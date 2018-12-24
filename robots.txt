@@ -1,2 +1,4 @@
 User-agent: *
 Disallow:
+
+Sitemap: https://bestjobs.github.io/sitemap.xml
