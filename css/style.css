@@ -68,6 +68,28 @@ body{
             clear: both;
             visibility: hidden;
         }
+        section h4{
+            font-size: 14px; 
+            margin: 0px;
+        }
+        .clearfix:after{
+            content: ".";
+            display: block;
+            height: 0;
+            clear: both;
+            visibility: hidden;
+        }
+        section h5{
+            font-size: 12px; 
+            margin: 0px;
+        }
+        .clearfix:after{
+            content: ".";
+            display: block;
+            height: 0;
+            clear: both;
+            visibility: hidden;
+        }
         footer{
             background-color: #3367D6; 
             padding: 10px;
