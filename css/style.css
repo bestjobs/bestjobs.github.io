@@ -7,7 +7,7 @@ body{
             padding: 10px;
         }
         header h1{
-            font-size: 18px; 
+            font-size: 20px; 
             margin: 10px 0;
         }
         .container{
@@ -47,6 +47,17 @@ body{
             padding: 10px;
         }
         section h2{
+            font-size: 18px; 
+            margin: 0px;
+        }
+        .clearfix:after{
+            content: ".";
+            display: block;
+            height: 0;
+            clear: both;
+            visibility: hidden;
+        }
+        section h3{
             font-size: 16px; 
             margin: 0px;
         }
