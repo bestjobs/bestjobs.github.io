@@ -62,8 +62,9 @@ body{
             padding: 10px;
         }
         footer p{
-            text-align: center; 
+            text-align: center;
             margin: 5px;
+            font-size: 12px;
         }
 {
   "theme_color": "#3367D6"
