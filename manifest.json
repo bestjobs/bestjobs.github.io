@@ -13,7 +13,7 @@
       "sizes": "512x512"
     }
   ],
-  "start_url": "https://bestjobs.github.io/",
+  "start_url": "bestjobs.github.io",
   "background_color": "#3367D6",
   "display": "standalone",
   "scope": "/bestjobs/",
