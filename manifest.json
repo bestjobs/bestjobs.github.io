@@ -1,6 +1,6 @@
 {
+  "name": "The bestjobs",
   "short_name": "bestjobs",
-  "name": "bestjobs",
   "icons": [
     {
       "src": "https://github.githubassets.com/favicon.ico",
@@ -13,9 +13,9 @@
       "sizes": "512x512"
     }
   ],
-  "start_url": "bestjobs.github.io",
-  "background_color": "#3367D6",
+  "start_url": "/",
+  "scope": "/",
   "display": "standalone",
-  "scope": "/bestjobs/",
+  "background_color": "#3367D6",
   "theme_color": "#3367D6"
 }
