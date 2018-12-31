@@ -1,8 +1,6 @@
 /*
-*
-* bestjobs
-* Copyright ©
-*
+ bestjobs.github.io
+ Copyright © 2018 bestjobs. All rights reserved!
 */
 
 const cacheName = `bestjobs`;
@@ -10,7 +8,7 @@ self.addEventListener('install', e => {
   e.waitUntil(
     caches.open(cacheName).then(cache => {
       return cache.addAll([
-        `/`,
+        `/`, // Alias for index.html
         `/*.html`
       ])
           .then(() => self.skipWaiting());
