@@ -21,6 +21,6 @@
   "start_url": "/",
   "background_color": "#9EB3FA",
   "display": "standalone",
-  "scope": "bestjobs.github.io",
+  "scope": "/",
   "theme_color": "#3367D6"
 }
