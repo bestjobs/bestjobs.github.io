@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+	<title>bestjobs Feed</title>
+	<subtitle>A subtitle.</subtitle>
+	<link href="https://bestjobs.github.io/feed/" rel="self" />
+	<link href="<link href="https://bestjobs.github.io/" />
+	<id>https://bestjobs.github.io/atom.xml/</id>
+	<updated>2013-12-24T18:30:02Z</updated>
+	
+	
+	<entry>
+		<title type="html">Backend Developer</title>
+		<link href="https://bestjobs.github.io/index.html" />
+		<link rel="alternate" type="text/html" href="https://bestjobs.github.io/index.html"/>
+		<link rel="edit" href="https://bestjobs.github.io/atom03/edit"/>
+		<id>https://bestjobs.github.io/</id>
+		<updated>2013-12-24T18:30:02Z</updated>
+		<summary>bestjobs</summary>
+		<content type="xhtml">
+			<div xmlns="http://www.w3.org/1999/xhtml">
+				<p>This is the entry content.</p>
+			</div>
+		</content>
+		<author>
+			<name>bestjobs</name>
+			<email>https://bestjobs.github.io/</email>
+		</author>
+	</entry>
+
+</feed>
