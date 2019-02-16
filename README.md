@@ -2,7 +2,9 @@
 Portal for bestjobs @ GitHub
 
 This repository is rendered online at http://bestjobs.github.io, it contains a listing of repositories that are open source and maintained by bestjobs teams.
+
 //=========
+
 There's nothing wrong with the above, especially now that CSS support is universal in all browsers. For example, you could have a file named TEMPLATE.html on your webserver that looks like this:
 
 <!DOCTYPE html>
@@ -25,7 +27,9 @@ However, what if you want to have a sidebar with links in it to a bunch of diffe
     or a cached dynamic site (Like workPress Cache for example)
 
 Do you know how many remote exploits WordPress has had in the past five years? Probably thousands. Do you know how many remote exploits Apache or nginx have had in the past five years that an attacker can use to mess up your website and infect your visitors' computers? Maybe one. I used to use WordPress for my site, but realized I was spending more time patching WordPress it than writing things to put on it. I moved to an SSG and haven't looked back.
+
 =========//
+
 
 Adding a new repo to the listing
 
