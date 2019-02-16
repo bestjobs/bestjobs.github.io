@@ -6,7 +6,7 @@ This repository is rendered online at http://bestjobs.github.io, it contains a l
 //=========
 
 There's nothing wrong with the above, especially now that CSS support is universal in all browsers. For example, you could have a file named TEMPLATE.html on your webserver that looks like this:
-
+```
 <!DOCTYPE html>
 <html lang='en-US'>
 <head>
@@ -19,7 +19,7 @@ There's nothing wrong with the above, especially now that CSS support is univers
     <h1>Change Me</h1>
 </body>
 </html>
-
+```
 You'd then copy this template to /index.html, /about/index.html, /wuffles/index.html to have a root page, an about page, and a page about your dog, respectively. Because you have common CSS and Javascript, you can change some things in common files and have the entire site change when you change just one file.
 
 However, what if you want to have a sidebar with links in it to a bunch of different sections of your site? Sure, you can copy and paste one into every single page on your site, but what if you want to change it later? Editing every single page on your site just to add a single link that shows up everywhere is a royal pain in the rear. This sort of repetitive work is better handled by some sort of HTML generator like a static-site generator or a dynamic generator.
