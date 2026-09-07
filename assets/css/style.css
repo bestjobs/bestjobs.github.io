@@ -1,10 +1,22 @@
-/* bestjobs.bg - Link-Only, CSS Subgrid Level 2 */
+/**
+ * bestjobs.bg - High-Performance, Privacy-First Job Board Engine
+ * File: /assets/css/style.css
+ * Description: High-density CSS Subgrid Level 2 layout rules for switching between tabular
+ *              subgrid rows and multi-column card grids without DOM mutation. Powered by
+ *              light-dark() tokens and native font stacks for zero layout shifts.
+ * 
+ * SPDX-License-Identifier: MIT
+ * License: MIT License (https://opensource.org/licenses/MIT)
+ * Copyright (c) 2026 bestjobs.bg
+ */
+
 :root {
   color-scheme: light dark;
 
   --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 
+  /* Native light-dark() Design Tokens */
   --bg-canvas: light-dark(#f8fafc, #090d16);
   --bg-surface: light-dark(#ffffff, #111827);
   --bg-surface-alt: light-dark(#f1f5f9, #1a2234);
@@ -48,7 +60,7 @@ body {
   padding: 0 1.25rem;
 }
 
-/* Header & Secure Navigation Links */
+/* Header & Secure Links */
 .site-header {
   border-bottom: 1px solid var(--border-subtle);
   background-color: var(--bg-surface);
@@ -84,7 +96,7 @@ body {
   gap: 1.25rem;
 }
 
-/* Language Link Styling */
+/* Language Link Switcher */
 .lang-switch-link {
   display: inline-flex;
   align-items: center;
@@ -317,7 +329,7 @@ body {
   border-top: 1px solid var(--border-subtle);
 }
 
-/* Accent Indicators & Apply Link */
+/* Featured Badges & Accent Lines */
 .job-card.is-featured {
   border-left: 4px solid var(--accent-featured);
 }
