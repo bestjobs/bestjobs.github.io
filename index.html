@@ -1,43 +1,59 @@
 <!--
-  bestjobs.bg - High-Performance, Privacy-First Job Board Engine
-  File: index.html (English Gateway)
-  Description: Primary English root interface featuring Google for Jobs (Schema.org/JobPosting)
-               JSON-LD metadata, Bulgarian language routing, strict link-only navigation (zero
-               button elements), and CSS Subgrid Level 2 dual-view layout.
-
-  SPDX-License-Identifier: MIT
-  License: MIT License (https://opensource.org/licenses/MIT)
-  Copyright (c) 2026 bestjobs.bg
+  ==============================================================================
+  FILE: /index.html
+  PROJECT: bestjobs.bg — Primary Career Portal & Job Board
+  NETWORK: Mobikom Bulgaria Digital Media Network (mobikom.bg)
+  LICENSE: MIT (https://opensource.org/licenses/MIT)
+  AUTHOR: Stoyan Stoyanov / Mobikom Bulgaria
+  LANGUAGE: English (en) • Canonical Root
+  PATTERN: Pattern 1 (Index & Native CSS Subgrid Engine)
+  STANDARDS: HTML5 Living Standard • CSS Grid Level 2 • Schema.org JSON-LD
+  COMPLIANCE: Strict CSP Level 3 • Zero Trackers • Zero Cookies • GDPR Default
+  INTERACTION: Strict Link-Only Architecture • Strictly Zero <button> Elements
+  ==============================================================================
+  DESCRIPTION:
+  Canonical English root for bestjobs.bg. Renders verified job ads, remote positions,
+  and regional hubs across Bulgaria using a 4-track subgrid (Meta/Salary, Role,
+  Location/Company, Direct Apply Link).
+  ==============================================================================
 -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BestJobs.bg | High-Trust Career Directory for Bulgaria</title>
-  <meta name="description" content="Verified, zero-cookie job board for Bulgaria and international remote careers. Direct employer contact with no tracker surveillance.">
+  <title>BestJobs.bg | Verified High-Trust Jobs in Bulgaria</title>
+  <meta name="description" content="BestJobs Bulgaria: Zero-cookie, privacy-first career directory for verified IT, management, regional, and remote opportunities across Bulgaria.">
+  <meta name="theme-color" content="#0052cc">
+  <meta name="robots" content="index, follow">
 
-  <!-- Alternate Language Directives -->
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="canonical" href="https://bestjobs.bg/">
   <link rel="alternate" hreflang="en" href="https://bestjobs.bg/">
   <link rel="alternate" hreflang="bg" href="https://bestjobs.bg/bg/">
   <link rel="alternate" hreflang="x-default" href="https://bestjobs.bg/">
+  <link rel="alternate" type="application/rss+xml" title="BestJobs.bg RSS" href="https://bestjobs.bg/rss.xml">
 
-  <link rel="stylesheet" href="/assets/css/style.css">
+  <!-- Open Graph -->
+  <meta property="og:title" content="BestJobs.bg | Career Discovery in Bulgaria">
+  <meta property="og:description" content="Zero-cookie verified job board operating across Sofia, Plovdiv, Varna, Burgas, Dobrich, and Remote.">
+  <meta property="og:url" content="https://bestjobs.bg/">
+  <meta property="og:type" content="website">
 
-  <!-- Google for Jobs Structured Data (Schema.org) -->
+  <!-- Schema.org / Google for Jobs Posting -->
   <script type="application/ld+json">
   {
-    "@context": "https://schema.org/",
+    "@context": "https://schema.org",
     "@type": "JobPosting",
-    "title": "Staff Backend Engineer (Go / Distributed Systems)",
-    "description": "<p>Seeking a senior distributed systems engineer for cloud infrastructure expansion.</p>",
+    "title": "Lead Software Engineer (Go / Distributed Systems)",
+    "description": "<p>High-availability backend architecture role supporting digital infrastructure in Bulgaria.</p>",
     "datePosted": "2026-09-01",
-    "validThrough": "2026-12-01",
+    "validThrough": "2026-12-31",
     "employmentType": "FULL_TIME",
     "hiringOrganization": {
       "@type": "Organization",
-      "name": "CloudScale AD",
-      "sameAs": "https://cloudscale.example.bg"
+      "name": "Mobikom Network",
+      "sameAs": "https://mobikom.bg"
     },
     "jobLocation": {
       "@type": "Place",
@@ -63,99 +79,171 @@
 </head>
 <body>
 
+  <!-- Universal Master Header (Aligned to mobikom.bg) -->
   <header class="site-header">
-    <div class="container nav-wrap">
-      <a href="/" class="brand-logo" rel="home">bestjobs<span>.bg</span></a>
-      
-      <nav class="nav-actions" aria-label="Primary Navigation">
-        <!-- Secured Bulgarian Switcher Link -->
-        <a href="/bg/" class="lang-switch-link" hreflang="bg" rel="alternate" title="Превключи на Български език">
-          <span class="lang-badge">БГ</span> Български
-        </a>
-        <a href="/jobs/post-a-job/" class="btn-post" rel="bookmark">+ Post a Job</a>
+    <div class="shell nav-bar">
+      <a href="/" class="brand-link" title="BestJobs.bg">
+        <svg viewBox="0 0 220 46" width="190" height="42" class="brand-logo-svg" role="img" aria-label="BestJobs.bg">
+          <g transform="translate(4, 3)">
+            <rect x="6" y="10" width="28" height="24" rx="4" fill="none" stroke="#0052cc" stroke-width="2.5" />
+            <path d="M14 10 V6 A4 4 0 0 1 26 6 V10" fill="none" stroke="#0052cc" stroke-width="2.5" />
+            <line x1="6" y1="20" x2="34" y2="20" stroke="#0052cc" stroke-width="2" />
+            <text x="44" y="24" font-size="21" font-weight="800" fill="currentColor" letter-spacing="-0.02em">bestjobs</text>
+            <text x="46" y="36" font-size="9" font-weight="700" fill="#2563eb" letter-spacing="0.18em">.BG &bull; JOBS</text>
+          </g>
+        </svg>
+      </a>
+
+      <nav aria-label="Primary Navigation">
+        <input type="checkbox" id="nav-toggle" class="nav-toggle" aria-label="Menu Toggle">
+        <label for="nav-toggle" class="nav-toggle-label">&#9776;</label>
+
+        <ul>
+          <li><a href="/" class="nav-link" aria-current="page">Vacancies</a></li>
+          <li><a href="/post-a-job/" class="nav-btn">+ Post a Vacancy</a></li>
+          <li><a href="https://mobikom.bg" class="nav-link" target="_blank" rel="noopener noreferrer">Mobikom Network</a></li>
+          <!-- Secured Link Language Switcher -->
+          <li><a href="/bg/" class="lang-toggle" hreflang="bg" rel="alternate">BG</a></li>
+        </ul>
       </nav>
     </div>
   </header>
 
-  <main class="container">
-    <section class="search-hero">
-      <div class="search-input-wrap">
-        <input 
-          type="search" 
-          id="job-search" 
-          class="search-input" 
-          placeholder="Search by role, stack, or city (e.g. Go, Sofia, Marketing, Remote)..."
-          autocomplete="off"
-          aria-label="Search jobs"
-        >
-      </div>
+  <main>
+    <div class="shell">
+      
+      <!-- Primary Hero -->
+      <section class="hero">
+        <span class="hero-tag">Mobikom Network &bull; Zero Trackers &bull; Est. 2011</span>
+        <h1>BestJobs Bulgaria</h1>
+        <p class="hero-lead">High-trust careers, salary transparency, and direct employer contact.</p>
+        <p>
+          No tracking pixels, no profile hoarding, and zero surveillance. Connect directly with hiring managers across Bulgaria or find remote positions.
+        </p>
+      </section>
 
-      <!-- Secured Link Filters (Zero <button> Tags) -->
-      <div class="filter-bar">
-        <nav class="tag-scroll" id="location-filters" aria-label="Location Filters">
-          <a href="?filter=all" class="pill-link active" data-filter="all">All Vacancies</a>
-          <a href="?filter=remote" class="pill-link" data-filter="remote">Remote</a>
-          <a href="?filter=sofia" class="pill-link" data-filter="sofia">Sofia</a>
-          <a href="?filter=plovdiv" class="pill-link" data-filter="plovdiv">Plovdiv</a>
-          <a href="?filter=varna" class="pill-link" data-filter="varna">Varna</a>
-          <a href="?filter=burgas" class="pill-link" data-filter="burgas">Burgas</a>
-          <a href="?filter=dobrich" class="pill-link" data-filter="dobrich">Dobrich</a>
+      <!-- Fast Search Component (Secured Link Filter Bar) -->
+      <section class="search-container">
+        <form role="search" onsubmit="return false;">
+          <div class="search-title-row">
+            <label for="search-input">&#128269; Live Filter:</label>
+            <a href="/rss.xml">&#128246; RSS Feed</a>
+          </div>
+          <input type="search" id="search-input" class="search-field" placeholder="Filter by skill, city, or sector (Go, Sofia, Varna, Plovdiv, Dobrich, Remote)..." autocomplete="off">
+        </form>
+
+        <!-- Secured Link Filters (Zero <button> Elements) -->
+        <nav class="filter-pills-row" aria-label="Location filters">
+          <a href="?filter=all" class="filter-pill active" data-filter="all">All Roles</a>
+          <a href="?filter=remote" class="filter-pill" data-filter="remote">Remote / Дистанционно</a>
+          <a href="?filter=sofia" class="filter-pill" data-filter="sofia">Sofia</a>
+          <a href="?filter=plovdiv" class="filter-pill" data-filter="plovdiv">Plovdiv</a>
+          <a href="?filter=varna" class="filter-pill" data-filter="varna">Varna</a>
+          <a href="?filter=burgas" class="filter-pill" data-filter="burgas">Burgas</a>
+          <a href="?filter=dobrich" class="filter-pill" data-filter="dobrich">Dobrich</a>
         </nav>
+      </section>
 
-        <!-- Secured Link Layout View Switcher -->
-        <div class="layout-switcher" aria-label="Display View Modes">
-          <a href="?view=list" class="view-link active" id="view-list" data-view="list">List</a>
-          <a href="?view=grid" class="view-link" id="view-grid" data-view="grid">Grid</a>
+      <!-- 4-Track CSS Subgrid Engine -->
+      <section>
+        <h2>Current Featured Opportunities</h2>
+        <div class="grid-cards" id="cards-grid">
+          
+          <article class="feature-card" data-searchable="sofia remote dev go backend cloud mobikom 8000 11500 bgn">
+            <span class="card-meta">8,000 – 11,500 BGN &bull; REMOTE</span>
+            <h3>Staff Backend Engineer (Go)</h3>
+            <p><strong>CloudScale AD</strong> &mdash; Sofia &bull; Fully Remote. High-scale distributed systems and cloud storage engineering.</p>
+            <a href="mailto:careers@cloudscale.example.bg?subject=Application%20Staff%20Backend%20Engineer" class="card-link" rel="noopener">Direct Apply &rarr;</a>
+          </article>
+
+          <article class="feature-card" data-searchable="varna office marketing performance sales 3500 5000 bgn">
+            <span class="card-meta">3,500 – 5,000 BGN &bull; VARNA</span>
+            <h3>Head of Performance Marketing</h3>
+            <p><strong>Black Sea Logistics Ltd</strong> &mdash; Varna (City Center). Data-driven conversion and pan-European shipping lead acquisition.</p>
+            <a href="https://example.bg/careers/marketing" class="card-link" target="_blank" rel="noopener noreferrer">Apply on ATS &rarr;</a>
+          </article>
+
+          <article class="feature-card" data-searchable="plovdiv industrial plc automation engineering 5000 6500 bgn">
+            <span class="card-meta">5,000 – 6,500 BGN &bull; PLOVDIV</span>
+            <h3>Lead Robotics Engineer</h3>
+            <p><strong>Thrace Tech Manufacturing</strong> &mdash; Plovdiv (Trakia EZ). PLC automation, robotic workcell commissioning, and field diagnostics.</p>
+            <a href="mailto:hr@thracetech.example.bg?subject=Lead%20Robotics%20Engineer" class="card-link" rel="noopener">Direct Apply &rarr;</a>
+          </article>
+
+          <article class="feature-card" data-searchable="dobrich dobrichnews dobruja agriculture agronomy operations 4500 7000 bgn">
+            <span class="card-meta">4,500 – 7,000 BGN &bull; DOBRICH</span>
+            <h3>Agricultural Operations Director</h3>
+            <p><strong>Dobruja Agro Consortium</strong> &mdash; Dobrich Region. Fleet management, precision seeding, and regional supply chain logistics.</p>
+            <a href="mailto:jobs@dobrujagrain.example.bg?subject=Operations%20Director" class="card-link" rel="noopener">Direct Apply &rarr;</a>
+          </article>
+
         </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- Subgrid Level 2 Feed -->
-    <div class="job-feed" id="feed" data-view="list">
-
-      <article class="job-card is-featured" data-tags="sofia remote dev go backend cloud">
-        <div class="c-company">CloudScale AD ★</div>
-        <div class="c-title">Staff Backend Engineer (Go)</div>
-        <div class="c-location">Sofia • Remote / Дистанционно</div>
-        <div class="c-salary">8,000 – 11,500 BGN</div>
-        <div class="c-apply">
-          <a href="mailto:careers@cloudscale.example.bg?subject=Application%20Staff%20Backend%20Engineer" class="apply-link" rel="noopener">Apply Direct</a>
+      <!-- Conversion Banner -->
+      <section class="conversion-banner">
+        <div>
+          <h3>Hire Verified Talent via Mobikom Network</h3>
+          <p>Syndicate your vacancies across BestJobs.bg, DobrichNews, and Dobruja media channels without third-party tracking.</p>
         </div>
-      </article>
-
-      <article class="job-card" data-tags="varna office marketing performance sales">
-        <div class="c-company">Black Sea Logistics Ltd</div>
-        <div class="c-title">Head of Performance Marketing</div>
-        <div class="c-location">Varna (City Center)</div>
-        <div class="c-salary">3,500 – 5,000 BGN</div>
-        <div class="c-apply">
-          <a href="https://example.bg/careers/marketing" target="_blank" rel="noopener noreferrer" class="apply-link">Apply Direct</a>
-        </div>
-      </article>
-
-      <article class="job-card" data-tags="plovdiv industrial plc automation engineering">
-        <div class="c-company">Thrace Tech Manufacturing</div>
-        <div class="c-title">Lead Industrial Robotics Engineer</div>
-        <div class="c-location">Plovdiv (Trakia EZ)</div>
-        <div class="c-salary">5,000 – 6,500 BGN</div>
-        <div class="c-apply">
-          <a href="mailto:hr@thracetech.example.bg?subject=Lead%20Robotics%20Engineer" class="apply-link" rel="noopener">Apply Direct</a>
-        </div>
-      </article>
-
-      <article class="job-card" data-tags="dobrich agriculture agronomy management supply">
-        <div class="c-company">Dobruja Grain Consortium</div>
-        <div class="c-title">Agricultural Operations Director</div>
-        <div class="c-location">Dobrich / Regional</div>
-        <div class="c-salary">4,500 – 7,000 BGN</div>
-        <div class="c-apply">
-          <a href="mailto:jobs@dobrujagrain.example.bg?subject=Operations%20Director" class="apply-link" rel="noopener">Apply Direct</a>
-        </div>
-      </article>
+        <a href="/post-a-job/" class="nav-btn">Publish a Vacancy &rarr;</a>
+      </section>
 
     </div>
   </main>
 
-  <script src="/assets/js/filter.js"></script>
+  <!-- Universal Master Footer (Exact mobikom.bg Shell) -->
+  <footer class="site-footer">
+    <div class="shell">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <h4>Mobikom Network</h4>
+          <ul>
+            <li><a href="https://mobikom.bg" rel="noopener" target="_blank">mobikom.bg (Network Root)</a></li>
+            <li><a href="https://www.dobrichnews.com" rel="noopener" target="_blank">dobrichnews.com</a></li>
+            <li><a href="https://www.dobruja.com" rel="noopener" target="_blank">dobruja.com</a></li>
+            <li><a href="https://bestjobs.bg">bestjobs.bg</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>BestJobs Bulgaria</h4>
+          <ul>
+            <li><a href="/">Active Vacancies</a></li>
+            <li><a href="/post-a-job/">Employer Portal</a></li>
+            <li><a href="/pricing/">Posting Packages</a></li>
+            <li><a href="/rss.xml">&#128246; RSS Feed</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Direct Employment Centers</h4>
+          <ul>
+            <li><a href="?filter=sofia">Jobs in Sofia</a></li>
+            <li><a href="?filter=plovdiv">Jobs in Plovdiv</a></li>
+            <li><a href="?filter=varna">Jobs in Varna</a></li>
+            <li><a href="?filter=dobrich">Jobs in Dobrich / Dobruja</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Privacy &amp; Security</h4>
+          <ul>
+            <li><a href="/privacy/">Zero-Cookie Privacy Policy</a></li>
+            <li><a href="/terms/">Terms of Use</a></li>
+            <li><a href="/gdpr/">GDPR Compliance</a></li>
+            <li><a href="/bg/" hreflang="bg" rel="alternate">Български (BG)</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2026 bestjobs.bg &bull; Mobikom Bulgaria. Zero-cookie, privacy-engineered portal.</p>
+        <a href="https://mobikom.bg/contact/" rel="noopener" target="_blank">Network Operations Desk &rarr;</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/assets/js/search.js" defer></script>
 </body>
 </html>
