@@ -1,25 +1,36 @@
+<!--
+  bestjobs.bg - High-Performance, Privacy-First Job Board Engine
+  File: index.html (English Gateway)
+  Description: Primary English root interface featuring Google for Jobs (Schema.org/JobPosting)
+               JSON-LD metadata, Bulgarian language routing, strict link-only navigation (zero
+               button elements), and CSS Subgrid Level 2 dual-view layout.
+
+  SPDX-License-Identifier: MIT
+  License: MIT License (https://opensource.org/licenses/MIT)
+  Copyright (c) 2026 bestjobs.bg
+-->
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BestJobs.bg | Verified High-Trust Jobs in Bulgaria</title>
-  <meta name="description" content="Privacy-first, zero-cookie job directory for top tech, executive, and regional careers in Bulgaria and fully remote.">
-  
-  <!-- Alternate Language Links for SEO -->
+  <title>BestJobs.bg | High-Trust Career Directory for Bulgaria</title>
+  <meta name="description" content="Verified, zero-cookie job board for Bulgaria and international remote careers. Direct employer contact with no tracker surveillance.">
+
+  <!-- Alternate Language Directives -->
   <link rel="alternate" hreflang="en" href="https://bestjobs.bg/">
   <link rel="alternate" hreflang="bg" href="https://bestjobs.bg/bg/">
   <link rel="alternate" hreflang="x-default" href="https://bestjobs.bg/">
 
   <link rel="stylesheet" href="/assets/css/style.css">
 
-  <!-- Google for Jobs Schema.org/JobPosting (English) -->
+  <!-- Google for Jobs Structured Data (Schema.org) -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org/",
     "@type": "JobPosting",
     "title": "Staff Backend Engineer (Go / Distributed Systems)",
-    "description": "<p>We are seeking an experienced Backend Engineer to lead cloud infrastructure scaling across Europe.</p>",
+    "description": "<p>Seeking a senior distributed systems engineer for cloud infrastructure expansion.</p>",
     "datePosted": "2026-09-01",
     "validThrough": "2026-12-01",
     "employmentType": "FULL_TIME",
@@ -56,7 +67,7 @@
     <div class="container nav-wrap">
       <a href="/" class="brand-logo" rel="home">bestjobs<span>.bg</span></a>
       
-      <nav class="nav-actions">
+      <nav class="nav-actions" aria-label="Primary Navigation">
         <!-- Secured Bulgarian Switcher Link -->
         <a href="/bg/" class="lang-switch-link" hreflang="bg" rel="alternate" title="Превключи на Български език">
           <span class="lang-badge">БГ</span> Български
@@ -73,13 +84,13 @@
           type="search" 
           id="job-search" 
           class="search-input" 
-          placeholder="Search by title, technology, city (e.g. Go, Sofia, Marketing, Remote)..."
+          placeholder="Search by role, stack, or city (e.g. Go, Sofia, Marketing, Remote)..."
           autocomplete="off"
           aria-label="Search jobs"
         >
       </div>
 
-      <!-- Secured Link Filters (No <button> elements) -->
+      <!-- Secured Link Filters (Zero <button> Tags) -->
       <div class="filter-bar">
         <nav class="tag-scroll" id="location-filters" aria-label="Location Filters">
           <a href="?filter=all" class="pill-link active" data-filter="all">All Vacancies</a>
@@ -91,8 +102,8 @@
           <a href="?filter=dobrich" class="pill-link" data-filter="dobrich">Dobrich</a>
         </nav>
 
-        <!-- Secured Link Layout Switcher -->
-        <div class="layout-switcher" aria-label="Layout Modes">
+        <!-- Secured Link Layout View Switcher -->
+        <div class="layout-switcher" aria-label="Display View Modes">
           <a href="?view=list" class="view-link active" id="view-list" data-view="list">List</a>
           <a href="?view=grid" class="view-link" id="view-grid" data-view="grid">Grid</a>
         </div>
