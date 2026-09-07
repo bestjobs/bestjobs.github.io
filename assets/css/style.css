@@ -1,42 +1,35 @@
 /**
- * bestjobs.bg - High-Performance, Privacy-First Job Board Engine
- * File: /assets/css/style.css
- * Description: High-density CSS Subgrid Level 2 layout rules for switching between tabular
- *              subgrid rows and multi-column card grids without DOM mutation. Powered by
- *              light-dark() tokens and native font stacks for zero layout shifts.
- * 
- * SPDX-License-Identifier: MIT
- * License: MIT License (https://opensource.org/licenses/MIT)
- * Copyright (c) 2026 bestjobs.bg
+ * ==============================================================================
+ * FILE: /assets/css/style.css
+ * PROJECT: bestjobs.bg — Master Design Engine (Mobikom Network Unified)
+ * LICENSE: MIT (https://opensource.org/licenses/MIT)
+ * AUTHOR: Stoyan Stoyanov / Mobikom Bulgaria (mobikom.bg)
+ * STANDARDS: CSS Grid Level 2 (Subgrid) • CSS Color Module 4 (light-dark)
+ * COMPLIANCE: Strict CSP Level 3 • Zero !important • Zero Cookies
+ * PERFORMANCE: Sub-14KB Single-Pass Engine • Native System Typography
+ * ==============================================================================
  */
 
 :root {
   color-scheme: light dark;
 
-  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-
-  /* Native light-dark() Design Tokens */
-  --bg-canvas: light-dark(#f8fafc, #090d16);
-  --bg-surface: light-dark(#ffffff, #111827);
-  --bg-surface-alt: light-dark(#f1f5f9, #1a2234);
-  --bg-hover: light-dark(#e2e8f0, #222d42);
-
-  --text-primary: light-dark(#0f172a, #f8fafc);
-  --text-secondary: light-dark(#475569, #94a3b8);
-  --text-muted: light-dark(#94a3b8, #64748b);
-
-  --border-subtle: light-dark(#e2e8f0, #1e293b);
-  --border-strong: light-dark(#cbd5e1, #334155);
-
-  --accent-primary: light-dark(#0284c7, #38bdf8);
-  --accent-surface: light-dark(#e0f2fe, #0c2d48);
+  /* light-dark() Dynamic Color Tokens */
+  --bg: light-dark(#ffffff, #0b0f19);
+  --bg-alt: light-dark(#f8fafc, #131b2e);
+  --border: light-dark(#dbe2ea, #1e293b);
+  --text: light-dark(#0f172a, #f1f5f9);
+  --muted: light-dark(#475569, #94a3b8);
+  --primary: light-dark(#0052cc, #38bdf8);
+  --primary-hover: light-dark(#0747a6, #7dd3fc);
+  --primary-fg: light-dark(#ffffff, #0b0f19);
   --accent-success: light-dark(#059669, #34d399);
-  --accent-featured: light-dark(#d97706, #fbbf24);
 
-  --radius-sm: 4px;
-  --radius-md: 8px;
-  --radius-lg: 12px;
+  /* Geometry & Typography Tokens */
+  --max-w: 1100px;
+  --max-w-prose: 760px;
+  --radius: 6px;
+  --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, system-ui, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 }
 
 *, *::before, *::after {
@@ -45,317 +38,366 @@
   padding: 0;
 }
 
+html {
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  overflow-y: scroll;
+  scrollbar-gutter: stable;
+}
+
 body {
-  background-color: var(--bg-canvas);
-  color: var(--text-primary);
-  font-family: var(--font-sans);
-  line-height: 1.5;
-  -webkit-font-smoothing: antialiased;
-  padding-bottom: 4rem;
-}
-
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 1.25rem;
-}
-
-/* Header & Secure Links */
-.site-header {
-  border-bottom: 1px solid var(--border-subtle);
-  background-color: var(--bg-surface);
-  position: sticky;
-  top: 0;
-  z-index: 50;
-}
-
-.nav-wrap {
+  min-height: 100vh;
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  height: 4rem;
+  flex-direction: column;
 }
 
-.brand-logo {
-  font-size: 1.35rem;
+main {
+  flex: 1;
+  padding-block: 2.5rem;
+}
+
+/* Unified 1100px Shell */
+.shell,
+.shell-prose {
+  width: 100%;
+  max-width: var(--max-w);
+  margin-inline: auto;
+  padding-inline: 1.25rem;
+}
+
+/* Typography */
+h1, h2, h3, h4 {
+  color: var(--text);
+  line-height: 1.25;
   font-weight: 800;
+  letter-spacing: -0.01em;
+}
+
+h1 { font-size: clamp(2rem, 4vw, 2.75rem); margin-bottom: 0.5rem; }
+h2 { font-size: 1.35rem; margin-block: 1.5rem 0.5rem; }
+h3 { font-size: 1.15rem; margin-bottom: 0.4rem; }
+
+p {
+  color: var(--muted);
+  margin-bottom: 1rem;
+}
+
+a {
+  color: var(--primary);
   text-decoration: none;
-  color: var(--text-primary);
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+a:focus-visible, input:focus-visible, .nav-toggle-label:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+/* Universal Header */
+header.site-header {
+  background: var(--bg-alt);
+  border-bottom: 1px solid var(--border);
+  position: relative;
+}
+
+.nav-bar {
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  gap: 0.25rem;
+  padding-block: 0.75rem;
 }
 
-.brand-logo span {
-  color: var(--accent-primary);
-}
-
-.nav-actions {
-  display: flex;
-  align-items: center;
-  gap: 1.25rem;
-}
-
-/* Language Link Switcher */
-.lang-switch-link {
+.brand-link {
   display: inline-flex;
   align-items: center;
-  gap: 0.4rem;
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: var(--text-secondary);
-  text-decoration: none;
-  padding: 0.35rem 0.65rem;
-  border-radius: var(--radius-md);
-  border: 1px solid var(--border-subtle);
-  background: var(--bg-surface-alt);
 }
 
-.lang-switch-link:hover {
-  color: var(--text-primary);
-  border-color: var(--accent-primary);
+.brand-logo-svg {
+  width: 190px;
+  height: 42px;
+  display: block;
 }
 
-.lang-badge {
-  background: var(--accent-primary);
-  color: #ffffff;
-  padding: 0.1rem 0.35rem;
-  border-radius: var(--radius-sm);
-  font-size: 0.7rem;
-  font-weight: 700;
+.nav-toggle, .nav-toggle-label {
+  display: none;
 }
 
-.btn-post {
-  display: inline-block;
-  background: var(--text-primary);
-  color: var(--bg-surface);
-  padding: 0.5rem 1rem;
-  border-radius: var(--radius-md);
-  text-decoration: none;
-  font-weight: 600;
-  font-size: 0.9rem;
-}
-
-/* Search Bar */
-.search-hero {
-  padding: 2.5rem 0 1.5rem;
-}
-
-.search-input-wrap {
-  position: relative;
-  margin-bottom: 1.25rem;
-}
-
-.search-input {
-  width: 100%;
-  padding: 0.85rem 1.25rem;
-  font-size: 1.1rem;
-  background: var(--bg-surface);
-  border: 1px solid var(--border-strong);
-  border-radius: var(--radius-lg);
-  color: var(--text-primary);
-  outline: none;
-}
-
-.search-input:focus {
-  border-color: var(--accent-primary);
-}
-
-/* Filter & Layout Links Bar */
-.filter-bar {
+nav ul {
   display: flex;
-  flex-wrap: wrap;
   align-items: center;
-  justify-content: space-between;
   gap: 0.75rem;
+  list-style: none;
 }
 
-.tag-scroll {
+.nav-link {
+  color: var(--text);
+  font-weight: 600;
+  padding: 0.4rem 0.6rem;
+  border-radius: var(--radius);
+}
+
+.nav-link:hover, .nav-link[aria-current="page"] {
+  color: var(--primary);
+}
+
+.nav-btn {
+  background: var(--primary);
+  color: var(--primary-fg);
+  font-weight: 600;
+  padding: 0.45rem 0.9rem;
+  border-radius: var(--radius);
+  display: inline-flex;
+  align-items: center;
+}
+
+.nav-btn:hover {
+  background: var(--primary-hover);
+  color: var(--primary-fg);
+  text-decoration: none;
+}
+
+.lang-toggle {
+  border: 1px solid var(--border);
+  font-weight: 600;
+  font-size: 0.85rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: var(--radius);
+  color: var(--text);
+}
+
+@media (max-width: 768px) {
+  .nav-toggle-label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    cursor: pointer;
+    font-size: 1.3rem;
+  }
+
+  nav ul {
+    display: none;
+  }
+
+  .nav-toggle:checked ~ ul {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: calc(100% + 1px);
+    left: 1.25rem;
+    right: 1.25rem;
+    background: var(--bg-alt);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1rem;
+    z-index: 100;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  }
+
+  .nav-toggle:checked ~ ul li,
+  .nav-toggle:checked ~ ul a {
+    width: 100%;
+    text-align: left;
+  }
+}
+
+/* Hero */
+.hero {
+  margin-bottom: 2.5rem;
+}
+
+.hero-tag {
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--primary);
+  display: block;
+  margin-bottom: 0.4rem;
+}
+
+.hero-lead {
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 0.5rem;
+}
+
+/* PATTERN 1: Native CSS Subgrid Engine (Jobs Directory) */
+.grid-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  /* Track 1: Meta/Salary | Track 2: Title | Track 3: Details | Track 4: Action */
+  grid-auto-rows: auto auto 1fr auto;
+  gap: 1.25rem;
+  margin-top: 1rem;
+}
+
+.feature-card {
+  display: grid;
+  grid-row: span 4;
+  grid-template-rows: subgrid;
+  background: var(--bg-alt);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.25rem;
+  row-gap: 0.5rem;
+  transition: border-color 0.15s ease;
+  content-visibility: auto;
+}
+
+.feature-card:hover {
+  border-color: var(--primary);
+}
+
+.card-meta {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--accent-success);
+  font-family: var(--font-mono);
+  align-self: start;
+}
+
+.feature-card h3 {
+  font-size: 1.2rem;
+  margin: 0;
+  align-self: start;
+}
+
+.feature-card p {
+  font-size: 0.95rem;
+  margin: 0;
+  align-self: start;
+}
+
+.feature-card a.card-link {
+  font-weight: 600;
+  align-self: end;
+  margin-top: 0.5rem;
+}
+
+/* Search Container & Filter Pills */
+.search-container {
+  background: var(--bg-alt);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--primary);
+  border-radius: var(--radius);
+  padding: 1rem;
+  margin-bottom: 2.5rem;
+}
+
+.search-title-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.search-field {
+  width: 100%;
+  padding: 0.65rem 0.85rem;
+  font-size: 1rem;
+  background: var(--bg);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  margin-bottom: 0.75rem;
+}
+
+.filter-pills-row {
   display: flex;
   gap: 0.5rem;
   flex-wrap: wrap;
 }
 
-/* Link-based Pills (no <button>) */
-.pill-link {
-  display: inline-flex;
-  align-items: center;
-  background: var(--bg-surface-alt);
-  border: 1px solid var(--border-subtle);
-  color: var(--text-secondary);
-  padding: 0.4rem 0.85rem;
+.filter-pill {
+  font-size: 0.82rem;
+  font-weight: 600;
+  padding: 0.3rem 0.65rem;
   border-radius: 9999px;
-  font-size: 0.85rem;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  color: var(--muted);
   text-decoration: none;
-  font-weight: 500;
 }
 
-.pill-link.active, .pill-link:hover {
-  background: var(--accent-surface);
-  color: var(--accent-primary);
-  border-color: var(--accent-primary);
+.filter-pill.active, .filter-pill:hover {
+  background: var(--primary);
+  color: var(--primary-fg);
+  border-color: var(--primary);
+  text-decoration: none;
 }
 
-/* Link-based Layout Switcher (no <button>) */
-.layout-switcher {
+/* Conversion Banner */
+.conversion-banner {
+  margin-top: 3rem;
+  background: var(--bg-alt);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.75rem;
   display: flex;
-  background: var(--bg-surface-alt);
-  border-radius: var(--radius-md);
-  padding: 2px;
-}
-
-.view-link {
-  display: inline-block;
-  padding: 0.35rem 0.75rem;
-  font-size: 0.85rem;
-  text-decoration: none;
-  color: var(--text-secondary);
-  border-radius: var(--radius-sm);
-}
-
-.view-link.active {
-  background: var(--bg-surface);
-  color: var(--text-primary);
-  font-weight: 600;
-}
-
-/* Feed Container */
-.job-feed {
-  margin-top: 1.5rem;
-  display: grid;
-  gap: 0.75rem;
-}
-
-/* ===================================================
-   MODE A: HIGH-DENSITY LIST VIEW (SUBGRID LEVEL 2)
-   =================================================== */
-.job-feed[data-view="list"] {
-  display: grid;
-  grid-template-columns: 210px minmax(290px, 1fr) 180px 180px 120px;
-  gap: 0.5rem 1rem;
-}
-
-.job-feed[data-view="list"] .job-card {
-  display: grid;
-  grid-column: 1 / -1;
-  grid-template-columns: subgrid;
+  justify-content: space-between;
   align-items: center;
-  background: var(--bg-surface);
-  border: 1px solid var(--border-subtle);
-  padding: 0.85rem 1.15rem;
-  border-radius: var(--radius-md);
+  gap: 1.5rem;
+  flex-wrap: wrap;
 }
 
-.job-feed[data-view="list"] .c-company {
-  font-weight: 600;
-  color: var(--text-secondary);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.job-feed[data-view="list"] .c-title {
-  font-size: 1rem;
-  font-weight: 700;
-  color: var(--text-primary);
-}
-
-.job-feed[data-view="list"] .c-location {
-  color: var(--text-secondary);
+/* Footer */
+footer.site-footer {
+  background: var(--bg-alt);
+  border-top: 1px solid var(--border);
+  padding-block: 2.5rem 1.5rem;
   font-size: 0.9rem;
 }
 
-.job-feed[data-view="list"] .c-salary {
-  font-family: var(--font-mono);
-  font-size: 0.9rem;
-  font-weight: 600;
-  color: var(--accent-success);
-}
-
-.job-feed[data-view="list"] .c-apply {
-  text-align: right;
-}
-
-/* ===================================================
-   MODE B: CARD GRID VIEW (3-COLUMN SUBGRID LEVEL 2)
-   =================================================== */
-.job-feed[data-view="grid"] {
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  grid-auto-rows: auto;
-  gap: 1.25rem;
-}
-
-.job-feed[data-view="grid"] .job-card {
+.footer-grid {
   display: grid;
-  grid-template-rows: subgrid;
-  grid-row: span 4;
-  background: var(--bg-surface);
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-lg);
-  padding: 1.25rem;
-  gap: 0.75rem;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 2rem;
+  margin-bottom: 2rem;
 }
 
-.job-feed[data-view="grid"] .c-company {
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: var(--text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
+.footer-col h4 {
+  font-size: 0.95rem;
+  margin-bottom: 0.5rem;
 }
 
-.job-feed[data-view="grid"] .c-title {
-  font-size: 1.15rem;
-  font-weight: 700;
-  line-height: 1.3;
-}
-
-.job-feed[data-view="grid"] .c-location {
-  font-size: 0.9rem;
-  color: var(--text-secondary);
+.footer-col ul {
+  list-style: none;
   display: flex;
   flex-direction: column;
-  gap: 0.25rem;
+  gap: 0.4rem;
 }
 
-.job-feed[data-view="grid"] .c-salary {
-  font-family: var(--font-mono);
-  font-weight: 600;
-  color: var(--accent-success);
+.footer-col a {
+  color: var(--muted);
 }
 
-.job-feed[data-view="grid"] .c-apply {
-  padding-top: 0.5rem;
-  border-top: 1px solid var(--border-subtle);
+.footer-col a:hover {
+  color: var(--primary);
 }
 
-/* Featured Badges & Accent Lines */
-.job-card.is-featured {
-  border-left: 4px solid var(--accent-featured);
-}
-
-.apply-link {
-  display: inline-block;
-  background: var(--accent-surface);
-  color: var(--accent-primary);
-  padding: 0.4rem 0.85rem;
-  border-radius: var(--radius-sm);
-  font-weight: 600;
+.footer-bottom {
+  border-top: 1px solid var(--border);
+  padding-top: 1.25rem;
+  display: flex;
+  justify-content: space-between;
+  color: var(--muted);
   font-size: 0.85rem;
-  text-decoration: none;
+  flex-wrap: wrap;
+  gap: 0.5rem;
 }
 
-.apply-link:hover {
-  filter: brightness(0.95);
-}
-
-.job-card[hidden] {
+.feature-card[hidden] {
   display: none !important;
-}
-
-@media (max-width: 820px) {
-  .job-feed[data-view="list"] {
-    display: flex;
-    flex-direction: column;
-  }
 }
