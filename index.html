@@ -1,32 +1,38 @@
 <!DOCTYPE html>
-<html lang="bg">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BestJobs.bg | Водещи обяви за работа в България</title>
-  <meta name="description" content="Модерна, бърза платформа за работа без бисквитки. Обяви от София, Пловдив, Варна, Бургас и дистанционно.">
+  <title>BestJobs.bg | Verified High-Trust Jobs in Bulgaria</title>
+  <meta name="description" content="Privacy-first, zero-cookie job directory for top tech, executive, and regional careers in Bulgaria and fully remote.">
+  
+  <!-- Alternate Language Links for SEO -->
+  <link rel="alternate" hreflang="en" href="https://bestjobs.bg/">
+  <link rel="alternate" hreflang="bg" href="https://bestjobs.bg/bg/">
+  <link rel="alternate" hreflang="x-default" href="https://bestjobs.bg/">
+
   <link rel="stylesheet" href="/assets/css/style.css">
 
-  <!-- Google for Jobs Structured Data Example -->
+  <!-- Google for Jobs Schema.org/JobPosting (English) -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org/",
     "@type": "JobPosting",
-    "title": "Senior Go / Backend Engineer",
-    "description": "<p>Търсим опитен софтуерен инженер за разширяване на нашата облачна инфраструктура.</p>",
+    "title": "Staff Backend Engineer (Go / Distributed Systems)",
+    "description": "<p>We are seeking an experienced Backend Engineer to lead cloud infrastructure scaling across Europe.</p>",
     "datePosted": "2026-09-01",
-    "validThrough": "2026-11-01",
+    "validThrough": "2026-12-01",
     "employmentType": "FULL_TIME",
     "hiringOrganization": {
       "@type": "Organization",
       "name": "CloudScale AD",
-      "sameAs": "https://example.bg"
+      "sameAs": "https://cloudscale.example.bg"
     },
     "jobLocation": {
       "@type": "Place",
       "address": {
         "@type": "PostalAddress",
-        "addressLocality": "София",
+        "addressLocality": "Sofia",
         "addressCountry": "BG"
       }
     },
@@ -36,8 +42,8 @@
       "currency": "BGN",
       "value": {
         "@type": "QuantitativeValue",
-        "minValue": 7000,
-        "maxValue": 9500,
+        "minValue": 8000,
+        "maxValue": 11500,
         "unitText": "MONTH"
       }
     }
@@ -48,9 +54,14 @@
 
   <header class="site-header">
     <div class="container nav-wrap">
-      <a href="/" class="brand-logo">bestjobs<span>.bg</span></a>
+      <a href="/" class="brand-logo" rel="home">bestjobs<span>.bg</span></a>
+      
       <nav class="nav-actions">
-        <a href="/jobs/post-a-job/" class="btn-post">+ Публикувай обява</a>
+        <!-- Secured Bulgarian Switcher Link -->
+        <a href="/bg/" class="lang-switch-link" hreflang="bg" rel="alternate" title="Превключи на Български език">
+          <span class="lang-badge">БГ</span> Български
+        </a>
+        <a href="/jobs/post-a-job/" class="btn-post" rel="bookmark">+ Post a Job</a>
       </nav>
     </div>
   </header>
@@ -62,69 +73,72 @@
           type="search" 
           id="job-search" 
           class="search-input" 
-          placeholder="Търсене по длъжност, умение, град (напр. Go, София, Маркетинг, Varna)..."
+          placeholder="Search by title, technology, city (e.g. Go, Sofia, Marketing, Remote)..."
           autocomplete="off"
+          aria-label="Search jobs"
         >
       </div>
 
+      <!-- Secured Link Filters (No <button> elements) -->
       <div class="filter-bar">
-        <div class="tag-scroll" id="location-filters">
-          <button class="pill-btn active" data-filter="all">Всички</button>
-          <button class="pill-btn" data-filter="дистанционно">Дистанционно</button>
-          <button class="pill-btn" data-filter="софия">София</button>
-          <button class="pill-btn" data-filter="пловдив">Пловдив</button>
-          <button class="pill-btn" data-filter="варна">Варна</button>
-          <button class="pill-btn" data-filter="бургас">Бургас</button>
-          <button class="pill-btn" data-filter="добрич">Добрич</button>
-        </div>
+        <nav class="tag-scroll" id="location-filters" aria-label="Location Filters">
+          <a href="?filter=all" class="pill-link active" data-filter="all">All Vacancies</a>
+          <a href="?filter=remote" class="pill-link" data-filter="remote">Remote</a>
+          <a href="?filter=sofia" class="pill-link" data-filter="sofia">Sofia</a>
+          <a href="?filter=plovdiv" class="pill-link" data-filter="plovdiv">Plovdiv</a>
+          <a href="?filter=varna" class="pill-link" data-filter="varna">Varna</a>
+          <a href="?filter=burgas" class="pill-link" data-filter="burgas">Burgas</a>
+          <a href="?filter=dobrich" class="pill-link" data-filter="dobrich">Dobrich</a>
+        </nav>
 
-        <div class="layout-switcher">
-          <button class="view-btn active" id="view-list" aria-label="Списък">Списък</button>
-          <button class="view-btn" id="view-grid" aria-label="Карти">Карти</button>
+        <!-- Secured Link Layout Switcher -->
+        <div class="layout-switcher" aria-label="Layout Modes">
+          <a href="?view=list" class="view-link active" id="view-list" data-view="list">List</a>
+          <a href="?view=grid" class="view-link" id="view-grid" data-view="grid">Grid</a>
         </div>
       </div>
     </section>
 
-    <!-- Job Feed rendered with Subgrid Level 2 -->
+    <!-- Subgrid Level 2 Feed -->
     <div class="job-feed" id="feed" data-view="list">
 
-      <article class="job-card is-featured" data-tags="софия дистанционно dev go backend">
+      <article class="job-card is-featured" data-tags="sofia remote dev go backend cloud">
         <div class="c-company">CloudScale AD ★</div>
-        <div class="c-title">Senior Go / Backend Engineer</div>
-        <div class="c-location">София • Дистанционно</div>
-        <div class="c-salary">7,000 – 9,500 лв.</div>
+        <div class="c-title">Staff Backend Engineer (Go)</div>
+        <div class="c-location">Sofia • Remote / Дистанционно</div>
+        <div class="c-salary">8,000 – 11,500 BGN</div>
         <div class="c-apply">
-          <a href="mailto:jobs@cloudscale.example.bg?subject=Application%20Go%20Dev" class="apply-btn">Кандидатствай</a>
+          <a href="mailto:careers@cloudscale.example.bg?subject=Application%20Staff%20Backend%20Engineer" class="apply-link" rel="noopener">Apply Direct</a>
         </div>
       </article>
 
-      <article class="job-card" data-tags="варна офис маркетинг sales">
-        <div class="c-company">Морски Логистики ООД</div>
-        <div class="c-title">Специалист Дигитален Маркетинг</div>
-        <div class="c-location">Варна (Център)</div>
-        <div class="c-salary">3,200 – 4,200 лв.</div>
+      <article class="job-card" data-tags="varna office marketing performance sales">
+        <div class="c-company">Black Sea Logistics Ltd</div>
+        <div class="c-title">Head of Performance Marketing</div>
+        <div class="c-location">Varna (City Center)</div>
+        <div class="c-salary">3,500 – 5,000 BGN</div>
         <div class="c-apply">
-          <a href="https://example.bg/apply/mkt" target="_blank" rel="noopener" class="apply-btn">Директно</a>
+          <a href="https://example.bg/careers/marketing" target="_blank" rel="noopener noreferrer" class="apply-link">Apply Direct</a>
         </div>
       </article>
 
-      <article class="job-card" data-tags="пловдив производство инженеринг">
-        <div class="c-company">Тракия Тех ЕООД</div>
-        <div class="c-title">Инженер Автоматизация PLC</div>
-        <div class="c-location">Пловдив (Тракия ИЗ)</div>
-        <div class="c-salary">4,500 – 5,800 лв.</div>
+      <article class="job-card" data-tags="plovdiv industrial plc automation engineering">
+        <div class="c-company">Thrace Tech Manufacturing</div>
+        <div class="c-title">Lead Industrial Robotics Engineer</div>
+        <div class="c-location">Plovdiv (Trakia EZ)</div>
+        <div class="c-salary">5,000 – 6,500 BGN</div>
         <div class="c-apply">
-          <a href="mailto:hr@trakiatech.example.bg" class="apply-btn">Кандидатствай</a>
+          <a href="mailto:hr@thracetech.example.bg?subject=Lead%20Robotics%20Engineer" class="apply-link" rel="noopener">Apply Direct</a>
         </div>
       </article>
 
-      <article class="job-card" data-tags="добрич агро агрономия мениджмънт">
-        <div class="c-company">Добруджанско Злато АД</div>
-        <div class="c-title">Главен Агроном & Експлоатация</div>
-        <div class="c-location">Добрич / Регион</div>
-        <div class="c-salary">4,000 – 6,000 лв.</div>
+      <article class="job-card" data-tags="dobrich agriculture agronomy management supply">
+        <div class="c-company">Dobruja Grain Consortium</div>
+        <div class="c-title">Agricultural Operations Director</div>
+        <div class="c-location">Dobrich / Regional</div>
+        <div class="c-salary">4,500 – 7,000 BGN</div>
         <div class="c-apply">
-          <a href="mailto:careers@dobrudzha.example.bg" class="apply-btn">Кандидатствай</a>
+          <a href="mailto:jobs@dobrujagrain.example.bg?subject=Operations%20Director" class="apply-link" rel="noopener">Apply Direct</a>
         </div>
       </article>
 
