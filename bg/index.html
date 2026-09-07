@@ -1,0 +1,161 @@
+<!--
+  bestjobs.bg - High-Performance, Privacy-First Job Board Engine
+  File: /bg/index.html (Bulgarian Gateway)
+  Description: Native Bulgarian root interface featuring Google for Jobs (Schema.org/JobPosting)
+               JSON-LD structured data, English language routing, strict link-only navigation 
+               (zero button elements), and CSS Subgrid Level 2 dual-view layout.
+
+  SPDX-License-Identifier: MIT
+  License: MIT License (https://opensource.org/licenses/MIT)
+  Copyright (c) 2026 bestjobs.bg
+-->
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BestJobs.bg | Водещи обяви за работа в България</title>
+  <meta name="description" content="Модерна, бърза платформа за работа без следящи бисквитки. Проверени позиции в София, Пловдив, Варна, Бургас, Добрич и дистанционно.">
+
+  <!-- Alternate Language Directives -->
+  <link rel="alternate" hreflang="en" href="https://bestjobs.bg/">
+  <link rel="alternate" hreflang="bg" href="https://bestjobs.bg/bg/">
+  <link rel="alternate" hreflang="x-default" href="https://bestjobs.bg/">
+
+  <link rel="stylesheet" href="/assets/css/style.css">
+
+  <!-- Google for Jobs Structured Data (Bulgarian) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org/",
+    "@type": "JobPosting",
+    "title": "Senior Go / Backend Инженер (Разпределени системи)",
+    "description": "<p>Търсим опитен софтуерен инженер за разширяване и оптимизиране на европейската ни облачна инфраструктура.</p>",
+    "datePosted": "2026-09-01",
+    "validThrough": "2026-12-01",
+    "employmentType": "FULL_TIME",
+    "hiringOrganization": {
+      "@type": "Organization",
+      "name": "CloudScale AD",
+      "sameAs": "https://cloudscale.example.bg"
+    },
+    "jobLocation": {
+      "@type": "Place",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "София",
+        "addressCountry": "BG"
+      }
+    },
+    "jobLocationType": "TELECOMMUTE",
+    "baseSalary": {
+      "@type": "MonetaryAmount",
+      "currency": "BGN",
+      "value": {
+        "@type": "QuantitativeValue",
+        "minValue": 8000,
+        "maxValue": 11500,
+        "unitText": "MONTH"
+      }
+    }
+  }
+  </script>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="container nav-wrap">
+      <a href="/bg/" class="brand-logo" rel="home">bestjobs<span>.bg</span></a>
+      
+      <nav class="nav-actions" aria-label="Основна навигация">
+        <!-- Secured English Switcher Link -->
+        <a href="/" class="lang-switch-link" hreflang="en" rel="alternate" title="Switch to English version">
+          <span class="lang-badge">EN</span> English
+        </a>
+        <a href="/jobs/post-a-job/" class="btn-post" rel="bookmark">+ Публикувай обява</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="search-hero">
+      <div class="search-input-wrap">
+        <input 
+          type="search" 
+          id="job-search" 
+          class="search-input" 
+          placeholder="Търсене по позиция, технология или град (напр. Go, София, Маркетинг, Varna)..."
+          autocomplete="off"
+          aria-label="Търсене на работни позиции"
+        >
+      </div>
+
+      <!-- Secured Link Filters (Zero <button> Tags) -->
+      <div class="filter-bar">
+        <nav class="tag-scroll" id="location-filters" aria-label="Филтри по локация">
+          <a href="?filter=all" class="pill-link active" data-filter="all">Всички позиции</a>
+          <a href="?filter=дистанционно" class="pill-link" data-filter="дистанционно">Дистанционно</a>
+          <a href="?filter=софия" class="pill-link" data-filter="софия">София</a>
+          <a href="?filter=пловдив" class="pill-link" data-filter="пловдив">Пловдив</a>
+          <a href="?filter=варна" class="pill-link" data-filter="варна">Варна</a>
+          <a href="?filter=бургас" class="pill-link" data-filter="бургас">Бургас</a>
+          <a href="?filter=добрич" class="pill-link" data-filter="добрич">Добрич</a>
+        </nav>
+
+        <!-- Secured Link Layout View Switcher -->
+        <div class="layout-switcher" aria-label="Изглед на списъка">
+          <a href="?view=list" class="view-link active" id="view-list" data-view="list">Списък</a>
+          <a href="?view=grid" class="view-link" id="view-grid" data-view="grid">Карти</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Subgrid Level 2 Feed -->
+    <div class="job-feed" id="feed" data-view="list">
+
+      <article class="job-card is-featured" data-tags="софия дистанционно sofia remote dev go backend cloud">
+        <div class="c-company">CloudScale AD ★</div>
+        <div class="c-title">Senior Go / Backend Инженер</div>
+        <div class="c-location">София • Дистанционно</div>
+        <div class="c-salary">8,000 – 11,500 лв.</div>
+        <div class="c-apply">
+          <a href="mailto:careers@cloudscale.example.bg?subject=Кандидатура%20Senior%20Go%20Инженер" class="apply-link" rel="noopener">Директно кандидатстване</a>
+        </div>
+      </article>
+
+      <article class="job-card" data-tags="варна varna офис маркетинг sales performance">
+        <div class="c-company">Блек Сий Лоджистикс ООД</div>
+        <div class="c-title">Ръководител Дигитален Маркетинг</div>
+        <div class="c-location">Варна (Център)</div>
+        <div class="c-salary">3,500 – 5,000 лв.</div>
+        <div class="c-apply">
+          <a href="https://example.bg/careers/marketing" target="_blank" rel="noopener noreferrer" class="apply-link">Към работодателя</a>
+        </div>
+      </article>
+
+      <article class="job-card" data-tags="пловдив plovdiv производство автоматизация plc robotika">
+        <div class="c-company">Тракия Тех Мануфакчъринг</div>
+        <div class="c-title">Водещ Инженер Роботизация & PLC</div>
+        <div class="c-location">Пловдив (Тракия ИЗ)</div>
+        <div class="c-salary">5,000 – 6,500 лв.</div>
+        <div class="c-apply">
+          <a href="mailto:hr@thracetech.example.bg?subject=Инженер%20Роботизация" class="apply-link" rel="noopener">Директно кандидатстване</a>
+        </div>
+      </article>
+
+      <article class="job-card" data-tags="добрич dobrich агро агрономия мениджмънт логистика">
+        <div class="c-company">Добруджански Зърнен Консорциум</div>
+        <div class="c-title">Директор Агрономски Операции</div>
+        <div class="c-location">Добрич / Област</div>
+        <div class="c-salary">4,500 – 7,000 лв.</div>
+        <div class="c-apply">
+          <a href="mailto:jobs@dobrujagrain.example.bg?subject=Директор%20Операции" class="apply-link" rel="noopener">Директно кандидатстване</a>
+        </div>
+      </article>
+
+    </div>
+  </main>
+
+  <script src="/assets/js/filter.js"></script>
+</body>
+</html>
