@@ -1,4 +1,15 @@
-// bestjobs.bg - High Performance Link-Only Filter Engine (<2KB)
+/**
+ * bestjobs.bg - High-Performance, Privacy-First Job Board Engine
+ * File: /assets/js/filter.js
+ * Description: Zero-dependency client-side engine under 2KB. Implements bi-directional
+ *              Latin <-> Cyrillic phonetic normalization, link-only filter dispatching
+ *              with History API state persistence, and subgrid view preferences.
+ * 
+ * SPDX-License-Identifier: MIT
+ * License: MIT License (https://opensource.org/licenses/MIT)
+ * Copyright (c) 2026 bestjobs.bg
+ */
+
 (() => {
   const searchInput = document.getElementById('job-search');
   const feed = document.getElementById('feed');
@@ -24,7 +35,7 @@
     return s;
   }
 
-  // Pre-index for instantaneous sub-millisecond search
+  // Pre-index text to achieve sub-millisecond search without memory churn
   const index = cards.map(card => ({
     element: card,
     text: (card.textContent + ' ' + (card.dataset.tags || '')).toLowerCase(),
@@ -49,7 +60,7 @@
 
   searchInput.addEventListener('input', runFilter);
 
-  // Link-Based Location Filter Dispatcher
+  // Link-based Location Filter Handling
   filterLinks.forEach(link => {
     link.addEventListener('click', (e) => {
       e.preventDefault();
@@ -57,7 +68,6 @@
       link.classList.add('active');
       activeFilter = link.dataset.filter.toLowerCase();
       
-      // Update browser URL state securely without reload
       const url = new URL(window.location);
       if (activeFilter === 'all') {
         url.searchParams.delete('filter');
@@ -70,7 +80,7 @@
     });
   });
 
-  // Link-Based Layout View Switcher
+  // Link-based Layout Switcher
   function setView(mode) {
     feed.dataset.view = mode;
     viewLinks.forEach(l => {
@@ -95,7 +105,7 @@
     });
   });
 
-  // Check URL Parameters on Load
+  // Restore State on Fresh Load
   const params = new URLSearchParams(window.location.search);
   const initialFilter = params.get('filter');
   const initialView = params.get('view') || localStorage.getItem('bj_view_pref');
