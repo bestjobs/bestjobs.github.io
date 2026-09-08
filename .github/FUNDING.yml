@@ -1,0 +1,10 @@
+# ==============================================================================
+# These are supported funding model platforms
+# bestjobs.bg as part of mobikom.bg — Official GitHub Sponsorship & Funding Configuration
+# ==============================================================================
+
+# Active Sponsorship Channels
+buy_me_a_coffee: mobikom
+
+# Direct Corporate / Institutional Sponsorship Gateway
+custom: ['https://mobikom.bg/contact/']
