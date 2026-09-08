@@ -1,0 +1,27 @@
+# ==============================================================================
+# bestjobs.bg — Git Ignore Rules
+# ==============================================================================
+
+# Operating System Files (macOS & Windows)
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+desktop.ini
+
+# Editor & Tooling Settings
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Temporary & Local Backup Files
+*.bak
+*.tmp
+*.log
+tree.txt
