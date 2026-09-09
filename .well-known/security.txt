@@ -1,0 +1,31 @@
+# ==============================================================================
+# BESTJOBS.BG — Vulnerability Disclosure & Security Policy (RFC 9116)
+# ==============================================================================
+
+# Primary Security & Vulnerability Reporting Contacts
+Contact: mailto:office@bestjobs.bg
+Contact: https://bestjobs.bg/contact/
+
+# Security, Privacy & Data Protection Policy (Single canonical URI)
+Policy: https://bestjobs.bg/privacy/
+
+# Canonical URI for this file (Must appear exactly once)
+Canonical: https://bestjobs.bg/.well-known/security.txt
+
+# Parent Operations Network & Associated Media Properties
+# • Parent Operations & Infrastructure: https://mobikom.bg
+# • Regional Media Group: https://www.dobruja.com
+# • Real-Time Daily News: https://www.dobrichnews.com
+Acknowledgments: https://mobikom.bg/about/
+Acknowledgments: https://mobikom.bg/
+Acknowledgments: https://www.dobruja.com
+Acknowledgments: https://www.dobrichnews.com
+
+# Career Board & Recruitment Portal (RFC 9116 Standard Directive)
+Hiring: https://bestjobs.bg
+
+# Supported Communication Languages (ISO 639-1)
+Preferred-Languages: bg, en
+
+# Expiration Date (ISO 8601 format - strictly required)
+Expires: 2027-09-01T00:00:00.000Z
