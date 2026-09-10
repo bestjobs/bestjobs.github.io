@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   let activeFilter = 'all';
 
-  // Keyboard navigation: Press '/' to jump straight to search
+  // Keyboard shortcut: Press '/' anywhere to jump to search
   document.addEventListener('keydown', function (e) {
     if (e.key === '/' && document.activeElement !== searchInput) {
       e.preventDefault();
@@ -31,7 +31,6 @@ document.addEventListener('DOMContentLoaded', function () {
       const matchesSearch = (query === '') || text.includes(query) || tags.includes(query);
 
       if (matchesPill && matchesSearch) {
-        // Restores CSS Subgrid layout
         card.style.display = 'grid';
       } else {
         card.style.display = 'none';
@@ -39,7 +38,6 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
-  // Pill click handlers
   pills.forEach(function (pill) {
     pill.addEventListener('click', function () {
       pills.forEach(p => p.classList.remove('active'));
@@ -49,7 +47,6 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 
-  // Search input typing
   if (searchInput) {
     searchInput.addEventListener('input', applyFilter);
   }
