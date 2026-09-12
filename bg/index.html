@@ -1,172 +1,161 @@
-<!--
-  bestjobs.bg - High-Performance, Privacy-First Job Board Engine
-  File: /bg/index.html (Bulgarian Gateway)
-  Description: Native Bulgarian root interface featuring Google for Jobs (Schema.org/JobPosting)
-               JSON-LD structured data, English language routing, strict link-only navigation 
-               (zero button elements), and CSS Subgrid Level 2 dual-view layout.
-
-  SPDX-License-Identifier: MIT
-  License: MIT License (https://opensource.org/licenses/MIT)
-  Copyright (c) 2026 bestjobs.bg
--->
 <!DOCTYPE html>
 <html lang="bg">
+<!--
+  ==============================================================================
+  ФАЙЛ: /bg/index.html
+  ПРОЕКТ: bestjobs.bg — Архитектура на отворени стандарти
+  ЛИЦЕНЗ: MIT (https://opensource.org/licenses/MIT)
+  АВТОР: Стоян Стоянов, MBM / MD • „Мобиком България“ ЕООД (ЕИК: 202341326)
+  СТАНДАРТИ: CSS Grid Level 2 (Subgrid) • Единно търсене на обяви и доклади
+  СИГУРНОСТ: 100% без бисквитки • Седалище: гр. Добрич, България
+  ==============================================================================
+-->
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BestJobs.bg | Водещи обяви за работа в България</title>
-  <meta name="description" content="Модерна, бърза платформа за работа без следящи бисквитки. Проверени позиции в София, Пловдив, Варна, Бургас, Добрич и дистанционно.">
-
-  <!-- Alternate Language Directives -->
-  <link rel="alternate" hreflang="en" href="https://bestjobs.bg/">
-  <link rel="alternate" hreflang="bg" href="https://bestjobs.bg/bg/">
-  <link rel="alternate" hreflang="x-default" href="https://bestjobs.bg/">
-
-  <link rel="stylesheet" href="/assets/css/style.css">
-
-  <!-- Google for Jobs Structured Data (Bulgarian) -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org/",
-    "@type": "JobPosting",
-    "title": "Senior Go / Backend Инженер (Разпределени системи)",
-    "description": "<p>Търсим опитен софтуерен инженер за разширяване и оптимизиране на европейската ни облачна инфраструктура.</p>",
-    "datePosted": "2026-09-01",
-    "validThrough": "2026-12-01",
-    "employmentType": "FULL_TIME",
-    "hiringOrganization": {
-      "@type": "Organization",
-      "name": "CloudScale AD",
-      "sameAs": "https://cloudscale.example.bg"
-    },
-    "jobLocation": {
-      "@type": "Place",
-      "address": {
-        "@type": "PostalAddress",
-        "addressLocality": "София",
-        "addressCountry": "BG"
-      }
-    },
-    "jobLocationType": "TELECOMMUTE",
-    "baseSalary": {
-      "@type": "MonetaryAmount",
-      "currency": "BGN",
-      "value": {
-        "@type": "QuantitativeValue",
-        "minValue": 8000,
-        "maxValue": 11500,
-        "unitText": "MONTH"
-      }
-    }
-  }
-  </script>
+  <title>BestJobs България — Проверени обяви и Регионален икономически анализ</title>
+  <meta name="description" content="Високоскоростен портал за работа и регионален бизнес анализ в България. Заплати в евро (€) в София, Пловдив, Варна, Бургас, Русе, Добрич.">
+  <link rel="stylesheet" href="../assets/css/style.css">
 </head>
 <body>
 
-  <!-- Universal Master Header (Aligned to mobikom.bg) -->
   <header class="site-header">
-    <div class="shell nav-bar">
-      <a href="/" class="brand-link" title="BestJobs.bg">
-        <svg viewBox="0 0 220 46" width="190" height="42" class="brand-logo-svg" role="img" aria-label="BestJobs.bg">
-          <g transform="translate(4, 3)">
-            <rect x="6" y="10" width="28" height="24" rx="4" fill="none" stroke="#0052cc" stroke-width="2.5" />
-            <path d="M14 10 V6 A4 4 0 0 1 26 6 V10" fill="none" stroke="#0052cc" stroke-width="2.5" />
-            <line x1="6" y1="20" x2="34" y2="20" stroke="#0052cc" stroke-width="2" />
-            <text x="44" y="24" font-size="21" font-weight="800" fill="currentColor" letter-spacing="-0.02em">bestjobs</text>
-            <text x="46" y="36" font-size="9" font-weight="700" fill="#2563eb" letter-spacing="0.18em">Bulgaria &bull; JOBS ADS BOARD</text>
-          </g>
+    <div class="container header-inner">
+      <a href="index.html" class="brand-wrapper" aria-label="BestJobs България">
+        <svg width="34" height="34" viewBox="0 0 48 48" fill="none" aria-hidden="true">
+          <rect width="48" height="48" rx="12" fill="#0052CC"/>
+          <path d="M19 14V11.5C19 10.12 20.12 9 21.5 9H26.5C27.88 9 29 10.12 29 11.5V14" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <rect x="9" y="14" width="30" height="23" rx="4" fill="#FFFFFF" fill-opacity="0.15" stroke="#FFFFFF" stroke-width="2.5" stroke-linejoin="round"/>
+          <path d="M9 19L21.8 25.4C23.18 26.09 24.82 26.09 26.2 25.4L39 19" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <rect x="22" y="24" width="4" height="5" rx="1.5" fill="#FFFFFF"/>
         </svg>
+        <span class="brand-text">bestjobs<span>.bg</span></span>
+        <span class="network-badge">Мобиком</span>
       </a>
-      
-      <nav class="nav-actions" aria-label="Основна навигация">
-        <!-- Secured English Switcher Link -->
-        <a href="/" class="lang-switch-link" hreflang="en" rel="alternate" title="Switch to English version">
-          <span class="lang-badge">EN</span> English
-        </a>
-        <a href="/jobs/post-a-job/" class="btn-post" rel="bookmark">+ Публикувай обява</a>
+
+      <nav aria-label="Основна навигация">
+        <ul class="nav-links">
+          <li><a href="index.html" class="nav-item-link active">Обяви и Анализи</a></li>
+          <li><a href="help-candidates.html" class="nav-item-link">За кандидати</a></li>
+          <li><a href="help-employers.html" class="nav-item-link">За работодатели</a></li>
+          <li>
+            <div class="lang-switch">
+              <a href="../index.html">EN</a>
+              <a href="index.html" class="active">BG</a>
+            </div>
+          </li>
+          <li><a href="submit.html" class="btn btn-primary btn-sm">Публикувай (€0.00)</a></li>
+        </ul>
       </nav>
     </div>
   </header>
-Need some style Work here!
-  <main class="container">
-    <section class="search-hero">
-      <div class="search-input-wrap">
-        <input 
-          type="search" 
-          id="job-search" 
-          class="search-input" 
-          placeholder="Търсене по позиция, технология или град (напр. Go, София, Маркетинг, Varna)..."
-          autocomplete="off"
-          aria-label="Търсене на работни позиции"
-        >
+
+  <section class="hero-section">
+    <div class="container">
+      <h1 class="hero-title">Проверени работни позиции и Икономически анализи</h1>
+      <p class="hero-sub">Стандартизирани заплати в Евро (€). Търсене в реално време на свободни позиции и регионални доклади.</p>
+
+      <div class="search-command-bar">
+        <svg class="search-icon-left" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        <input type="search" id="live-search-input" class="search-input" placeholder="Търсене по длъжност, фирма, заплата в евро, град или тема от анализа..." autocomplete="off">
+        <kbd class="search-shortcut-hint" aria-hidden="true">/</kbd>
       </div>
 
-      <!-- Secured Link Filters (Zero <button> Tags) -->
-      <div class="filter-bar">
-        <nav class="tag-scroll" id="location-filters" aria-label="Филтри по локация">
-          <a href="?filter=all" class="pill-link active" data-filter="all">Всички позиции</a>
-          <a href="?filter=дистанционно" class="pill-link" data-filter="дистанционно">Дистанционно</a>
-          <a href="?filter=софия" class="pill-link" data-filter="софия">София</a>
-          <a href="?filter=пловдив" class="pill-link" data-filter="пловдив">Пловдив</a>
-          <a href="?filter=варна" class="pill-link" data-filter="варна">Варна</a>
-          <a href="?filter=бургас" class="pill-link" data-filter="бургас">Бургас</a>
-          <a href="?filter=добрич" class="pill-link" data-filter="добрич">Добрич</a>
-        </nav>
-
-        <!-- Secured Link Layout View Switcher -->
-        <div class="layout-switcher" aria-label="Изглед на списъка">
-          <a href="?view=list" class="view-link active" id="view-list" data-view="list">Списък</a>
-          <a href="?view=grid" class="view-link" id="view-grid" data-view="grid">Карти</a>
-        </div>
+      <div class="content-mode-bar" id="content-mode-container" role="tablist">
+        <button type="button" class="mode-pill active" data-mode="all">Всичко</button>
+        <button type="button" class="mode-pill" data-mode="jobs">Обяви за работа</button>
+        <button type="button" class="mode-pill" data-mode="articles">Икономически доклади</button>
       </div>
-    </section>
 
-    <!-- Subgrid Level 2 Feed -->
-    <div class="job-feed" id="feed" data-view="list">
-
-      <article class="job-card is-featured" data-tags="софия дистанционно sofia remote dev go backend cloud">
-        <div class="c-company">CloudScale AD ★</div>
-        <div class="c-title">Senior Go / Backend Инженер</div>
-        <div class="c-location">София • Дистанционно</div>
-        <div class="c-salary">8,000 – 11,500 лв.</div>
-        <div class="c-apply">
-          <a href="mailto:careers@cloudscale.example.bg?subject=Кандидатура%20Senior%20Go%20Инженер" class="apply-link" rel="noopener">Директно кандидатстване</a>
-        </div>
-      </article>
-
-      <article class="job-card" data-tags="варна varna офис маркетинг sales performance">
-        <div class="c-company">Блек Сий Лоджистикс ООД</div>
-        <div class="c-title">Ръководител Дигитален Маркетинг</div>
-        <div class="c-location">Варна (Център)</div>
-        <div class="c-salary">3,500 – 5,000 лв.</div>
-        <div class="c-apply">
-          <a href="https://example.bg/careers/marketing" target="_blank" rel="noopener noreferrer" class="apply-link">Към работодателя</a>
-        </div>
-      </article>
-
-      <article class="job-card" data-tags="пловдив plovdiv производство автоматизация plc robotika">
-        <div class="c-company">Тракия Тех Мануфакчъринг</div>
-        <div class="c-title">Водещ Инженер Роботизация & PLC</div>
-        <div class="c-location">Пловдив (Тракия ИЗ)</div>
-        <div class="c-salary">5,000 – 6,500 лв.</div>
-        <div class="c-apply">
-          <a href="mailto:hr@thracetech.example.bg?subject=Инженер%20Роботизация" class="apply-link" rel="noopener">Директно кандидатстване</a>
-        </div>
-      </article>
-
-      <article class="job-card" data-tags="добрич dobrich агро агрономия мениджмънт логистика">
-        <div class="c-company">Добруджански Зърнен Консорциум</div>
-        <div class="c-title">Директор Агрономски Операции</div>
-        <div class="c-location">Добрич / Област</div>
-        <div class="c-salary">4,500 – 7,000 лв.</div>
-        <div class="c-apply">
-          <a href="mailto:jobs@dobrujagrain.example.bg?subject=Директор%20Операции" class="apply-link" rel="noopener">Директно кандидатстване</a>
-        </div>
-      </article>
-
+      <div class="filter-pills-bar" id="filter-pills-container" role="toolbar">
+        <button type="button" class="filter-pill active" data-filter="all">Всички градове</button>
+        <button type="button" class="filter-pill" data-filter="Sofia">София</button>
+        <button type="button" class="filter-pill" data-filter="Plovdiv">Пловдив</button>
+        <button type="button" class="filter-pill" data-filter="Varna">Варна</button>
+        <button type="button" class="filter-pill" data-filter="Burgas">Бургас</button>
+        <button type="button" class="filter-pill" data-filter="Ruse">Русе</button>
+        <button type="button" class="filter-pill" data-filter="Stara Zagora">Стара Загора</button>
+        <button type="button" class="filter-pill" data-filter="Dobrich">Добрич</button>
+        <button type="button" class="filter-pill" data-filter="Remote">Дистанционно</button>
+        <button type="button" class="filter-pill" data-filter="Abroad">В чужбина</button>
+      </div>
     </div>
+  </section>
+
+  <main class="container">
+    <div class="results-overview">
+      <span id="results-count-label">Зареждане на съдържанието...</span>
+      <span class="currency-indicator">Стандартна валута: Евро (€)</span>
+    </div>
+
+    <!-- 6-редова подрешетка за обявите -->
+    <div class="jobs-grid" id="jobs-grid-container" aria-live="polite"></div>
+
+    <!-- Регионални икономически анализи и статии -->
+    <section class="articles-section" id="articles-section">
+      <div class="section-heading-bar">
+        <h2 class="section-heading-title">Регионални икономически обзори и Заплати в Евро</h2>
+      </div>
+      <div class="articles-grid" id="articles-grid-container"></div>
+    </section>
   </main>
 
-  <script src="/assets/js/filter.js"></script>
+  <!-- Страничен универсален четец за обяви и статии -->
+  <div class="drawer-backdrop" id="job-drawer-backdrop" aria-hidden="true">
+    <div class="drawer-panel" role="dialog" aria-modal="true" aria-labelledby="drawer-job-title">
+      <header class="drawer-header">
+        <div>
+          <span class="category-tag" id="drawer-category">Категория</span>
+          <h2 class="job-h2" id="drawer-job-title" style="margin-top: 0.35rem;">Заглавие</h2>
+          <div class="company-meta" id="drawer-company-line">Информация</div>
+        </div>
+        <button type="button" class="drawer-close-btn" id="drawer-close-btn" aria-label="Затвори">&times;</button>
+      </header>
+
+      <div class="drawer-body">
+        <div class="card-track-salary" id="drawer-salary">
+          <span class="salary-num">€0,000</span>
+          <span class="salary-freq">/ на месец</span>
+        </div>
+        <h3 class="drawer-section-title">Резюме</h3>
+        <p id="drawer-description" class="card-track-desc" style="-webkit-line-clamp: initial;"></p>
+        
+        <h3 class="drawer-section-title" id="drawer-resp-title">Отговорности</h3>
+        <ul class="drawer-list" id="drawer-responsibilities"></ul>
+        
+        <h3 class="drawer-section-title" id="drawer-reqs-title">Изисквания</h3>
+        <ul class="drawer-list" id="drawer-requirements"></ul>
+
+        <!-- Тяло на икономическия анализ -->
+        <div id="drawer-article-body" class="drawer-article-body"></div>
+      </div>
+
+      <footer class="drawer-footer">
+        <a href="#" id="drawer-apply-btn" class="btn btn-primary" rel="nofollow noopener noreferrer">Кандидатствай директно</a>
+        <button type="button" class="btn btn-secondary" id="drawer-dismiss-btn">Назад</button>
+      </footer>
+    </div>
+  </div>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="brand-text">bestjobs<span>.bg</span></div>
+      <ul class="footer-links">
+        <li><a href="submit.html">Публикувай (€0.00)</a></li>
+        <li><a href="pricing.html">Цени</a></li>
+        <li><a href="terms.html">Правен статут по ЗНЗ</a></li>
+        <li><a href="privacy.html">Поверителност</a></li>
+        <li><a href="help-candidates.html">ЧЗВ Кандидати</a></li>
+        <li><a href="../index.html">English Version (EN)</a></li>
+      </ul>
+      <div class="footer-bottom-text">
+        &copy; BestJobs.bg — Проект на „Мобиком България“ ЕООД (ЕИК 202341326). Лицензирано по MIT • Автор: Стоян Стоянов, MBM / MD.
+      </div>
+    </div>
+  </footer>
+
+  <script src="../assets/js/app.js"></script>
 </body>
 </html>
