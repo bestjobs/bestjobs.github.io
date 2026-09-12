@@ -20,10 +20,10 @@
 </head>
 <body>
 
-  <!-- Заглавна част -->
   <header class="site-header">
     <div class="container header-inner">
-      <a href="index.html" class="brand-wrapper" aria-label="BestJobs България">
+      <!-- Clean Bulgarian Root Link: points to /bg/ -->
+      <a href="/bg/" class="brand-wrapper" aria-label="BestJobs България">
         <svg width="36" height="36" viewBox="0 0 48 48" fill="none" aria-hidden="true">
           <rect width="48" height="48" rx="12" fill="#0052CC"/>
           <path d="M19 14V11.5C19 10.12 20.12 9 21.5 9H26.5C27.88 9 29 10.12 29 11.5V14" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -40,12 +40,13 @@
 
       <nav aria-label="Основна навигация">
         <ul class="nav-links">
-          <li><a href="index.html" class="nav-item-link active">Обяви и Анализи</a></li>
+          <!-- Clean Bulgarian Root Link: points to /bg/ -->
+          <li><a href="/bg/" class="nav-item-link active">Обяви и Анализи</a></li>
           <li><a href="help-candidates.html" class="nav-item-link">За кандидати</a></li>
           <li><a href="help-employers.html" class="nav-item-link">За работодатели</a></li>
-          <!-- Изчистен превключвател само с EN връзка -->
+          <!-- Clean English Switcher: points strictly to / -->
           <li>
-            <a href="../index.html" class="lang-pill" title="English Version">EN</a>
+            <a href="/" class="lang-pill" title="English Version">EN</a>
           </li>
           <li><a href="submit.html" class="btn btn-primary btn-sm">Публикувай (€0.00)</a></li>
         </ul>
@@ -66,14 +67,12 @@
         <kbd class="search-shortcut-hint" aria-hidden="true">/</kbd>
       </div>
 
-      <!-- Сегменти за съдържание (100% защитени <a href> връзки) -->
       <div class="content-mode-bar" id="content-mode-container" role="tablist">
         <a href="#mode-all" class="mode-pill active" data-mode="all" role="tab">Всичко</a>
         <a href="#mode-jobs" class="mode-pill" data-mode="jobs" role="tab">Обяви за работа</a>
         <a href="#mode-articles" class="mode-pill" data-mode="articles" role="tab">Икономически доклади</a>
       </div>
 
-      <!-- Лента с филтри за градове (100% защитени <a href> връзки) -->
       <div class="filter-pills-bar" id="filter-pills-container" role="toolbar">
         <a href="#all" class="filter-pill active" data-filter="all" role="button">Всички градове</a>
         <a href="#Sofia" class="filter-pill" data-filter="Sofia" role="button">София</a>
@@ -152,7 +151,8 @@
         <li><a href="terms.html">Правен статут по ЗНЗ</a></li>
         <li><a href="privacy.html">Поверителност</a></li>
         <li><a href="help-candidates.html">ЧЗВ Кандидати</a></li>
-        <li><a href="../index.html">English Version (EN)</a></li>
+        <!-- Clean Link to English: points to / -->
+        <li><a href="/">English Version (EN)</a></li>
       </ul>
       <div class="footer-bottom-text">
         &copy; BestJobs — Проект на мрежата Мобиком. Лицензирано по MIT • Автор: Стоян Стоянов, MBM / MD • 100% без бисквитки.
