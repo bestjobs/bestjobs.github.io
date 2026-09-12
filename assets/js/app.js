@@ -4,7 +4,7 @@
  * PROJECT: bestjobs.bg — Master Design Engine (Mobikom Network Unified)
  * LICENSE: MIT (https://opensource.org/licenses/MIT)
  * AUTHOR: Stoyan Stoyanov, MBM / MD • Mobikom Bulgaria (mobikom.bg)
- * STANDARDS: CSS Grid Level 2 (Subgrid) • CSS Color Module 4 (light-dark)
+ * STANDARDS: CSS Grid Level 2 (Subgrid) • Permanent Path SEO Routing (/city/)
  * COMPLIANCE: Strict CSP Level 3 • Zero Cookies
  * PERFORMANCE: Sub-14KB Single-Pass Engine • Native System Typography
  * ===============================================================================
@@ -27,12 +27,12 @@ const CONTENT_REPOSITORY = {
         bg: "Архитектура на европейски edge клъстери, Cloudflare конфигурации и хибридни мрежи."
       },
       responsibilities: {
-        en: ["Architect resilient edge networks", "Enforce Zero Trust access security"],
-        bg: ["Проектиране на устойчиви мрежи", "Внедряване на Zero Trust политики"]
+        en: ["Architect resilient edge networks across European points of presence", "Enforce Zero Trust access security and edge-layer caching policies"],
+        bg: ["Проектиране на устойчиви мрежи в европейски точки на присъствие", "Внедряване на Zero Trust политики за сигурност и кеширане"]
       },
       requirements: {
-        en: ["6+ years enterprise cloud architecture", "Deep HTTP/3 and Anycast knowledge"],
-        bg: ["6+ години опит с облачни архитектури", "Владеене на HTTP/3 и Anycast"]
+        en: ["6+ years enterprise cloud architecture (AWS, GCP, or Cloudflare Workers)", "Deep HTTP/3, TLS 1.3, and Anycast routing expertise"],
+        bg: ["6+ години опит с облачни архитектури (AWS, GCP или Cloudflare Workers)", "Задълбочено владеене на HTTP/3, TLS 1.3 и Anycast маршрутизация"]
       },
       applyEmail: "careers@mobikom.bg"
     },
@@ -50,12 +50,12 @@ const CONTENT_REPOSITORY = {
         bg: "Разработка на високопроизводителни уеб архитектури за регионални медийни платформи."
       },
       responsibilities: {
-        en: ["Build blazing-fast frontend components", "Optimize Core Web Vitals to sub-second speeds"],
-        bg: ["Изграждане на бързи UI компоненти", "Оптимизация на Core Web Vitals"]
+        en: ["Build blazing-fast frontend components without bloated third-party frameworks", "Optimize Core Web Vitals to maintain sub-second load times"],
+        bg: ["Изграждане на бързи UI компоненти без излишни библиотеки", "Оптимизация на Core Web Vitals за зареждане под 1 секунда"]
       },
       requirements: {
-        en: ["5+ years TypeScript development", "High autonomous problem solving"],
-        bg: ["5+ години опит с TypeScript", "Отлична самостоятелност"]
+        en: ["5+ years modern JavaScript and TypeScript development", "Self-starter capable of full autonomy in a remote environment"],
+        bg: ["5+ години опит с модерен JavaScript и TypeScript", "Отлична самостоятелност за дистанционна работа"]
       },
       applyEmail: "dev-jobs@dobrudja.com"
     },
@@ -73,7 +73,7 @@ const CONTENT_REPOSITORY = {
         bg: "Внедряване и програмиране на автоматизирани линии на Siemens и Beckhoff в Тракия Икономическа Зона."
       },
       responsibilities: {
-        en: ["Program Siemens S7-1500 and Beckhoff TwinCAT", "Troubleshoot industrial SCADA networks"],
+        en: ["Program Siemens S7-1500 and Beckhoff TwinCAT systems", "Troubleshoot industrial SCADA networks"],
         bg: ["Програмиране на Siemens S7-1500", "Диагностика на SCADA системи"]
       },
       requirements: {
@@ -96,12 +96,12 @@ const CONTENT_REPOSITORY = {
         bg: "Координация на контейнерни превози, митническо оформяне и железопътна спедиция от Варна."
       },
       responsibilities: {
-        en: ["Schedule vessel loading cycles", "Handle EU customs documentation"],
-        bg: ["Графици на товарене на съдове", "Оформяне на митнически документи"]
+        en: ["Schedule vessel loading cycles and container yard movements", "Handle EU customs documentation"],
+        bg: ["Графици на товарене на съдове и обработка на контейнери", "Оформяне на митническа документация по стандартите на ЕС"]
       },
       requirements: {
-        en: ["Experience in maritime forwarding", "Fluency in English and Bulgarian"],
-        bg: ["Опит в морската спедиция", "Владеене на английски език"]
+        en: ["Experience in maritime forwarding or customs brokerage", "Fluency in English and Bulgarian"],
+        bg: ["Опит в морската спедиция или митническото представителство", "Владеене на английски и български език"]
       },
       applyEmail: "jobs@blackseacargo.bg"
     },
@@ -119,8 +119,8 @@ const CONTENT_REPOSITORY = {
         bg: "Ръководство на кардиологично отделение и инвазивна диагностика в модерен болничен комплекс в Бургас."
       },
       responsibilities: {
-        en: ["Direct department medical staff", "Oversee intensive care protocols"],
-        bg: ["Организация на лечебния процес", "Контрол на интензивните грижи"]
+        en: ["Direct department medical staff and clinical on-call schedules", "Execute complex diagnostic and interventional cardiovascular procedures"],
+        bg: ["Организация на лечебния процес в отделението и графиците", "Провеждане на инвазивни диагностични процедури"]
       },
       requirements: {
         en: ["Board certified in Cardiology", "5+ years clinical leadership"],
@@ -143,7 +143,7 @@ const CONTENT_REPOSITORY = {
       },
       responsibilities: {
         en: ["Control seasonal P&L and EBITDA targets", "Supervise F&B, Rooms, and Engineering"],
-        bg: ["Контрол на сезонния P&L бюджет", "Ръководство на отделите"]
+        bg: ["Контрол на сезонния P&L бюджет и финансовите резултати", "Управление на ръководителите на отдели"]
       },
       requirements: {
         en: ["Proven track record in resort management", "Fluent English and German or Russian"],
@@ -253,6 +253,35 @@ document.addEventListener('DOMContentLoaded', () => {
   let activeFilter = 'all';
   let activeMode = 'all';
   let searchQuery = '';
+
+  // 1. Permanent Path Router on Boot (Parses /sofia/, /varna/, /bg/burgas/, etc.)
+  const pathSegments = window.location.pathname.toLowerCase().split('/').filter(Boolean);
+  const lastPathSegment = pathSegments[pathSegments.length - 1];
+
+  const cityPathMap = {
+    'sofia': 'Sofia',
+    'plovdiv': 'Plovdiv',
+    'varna': 'Varna',
+    'burgas': 'Burgas',
+    'ruse': 'Ruse',
+    'stara-zagora': 'Stara Zagora',
+    'dobrich': 'Dobrich',
+    'remote': 'Remote',
+    'abroad': 'Abroad'
+  };
+
+  if (lastPathSegment && cityPathMap[lastPathSegment]) {
+    activeFilter = cityPathMap[lastPathSegment];
+    if (pillsContainer) {
+      pillsContainer.querySelectorAll('.filter-pill').forEach(p => {
+        if (p.getAttribute('data-filter') === activeFilter) {
+          p.classList.add('active');
+        } else {
+          p.classList.remove('active');
+        }
+      });
+    }
+  }
 
   function renderAll() {
     const q = searchQuery.toLowerCase().trim();
@@ -406,7 +435,6 @@ document.addEventListener('DOMContentLoaded', () => {
     drawerSalary.style.display = 'flex';
     drawerSalary.querySelector('.salary-num').textContent = job.salary;
 
-    // Red Test Warning Banner inside Drawer
     drawerDesc.innerHTML = `
       <div class="test-position-alert">${escapeHTML(i18n.testNotice)}</div>
       <div>${escapeHTML(job.desc[lang] || job.desc.en)}</div>
@@ -477,18 +505,26 @@ document.addEventListener('DOMContentLoaded', () => {
     }[t] || t));
   }
 
+  // Permanent Path SEO Filter Listener (Updates History State without reload)
   if (pillsContainer) {
     pillsContainer.addEventListener('click', (e) => {
       const anchor = e.target.closest('.filter-pill');
       if (!anchor) return;
       e.preventDefault();
+
       pillsContainer.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
       anchor.classList.add('active');
       activeFilter = anchor.getAttribute('data-filter');
+
+      // Pushes clean permanent path into browser address bar
+      const permalink = anchor.getAttribute('href');
+      window.history.pushState(null, '', permalink);
+
       renderAll();
     });
   }
 
+  // Content Mode Switch Listener
   if (modeContainer) {
     modeContainer.addEventListener('click', (e) => {
       const anchor = e.target.closest('.mode-pill');
@@ -501,6 +537,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // Live Search Input Listener
   if (searchInput) {
     searchInput.addEventListener('input', (e) => {
       searchQuery = e.target.value;
@@ -508,6 +545,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // Hotkey '/' focuses search, 'Escape' closes drawer
   document.addEventListener('keydown', (e) => {
     if (e.key === '/' && document.activeElement !== searchInput) {
       e.preventDefault();
@@ -517,6 +555,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
+  // Delegated Clicks for Secured Anchors
   document.addEventListener('click', (e) => {
     const jobLink = e.target.closest('.js-open-details');
     if (jobLink) {
@@ -544,6 +583,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // Deep-Link URL Hash Resolver (#job-01 or #art-01)
   const initialHash = window.location.hash.replace('#', '');
   if (initialHash) {
     if (initialHash.startsWith('job-')) openJobDrawer(initialHash);
