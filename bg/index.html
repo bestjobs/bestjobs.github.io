@@ -20,9 +20,9 @@
 </head>
 <body>
 
+  <!-- Заглавна част -->
   <header class="site-header">
     <div class="container header-inner">
-      <!-- Clean Bulgarian Root Link: points to /bg/ -->
       <a href="/bg/" class="brand-wrapper" aria-label="BestJobs България">
         <svg width="36" height="36" viewBox="0 0 48 48" fill="none" aria-hidden="true">
           <rect width="48" height="48" rx="12" fill="#0052CC"/>
@@ -40,11 +40,10 @@
 
       <nav aria-label="Основна навигация">
         <ul class="nav-links">
-          <!-- Clean Bulgarian Root Link: points to /bg/ -->
           <li><a href="/bg/" class="nav-item-link active">Обяви и Анализи</a></li>
           <li><a href="help-candidates.html" class="nav-item-link">За кандидати</a></li>
           <li><a href="help-employers.html" class="nav-item-link">За работодатели</a></li>
-          <!-- Clean English Switcher: points strictly to / -->
+          <!-- Изчистен превключвател към английския корен / -->
           <li>
             <a href="/" class="lang-pill" title="English Version">EN</a>
           </li>
@@ -67,23 +66,25 @@
         <kbd class="search-shortcut-hint" aria-hidden="true">/</kbd>
       </div>
 
+      <!-- Сегменти за съдържание (100% защитени <a href> връзки) -->
       <div class="content-mode-bar" id="content-mode-container" role="tablist">
         <a href="#mode-all" class="mode-pill active" data-mode="all" role="tab">Всичко</a>
         <a href="#mode-jobs" class="mode-pill" data-mode="jobs" role="tab">Обяви за работа</a>
         <a href="#mode-articles" class="mode-pill" data-mode="articles" role="tab">Икономически доклади</a>
       </div>
 
-      <div class="filter-pills-bar" id="filter-pills-container" role="toolbar">
-        <a href="#all" class="filter-pill active" data-filter="all" role="button">Всички градове</a>
-        <a href="#Sofia" class="filter-pill" data-filter="Sofia" role="button">София</a>
-        <a href="#Plovdiv" class="filter-pill" data-filter="Plovdiv" role="button">Пловдив</a>
-        <a href="#Varna" class="filter-pill" data-filter="Varna" role="button">Варна</a>
-        <a href="#Burgas" class="filter-pill" data-filter="Burgas" role="button">Бургас</a>
-        <a href="#Ruse" class="filter-pill" data-filter="Ruse" role="button">Русе</a>
-        <a href="#StaraZagora" class="filter-pill" data-filter="Stara Zagora" role="button">Стара Загора</a>
-        <a href="#Dobrich" class="filter-pill" data-filter="Dobrich" role="button">Добрич</a>
-        <a href="#Remote" class="filter-pill" data-filter="Remote" role="button">Дистанционно</a>
-        <a href="#Abroad" class="filter-pill" data-filter="Abroad" role="button">В чужбина</a>
+      <!-- Постоянни SEO адреси по градове за Googlebot и потребители -->
+      <div class="filter-pills-bar" id="filter-pills-container" role="navigation" aria-label="Филтриране по градове">
+        <a href="/bg/" class="filter-pill active" data-filter="all">Всички градове</a>
+        <a href="/bg/sofia/" class="filter-pill" data-filter="Sofia">София</a>
+        <a href="/bg/plovdiv/" class="filter-pill" data-filter="Plovdiv">Пловдив</a>
+        <a href="/bg/varna/" class="filter-pill" data-filter="Varna">Варна</a>
+        <a href="/bg/burgas/" class="filter-pill" data-filter="Burgas">Бургас</a>
+        <a href="/bg/ruse/" class="filter-pill" data-filter="Ruse">Русе</a>
+        <a href="/bg/stara-zagora/" class="filter-pill" data-filter="Stara Zagora">Стара Загора</a>
+        <a href="/bg/dobrich/" class="filter-pill" data-filter="Dobrich">Добрич</a>
+        <a href="/bg/remote/" class="filter-pill" data-filter="Remote">Дистанционно</a>
+        <a href="/bg/abroad/" class="filter-pill" data-filter="Abroad">В чужбина</a>
       </div>
     </div>
   </section>
@@ -151,7 +152,6 @@
         <li><a href="terms.html">Правен статут по ЗНЗ</a></li>
         <li><a href="privacy.html">Поверителност</a></li>
         <li><a href="help-candidates.html">ЧЗВ Кандидати</a></li>
-        <!-- Clean Link to English: points to / -->
         <li><a href="/">English Version (EN)</a></li>
       </ul>
       <div class="footer-bottom-text">
