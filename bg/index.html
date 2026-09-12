@@ -1,20 +1,21 @@
 <!DOCTYPE html>
 <html lang="bg">
 <!--
-  ==============================================================================
-  ФАЙЛ: /bg/index.html
-  ПРОЕКТ: bestjobs.bg — Архитектура на отворени стандарти
-  ЛИЦЕНЗ: MIT (https://opensource.org/licenses/MIT)
-  АВТОР: Стоян Стоянов, MBM / MD • „Мобиком България“ ЕООД (ЕИК: 202341326)
-  СТАНДАРТИ: CSS Grid Level 2 (Subgrid) • Единно търсене на обяви и доклади
-  СИГУРНОСТ: 100% без бисквитки • Седалище: гр. Добрич, България
-  ==============================================================================
+  ===============================================================================
+  FILE: /bg/index.html
+  PROJECT: bestjobs.bg — Master Design Engine (Mobikom Network Unified)
+  LICENSE: MIT (https://opensource.org/licenses/MIT)
+  AUTHOR: Stoyan Stoyanov, MBM / MD • Mobikom Bulgaria (mobikom.bg)
+  STANDARDS: CSS Grid Level 2 (Subgrid) • CSS Color Module 4 (light-dark)
+  COMPLIANCE: Strict CSP Level 3 • Zero Cookies
+  PERFORMANCE: Sub-14KB Single-Pass Engine • Native System Typography
+  ===============================================================================
 -->
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BestJobs България — Проверени обяви и Регионален икономически анализ</title>
-  <meta name="description" content="Високоскоростен портал за работа и регионален бизнес анализ в България. Заплати в евро (€) в София, Пловдив, Варна, Бургас, Русе, Добрич.">
+  <title>BestJobs — Проверени обяви и Регионален икономически анализ</title>
+  <meta name="description" content="Високоскоростен портал за работа и регионален бизнес анализ в България. Заплати в евро (€) в София, Пловдив, Варна, Бургас, Русе.">
   <link rel="stylesheet" href="../assets/css/style.css">
 </head>
 <body>
@@ -22,15 +23,18 @@
   <header class="site-header">
     <div class="container header-inner">
       <a href="index.html" class="brand-wrapper" aria-label="BestJobs България">
-        <svg width="34" height="34" viewBox="0 0 48 48" fill="none" aria-hidden="true">
+        <svg width="36" height="36" viewBox="0 0 48 48" fill="none" aria-hidden="true">
           <rect width="48" height="48" rx="12" fill="#0052CC"/>
           <path d="M19 14V11.5C19 10.12 20.12 9 21.5 9H26.5C27.88 9 29 10.12 29 11.5V14" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
           <rect x="9" y="14" width="30" height="23" rx="4" fill="#FFFFFF" fill-opacity="0.15" stroke="#FFFFFF" stroke-width="2.5" stroke-linejoin="round"/>
           <path d="M9 19L21.8 25.4C23.18 26.09 24.82 26.09 26.2 25.4L39 19" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
           <rect x="22" y="24" width="4" height="5" rx="1.5" fill="#FFFFFF"/>
         </svg>
-        <span class="brand-text">bestjobs<span>.bg</span></span>
-        <span class="network-badge">Мобиком</span>
+
+        <div class="brand-text-group">
+          <div class="brand-title">bestjobs</div>
+          <div class="brand-subline">България • <span class="sub-corp">Борса за обяви на Мобиком</span></div>
+        </div>
       </a>
 
       <nav aria-label="Основна навигация">
@@ -39,10 +43,7 @@
           <li><a href="help-candidates.html" class="nav-item-link">За кандидати</a></li>
           <li><a href="help-employers.html" class="nav-item-link">За работодатели</a></li>
           <li>
-            <div class="lang-switch">
-              <a href="../index.html">EN</a>
-              <a href="index.html" class="active">BG</a>
-            </div>
+            <a href="../index.html" class="lang-pill" title="English Version">EN</a>
           </li>
           <li><a href="submit.html" class="btn btn-primary btn-sm">Публикувай (€0.00)</a></li>
         </ul>
@@ -64,22 +65,22 @@
       </div>
 
       <div class="content-mode-bar" id="content-mode-container" role="tablist">
-        <button type="button" class="mode-pill active" data-mode="all">Всичко</button>
-        <button type="button" class="mode-pill" data-mode="jobs">Обяви за работа</button>
-        <button type="button" class="mode-pill" data-mode="articles">Икономически доклади</button>
+        <a href="#mode-all" class="mode-pill active" data-mode="all" role="tab">Всичко</a>
+        <a href="#mode-jobs" class="mode-pill" data-mode="jobs" role="tab">Обяви за работа</a>
+        <a href="#mode-articles" class="mode-pill" data-mode="articles" role="tab">Икономически доклади</a>
       </div>
 
       <div class="filter-pills-bar" id="filter-pills-container" role="toolbar">
-        <button type="button" class="filter-pill active" data-filter="all">Всички градове</button>
-        <button type="button" class="filter-pill" data-filter="Sofia">София</button>
-        <button type="button" class="filter-pill" data-filter="Plovdiv">Пловдив</button>
-        <button type="button" class="filter-pill" data-filter="Varna">Варна</button>
-        <button type="button" class="filter-pill" data-filter="Burgas">Бургас</button>
-        <button type="button" class="filter-pill" data-filter="Ruse">Русе</button>
-        <button type="button" class="filter-pill" data-filter="Stara Zagora">Стара Загора</button>
-        <button type="button" class="filter-pill" data-filter="Dobrich">Добрич</button>
-        <button type="button" class="filter-pill" data-filter="Remote">Дистанционно</button>
-        <button type="button" class="filter-pill" data-filter="Abroad">В чужбина</button>
+        <a href="#all" class="filter-pill active" data-filter="all" role="button">Всички градове</a>
+        <a href="#Sofia" class="filter-pill" data-filter="Sofia" role="button">София</a>
+        <a href="#Plovdiv" class="filter-pill" data-filter="Plovdiv" role="button">Пловдив</a>
+        <a href="#Varna" class="filter-pill" data-filter="Varna" role="button">Варна</a>
+        <a href="#Burgas" class="filter-pill" data-filter="Burgas" role="button">Бургас</a>
+        <a href="#Ruse" class="filter-pill" data-filter="Ruse" role="button">Русе</a>
+        <a href="#StaraZagora" class="filter-pill" data-filter="Stara Zagora" role="button">Стара Загора</a>
+        <a href="#Dobrich" class="filter-pill" data-filter="Dobrich" role="button">Добрич</a>
+        <a href="#Remote" class="filter-pill" data-filter="Remote" role="button">Дистанционно</a>
+        <a href="#Abroad" class="filter-pill" data-filter="Abroad" role="button">В чужбина</a>
       </div>
     </div>
   </section>
@@ -90,10 +91,8 @@
       <span class="currency-indicator">Стандартна валута: Евро (€)</span>
     </div>
 
-    <!-- 6-редова подрешетка за обявите -->
     <div class="jobs-grid" id="jobs-grid-container" aria-live="polite"></div>
 
-    <!-- Регионални икономически анализи и статии -->
     <section class="articles-section" id="articles-section">
       <div class="section-heading-bar">
         <h2 class="section-heading-title">Регионални икономически обзори и Заплати в Евро</h2>
@@ -102,7 +101,6 @@
     </section>
   </main>
 
-  <!-- Страничен универсален четец за обяви и статии -->
   <div class="drawer-backdrop" id="job-drawer-backdrop" aria-hidden="true">
     <div class="drawer-panel" role="dialog" aria-modal="true" aria-labelledby="drawer-job-title">
       <header class="drawer-header">
@@ -111,7 +109,7 @@
           <h2 class="job-h2" id="drawer-job-title" style="margin-top: 0.35rem;">Заглавие</h2>
           <div class="company-meta" id="drawer-company-line">Информация</div>
         </div>
-        <button type="button" class="drawer-close-btn" id="drawer-close-btn" aria-label="Затвори">&times;</button>
+        <a href="#close" class="drawer-close-btn" id="drawer-close-btn" aria-label="Затвори" role="button">&times;</a>
       </header>
 
       <div class="drawer-body">
@@ -128,22 +126,24 @@
         <h3 class="drawer-section-title" id="drawer-reqs-title">Изисквания</h3>
         <ul class="drawer-list" id="drawer-requirements"></ul>
 
-        <!-- Тяло на икономическия анализ -->
         <div id="drawer-article-body" class="drawer-article-body"></div>
       </div>
 
       <footer class="drawer-footer">
-        <a href="#" id="drawer-apply-btn" class="btn btn-primary" rel="nofollow noopener noreferrer">Кандидатствай директно</a>
-        <button type="button" class="btn btn-secondary" id="drawer-dismiss-btn">Назад</button>
+        <a href="#" id="drawer-apply-btn" class="btn btn-primary" target="_blank" rel="nofollow noopener noreferrer">Кандидатствай директно</a>
+        <a href="#close" class="btn btn-secondary" id="drawer-dismiss-btn" role="button">Назад</a>
       </footer>
     </div>
   </div>
 
   <footer class="site-footer">
     <div class="container footer-inner">
-      <div class="brand-text">bestjobs<span>.bg</span></div>
+      <div class="brand-text-group">
+        <div class="brand-title">bestjobs</div>
+        <div class="brand-subline">България • <span class="sub-corp">Борса за обяви на Мобиком</span></div>
+      </div>
       <ul class="footer-links">
-        <li><a href="submit.html">Публикувай (€0.00)</a></li>
+        <li><a href="submit.html">Публикувай обява (€0.00)</a></li>
         <li><a href="pricing.html">Цени</a></li>
         <li><a href="terms.html">Правен статут по ЗНЗ</a></li>
         <li><a href="privacy.html">Поверителност</a></li>
@@ -151,7 +151,7 @@
         <li><a href="../index.html">English Version (EN)</a></li>
       </ul>
       <div class="footer-bottom-text">
-        &copy; BestJobs.bg — Проект на „Мобиком България“ ЕООД (ЕИК 202341326). Лицензирано по MIT • Автор: Стоян Стоянов, MBM / MD.
+        &copy; BestJobs — Проект на мрежата Мобиком. Лицензирано по MIT • Автор: Стоян Стоянов, MBM / MD • 100% без бисквитки.
       </div>
     </div>
   </footer>
