@@ -23,8 +23,9 @@
   <!-- Site Header -->
   <header class="site-header">
     <div class="container header-inner">
-      <!-- Clean Root Link: points to / -->
+      <!-- Permanent Root Link -->
       <a href="/" class="brand-wrapper" aria-label="BestJobs Bulgaria">
+        <!-- Stylized Executive Briefcase SVG -->
         <svg width="36" height="36" viewBox="0 0 48 48" fill="none" aria-hidden="true">
           <rect width="48" height="48" rx="12" fill="#0052CC"/>
           <path d="M19 14V11.5C19 10.12 20.12 9 21.5 9H26.5C27.88 9 29 10.12 29 11.5V14" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -41,11 +42,10 @@
 
       <nav aria-label="Primary Navigation">
         <ul class="nav-links">
-          <!-- Clean Root Link: points to / -->
           <li><a href="/" class="nav-item-link active">Jobs & Analysis</a></li>
           <li><a href="help-candidates.html" class="nav-item-link">Candidate Guide</a></li>
           <li><a href="help-employers.html" class="nav-item-link">Employer Guide</a></li>
-          <!-- Clean Bulgarian Switcher: points strictly to /bg/ -->
+          <!-- Permanent Link to Bulgarian Root -->
           <li>
             <a href="/bg/" class="lang-pill" title="Българска версия">BG</a>
           </li>
@@ -68,23 +68,25 @@
         <kbd class="search-shortcut-hint" aria-hidden="true">/</kbd>
       </div>
 
+      <!-- Segment Tabs (100% Secured <a href> Links) -->
       <div class="content-mode-bar" id="content-mode-container" role="tablist">
         <a href="#mode-all" class="mode-pill active" data-mode="all" role="tab">All Content</a>
         <a href="#mode-jobs" class="mode-pill" data-mode="jobs" role="tab">Job Vacancies</a>
         <a href="#mode-articles" class="mode-pill" data-mode="articles" role="tab">Economic Reports</a>
       </div>
 
-      <div class="filter-pills-bar" id="filter-pills-container" role="toolbar">
-        <a href="#all" class="filter-pill active" data-filter="all" role="button">All Locations</a>
-        <a href="#Sofia" class="filter-pill" data-filter="Sofia" role="button">Sofia</a>
-        <a href="#Plovdiv" class="filter-pill" data-filter="Plovdiv" role="button">Plovdiv</a>
-        <a href="#Varna" class="filter-pill" data-filter="Varna" role="button">Varna</a>
-        <a href="#Burgas" class="filter-pill" data-filter="Burgas" role="button">Burgas</a>
-        <a href="#Ruse" class="filter-pill" data-filter="Ruse" role="button">Ruse</a>
-        <a href="#StaraZagora" class="filter-pill" data-filter="Stara Zagora" role="button">Stara Zagora</a>
-        <a href="#Dobrich" class="filter-pill" data-filter="Dobrich" role="button">Dobrich</a>
-        <a href="#Remote" class="filter-pill" data-filter="Remote" role="button">Remote</a>
-        <a href="#Abroad" class="filter-pill" data-filter="Abroad" role="button">Abroad</a>
+      <!-- Permanent Path SEO Links for Googlebot & Users -->
+      <div class="filter-pills-bar" id="filter-pills-container" role="navigation" aria-label="City Career Filters">
+        <a href="/" class="filter-pill active" data-filter="all">All Locations</a>
+        <a href="/sofia/" class="filter-pill" data-filter="Sofia">Sofia</a>
+        <a href="/plovdiv/" class="filter-pill" data-filter="Plovdiv">Plovdiv</a>
+        <a href="/varna/" class="filter-pill" data-filter="Varna">Varna</a>
+        <a href="/burgas/" class="filter-pill" data-filter="Burgas">Burgas</a>
+        <a href="/ruse/" class="filter-pill" data-filter="Ruse">Ruse</a>
+        <a href="/stara-zagora/" class="filter-pill" data-filter="Stara Zagora">Stara Zagora</a>
+        <a href="/dobrich/" class="filter-pill" data-filter="Dobrich">Dobrich</a>
+        <a href="/remote/" class="filter-pill" data-filter="Remote">Remote</a>
+        <a href="/abroad/" class="filter-pill" data-filter="Abroad">Abroad</a>
       </div>
     </div>
   </section>
@@ -95,8 +97,10 @@
       <span class="currency-indicator">Standard Currency: Euro (€)</span>
     </div>
 
+    <!-- 6-Track Subgrid Matrix Container -->
     <div class="jobs-grid" id="jobs-grid-container" aria-live="polite"></div>
 
+    <!-- Regional Economic Analyses Section -->
     <section class="articles-section" id="articles-section">
       <div class="section-heading-bar">
         <h2 class="section-heading-title">Regional Economic Reports & Salary Benchmarks</h2>
@@ -131,6 +135,7 @@
         <h3 class="drawer-section-title" id="drawer-reqs-title">Requirements</h3>
         <ul class="drawer-list" id="drawer-requirements"></ul>
 
+        <!-- Article Full Body -->
         <div id="drawer-article-body" class="drawer-article-body"></div>
       </div>
 
@@ -141,6 +146,7 @@
     </div>
   </div>
 
+  <!-- Sanitized Site Footer -->
   <footer class="site-footer">
     <div class="container footer-inner">
       <div class="brand-text-group">
@@ -153,7 +159,6 @@
         <li><a href="terms.html">Terms</a></li>
         <li><a href="privacy.html">Privacy</a></li>
         <li><a href="help-candidates.html">Candidate FAQ</a></li>
-        <!-- Clean Link to Bulgarian: points to /bg/ -->
         <li><a href="/bg/">Български (BG)</a></li>
       </ul>
       <div class="footer-bottom-text">
