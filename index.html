@@ -20,9 +20,11 @@
 </head>
 <body>
 
+  <!-- Site Header -->
   <header class="site-header">
     <div class="container header-inner">
       <a href="index.html" class="brand-wrapper" aria-label="BestJobs Bulgaria">
+        <!-- Stylized Executive Briefcase SVG -->
         <svg width="36" height="36" viewBox="0 0 48 48" fill="none" aria-hidden="true">
           <rect width="48" height="48" rx="12" fill="#0052CC"/>
           <path d="M19 14V11.5C19 10.12 20.12 9 21.5 9H26.5C27.88 9 29 10.12 29 11.5V14" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -31,6 +33,7 @@
           <rect x="22" y="24" width="4" height="5" rx="1.5" fill="#FFFFFF"/>
         </svg>
 
+        <!-- Brand Text Lockup: No .bg + Clean Subtitle -->
         <div class="brand-text-group">
           <div class="brand-title">bestjobs</div>
           <div class="brand-subline">Bulgaria • <span class="sub-corp">Job ads board of Mobikom</span></div>
@@ -42,6 +45,7 @@
           <li><a href="index.html" class="nav-item-link active">Jobs & Analysis</a></li>
           <li><a href="help-candidates.html" class="nav-item-link">Candidate Guide</a></li>
           <li><a href="help-employers.html" class="nav-item-link">Employer Guide</a></li>
+          <!-- Single Target Language Switcher -->
           <li>
             <a href="bg/index.html" class="lang-pill" title="Българска версия">BG</a>
           </li>
@@ -64,12 +68,14 @@
         <kbd class="search-shortcut-hint" aria-hidden="true">/</kbd>
       </div>
 
+      <!-- Segment Tabs (100% Secured <a href> Links) -->
       <div class="content-mode-bar" id="content-mode-container" role="tablist">
         <a href="#mode-all" class="mode-pill active" data-mode="all" role="tab">All Content</a>
         <a href="#mode-jobs" class="mode-pill" data-mode="jobs" role="tab">Job Vacancies</a>
         <a href="#mode-articles" class="mode-pill" data-mode="articles" role="tab">Economic Reports</a>
       </div>
 
+      <!-- Major City Filter Pills (100% Secured <a href> Links) -->
       <div class="filter-pills-bar" id="filter-pills-container" role="toolbar">
         <a href="#all" class="filter-pill active" data-filter="all" role="button">All Locations</a>
         <a href="#Sofia" class="filter-pill" data-filter="Sofia" role="button">Sofia</a>
@@ -91,8 +97,10 @@
       <span class="currency-indicator">Standard Currency: Euro (€)</span>
     </div>
 
+    <!-- 6-Track Subgrid Matrix Container -->
     <div class="jobs-grid" id="jobs-grid-container" aria-live="polite"></div>
 
+    <!-- Regional Economic Analyses Section -->
     <section class="articles-section" id="articles-section">
       <div class="section-heading-bar">
         <h2 class="section-heading-title">Regional Economic Reports & Salary Benchmarks</h2>
@@ -101,6 +109,7 @@
     </section>
   </main>
 
+  <!-- Slide-Over Universal Reader Drawer -->
   <div class="drawer-backdrop" id="job-drawer-backdrop" aria-hidden="true">
     <div class="drawer-panel" role="dialog" aria-modal="true" aria-labelledby="drawer-job-title">
       <header class="drawer-header">
@@ -126,6 +135,7 @@
         <h3 class="drawer-section-title" id="drawer-reqs-title">Requirements</h3>
         <ul class="drawer-list" id="drawer-requirements"></ul>
 
+        <!-- Article Full Body -->
         <div id="drawer-article-body" class="drawer-article-body"></div>
       </div>
 
@@ -136,6 +146,7 @@
     </div>
   </div>
 
+  <!-- Sanitized Site Footer -->
   <footer class="site-footer">
     <div class="container footer-inner">
       <div class="brand-text-group">
