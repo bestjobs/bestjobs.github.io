@@ -1,13 +1,13 @@
 /**
- * ==============================================================================
+ * ===============================================================================
  * FILE: /assets/js/app.js
  * PROJECT: bestjobs.bg — Master Design Engine (Mobikom Network Unified)
  * LICENSE: MIT (https://opensource.org/licenses/MIT)
  * AUTHOR: Stoyan Stoyanov, MBM / MD • Mobikom Bulgaria (mobikom.bg)
- * STANDARDS: CSS Grid Level 2 (Subgrid) • Unified Jobs & Articles Search
- * COMPLIANCE: Strict CSP Level 3 • Zero !important • Zero Cookies
+ * STANDARDS: CSS Grid Level 2 (Subgrid) • CSS Color Module 4 (light-dark)
+ * COMPLIANCE: Strict CSP Level 3 • Zero Cookies
  * PERFORMANCE: Sub-14KB Single-Pass Engine • Native System Typography
- * ==============================================================================
+ * ===============================================================================
  */
 
 document.addEventListener('DOMContentLoaded', async () => {
@@ -48,7 +48,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   }[lang];
 
-  // DOM Cache
   const gridContainer = document.getElementById('jobs-grid-container');
   const articlesContainer = document.getElementById('articles-grid-container');
   const articlesSection = document.getElementById('articles-section');
@@ -57,7 +56,6 @@ document.addEventListener('DOMContentLoaded', async () => {
   const pillsContainer = document.getElementById('filter-pills-container');
   const modeContainer = document.getElementById('content-mode-container');
 
-  // Drawer Elements
   const drawerBackdrop = document.getElementById('job-drawer-backdrop');
   const drawerCloseBtn = document.getElementById('drawer-close-btn');
   const drawerDismissBtn = document.getElementById('drawer-dismiss-btn');
@@ -74,7 +72,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   const drawerApplyBtn = document.getElementById('drawer-apply-btn');
 
   let activeFilter = 'all';
-  let activeMode = 'all'; // 'all', 'jobs', 'articles'
+  let activeMode = 'all';
   let searchQuery = '';
   let contentData = { jobs: [], articles: [] };
 
@@ -88,12 +86,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     return;
   }
 
-  // Unified Rendering Engine
   function renderAll() {
     const q = searchQuery.toLowerCase().trim();
     const filterLower = activeFilter.toLowerCase();
 
-    // 1. Filter Jobs
     const filteredJobs = contentData.jobs.filter(job => {
       const jobLoc = (job.location || '').toLowerCase();
       const jobMode = (job.workMode.en || job.workMode || '').toLowerCase();
@@ -112,11 +108,9 @@ document.addEventListener('DOMContentLoaded', async () => {
       const company = (job.company[lang] || job.company.en || '').toLowerCase();
       const desc = (job.desc[lang] || job.desc.en || '').toLowerCase();
 
-      const matchSearch = q === '' || title.includes(q) || company.includes(q) || desc.includes(q) || jobLoc.includes(q);
-      return matchFilter && matchSearch;
+      return matchFilter && (q === '' || title.includes(q) || company.includes(q) || desc.includes(q) || jobLoc.includes(q));
     });
 
-    // 2. Filter Articles
     const filteredArticles = contentData.articles.filter(art => {
       const title = (art.title[lang] || art.title.en || '').toLowerCase();
       const excerpt = (art.excerpt[lang] || art.excerpt.en || '').toLowerCase();
@@ -125,12 +119,10 @@ document.addEventListener('DOMContentLoaded', async () => {
       return q === '' || title.includes(q) || excerpt.includes(q) || cat.includes(q);
     });
 
-    // Update Counter
     if (countLabel) {
       countLabel.textContent = `${i18n.showing} ${filteredJobs.length} ${i18n.roles} • ${filteredArticles.length} ${i18n.articles}`;
     }
 
-    // Render Jobs Grid
     if (gridContainer) {
       gridContainer.innerHTML = '';
       if (activeMode === 'articles') {
@@ -191,8 +183,8 @@ document.addEventListener('DOMContentLoaded', async () => {
               </div>
 
               <footer class="card-track-actions">
-                <a href="${directApplyUrl}" class="btn btn-primary btn-sm" rel="nofollow noopener noreferrer" title="${escapeHTML(i18n.directNotice)}">${escapeHTML(i18n.apply)}</a>
-                <button type="button" class="btn btn-secondary btn-sm js-open-details" data-id="${job.id}">${escapeHTML(i18n.details)}</button>
+                <a href="${directApplyUrl}" class="btn btn-primary btn-sm" target="_blank" rel="nofollow noopener noreferrer" title="${escapeHTML(i18n.directNotice)}">${escapeHTML(i18n.apply)}</a>
+                <a href="#${job.id}" class="btn btn-secondary btn-sm js-open-details" data-id="${job.id}" role="button">${escapeHTML(i18n.details)}</a>
               </footer>
             `;
             gridContainer.appendChild(card);
@@ -201,7 +193,6 @@ document.addEventListener('DOMContentLoaded', async () => {
       }
     }
 
-    // Render Articles Grid
     if (articlesContainer && articlesSection) {
       articlesContainer.innerHTML = '';
       if (activeMode === 'jobs' || filteredArticles.length === 0) {
@@ -222,7 +213,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             <p class="article-excerpt">${artExcerpt}</p>
             <div class="article-footer">
               <span>${art.date}</span>
-              <button type="button" class="btn btn-secondary btn-sm js-open-article" data-id="${art.id}">${escapeHTML(i18n.readArticle)}</button>
+              <a href="#${art.id}" class="btn btn-secondary btn-sm js-open-article" data-id="${art.id}" role="button">${escapeHTML(i18n.readArticle)}</a>
             </div>
           `;
           articlesContainer.appendChild(card);
@@ -231,7 +222,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   }
 
-  // Open Details Drawer for a Job
   function openJobDrawer(id) {
     const job = contentData.jobs.find(j => j.id === id);
     if (!job) return;
@@ -272,7 +262,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     document.body.style.overflow = 'hidden';
   }
 
-  // Open Details Drawer for an Article
   function openArticleDrawer(id) {
     const art = contentData.articles.find(a => a.id === id);
     if (!art) return;
@@ -309,31 +298,30 @@ document.addEventListener('DOMContentLoaded', async () => {
     }[t] || t));
   }
 
-  // Filter Pills Listener
   if (pillsContainer) {
     pillsContainer.addEventListener('click', (e) => {
-      const btn = e.target.closest('.filter-pill');
-      if (!btn) return;
+      const anchor = e.target.closest('.filter-pill');
+      if (!anchor) return;
+      e.preventDefault();
       pillsContainer.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
-      btn.classList.add('active');
-      activeFilter = btn.getAttribute('data-filter');
+      anchor.classList.add('active');
+      activeFilter = anchor.getAttribute('data-filter');
       renderAll();
     });
   }
 
-  // Segment Mode Switch (All / Jobs / Articles)
   if (modeContainer) {
     modeContainer.addEventListener('click', (e) => {
-      const btn = e.target.closest('.mode-pill');
-      if (!btn) return;
+      const anchor = e.target.closest('.mode-pill');
+      if (!anchor) return;
+      e.preventDefault();
       modeContainer.querySelectorAll('.mode-pill').forEach(p => p.classList.remove('active'));
-      btn.classList.add('active');
-      activeMode = btn.getAttribute('data-mode');
+      anchor.classList.add('active');
+      activeMode = anchor.getAttribute('data-mode');
       renderAll();
     });
   }
 
-  // Live Search Input Listener
   if (searchInput) {
     searchInput.addEventListener('input', (e) => {
       searchQuery = e.target.value;
@@ -341,7 +329,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
   }
 
-  // Hotkey '/' focuses search, 'Escape' closes drawer
   document.addEventListener('keydown', (e) => {
     if (e.key === '/' && document.activeElement !== searchInput) {
       e.preventDefault();
@@ -351,29 +338,33 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   });
 
-  // Delegated Clicks for Jobs and Articles
   document.addEventListener('click', (e) => {
-    const jobBtn = e.target.closest('.js-open-details');
-    if (jobBtn) {
-      openJobDrawer(jobBtn.getAttribute('data-id'));
+    const jobLink = e.target.closest('.js-open-details');
+    if (jobLink) {
+      e.preventDefault();
+      openJobDrawer(jobLink.getAttribute('data-id'));
       return;
     }
-    const artBtn = e.target.closest('.js-open-article');
-    if (artBtn) {
-      openArticleDrawer(artBtn.getAttribute('data-id'));
+    const artLink = e.target.closest('.js-open-article');
+    if (artLink) {
+      e.preventDefault();
+      openArticleDrawer(artLink.getAttribute('data-id'));
+      return;
+    }
+    const closeTrigger = e.target.closest('#drawer-close-btn, #drawer-dismiss-btn');
+    if (closeTrigger) {
+      e.preventDefault();
+      closeDrawer();
       return;
     }
   });
 
-  if (drawerCloseBtn) drawerCloseBtn.addEventListener('click', closeDrawer);
-  if (drawerDismissBtn) drawerDismissBtn.addEventListener('click', closeDrawer);
   if (drawerBackdrop) {
     drawerBackdrop.addEventListener('click', (e) => {
       if (e.target === drawerBackdrop) closeDrawer();
     });
   }
 
-  // Deep-Link URL Hash Resolver (#job-01 or #art-01)
   const initialHash = window.location.hash.replace('#', '');
   if (initialHash) {
     if (initialHash.startsWith('job-')) openJobDrawer(initialHash);
