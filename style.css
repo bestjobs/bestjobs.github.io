@@ -1,0 +1,147 @@
+:root {
+  --bg: #ffffff;
+  --text: #111111;
+  --muted: #555555;
+  --border: #e0e0e0;
+  --card-bg: #fbfbfb;
+  --accent: #000000;
+  --link: #003366;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #121212;
+    --text: #e0e0e0;
+    --muted: #a0a0a0;
+    --border: #2a2a2a;
+    --card-bg: #1a1a1a;
+    --accent: #ffffff;
+    --link: #8ab4f8;
+  }
+}
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background-color: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  font-size: 16px;
+  padding: 20px;
+}
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+}
+header {
+  border-bottom: 2px solid var(--border);
+  padding-bottom: 25px;
+  margin-bottom: 35px;
+}
+h1 {
+  font-size: 2rem;
+  letter-spacing: -0.5px;
+  margin-bottom: 8px;
+  color: var(--accent);
+}
+.subtitle {
+  color: var(--muted);
+  font-size: 1.05rem;
+}
+.notice-box {
+  background-color: var(--card-bg);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--accent);
+  padding: 16px 20px;
+  margin-bottom: 35px;
+  font-size: 0.95rem;
+}
+.notice-box strong {
+  color: var(--accent);
+}
+section {
+  margin-bottom: 40px;
+}
+h2 {
+  font-size: 1.3rem;
+  margin-bottom: 16px;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 8px;
+  color: var(--accent);
+}
+p {
+  margin-bottom: 16px;
+  color: var(--text);
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 16px;
+  margin-top: 20px;
+}
+.card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  padding: 20px;
+}
+.card h3 {
+  font-size: 1.1rem;
+  margin-bottom: 8px;
+  color: var(--accent);
+}
+.card p {
+  font-size: 0.9rem;
+  color: var(--muted);
+  margin-bottom: 0;
+}
+ul {
+  list-style-position: inside;
+  margin-bottom: 16px;
+  color: var(--text);
+}
+li {
+  margin-bottom: 6px;
+}
+a {
+  color: var(--link);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+a:hover {
+  text-decoration: none;
+}
+.table-wrap {
+  overflow-x: auto;
+  margin-bottom: 20px;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+  text-align: left;
+}
+th, td {
+  padding: 12px 14px;
+  border: 1px solid var(--border);
+}
+th {
+  background-color: var(--card-bg);
+  color: var(--accent);
+}
+footer {
+  border-top: 1px solid var(--border);
+  padding-top: 25px;
+  margin-top: 50px;
+  font-size: 0.85rem;
+  color: var(--muted);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.network-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+}
