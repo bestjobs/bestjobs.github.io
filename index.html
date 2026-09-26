@@ -1,1 +1,275 @@
-coming soon
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BestJobs.bg | Платформа за обяви за работа и кариерно развитие</title>
+<style>
+:root {
+  --bg: #ffffff;
+  --text: #111111;
+  --muted: #555555;
+  --border: #e0e0e0;
+  --card-bg: #fbfbfb;
+  --accent: #000000;
+  --link: #003366;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #121212;
+    --text: #e0e0e0;
+    --muted: #a0a0a0;
+    --border: #2a2a2a;
+    --card-bg: #1a1a1a;
+    --accent: #ffffff;
+    --link: #8ab4f8;
+  }
+}
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background-color: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  font-size: 16px;
+  padding: 20px;
+}
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+}
+header {
+  border-bottom: 2px solid var(--border);
+  padding-bottom: 25px;
+  margin-bottom: 35px;
+}
+h1 {
+  font-size: 2rem;
+  letter-spacing: -0.5px;
+  margin-bottom: 8px;
+  color: var(--accent);
+}
+.subtitle {
+  color: var(--muted);
+  font-size: 1.05rem;
+}
+.notice-box {
+  background-color: var(--card-bg);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--accent);
+  padding: 16px 20px;
+  margin-bottom: 35px;
+  font-size: 0.95rem;
+}
+.notice-box strong {
+  color: var(--accent);
+}
+section {
+  margin-bottom: 40px;
+}
+h2 {
+  font-size: 1.3rem;
+  margin-bottom: 16px;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 8px;
+  color: var(--accent);
+}
+p {
+  margin-bottom: 16px;
+  color: var(--text);
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 16px;
+  margin-top: 20px;
+}
+.card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  padding: 20px;
+}
+.card h3 {
+  font-size: 1.1rem;
+  margin-bottom: 8px;
+  color: var(--accent);
+}
+.card p {
+  font-size: 0.9rem;
+  color: var(--muted);
+  margin-bottom: 0;
+}
+ul {
+  list-style-position: inside;
+  margin-bottom: 16px;
+  color: var(--text);
+}
+li {
+  margin-bottom: 6px;
+}
+a {
+  color: var(--link);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+a:hover {
+  text-decoration: none;
+}
+.table-wrap {
+  overflow-x: auto;
+  margin-bottom: 20px;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+  text-align: left;
+}
+th, td {
+  padding: 12px 14px;
+  border: 1px solid var(--border);
+}
+th {
+  background-color: var(--card-bg);
+  color: var(--accent);
+}
+footer {
+  border-top: 1px solid var(--border);
+  padding-top: 25px;
+  margin-top: 50px;
+  font-size: 0.85rem;
+  color: var(--muted);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.network-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+
+<header>
+  <h1>BestJobs.bg</h1>
+  <div class="subtitle">Институционална платформа за публикуване на обяви за работа и директна трудова реализация</div>
+</header>
+
+<div class="notice-box">
+  <strong>Правен статут и регулаторна рамка:</strong> BestJobs.bg е електронен информационен масив за директно публикуване на обяви за работа съгласно Закона за електронната търговия (ЗЕТ). Платформата <strong>не извършва</strong> трудово посредничество по смисъла на Закона за насърчаване на заетостта (ЗНЗ), не препраща автобиографии и не събира такси от търсещите работа лица под никаква форма. Всички трудови правоотношения се договарят директно между работодателя и кандидата.
+</div>
+
+<section>
+  <h2>Основни икономически сектори за директен контакт</h2>
+  <p>Регистър на структуроопределящите сектори с постоянна заетост и публично обявени свободни позиции в България и региона на Североизточна България:</p>
+  
+  <div class="grid">
+    <div class="card">
+      <h3>Агробизнес и преработка</h3>
+      <p>Растениевъдство, механизация, агрономия, преработка на зърнени култури и хранителни технологии в Добруджа.</p>
+    </div>
+    <div class="card">
+      <h3>Производство и индустрия</h3>
+      <p>Машиностроене, лека промишленост, заваръчни технологии, електротехника и автоматизирани поточни линии.</p>
+    </div>
+    <div class="card">
+      <h3>Транспорт и логистика</h3>
+      <p>Международен транспорт, складови терминали, вътрешна дистрибуция и сухопътна спедиция.</p>
+    </div>
+    <div class="card">
+      <h3>Медицина и фармация</h3>
+      <p>Лекари-специализанти, медицински сестри, болничен персонал и фармацевтично обслужване.</p>
+    </div>
+    <div class="card">
+      <h3>Търговия и дистрибуция</h3>
+      <p>Регионално B2B представителство, търговски мениджмънт, снабдяване и складово стопанство.</p>
+    </div>
+    <div class="card">
+      <h3>Технологии и инженерство</h3>
+      <p>Мрежова сигурност, софтуерен инженеринг, поддръжка на автономни системи и телекомуникации.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>Стандарти за публикуване на обяви</h2>
+  <p>В съответствие с българското законодателство и практиките за прозрачност на възнагражденията в Европейския съюз, обявите в BestJobs.bg отговарят на следните критерии:</p>
+  <ul>
+    <li>Пълна забрана за дискриминационни изисквания по смисъла на Закона за защита от дискриминация (ЗЗД).</li>
+    <li>Прозрачност на параметрите: задължително посочване на основно трудово възнаграждение (бруто/нето в BGN или EUR).</li>
+    <li>Директен контакт: предоставяне на легитимен служебен имейл адрес или физически адрес на отдела за човешки ресурси на работодателя.</li>
+    <li>Липса на посредници: достъпът на кандидатите до работодателя се осъществява без регистрационни такси и пререгистрации.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Нормативен справочник за кандидати</h2>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Параметър</th>
+          <th>Законово изискване (Кодекс на труда)</th>
+          <th>Приложимост</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Трудов договор</td>
+          <td>Сключва се в писмена форма преди постъпване на работа (чл. 62)</td>
+          <td>Задължително за всички позиции</td>
+        </tr>
+        <tr>
+          <td>Работно време</td>
+          <td>Редовно работно време до 8 часа дневно / 40 часа седмично (чл. 136)</td>
+          <td>Стандартна пълна заетост</td>
+        </tr>
+        <tr>
+          <td>Изпитателен срок</td>
+          <td>Максимален срок до 6 месеца в полза на работодателя или взаимен (чл. 70)</td>
+          <td>По индивидуална уговорка</td>
+        </tr>
+        <tr>
+          <td>Посредническа дейност</td>
+          <td>Безплатна за търсещите работа лица по силата на ЗНЗ</td>
+          <td>Императивно законово правило</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section>
+  <h2>Редакционна поща и връзка с администрацията</h2>
+  <p>За технически въпроси, валидация на публични обяви и институционална кореспонденция:</p>
+  <p>Официална пощенска кутия: <a href="mailto:desk@mobikom.bg">desk@mobikom.bg</a></p>
+  <p>Режим на работа: Входящите запитвания се обработват през криптографски защитена пощенска инфраструктура с активен MTA-STS протокол.</p>
+</section>
+
+<footer>
+  <div class="network-links">
+    <span>Институционална мрежа:</span>
+    <a href="https://mobikom.bg">Mobikom.bg</a>
+    <a href="https://dobrichnews.com">DobrichNews.com</a>
+    <a href="https://dobruja.com">Dobruja.com</a>
+  </div>
+  <div>
+    Политика за нулева употреба на бисквитки (Zero-Cookie Architecture) • Защита на личните данни (GDPR) • Изходен код под свободен лиценз MIT
+  </div>
+  <div>
+    © 2026 BestJobs.bg. Всички права върху публичното представяне и структура са запазени съгласно ЗАСП.
+  </div>
+</footer>
+
+</div>
+
+</body>
+</html>
