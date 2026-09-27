@@ -260,5 +260,77 @@ ${vipItemsXml.trimEnd()}
   fs.writeFileSync(path.join(ROOT_DIR, 'vip-jobs.xml'), vipFeed, 'utf8');
 };
 
+const generateSitemapXml = () => {
+  const today = new Date().toISOString().split('T')[0];
+
+  const staticRoutes = [
+    { url: 'https://bestjobs.bg/', priority: '1.0', changefreq: 'daily' },
+    { url: 'https://bestjobs.bg/bg/', priority: '1.0', changefreq: 'daily' },
+    { url: 'https://bestjobs.bg/bestjobs/', priority: '0.9', changefreq: 'daily' },
+    { url: 'https://bestjobs.bg/bestjobs/bg/', priority: '0.9', changefreq: 'daily' },
+    { url: 'https://bestjobs.bg/mall/', priority: '0.8', changefreq: 'weekly' },
+    { url: 'https://bestjobs.bg/mall/bg/', priority: '0.8', changefreq: 'weekly' },
+    { url: 'https://bestjobs.bg/energy/', priority: '0.8', changefreq: 'weekly' },
+    { url: 'https://bestjobs.bg/energy/bg/', priority: '0.8', changefreq: 'weekly' },
+    { url: 'https://bestjobs.bg/invest/', priority: '0.8', changefreq: 'weekly' },
+    { url: 'https://bestjobs.bg/invest/bg/', priority: '0.8', changefreq: 'weekly' },
+    { url: 'https://bestjobs.bg/property/', priority: '0.8', changefreq: 'weekly' },
+    { url: 'https://bestjobs.bg/property/bg/', priority: '0.8', changefreq: 'weekly' },
+    { url: 'https://bestjobs.bg/medical/', priority: '0.8', changefreq: 'weekly' },
+    { url: 'https://bestjobs.bg/medical/bg/', priority: '0.8', changefreq: 'weekly' },
+    { url: 'https://bestjobs.bg/education/', priority: '0.8', changefreq: 'weekly' },
+    { url: 'https://bestjobs.bg/education/bg/', priority: '0.8', changefreq: 'weekly' },
+    { url: 'https://bestjobs.bg/sports/', priority: '0.8', changefreq: 'weekly' },
+    { url: 'https://bestjobs.bg/sports/bg/', priority: '0.8', changefreq: 'weekly' },
+    { url: 'https://bestjobs.bg/culture/', priority: '0.8', changefreq: 'weekly' },
+    { url: 'https://bestjobs.bg/culture/bg/', priority: '0.8', changefreq: 'weekly' },
+    { url: 'https://bestjobs.bg/legal/', priority: '0.8', changefreq: 'weekly' },
+    { url: 'https://bestjobs.bg/legal/bg/', priority: '0.8', changefreq: 'weekly' },
+    { url: 'https://bestjobs.bg/blog/', priority: '0.8', changefreq: 'weekly' },
+    { url: 'https://bestjobs.bg/bg/blog/', priority: '0.8', changefreq: 'weekly' },
+    { url: 'https://bestjobs.bg/about/', priority: '0.5', changefreq: 'monthly' },
+    { url: 'https://bestjobs.bg/bg/about/', priority: '0.5', changefreq: 'monthly' },
+    { url: 'https://bestjobs.bg/contact/', priority: '0.5', changefreq: 'monthly' },
+    { url: 'https://bestjobs.bg/bg/contact/', priority: '0.5', changefreq: 'monthly' },
+    { url: 'https://bestjobs.bg/privacy/', priority: '0.3', changefreq: 'monthly' },
+    { url: 'https://bestjobs.bg/terms/', priority: '0.3', changefreq: 'monthly' },
+    { url: 'https://bestjobs.bg/gdpr/', priority: '0.3', changefreq: 'monthly' }
+  ];
+
+  let xml = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+`;
+
+  staticRoutes.forEach((route) => {
+    xml += `  <url>
+    <loc>${route.url}</loc>
+    <lastmod>${today}</lastmod>
+    <changefreq>${route.changefreq}</changefreq>
+    <priority>${route.priority}</priority>
+  </url>\n`;
+  });
+
+  jobs.forEach((job) => {
+    xml += `  <url>
+    <loc>https://bestjobs.bg/bestjobs/${escapeXml(job.slug)}/</loc>
+    <lastmod>${job.date}</lastmod>
+    <changefreq>never</changefreq>
+    <priority>0.7</priority>
+  </url>\n`;
+
+    xml += `  <url>
+    <loc>https://bestjobs.bg/bestjobs/bg/${escapeXml(job.slug)}/</loc>
+    <lastmod>${job.date}</lastmod>
+    <changefreq>never</changefreq>
+    <priority>0.7</priority>
+  </url>\n`;
+  });
+
+  xml += `</urlset>\n`;
+
+  fs.writeFileSync(path.join(ROOT_DIR, 'sitemap.xml'), xml, 'utf8');
+};
+
 generateIndividualPages();
 generateXmlFeeds();
+generateSitemapXml();
