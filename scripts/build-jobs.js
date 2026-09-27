@@ -5,6 +5,9 @@ const ROOT_DIR = path.resolve(__dirname, '..');
 const JOBS_FILE = path.join(ROOT_DIR, 'data', 'jobs.json');
 const TEMPLATE_FILE = path.join(ROOT_DIR, 'templates', 'job-detail.html');
 
+const INDEX_EN_FILE = path.join(ROOT_DIR, 'bestjobs', 'index.html');
+const INDEX_BG_FILE = path.join(ROOT_DIR, 'bestjobs', 'bg', 'index.html');
+
 const rawJobs = fs.readFileSync(JOBS_FILE, 'utf8');
 const jobs = JSON.parse(rawJobs);
 const template = fs.readFileSync(TEMPLATE_FILE, 'utf8');
@@ -210,6 +213,90 @@ const generateIndividualPages = () => {
   });
 };
 
+const updateCatalogIndexes = () => {
+  const cardsEn = jobs.map((job) => {
+    const vipClass = job.vip ? ' vip-card' : '';
+    const vipBadge = job.vip ? `\n              <div class="meta-badges-inline">\n                <a href="/bestjobs/help/#vip" class="vip-tag" title="Learn what a VIP listing is and how to syndicate across network">🌟 VIP</a>\n              </div>` : '';
+    const chips = job.chips_en.map((c) => `<span class="chip-item">${c}</span>`).join('\n              ');
+
+    return `          <article class="job-card${vipClass}" data-slug="${job.slug}" data-industry="${job.industry}" data-city="${job.city}" data-type="${job.type}" data-date="${job.date}">
+            <div class="card-meta-bar">
+              <span>${job.id} &bull; ${job.industry.toUpperCase()} &bull; ${job.city.toUpperCase()}</span>${vipBadge}
+            </div>
+            <div class="card-title-box">
+              <h3>${job.title_en}</h3>
+              <div class="card-subtitle">${job.subtitle_en}</div>
+              <div class="card-company">${job.company_en}</div>
+            </div>
+            <div class="card-salary-box">
+              <span class="salary-figure">${job.salary_gross} € per month</span>
+              <span class="salary-net-calc">(net ~${job.salary_net} €)</span>
+            </div>
+            <div class="card-chips-row">
+              ${chips}
+            </div>
+            <div class="card-text-summary">
+              ${job.desc_en}
+            </div>
+            <div class="card-footer-actions">
+              <a href="/bestjobs/${job.slug}/" class="card-spec-link" title="Open complete technical specification for ${escapeXml(job.title_en)}">Read Full Job &rarr;</a>
+              <a href="mailto:${job.email}?subject=${encodeURIComponent(`Application: ${job.title_en} (Ref: ${job.id})`)}" class="btn-direct-apply" title="Apply directly to ${escapeXml(job.company_en)} via email">Apply with Email &rarr;</a>
+            </div>
+          </article>`;
+  }).join('\n\n');
+
+  const cardsBg = jobs.map((job) => {
+    const vipClass = job.vip ? ' vip-card' : '';
+    const vipBadge = job.vip ? `\n              <div class="meta-badges-inline">\n                <a href="/bestjobs/bg/help/#vip" class="vip-tag" title="Научете какво представлява VIP позицията и синдикацията">🌟 VIP</a>\n              </div>` : '';
+    const chips = job.chips_bg.map((c) => `<span class="chip-item">${c}</span>`).join('\n              ');
+
+    return `          <article class="job-card${vipClass}" data-slug="${job.slug}" data-industry="${job.industry}" data-city="${job.city}" data-type="${job.type}" data-date="${job.date}">
+            <div class="card-meta-bar">
+              <span>${job.id} &bull; ${job.industry.toUpperCase()} &bull; ${job.city.toUpperCase()}</span>${vipBadge}
+            </div>
+            <div class="card-title-box">
+              <h3>${job.title_bg}</h3>
+              <div class="card-subtitle">${job.subtitle_bg}</div>
+              <div class="card-company">${job.company_bg}</div>
+            </div>
+            <div class="card-salary-box">
+              <span class="salary-figure">${job.salary_gross} € на месец</span>
+              <span class="salary-net-calc">(нето ~${job.salary_net} €)</span>
+            </div>
+            <div class="card-chips-row">
+              ${chips}
+            </div>
+            <div class="card-text-summary">
+              ${job.desc_bg}
+            </div>
+            <div class="card-footer-actions">
+              <a href="/bestjobs/bg/${job.slug}/" class="card-spec-link" title="Отворете пълната техническа спецификация за ${escapeXml(job.title_bg)}">Виж цялата обява &rarr;</a>
+              <a href="mailto:${job.email}?subject=${encodeURIComponent(`Кандидатура: ${job.title_bg} (Реф. №: ${job.id})`)}" class="btn-direct-apply" title="Кандидатствайте директно към ${escapeXml(job.company_bg)} по имейл">Кандидатствай по имейл &rarr;</a>
+            </div>
+          </article>`;
+  }).join('\n\n');
+
+  const replaceContainer = (filePath, cardsHtml) => {
+    if (!fs.existsSync(filePath)) return;
+    const content = fs.readFileSync(filePath, 'utf8');
+    const startTag = '<!-- JOBS_CONTAINER_START -->';
+    const endTag = '<!-- JOBS_CONTAINER_END -->';
+
+    const startIndex = content.indexOf(startTag);
+    const endIndex = content.indexOf(endTag);
+
+    if (startIndex !== -1 && endIndex !== -1) {
+      const newContent = content.substring(0, startIndex + startTag.length) +
+        '\n' + cardsHtml + '\n        ' +
+        content.substring(endIndex);
+      fs.writeFileSync(filePath, newContent, 'utf8');
+    }
+  };
+
+  replaceContainer(INDEX_EN_FILE, cardsEn);
+  replaceContainer(INDEX_BG_FILE, cardsBg);
+};
+
 const generateXmlFeeds = () => {
   const now = new Date().toUTCString();
 
@@ -332,5 +419,6 @@ const generateSitemapXml = () => {
 };
 
 generateIndividualPages();
+updateCatalogIndexes();
 generateXmlFeeds();
 generateSitemapXml();
