@@ -1,4 +1,4 @@
-(function () {
+(() => {
   'use strict';
 
   document.addEventListener('DOMContentLoaded', () => {
@@ -12,62 +12,70 @@
     const streamBtn = document.getElementById('btn-stream-audio');
     if (!streamBtn) return;
 
+    const isBg = (document.documentElement.lang || '').toLowerCase().startsWith('bg');
+    const i18n = {
+      lang: isBg ? 'bg-BG' : 'en-US',
+      play: isBg ? '🔊 Слушай обявите' : '🔊 Listen to Vacancy Stream',
+      stop: isBg ? '⏹ Спри четенето' : '⏹ Stop Listening',
+      phrase: (idx, title, comp, sal) => isBg
+        ? `Обява ${idx}: ${title} в ${comp}. Брутна заплата: ${sal}.`
+        : `Vacancy ${idx}: ${title} at ${comp}. Gross monthly salary: ${sal}.`
+    };
+
     let isPlaying = false;
+    let currentIndex = 0;
+    let visibleCards = [];
+
+    const stopPlayback = () => {
+      window.speechSynthesis.cancel();
+      isPlaying = false;
+      streamBtn.textContent = i18n.play;
+    };
+
+    const speakNextCard = () => {
+      if (!isPlaying || currentIndex >= visibleCards.length) {
+        stopPlayback();
+        return;
+      }
+
+      const card = visibleCards[currentIndex];
+      const title = card.querySelector('h3')?.textContent.trim() || '';
+      const company = card.querySelector('.card-company')?.textContent.trim() || '';
+      const salary = card.querySelector('.salary-figure')?.textContent.trim() || '';
+
+      const utterance = new SpeechSynthesisUtterance(i18n.phrase(currentIndex + 1, title, company, salary));
+      utterance.lang = i18n.lang;
+      utterance.rate = 0.95;
+
+      utterance.onend = () => {
+        currentIndex++;
+        speakNextCard();
+      };
+
+      utterance.onerror = stopPlayback;
+
+      window.speechSynthesis.speak(utterance);
+    };
 
     streamBtn.addEventListener('click', (e) => {
       e.preventDefault();
 
       if (isPlaying || window.speechSynthesis.speaking) {
-        window.speechSynthesis.cancel();
-        isPlaying = false;
-        streamBtn.textContent = '🔊 Listen to Vacancy Stream';
+        stopPlayback();
         return;
       }
 
       window.speechSynthesis.cancel();
-      isPlaying = true;
-      streamBtn.textContent = '⏹ Stop Listening';
+      visibleCards = Array.from(document.querySelectorAll('.job-card:not([hidden])'));
 
-      const visibleCards = Array.from(document.querySelectorAll('.job-card:not([hidden])'));
       if (visibleCards.length === 0) {
-        isPlaying = false;
-        streamBtn.textContent = '🔊 Listen to Vacancy Stream';
+        stopPlayback();
         return;
       }
 
-      let currentIndex = 0;
-
-      function speakNextCard() {
-        if (!isPlaying || currentIndex >= visibleCards.length) {
-          isPlaying = false;
-          streamBtn.textContent = '🔊 Listen to Vacancy Stream';
-          return;
-        }
-
-        const card = visibleCards[currentIndex];
-        const title = card.querySelector('h3')?.textContent.trim() || '';
-        const company = card.querySelector('.card-company')?.textContent.trim() || '';
-        const salary = card.querySelector('.salary-figure')?.textContent.trim() || '';
-
-        const text = `Vacancy ${currentIndex + 1}: ${title} at ${company}. Gross monthly salary: ${salary}.`;
-
-        const utterance = new SpeechSynthesisUtterance(text);
-        utterance.lang = 'en-US';
-        utterance.rate = 0.95;
-
-        utterance.onend = () => {
-          currentIndex++;
-          speakNextCard();
-        };
-
-        utterance.onerror = () => {
-          isPlaying = false;
-          streamBtn.textContent = '🔊 Listen to Vacancy Stream';
-        };
-
-        window.speechSynthesis.speak(utterance);
-      }
-
+      isPlaying = true;
+      currentIndex = 0;
+      streamBtn.textContent = i18n.stop;
       speakNextCard();
     });
   }
@@ -81,33 +89,35 @@
 
     let activeTag = null;
 
-    function applyFilters() {
-      const selectedInd = industrySelect ? industrySelect.value : '';
-      const selectedCity = citySelect ? citySelect.value : '';
-      const selectedType = typeSelect ? typeSelect.value : '';
+    const applyFilters = () => {
+      const sInd = industrySelect?.value || '';
+      const sCity = citySelect?.value || '';
+      const sType = typeSelect?.value || '';
+      const searchTag = activeTag ? activeTag.toLowerCase() : null;
 
-      cards.forEach((card) => {
+      for (let i = 0; i < cards.length; i++) {
+        const card = cards[i];
         const ind = card.getAttribute('data-industry') || '';
         const city = card.getAttribute('data-city') || '';
         const type = card.getAttribute('data-type') || '';
-        const chipsText = card.querySelector('.card-chips-row')?.textContent.toLowerCase() || '';
+        const chips = searchTag ? (card.querySelector('.card-chips-row')?.textContent.toLowerCase() || '') : '';
 
-        const matchesInd = !selectedInd || ind === selectedInd;
-        const matchesCity = !selectedCity || city === selectedCity;
-        const matchesType = !selectedType || type === selectedType;
-        const matchesTag = !activeTag || chipsText.includes(activeTag.toLowerCase());
+        const visible = (!sInd || ind === sInd) &&
+                        (!sCity || city === sCity) &&
+                        (!sType || type === sType) &&
+                        (!searchTag || chips.includes(searchTag));
 
-        if (matchesInd && matchesCity && matchesType && matchesTag) {
+        if (visible) {
           card.removeAttribute('hidden');
         } else {
           card.setAttribute('hidden', '');
         }
-      });
-    }
+      }
+    };
 
-    if (industrySelect) industrySelect.addEventListener('change', applyFilters);
-    if (citySelect) citySelect.addEventListener('change', applyFilters);
-    if (typeSelect) typeSelect.addEventListener('change', applyFilters);
+    industrySelect?.addEventListener('change', applyFilters);
+    citySelect?.addEventListener('change', applyFilters);
+    typeSelect?.addEventListener('change', applyFilters);
 
     chipLinks.forEach((link) => {
       link.addEventListener('click', (e) => {
@@ -118,7 +128,9 @@
           activeTag = null;
           link.classList.remove('active');
         } else {
-          chipLinks.forEach((other) => other.classList.remove('active'));
+          for (let i = 0; i < chipLinks.length; i++) {
+            chipLinks[i].classList.remove('active');
+          }
           activeTag = tag;
           link.classList.add('active');
         }
