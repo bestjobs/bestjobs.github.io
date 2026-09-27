@@ -475,8 +475,15 @@ nav ul {
 }
 .card-chips-row {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   gap: 0.25rem;
+  overflow-x: auto;
+  scrollbar-width: none;
+  align-items: center;
+  min-height: 1.45rem;
+}
+.card-chips-row::-webkit-scrollbar {
+  display: none;
 }
 .chip-item {
   font-size: 0.72rem;
@@ -487,6 +494,7 @@ nav ul {
   border-radius: 4px;
   color: var(--text);
   white-space: nowrap;
+  flex-shrink: 0;
 }
 .card-text-summary {
   font-size: 0.9rem;
