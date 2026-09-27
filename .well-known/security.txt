@@ -1,0 +1,9 @@
+Contact: mailto:office@bestjobs.bg
+Contact: https://bestjobs.bg/contact/
+Expires: 2027-09-01T00:00:00.000Z
+Encryption: https://bestjobs.bg/pgp-key.txt
+Acknowledgments: https://mobikom.bg/about/
+Preferred-Languages: bg, en
+Canonical: https://bestjobs.bg/.well-known/security.txt
+Policy: https://bestjobs.bg/privacy/
+Hiring: https://bestjobs.bg/bestjobs/
