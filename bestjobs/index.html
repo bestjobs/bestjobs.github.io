@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Job Board | BestJobs Bulgaria &bull; Euro Standards &bull; Zero Cookies</title>
+  <meta name="description" content="Verified direct job announcements across Bulgaria. Mandatory Euro (€) salary transparency, 18 social benefit filters, and direct employer contact.">
+  <meta name="theme-color" content="#0052cc">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://bestjobs.bg/bestjobs/">
+  <link rel="alternate" hreflang="en" href="https://bestjobs.bg/bestjobs/">
+  <link rel="alternate" hreflang="bg" href="https://bestjobs.bg/bg/bestjobs/">
+  <link rel="alternate" hreflang="x-default" href="https://bestjobs.bg/bestjobs/">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="icon" type="image/x-icon" href="../favicon.ico">
+  <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+  <link rel="alternate" type="application/rss+xml" title="BestJobs Vacancies Feed" href="../all-jobs.xml">
+  <link rel="alternate" type="application/rss+xml" title="BestJobs VIP Network Feed" href="../vip-jobs.xml">
+</head>
+<body>
+  <header class="site-header">
+    <div class="shell nav-bar">
+      <a href="/bestjobs/" class="brand-link" title="BestJobs Bulgaria — Job Ads Board">
+        <svg viewBox="0 0 240 46" width="220" height="42" class="brand-logo-svg" role="img" aria-label="BestJobs Bulgaria Logo">
+          <g transform="translate(4, 3)">
+            <circle cx="8" cy="20" r="4" fill="#0052cc" />
+            <circle cx="22" cy="10" r="4" fill="#0052cc" />
+            <circle cx="22" cy="30" r="4" fill="#dc2626" />
+            <circle cx="36" cy="20" r="4" fill="#0052cc" />
+            <path d="M8 20 L22 10 L36 20 L22 30 Z M22 10 L22 30" stroke="#0052cc" stroke-width="2" fill="none" />
+            <text x="48" y="24" font-size="22" font-weight="800" fill="currentColor" letter-spacing="-0.02em">bestjobs</text>
+            <text x="50" y="36" font-size="8.2" font-weight="700" fill="#0052cc" letter-spacing="0.12em">BULGARIA</text>
+          </g>
+        </svg>
+      </a>
+      <nav aria-label="Job Board Navigation">
+        <input type="checkbox" id="nav-toggle" class="nav-toggle" aria-label="Toggle Navigation Drawer">
+        <label for="nav-toggle" class="nav-toggle-label" title="Open Navigation Menu">&#9776;</label>
+        <ul>
+          <li><a href="/" class="nav-link" title="Return to Sovereign Mega-Portal Home">&larr; Portal Home</a></li>
+          <li><a href="/bestjobs/" class="nav-link" aria-current="page" title="Current Active Vacancies Stream">Vacancies</a></li>
+          <li><a href="/bestjobs/post/" class="nav-btn" title="Post Vacancy Ad Directly">+ Post a Job</a></li>
+          <li><a href="/bestjobs/blog/" class="nav-link" title="Career Advice and Labor Law Insights">Career Advice</a></li>
+          <li><a href="/bestjobs/help/" class="nav-link" title="Employer and Candidate Documentation">Help Desk</a></li>
+          <li><a href="/contact/" class="nav-link" title="Official Communication Desks">Contact</a></li>
+          <li><a href="/bg/bestjobs/" class="lang-toggle" hreflang="bg" title="Превключете към българската версия на борда">Български (BG)</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <main>
+    <div class="shell">
+      <section class="hero">
+        <span class="hero-tag">SOVEREIGN EMPLOYMENT BOARD &bull; EST. 2013</span>
+        <h1>Direct Employment Board &bull; Bulgaria</h1>
+        <p class="hero-lead">Transparent Gross Compensation in Euro (€) &bull; Verified Direct Contact &bull; Zero Cookies.</p>
+        <p>
+          All vacancy listings mandate unambiguous Euro figures. Resumes route cleanly to the hiring employer's authenticated inbox without intermediary recruitment fees.
+        </p>
+        <div class="hero-actions">
+          <a href="/bestjobs/post/" class="nav-btn" title="Open direct job announcement submission form">+ Post Job Announcement &rarr;</a>
+          <a href="/bestjobs/blog/" class="nav-link" title="Read career advice and labor market guides">Career Advice &amp; Labor Guides &rarr;</a>
+        </div>
+      </section>
+
+      <section class="filter-box" aria-label="Filter Jobs Directory">
+        <p style="font-weight: 700; color: var(--text); margin-bottom: 0.35rem;">
+          Select your industry, region, and preferences below to filter active job vacancies instantly:
+        </p>
+        
+        <div class="filter-selects-row">
+          <select id="filter-industry" class="select-control" aria-label="Filter by Industry Sector">
+            <option value="">All Industries &amp; Sectors (Всички индустрии)</option>
+            <option value="public-sector">Public Administration &amp; State Agencies</option>
+            <option value="defense">Defense &amp; Armed Forces</option>
+            <option value="healthcare">Healthcare, Medicine &amp; Diagnostics</option>
+            <option value="education">Education &amp; Academic Inspectorates</option>
+            <option value="judiciary">Judiciary, Legal &amp; Registers</option>
+            <option value="regional-dev">Regional Development &amp; Public Works</option>
+            <option value="social-security">Social Security &amp; Revenue Services</option>
+            <option value="transport-logistics">Transport, Ports &amp; Infrastructure</option>
+            <option value="agriculture">Agriculture, Forestry &amp; Environment</option>
+            <option value="municipal">Municipal Administrations</option>
+          </select>
+
+          <select id="filter-city" class="select-control" aria-label="Filter by Regional Geography">
+            <option value="">All 28 Bulgarian Administrative Regions</option>
+            <option value="sofia">Sofia-City (София-град)</option>
+            <option value="plovdiv">Plovdiv (Пловдив)</option>
+            <option value="varna">Varna (Варна)</option>
+            <option value="burgas">Burgas (Бургас)</option>
+            <option value="dobrich">Dobrich &amp; Dobruja (Добрич)</option>
+            <option value="ruse">Ruse (Русе)</option>
+            <option value="stara-zagora">Stara Zagora (Стара Загора)</option>
+            <option value="blagoevgrad">Blagoevgrad (Благоевград)</option>
+            <option value="veliko-tarnovo">Veliko Tarnovo (Велико Търново)</option>
+            <option value="vidin">Vidin (Видин)</option>
+            <option value="vratsa">Vratsa (Враца)</option>
+            <option value="gabrovo">Gabrovo (Габрово)</option>
+            <option value="kardzhali">Kardzhali (Кърджали)</option>
+            <option value="kyustendil">Kyustendil (Кюстендил)</option>
+            <option value="lovech">Lovech (Ловеч)</option>
+            <option value="montana">Montana (Монтана)</option>
+            <option value="pazardzhik">Pazardzhik (Пазарджик)</option>
+            <option value="pernik">Pernik (Перник)</option>
+            <option value="pleven">Pleven (Плевен)</option>
+            <option value="razgrad">Razgrad (Разград)</option>
+            <option value="silistra">Silistra (Силистра)</option>
+            <option value="sliven">Sliven (Сливен)</option>
+            <option value="smolyan">Smolyan (Смолян)</option>
+            <option value="sofia-district">Sofia-Province (София-област)</option>
+            <option value="targovishte">Targovishte (Търговище)</option>
+            <option value="haskovo">Haskovo (Хасково)</option>
+            <option value="shumen">Shumen (Шумен)</option>
+            <option value="yambol">Yambol (Ямбол)</option>
+            <option value="remote">Remote &bull; Work from Anywhere (Дистанционно)</option>
+            <option value="abroad">International / Overseas (Чужбина)</option>
+          </select>
+
+          <select id="filter-type" class="select-control" aria-label="Filter by Employment Type">
+            <option value="">All Working Arrangements</option>
+            <option value="civil-service">Civil Service (Служебно правоотношение)</option>
+            <option value="labor-code">Labor Code Contract (Трудов договор по КТ)</option>
+            <option value="full-time">Full-Time (Пълен работен ден)</option>
+          </select>
+        </div>
+
+        <div class="bonus-chips-wrap">
+          <a href="#filter-disconnect" class="chip-btn" data-tag="disconnect" title="Filter by strict ban on off-hours communications">📴 Right to Disconnect</a>
+          <a href="#filter-medical" class="chip-btn" data-tag="medical" title="Filter by statutory annual preventive medical examinations">🩺 Annual Medical Exams</a>
+          <a href="#filter-transit" class="chip-btn" data-tag="transit" title="Filter by dedicated corporate shuttle transit">🚌 Shuttle Transit</a>
+          <a href="#filter-bike" class="chip-btn" data-tag="bike" title="Filter by monthly cash allowance for bicycle commuting">🚴 Bike Allowance</a>
+          <a href="#filter-smoke-free" class="chip-btn" data-tag="smoke-free" title="Filter by bonus leave for non-smokers">🚭 Smoke-Free Bonus</a>
+          <a href="#filter-fruits" class="chip-btn" data-tag="fruits" title="Filter by daily fresh orchard fruits and filtered water">🍎 Fruits &amp; Water</a>
+          <a href="#filter-dental" class="chip-btn" data-tag="dental" title="Filter by corporate dental plan coverage">🦷 Dental Plan</a>
+          <a href="#filter-housing" class="chip-btn" data-tag="housing" title="Filter by employer provided housing or rent subsidy">🏠 Housing Subsidy</a>
+          <a href="#filter-4-day" class="chip-btn" data-tag="4-day" title="Filter by compressed 4-day working schedule">🗓️ 4-Day Week</a>
+          <a href="#filter-car" class="chip-btn" data-tag="car" title="Filter by provided company car and fuel coverage">🚗 Company Car</a>
+          <a href="#filter-insurance" class="chip-btn" data-tag="insurance" title="Filter by full private health and hospital coverage">🏥 Health Insurance</a>
+          <a href="#filter-bonus" class="chip-btn" data-tag="bonus" title="Filter by explicit performance-linked bonuses">📈 Performance Bonus</a>
+          <a href="#filter-tuition" class="chip-btn" data-tag="tuition" title="Filter by university tuition and certification support">🎓 Tuition Aid</a>
+          <a href="#filter-kindergarten" class="chip-btn" data-tag="kindergarten" title="Filter by company nursery or kindergarten support">👶 Kindergarten Subsidy</a>
+          <a href="#filter-relocation" class="chip-btn" data-tag="relocation" title="Filter by full relocation assistance package">📦 Relocation Package</a>
+          <a href="#filter-mental" class="chip-btn" data-tag="mental" title="Filter by paid mental health recharge days">🧠 Mental Health Days</a>
+          <a href="#filter-sabbatical" class="chip-btn" data-tag="sabbatical" title="Filter by time-bank accrued sabbatical options">⏳ Paid Sabbatical</a>
+          <a href="#filter-sober" class="chip-btn" data-tag="sober" title="Filter by alcohol-free professional workplace culture">🍷 Sober Workplace</a>
+        </div>
+      </section>
+
+      <section aria-labelledby="vacancies-heading">
+        <div class="stream-header-bar">
+          <h2 id="vacancies-heading">Current Vacancies &bull; Euro (€) Standard</h2>
+          <a href="#listen-all-stream" id="btn-stream-audio" class="btn-stream-audio" title="Listen consecutively to all active job announcements without looking at screen">🔊 Listen to Vacancy Stream</a>
+        </div>
+
+        <div class="grid-cards" id="jobs-container">
+
+          <article class="job-card vip-card" data-slug="BJ-1001-chief-financial-expert" data-industry="defense" data-city="sofia" data-type="civil-service" data-date="2026-09-27">
+            <div class="card-meta-bar">
+              <span>BJ-1001 &bull; DEFENSE &bull; SOFIA</span>
+              <div class="meta-badges-inline">
+                <a href="/bestjobs/help/#vip" class="vip-tag" title="Learn what a VIP listing is and how to syndicate across network">🌟 VIP</a>
+              </div>
+            </div>
+            <div class="card-title-box">
+              <h3>Chief Financial Expert</h3>
+              <div class="card-subtitle">Accounting &amp; Budget Directorate</div>
+              <div class="card-company">Ministry of Defense <span class="company-web-text">(mod.bg)</span></div>
+            </div>
+            <div class="card-salary-box">
+              <span class="salary-figure">1,388 € / mo</span>
+              <span class="salary-net-calc">(net ~1,077 €)</span>
+            </div>
+            <div class="card-chips-row">
+              <span class="chip-item">🩺 Medical Exams</span>
+              <span class="chip-item">🏥 Full Health</span>
+              <span class="chip-item">📴 Disconnect</span>
+            </div>
+            <div class="card-text-summary">
+              Oversight of military budget execution, state asset audits, and treasury accounting under the State Servant Act.
+            </div>
+            <div class="card-footer-actions">
+              <a href="/jobs/BJ-1001-chief-financial-expert/" class="card-spec-link" title="Open complete technical specification for Chief Financial Expert">Read Full Job &rarr;</a>
+              <a href="mailto:ras@government.bg?subject=Application:%20Chief%20Financial%20Expert%20(Ref:%20BJ-1001)" class="btn-direct-apply" title="Apply directly to Ministry of Defense via email">Apply with Email &rarr;</a>
+            </div>
+          </article>
+
+          <article class="job-card vip-card" data-slug="BJ-1002-state-social-policy-expert" data-industry="defense" data-city="sofia" data-type="civil-service" data-date="2026-09-27">
+            <div class="card-meta-bar">
+              <span>BJ-1002 &bull; DEFENSE &bull; SOFIA</span>
+              <div class="meta-badges-inline">
+                <a href="/bestjobs/help/#vip" class="vip-tag" title="Learn about VIP priority placement">🌟 VIP</a>
+              </div>
+            </div>
+            <div class="card-title-box">
+              <h3>State Social Policy Expert</h3>
+              <div class="card-subtitle">Social Activities &amp; Veterans Affairs</div>
+              <div class="card-company">Ministry of Defense <span class="company-web-text">(mod.bg)</span></div>
+            </div>
+            <div class="card-salary-box">
+              <span class="salary-figure">1,654 € / mo</span>
+              <span class="salary-net-calc">(net ~1,283 €)</span>
+            </div>
+            <div class="card-chips-row">
+              <span class="chip-item">🩺 Medical Exams</span>
+              <span class="chip-item">🚌 Transit Pass</span>
+              <span class="chip-item">📴 Disconnect</span>
+            </div>
+            <div class="card-text-summary">
+              Policy formulation for armed forces housing funds, social rehabilitation, and veteran support programs across the country.
+            </div>
+            <div class="card-footer-actions">
+              <a href="/jobs/BJ-1002-state-social-policy-expert/" class="card-spec-link" title="Open complete technical specification for State Social Policy Expert">Read Full Job &rarr;</a>
+              <a href="mailto:ras@government.bg?subject=Application:%20State%20Expert%20Social%20(Ref:%20BJ-1002)" class="btn-direct-apply" title="Apply directly via email">Apply with Email &rarr;</a>
+            </div>
+          </article>
+
+          <article class="job-card vip-card" data-slug="BJ-1003-chief-inspector-regional-development" data-industry="regional-dev" data-city="sofia" data-type="civil-service" data-date="2026-09-27">
+            <div class="card-meta-bar">
+              <span>BJ-1003 &bull; REGIONAL DEV &bull; SOFIA</span>
+              <div class="meta-badges-inline">
+                <a href="/bestjobs/help/#vip" class="vip-tag" title="Learn about VIP syndication">🌟 VIP</a>
+              </div>
+            </div>
+            <div class="card-title-box">
+              <h3>Chief Inspector &bull; Regional Works</h3>
+              <div class="card-subtitle">Inspectorate &amp; Administrative Control</div>
+              <div class="card-company">Ministry of Regional Development <span class="company-web-text">(mrrb.bg)</span></div>
+            </div>
+            <div class="card-salary-box">
+              <span class="salary-figure">1,207 € / mo</span>
+              <span class="salary-net-calc">(net ~937 €)</span>
+            </div>
+            <div class="card-chips-row">
+              <span class="chip-item">🩺 Medical Exams</span>
+              <span class="chip-item">🛡️ Accident Cover</span>
+              <span class="chip-item">📴 Disconnect</span>
+            </div>
+            <div class="card-text-summary">
+              Administrative inspection of infrastructure projects, municipal funding audits, and anti-corruption compliance.
+            </div>
+            <div class="card-footer-actions">
+              <a href="/jobs/BJ-1003-chief-inspector-regional-development/" class="card-spec-link" title="Open complete technical specification for Chief Inspector MRRB">Read Full Job &rarr;</a>
+              <a href="mailto:ras@government.bg?subject=Application:%20Chief%20Inspector%20MRRB%20(Ref:%20BJ-1003)" class="btn-direct-apply" title="Apply directly via email">Apply with Email &rarr;</a>
+            </div>
+          </article>
+
+          <article class="job-card" data-slug="BJ-1004-it-workflow-systems-analyst" data-industry="judiciary" data-city="sofia" data-type="civil-service" data-date="2026-09-26">
+            <div class="card-meta-bar">
+              <span>BJ-1004 &bull; IT &amp; REGISTERS &bull; SOFIA</span>
+            </div>
+            <div class="card-title-box">
+              <h3>IT Workflow Systems Analyst</h3>
+              <div class="card-subtitle">Trade Register Technology Directorate</div>
+              <div class="card-company">Registry Agency of Bulgaria <span class="company-web-text">(registryagency.bg)</span></div>
+            </div>
+            <div class="card-salary-box">
+              <span class="salary-figure">1,450 € / mo</span>
+              <span class="salary-net-calc">(net ~1,125 €)</span>
+            </div>
+            <div class="card-chips-row">
+              <span class="chip-item">🩺 Medical Exams</span>
+              <span class="chip-item">🦷 Dental Plan</span>
+              <span class="chip-item">📴 Disconnect</span>
+            </div>
+            <div class="card-text-summary">
+              Optimization of data exchange pipelines, Trade Register integration, and property portal electronic service workflows.
+            </div>
+            <div class="card-footer-actions">
+              <a href="/jobs/BJ-1004-it-workflow-systems-analyst/" class="card-spec-link" title="Open complete technical specification for IT Analyst">Read Full Job &rarr;</a>
+              <a href="mailto:office@registryagency.bg?subject=Application:%20IT%20Analyst%20(Ref:%20BJ-1004)" class="btn-direct-apply" title="Apply directly via email">Apply with Email &rarr;</a>
+            </div>
+          </article>
+
+          <article class="job-card" data-slug="BJ-1005-senior-legal-counsel" data-industry="municipal" data-city="kardzhali" data-type="civil-service" data-date="2026-09-26">
+            <div class="card-meta-bar">
+              <span>BJ-1005 &bull; MUNICIPAL &bull; KARDZHALI</span>
+            </div>
+            <div class="card-title-box">
+              <h3>Senior Legal Counsel</h3>
+              <div class="card-subtitle">Legal &amp; Public Procurement Directorate</div>
+              <div class="card-company">Kardzhali Municipality <span class="company-web-text">(kardjali.bg)</span></div>
+            </div>
+            <div class="card-salary-box">
+              <span class="salary-figure">1,150 € / mo</span>
+              <span class="salary-net-calc">(net ~892 €)</span>
+            </div>
+            <div class="card-chips-row">
+              <span class="chip-item">🩺 Medical Exams</span>
+              <span class="chip-item">🚌 Transit Pass</span>
+              <span class="chip-item">📴 Disconnect</span>
+            </div>
+            <div class="card-text-summary">
+              Legal review of public procurement tenders, municipal property contracts, and litigation before regional administrative courts.
+            </div>
+            <div class="card-footer-actions">
+              <a href="/jobs/BJ-1005-senior-legal-counsel/" class="card-spec-link" title="Open complete technical specification for Senior Legal Counsel">Read Full Job &rarr;</a>
+              <a href="mailto:obshtina@kardjali.bg?subject=Application:%20Legal%20Counsel%20(Ref:%20BJ-1005)" class="btn-direct-apply" title="Apply directly via email">Apply with Email &rarr;</a>
+            </div>
+          </article>
+
+          <article class="job-card" data-slug="BJ-1006-head-chief-architect" data-industry="municipal" data-city="sofia" data-type="civil-service" data-date="2026-09-25">
+            <div class="card-meta-bar">
+              <span>BJ-1006 &bull; MUNICIPAL &bull; SOFIA</span>
+            </div>
+            <div class="card-title-box">
+              <h3>Head Chief Architect</h3>
+              <div class="card-subtitle">Urban Planning &amp; Spatial Development</div>
+              <div class="card-company">Triaditsa District Municipality <span class="company-web-text">(triaditza.org)</span></div>
+            </div>
+            <div class="card-salary-box">
+              <span class="salary-figure">2,100 € / mo</span>
+              <span class="salary-net-calc">(net ~1,630 €)</span>
+            </div>
+            <div class="card-chips-row">
+              <span class="chip-item">🩺 Medical Exams</span>
+              <span class="chip-item">🅿️ Parking Spot</span>
+              <span class="chip-item">📴 Disconnect</span>
+            </div>
+            <div class="card-text-summary">
+              Comprehensive urban development approval, territorial planning, and building permit validation under the Spatial Development Act.
+            </div>
+            <div class="card-footer-actions">
+              <a href="/jobs/BJ-1006-head-chief-architect/" class="card-spec-link" title="Open complete technical specification for Head Architect">Read Full Job &rarr;</a>
+              <a href="mailto:triaditza@triaditza.org?subject=Application:%20Head%20Architect%20(Ref:%20BJ-1006)" class="btn-direct-apply" title="Apply directly via email">Apply with Email &rarr;</a>
+            </div>
+          </article>
+
+          <article class="job-card" data-slug="BJ-1007-senior-education-inspector" data-industry="education" data-city="varna" data-type="civil-service" data-date="2026-09-24">
+            <div class="card-meta-bar">
+              <span>BJ-1007 &bull; EDUCATION &bull; VARNA</span>
+            </div>
+            <div class="card-title-box">
+              <h3>Senior Education Inspector</h3>
+              <div class="card-subtitle">Regional Education Department (RUO Varna)</div>
+              <div class="card-company">Ministry of Education and Science <span class="company-web-text">(mon.bg)</span></div>
+            </div>
+            <div class="card-salary-box">
+              <span class="salary-figure">1,350 € / mo</span>
+              <span class="salary-net-calc">(net ~1,048 €)</span>
+            </div>
+            <div class="card-chips-row">
+              <span class="chip-item">🩺 Medical Exams</span>
+              <span class="chip-item">🎓 Tuition Aid</span>
+              <span class="chip-item">📴 Disconnect</span>
+            </div>
+            <div class="card-text-summary">
+              Curriculum compliance, state examination coordination (Matura), and pedagogical monitoring in secondary schools across Varna.
+            </div>
+            <div class="card-footer-actions">
+              <a href="/jobs/BJ-1007-senior-education-inspector/" class="card-spec-link" title="Open complete technical specification for Senior Education Inspector">Read Full Job &rarr;</a>
+              <a href="mailto:rio_varna@mon.bg?subject=Application:%20RUO%20Inspector%20(Ref:%20BJ-1007)" class="btn-direct-apply" title="Apply directly via email">Apply with Email &rarr;</a>
+            </div>
+          </article>
+
+          <article class="job-card" data-slug="BJ-1008-pension-claims-auditor" data-industry="social-security" data-city="dobrich" data-type="civil-service" data-date="2026-09-24">
+            <div class="card-meta-bar">
+              <span>BJ-1008 &bull; SOCIAL SECURITY &bull; DOBRICH</span>
+            </div>
+            <div class="card-title-box">
+              <h3>Pension Claims Senior Auditor</h3>
+              <div class="card-subtitle">Pensions &amp; Social Insurance Directorate</div>
+              <div class="card-company">National Social Security Institute (NOI Dobrich) <span class="company-web-text">(nssi.bg)</span></div>
+            </div>
+            <div class="card-salary-box">
+              <span class="salary-figure">1,180 € / mo</span>
+              <span class="salary-net-calc">(net ~916 €)</span>
+            </div>
+            <div class="card-chips-row">
+              <span class="chip-item">🩺 Medical Exams</span>
+              <span class="chip-item">🏥 Full Health</span>
+              <span class="chip-item">📴 Disconnect</span>
+            </div>
+            <div class="card-text-summary">
+              Verification of labor and insurance records (UP-2, UP-3), pension entitlement calculations, and statutory fund audits in Dobrich.
+            </div>
+            <div class="card-footer-actions">
+              <a href="/jobs/BJ-1008-pension-claims-auditor/" class="card-spec-link" title="Open complete technical specification for Pension Auditor">Read Full Job &rarr;</a>
+              <a href="mailto:dobrich@nssi.bg?subject=Application:%20Pension%20Auditor%20(Ref:%20BJ-1008)" class="btn-direct-apply" title="Apply directly via email">Apply with Email &rarr;</a>
+            </div>
+          </article>
+
+          <article class="job-card" data-slug="BJ-1009-senior-revenue-tax-inspector" data-industry="social-security" data-city="plovdiv" data-type="civil-service" data-date="2026-09-23">
+            <div class="card-meta-bar">
+              <span>BJ-1009 &bull; REVENUE &bull; PLOVDIV</span>
+            </div>
+            <div class="card-title-box">
+              <h3>Senior Revenue &amp; Tax Inspector</h3>
+              <div class="card-subtitle">Audits &amp; Fiscal Control Department</div>
+              <div class="card-company">National Revenue Agency (NRA Plovdiv) <span class="company-web-text">(nra.bg)</span></div>
+            </div>
+            <div class="card-salary-box">
+              <span class="salary-figure">1,400 € / mo</span>
+              <span class="salary-net-calc">(net ~1,086 €)</span>
+            </div>
+            <div class="card-chips-row">
+              <span class="chip-item">🩺 Medical Exams</span>
+              <span class="chip-item">📈 Performance Bonus</span>
+              <span class="chip-item">📴 Disconnect</span>
+            </div>
+            <div class="card-text-summary">
+              Cross-border VAT audits, corporate tax verification, and fiscal transaction monitoring across South-Central Bulgaria.
+            </div>
+            <div class="card-footer-actions">
+              <a href="/jobs/BJ-1009-senior-revenue-tax-inspector/" class="card-spec-link" title="Open complete technical specification for Tax Inspector">Read Full Job &rarr;</a>
+              <a href="mailto:td_plovdiv@ro02.nra.bg?subject=Application:%20Tax%20Inspector%20(Ref:%20BJ-1009)" class="btn-direct-apply" title="Apply directly via email">Apply with Email &rarr;</a>
+            </div>
+          </article>
+
+          <article class="job-card" data-slug="BJ-1010-customs-intelligence-officer" data-industry="transport-logistics" data-city="ruse" data-type="civil-service" data-date="2026-09-23">
+            <div class="card-meta-bar">
+              <span>BJ-1010 &bull; CUSTOMS &bull; RUSE</span>
+            </div>
+            <div class="card-title-box">
+              <h3>Senior Customs Intelligence Officer</h3>
+              <div class="card-subtitle">Danube Border Customs Directorate</div>
+              <div class="card-company">National Customs Agency <span class="company-web-text">(customs.bg)</span></div>
+            </div>
+            <div class="card-salary-box">
+              <span class="salary-figure">1,420 € / mo</span>
+              <span class="salary-net-calc">(net ~1,102 €)</span>
+            </div>
+            <div class="card-chips-row">
+              <span class="chip-item">🩺 Medical Exams</span>
+              <span class="chip-item">🛡️ Accident Cover</span>
+              <span class="chip-item">📴 Disconnect</span>
+            </div>
+            <div class="card-text-summary">
+              Cargo manifest scanning, dual-use goods verification, and international commercial river freight control at Danube Bridge.
+            </div>
+            <div class="card-footer-actions">
+              <a href="/jobs/BJ-1010-customs-intelligence-officer/" class="card-spec-link" title="Open complete technical specification for Customs Officer">Read Full Job &rarr;</a>
+              <a href="mailto:customs_ruse@customs.bg?subject=Application:%20Customs%20Officer%20(Ref:%20BJ-1010)" class="btn-direct-apply" title="Apply directly via email">Apply with Email &rarr;</a>
+            </div>
+          </article>
+
+          <article class="job-card" data-slug="BJ-1011-chief-epidemiologist-inspector" data-industry="healthcare" data-city="burgas" data-type="civil-service" data-date="2026-09-22">
+            <div class="card-meta-bar">
+              <span>BJ-1011 &bull; HEALTHCARE &bull; BURGAS</span>
+            </div>
+            <div class="card-title-box">
+              <h3>Chief Epidemiologist Inspector</h3>
+              <div class="card-subtitle">Communicable Diseases Directorate</div>
+              <div class="card-company">Regional Health Inspection (RZI Burgas) <span class="company-web-text">(rzi-burgas.bg)</span></div>
+            </div>
+            <div class="card-salary-box">
+              <span class="salary-figure">1,500 € / mo</span>
+              <span class="salary-net-calc">(net ~1,164 €)</span>
+            </div>
+            <div class="card-chips-row">
+              <span class="chip-item">🩺 Medical Exams</span>
+              <span class="chip-item">🏥 Full Health</span>
+              <span class="chip-item">📴 Disconnect</span>
+            </div>
+            <div class="card-text-summary">
+              Epidemiological surveillance, coastal water health audits, and sanitary control across Black Sea seaside municipalities.
+            </div>
+            <div class="card-footer-actions">
+              <a href="/jobs/BJ-1011-chief-epidemiologist-inspector/" class="card-spec-link" title="Open complete technical specification for Chief Epidemiologist">Read Full Job &rarr;</a>
+              <a href="mailto:rzi@rzi-burgas.bg?subject=Application:%20Chief%20Epidemiologist%20(Ref:%20BJ-1011)" class="btn-direct-apply" title="Apply directly via email">Apply with Email &rarr;</a>
+            </div>
+          </article>
+
+          <article class="job-card" data-slug="BJ-1012-senior-forestry-engineer" data-industry="agriculture" data-city="shumen" data-type="labor-code" data-date="2026-09-21">
+            <div class="card-meta-bar">
+              <span>BJ-1012 &bull; FORESTRY &bull; SHUMEN</span>
+            </div>
+            <div class="card-title-box">
+              <h3>Senior Forestry Engineer</h3>
+              <div class="card-subtitle">Forest Protection &amp; Timber Management</div>
+              <div class="card-company">Northeastern State Forestry Enterprise <span class="company-web-text">(dpshumen.bg)</span></div>
+            </div>
+            <div class="card-salary-box">
+              <span class="salary-figure">1,250 € / mo</span>
+              <span class="salary-net-calc">(net ~970 €)</span>
+            </div>
+            <div class="card-chips-row">
+              <span class="chip-item">🩺 Medical Exams</span>
+              <span class="chip-item">🚗 Company Car</span>
+              <span class="chip-item">🛡️ Accident Cover</span>
+            </div>
+            <div class="card-text-summary">
+              Afforestation programs, timber harvesting compliance, and wildfire prevention monitoring across Shumen and Ludogorie state forest tracts.
+            </div>
+            <div class="card-footer-actions">
+              <a href="/jobs/BJ-1012-senior-forestry-engineer/" class="card-spec-link" title="Open complete technical specification for Forestry Engineer">Read Full Job &rarr;</a>
+              <a href="mailto:dpshumen@abv.bg?subject=Application:%20Forestry%20Engineer%20(Ref:%20BJ-1012)" class="btn-direct-apply" title="Apply directly via email">Apply with Email &rarr;</a>
+            </div>
+          </article>
+
+          <article class="job-card" data-slug="BJ-1013-environmental-monitoring-inspector" data-industry="agriculture" data-city="stara-zagora" data-type="civil-service" data-date="2026-09-21">
+            <div class="card-meta-bar">
+              <span>BJ-1013 &bull; ENVIRONMENT &bull; STARA ZAGORA</span>
+            </div>
+            <div class="card-title-box">
+              <h3>Chief Environmental Air Quality Inspector</h3>
+              <div class="card-subtitle">Regional Inspectorate of Environment and Water</div>
+              <div class="card-company">RIOSV Stara Zagora <span class="company-web-text">(stz.riosv.com)</span></div>
+            </div>
+            <div class="card-salary-box">
+              <span class="salary-figure">1,220 € / mo</span>
+              <span class="salary-net-calc">(net ~947 €)</span>
+            </div>
+            <div class="card-chips-row">
+              <span class="chip-item">🩺 Medical Exams</span>
+              <span class="chip-item">🏥 Full Health</span>
+              <span class="chip-item">📴 Disconnect</span>
+            </div>
+            <div class="card-text-summary">
+              Stationary air emissions tracking, industrial discharge control, and Maritsa industrial basin ecological permit verifications.
+            </div>
+            <div class="card-footer-actions">
+              <a href="/jobs/BJ-1013-environmental-monitoring-inspector/" class="card-spec-link" title="Open complete technical specification for Air Quality Inspector">Read Full Job &rarr;</a>
+              <a href="mailto:office@stz.riosv.com?subject=Application:%20Air%20Quality%20Inspector%20(Ref:%20BJ-1013)" class="btn-direct-apply" title="Apply directly via email">Apply with Email &rarr;</a>
+            </div>
+          </article>
+
+          <article class="job-card" data-slug="BJ-1014-chief-agricultural-fund-inspector" data-industry="agriculture" data-city="dobrich" data-type="civil-service" data-date="2026-09-20">
+            <div class="card-meta-bar">
+              <span>BJ-1014 &bull; AGRIBUSINESS &bull; DOBRICH</span>
+            </div>
+            <div class="card-title-box">
+              <h3>Chief Agricultural Fund Inspector</h3>
+              <div class="card-subtitle">Direct Payments &amp; Farm Subsidy Verification</div>
+              <div class="card-company">State Fund Agriculture (DFZ Dobrich) <span class="company-web-text">(dfz.bg)</span></div>
+            </div>
+            <div class="card-salary-box">
+              <span class="salary-figure">1,320 € / mo</span>
+              <span class="salary-net-calc">(net ~1,024 €)</span>
+            </div>
+            <div class="card-chips-row">
+              <span class="chip-item">🩺 Medical Exams</span>
+              <span class="chip-item">🚗 Company Car</span>
+              <span class="chip-item">📴 Disconnect</span>
+            </div>
+            <div class="card-text-summary">
+              Field on-the-spot inspections of arable land, satellite crop verification, and EU agricultural direct subsidies control in Dobruja.
+            </div>
+            <div class="card-footer-actions">
+              <a href="/jobs/BJ-1014-chief-agricultural-fund-inspector/" class="card-spec-link" title="Open complete technical specification for Agricultural Inspector">Read Full Job &rarr;</a>
+              <a href="mailto:dfz@dfz.bg?subject=Application:%20Agricultural%20Inspector%20(Ref:%20BJ-1014)" class="btn-direct-apply" title="Apply directly via email">Apply with Email &rarr;</a>
+            </div>
+          </article>
+
+          <article class="job-card" data-slug="BJ-1015-cadastral-mapping-geodesist" data-industry="judiciary" data-city="blagoevgrad" data-type="civil-service" data-date="2026-09-19">
+            <div class="card-meta-bar">
+              <span>BJ-1015 &bull; REGISTERS &bull; BLAGOEVGRAD</span>
+            </div>
+            <div class="card-title-box">
+              <h3>Senior Cadastral Mapping Geodesist</h3>
+              <div class="card-subtitle">Cadastre and Property Registration Service</div>
+              <div class="card-company">Geodesy &amp; Cadastre Agency (AGKK) <span class="company-web-text">(cadastre.bg)</span></div>
+            </div>
+            <div class="card-salary-box">
+              <span class="salary-figure">1,190 € / mo</span>
+              <span class="salary-net-calc">(net ~923 €)</span>
+            </div>
+            <div class="card-chips-row">
+              <span class="chip-item">🩺 Medical Exams</span>
+              <span class="chip-item">🚌 Transit Pass</span>
+              <span class="chip-item">📴 Disconnect</span>
+            </div>
+            <div class="card-text-summary">
+              Validation of digital cadastral maps, land boundary dispute resolution, and registration of property plans under ZKIIR.
+            </div>
+            <div class="card-footer-actions">
+              <a href="/jobs/BJ-1015-cadastral-mapping-geodesist/" class="card-spec-link" title="Open complete technical specification for Geodesist">Read Full Job &rarr;</a>
+              <a href="mailto:blagoevgrad@cadastre.bg?subject=Application:%20Geodesist%20(Ref:%20BJ-1015)" class="btn-direct-apply" title="Apply directly via email">Apply with Email &rarr;</a>
+            </div>
+          </article>
+
+          <article class="job-card" data-slug="BJ-1016-port-state-control-maritime-inspector" data-industry="transport-logistics" data-city="varna" data-type="civil-service" data-date="2026-09-18">
+            <div class="card-meta-bar">
+              <span>BJ-1016 &bull; MARITIME &bull; VARNA</span>
+            </div>
+            <div class="card-title-box">
+              <h3>Port State Control Maritime Inspector</h3>
+              <div class="card-subtitle">Maritime Administration Executive Agency</div>
+              <div class="card-company">Port Administration Varna <span class="company-web-text">(marad.bg)</span></div>
+            </div>
+            <div class="card-salary-box">
+              <span class="salary-figure">1,600 € / mo</span>
+              <span class="salary-net-calc">(net ~1,241 €)</span>
+            </div>
+            <div class="card-chips-row">
+              <span class="chip-item">🩺 Medical Exams</span>
+              <span class="chip-item">🛡️ Accident Cover</span>
+              <span class="chip-item">📴 Disconnect</span>
+            </div>
+            <div class="card-text-summary">
+              Ship safety audits, Paris MoU vessel inspections, seafarers STCW licensing verification, and maritime pollution prevention in Varna bay.
+            </div>
+            <div class="card-footer-actions">
+              <a href="/jobs/BJ-1016-port-state-control-maritime-inspector/" class="card-spec-link" title="Open complete technical specification for Maritime Inspector">Read Full Job &rarr;</a>
+              <a href="mailto:hm_vn@marad.bg?subject=Application:%20Maritime%20Inspector%20(Ref:%20BJ-1016)" class="btn-direct-apply" title="Apply directly via email">Apply with Email &rarr;</a>
+            </div>
+          </article>
+
+          <article class="job-card" data-slug="BJ-1017-chief-energy-efficiency-analyst" data-industry="public-sector" data-city="sofia" data-type="civil-service" data-date="2026-09-17">
+            <div class="card-meta-bar">
+              <span>BJ-1017 &bull; ENERGY &bull; SOFIA</span>
+            </div>
+            <div class="card-title-box">
+              <h3>Chief Energy Efficiency Analyst</h3>
+              <div class="card-subtitle">Sustainable Energy Development Agency (AUER)</div>
+              <div class="card-company">Ministry of Energy <span class="company-web-text">(seea.government.bg)</span></div>
+            </div>
+            <div class="card-salary-box">
+              <span class="salary-figure">1,480 € / mo</span>
+              <span class="salary-net-calc">(net ~1,148 €)</span>
+            </div>
+            <div class="card-chips-row">
+              <span class="chip-item">🩺 Medical Exams</span>
+              <span class="chip-item">🚴 Bike Allowance</span>
+              <span class="chip-item">📴 Disconnect</span>
+            </div>
+            <div class="card-text-summary">
+              Audit of national energy efficiency passports for public buildings, industrial energy audits, and EU decarbonization metrics.
+            </div>
+            <div class="card-footer-actions">
+              <a href="/jobs/BJ-1017-chief-energy-efficiency-analyst/" class="card-spec-link" title="Open complete technical specification for Energy Analyst">Read Full Job &rarr;</a>
+              <a href="mailto:auer@seea.government.bg?subject=Application:%20Energy%20Analyst%20(Ref:%20BJ-1017)" class="btn-direct-apply" title="Apply directly via email">Apply with Email &rarr;</a>
+            </div>
+          </article>
+
+          <article class="job-card" data-slug="BJ-1018-chief-labor-standards-inspector" data-industry="social-security" data-city="plovdiv" data-type="civil-service" data-date="2026-09-17">
+            <div class="card-meta-bar">
+              <span>BJ-1018 &bull; LABOR LAW &bull; PLOVDIV</span>
+            </div>
+            <div class="card-title-box">
+              <h3>Chief Labor Standards Inspector</h3>
+              <div class="card-subtitle">General Labor Inspection (GIT Plovdiv)</div>
+              <div class="card-company">Ministry of Labor and Social Policy <span class="company-web-text">(gli.government.bg)</span></div>
+            </div>
+            <div class="card-salary-box">
+              <span class="salary-figure">1,260 € / mo</span>
+              <span class="salary-net-calc">(net ~978 €)</span>
+            </div>
+            <div class="card-chips-row">
+              <span class="chip-item">🩺 Medical Exams</span>
+              <span class="chip-item">🏥 Full Health</span>
+              <span class="chip-item">📴 Disconnect</span>
+            </div>
+            <div class="card-text-summary">
+              Workplace safety monitoring, undeclared labor audits, working hours control under the Labor Code, and occupational hazard prevention.
+            </div>
+            <div class="card-footer-actions">
+              <a href="/jobs/BJ-1018-chief-labor-standards-inspector/" class="card-spec-link" title="Open complete technical specification for Labor Inspector">Read Full Job &rarr;</a>
+              <a href="mailto:info_oit_pd@gli.government.bg?subject=Application:%20Labor%20Inspector%20(Ref:%20BJ-1018)" class="btn-direct-apply" title="Apply directly via email">Apply with Email &rarr;</a>
+            </div>
+          </article>
+
+          <article class="job-card" data-slug="BJ-1019-senior-laboratory-microbiologist" data-industry="agriculture" data-city="dobrich" data-type="civil-service" data-date="2026-09-16">
+            <div class="card-meta-bar">
+              <span>BJ-1019 &bull; FOOD SAFETY &bull; DOBRICH</span>
+            </div>
+            <div class="card-title-box">
+              <h3>Senior Laboratory Microbiologist</h3>
+              <div class="card-subtitle">Food Safety Directorate (ODBH Dobrich)</div>
+              <div class="card-company">Bulgarian Food Safety Agency (BFSA) <span class="company-web-text">(bfsa.bg)</span></div>
+            </div>
+            <div class="card-salary-box">
+              <span class="salary-figure">1,280 € / mo</span>
+              <span class="salary-net-calc">(net ~993 €)</span>
+            </div>
+            <div class="card-chips-row">
+              <span class="chip-item">🩺 Medical Exams</span>
+              <span class="chip-item">🍎 Fruits &amp; Water</span>
+              <span class="chip-item">📴 Disconnect</span>
+            </div>
+            <div class="card-text-summary">
+              Microbiological testing of meat, dairy, and agricultural food samples from Dobruja agricultural processors. ISO 17025 accredited methods.
+            </div>
+            <div class="card-footer-actions">
+              <a href="/jobs/BJ-1019-senior-laboratory-microbiologist/" class="card-spec-link" title="Open complete technical specification for Microbiologist">Read Full Job &rarr;</a>
+              <a href="mailto:odbh_dobrich@bfsa.bg?subject=Application:%20Microbiologist%20(Ref:%20BJ-1019)" class="btn-direct-apply" title="Apply directly via email">Apply with Email &rarr;</a>
+            </div>
+          </article>
+
+          <article class="job-card" data-slug="BJ-1020-civil-emergency-operations-specialist" data-industry="public-sector" data-city="ruse" data-type="civil-service" data-date="2026-09-15">
+            <div class="card-meta-bar">
+              <span>BJ-1020 &bull; CIVIL PROTECTION &bull; RUSE</span>
+            </div>
+            <div class="card-title-box">
+              <h3>Civil Emergency Operations Specialist</h3>
+              <div class="card-subtitle">Fire Safety and Civil Protection (PBZN Ruse)</div>
+              <div class="card-company">Ministry of Interior <span class="company-web-text">(mvr.bg)</span></div>
+            </div>
+            <div class="card-salary-box">
+              <span class="salary-figure">1,390 € / mo</span>
+              <span class="salary-net-calc">(net ~1,079 €)</span>
+            </div>
+            <div class="card-chips-row">
+              <span class="chip-item">🩺 Medical Exams</span>
+              <span class="chip-item">🛡️ Accident Cover</span>
+              <span class="chip-item">🚗 Company Car</span>
+            </div>
+            <div class="card-text-summary">
+              Crisis management planning for Danube flood protection, chemical risk monitoring, and coordinated regional disaster relief operations.
+            </div>
+            <div class="card-footer-actions">
+              <a href="/jobs/BJ-1020-civil-emergency-operations-specialist/" class="card-spec-link" title="Open complete technical specification for Emergency Specialist">Read Full Job &rarr;</a>
+              <a href="mailto:ruse@mvr.bg?subject=Application:%20Emergency%20Specialist%20(Ref:%20BJ-1020)" class="btn-direct-apply" title="Apply directly via email">Apply with Email &rarr;</a>
+            </div>
+          </article>
+
+          <article class="job-card" data-slug="BJ-1021-state-secondary-school-educator" data-industry="education" data-city="abroad" data-type="civil-service" data-date="2026-09-15">
+            <div class="card-meta-bar">
+              <span>BJ-1021 &bull; EDUCATION &bull; BRATISLAVA (ABROAD)</span>
+            </div>
+            <div class="card-title-box">
+              <h3>State Secondary School Educator</h3>
+              <div class="card-subtitle">Bulgarian State School "Hristo Botev" &bull; Slovakia</div>
+              <div class="card-company">Ministry of Education and Science <span class="company-web-text">(mon.bg)</span></div>
+            </div>
+            <div class="card-salary-box">
+              <span class="salary-figure">2,450 € / mo</span>
+              <span class="salary-net-calc">(net ~2,180 €)</span>
+            </div>
+            <div class="card-chips-row">
+              <span class="chip-item">🩺 Medical Exams</span>
+              <span class="chip-item">🏠 Housing Subsidy</span>
+              <span class="chip-item">📦 Relocation</span>
+            </div>
+            <div class="card-text-summary">
+              Official state educational posting in Bratislava, Slovakia. Teaching Bulgarian language, literature, and culture under national curriculum abroad.
+            </div>
+            <div class="card-footer-actions">
+              <a href="/jobs/BJ-1021-state-secondary-school-educator/" class="card-spec-link" title="Open complete technical specification for Educator Bratislava">Read Full Job &rarr;</a>
+              <a href="mailto:edubg@mon.bg?subject=Application:%20Educator%20Bratislava%20(Ref:%20BJ-1021)" class="btn-direct-apply" title="Apply directly via email">Apply with Email &rarr;</a>
+            </div>
+          </article>
+
+        </div>
+
+        <div class="stream-load-bar">
+          <a href="/bestjobs/post/" class="nav-btn" title="Publish an official vacancy announcement on BestJobs">+ Post a Vacancy Announcement</a>
+        </div>
+      </section>
+
+      <section class="audit-box" aria-labelledby="dispatch-heading">
+        <h3 id="dispatch-heading">Executive Labor Market Dispatch &bull; Ani Ivanova Desk</h3>
+        <p>
+          We do not operate web tracking databases or commercial mailing lists. To receive our macroeconomic summary of verified Euro-denominated vacancies, labor law analyses, and wage indices across Bulgaria, initiate a direct subscription by sending a blank email to Chief Editor Ani Ivanova:
+        </p>
+        <p style="margin-top: 0.5rem;">
+          <a href="mailto:ani@bestjobs.bg?subject=Subscribe%20to%20BestJobs%20Market%20Dispatch" class="nav-btn" style="display: inline-grid; width: max-content;" title="Subscribe directly by sending email to Ani Ivanova">Subscribe via Email: ani@bestjobs.bg &rarr;</a>
+        </p>
+      </section>
+
+      <section class="audit-box" aria-labelledby="standards-heading">
+        <h3 id="standards-heading">Institutional Employment Directives &bull; Zero Compromise</h3>
+        <ul class="audit-list">
+          <li><strong>Mandatory Euro Compensation:</strong> Every vacancy listing enforces an unambiguous Gross figure in Euro (€). Postings with undefined or negotiable salaries are systematically rejected.</li>
+          <li><strong>100% White Economy:</strong> We strictly bar unofficial cash transactions. Full social and healthcare accruals protect the candidate's statutory pension and safety rights.</li>
+          <li><strong>Zero Candidate Tracking:</strong> No candidate resumes or personal data are stored in third-party server databases. Applications route cleanly to the employer's authenticated email.</li>
+          <li><strong>Closed Network Integrity:</strong> Outbound active hyperlinks resolve strictly within the sovereign consortium: mobikom.bg, dobrichnews.com, dobruja.com, and bestjobs.bg.</li>
+          <li><strong>Regulatory Notice (ЗНЗ Shield):</strong> BestJobs.bg operates strictly as a decentralized classified job advertising bulletin. The platform does not perform employment mediation, recruitment agency services, or candidate screening under the Employment Promotion Act (ЗНЗ). All employment relationships are established directly between the candidate and the hiring employer.</li>
+        </ul>
+      </section>
+
+      <section class="conversion-banner" aria-labelledby="employer-callout">
+        <div>
+          <h3 id="employer-callout">Looking to recruit verified talent in Bulgaria?</h3>
+          <p>Publish vacancy listings directly. VIP postings feature automated media syndication across dobrichnews.com and dobruja.com.</p>
+        </div>
+        <a href="/bestjobs/post/" class="nav-btn" title="Open vacancy submission form to publish an ad">Post a Vacancy Directly &rarr;</a>
+      </section>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="shell">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <h4>Sovereign Media Consortium</h4>
+          <ul>
+            <li><a href="https://mobikom.bg" rel="noopener noreferrer external" target="_blank" title="Mobikom Bulgaria — Institutional Root Gateway">mobikom.bg &bull; Institutional Hub</a></li>
+            <li><a href="https://www.dobrichnews.com" rel="noopener noreferrer external" target="_blank" title="Real-time daily news in North-East Bulgaria">dobrichnews.com &bull; Daily News</a></li>
+            <li><a href="https://www.dobruja.com" rel="noopener noreferrer external" target="_blank" title="Agricultural preservation, regional traditions and culture">dobruja.com &bull; Cultural Review</a></li>
+            <li><a href="../all-jobs.xml" title="Subscribe to open RSS feed of all current vacancies">&#128246; Open Vacancy RSS Feed</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Platform Navigation</h4>
+          <ul>
+            <li><a href="/" title="Return to Sovereign Mega-Portal Home">Portal Home</a></li>
+            <li><a href="/bestjobs/" title="Current active job announcements">Job Board Stream</a></li>
+            <li><a href="/bestjobs/post/" title="Submit a job opening directly">Post a Vacancy</a></li>
+            <li><a href="/bestjobs/blog/" title="Career advice monographs and labor market research">Career Insights &amp; Guides</a></li>
+            <li><a href="/about/" title="Historical lineage and corporate governance">About Us</a></li>
+            <li><a href="/bestjobs/help/" title="Guide for candidates and employers">Help Documentation</a></li>
+            <li><a href="/contact/" title="Official communication desks">Contact Desks</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Operations &amp; Syndication</h4>
+          <ul>
+            <li><a href="/contact/#dispatch" title="Chief Editor Ani Ivanova Market Dispatch Desk">Ani Ivanova &bull; Market Dispatch</a></li>
+            <li><a href="/contact/#candidates" title="Candidate support and verification desk">Candidate Support Desk</a></li>
+            <li><a href="/contact/#employers" title="Employer B2B listing support and VIP syndication">Employers B2B Desk</a></li>
+            <li><a href="../vip-jobs.xml" title="Syndicated VIP feed for media partners">&#128246; VIP Syndication Feed</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <nav class="footer-legal-bar" aria-label="Legal &amp; Policy Navigation">
+        <a href="/privacy/" title="Zero-cookie architecture and strict no-tracking privacy notice">Privacy Policy</a>
+        <span class="legal-sep">&bull;</span>
+        <a href="/terms/" title="Operational guidelines and employment board rules">Terms of Service</a>
+        <span class="legal-sep">&bull;</span>
+        <a href="/gdpr/" title="Regulation (EU) 2016/679 compliance declaration">GDPR Compliance</a>
+        <span class="legal-sep">&bull;</span>
+        <a href="/bg/bestjobs/" hreflang="bg" title="Преминете към официалния български кариерен борд">Български Борд (BG)</a>
+      </nav>
+
+      <div class="footer-bottom">
+        <p>&copy; 2026 bestjobs.bg. Open-source under MIT License (github.com/bestjobs). Part of <a href="https://mobikom.bg/about/" rel="noopener noreferrer external" target="_blank" title="Mobikom Bulgaria Consortium governance and heritage">Mobikom Bulgaria Consortium</a>. Zero-cookie architecture.</p>
+        <a href="/contact/" title="Reach official operations desk">Reach Operations Desk &rarr;</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../assets/js/engine.js" defer></script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "BestJobs Bulgaria",
+    "url": "https://bestjobs.bg/bestjobs/",
+    "description": "Verified direct job announcements across Bulgaria.",
+    "publisher": {
+      "@type": "Organization",
+      "name": "BestJobs Bulgaria",
+      "url": "https://bestjobs.bg/",
+      "logo": "https://bestjobs.bg/apple-touch-icon.png",
+      "sameAs": [
+        "https://mobikom.bg",
+        "https://www.dobrichnews.com",
+        "https://www.dobruja.com"
+      ]
+    }
+  }
+  </script>
+</body>
+</html>
