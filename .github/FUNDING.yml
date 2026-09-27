@@ -1,0 +1,10 @@
+# ===============================================================================================
+# bestjobs.bg is a a project of mobikom.bg — Official GitHub Sponsorship & Funding Configuration
+# ===============================================================================================
+
+# Direct Stripe Checkout & Corporate Institutional Gateways
+custom: [
+  "https://buy.stripe.com/7sYdR8epV9RP4cCfDJ2B200",
+  "https://mobikom.bg/support/",
+  "https://mobikom.bg/contact/"
+]
