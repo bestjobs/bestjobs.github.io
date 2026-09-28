@@ -498,7 +498,7 @@ nav ul {
 }
 .card-footer-actions {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   justify-content: space-between;
   align-items: center;
   gap: 0.5rem;
@@ -510,7 +510,8 @@ nav ul {
   font-size: 0.82rem;
   font-weight: 700;
   color: var(--primary);
-  min-height: 40px;
+  white-space: nowrap;
+  min-height: 38px;
   display: inline-flex;
   align-items: center;
 }
@@ -519,12 +520,12 @@ nav ul {
   color: var(--primary-fg);
   font-size: 0.78rem;
   font-weight: 700;
-  padding: 0.35rem 0.6rem;
+  padding: 0.3rem 0.65rem;
   border-radius: var(--radius);
+  white-space: nowrap;
   display: inline-grid;
   place-items: center;
-  min-height: 40px;
-  text-align: center;
+  min-height: 38px;
 }
 .btn-direct-apply:hover {
   background: var(--primary-hover);
@@ -552,7 +553,6 @@ nav ul {
   border-top: none;
   padding-top: 0;
   margin-top: 0;
-  flex-wrap: nowrap;
 }
 .grid-cards[data-view="accordion"] {
   grid-template-columns: 1fr;
