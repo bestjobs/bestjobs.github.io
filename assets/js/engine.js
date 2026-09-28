@@ -1,6 +1,8 @@
 (() => {
   'use strict';
 
+  const ENABLE_AI = true;
+
   let liveAnnouncer = null;
 
   document.addEventListener('DOMContentLoaded', () => {
@@ -39,6 +41,35 @@
     }
   }
 
+  async function getAiExecutiveSummary(text, isBg) {
+    if (!ENABLE_AI) return text;
+
+    if ('ai' in window && 'summarizer' in window.ai) {
+      try {
+        const capabilities = await window.ai.summarizer.capabilities();
+        if (capabilities && capabilities.available !== 'no') {
+          const summarizer = await window.ai.summarizer.create({
+            type: 'key-points',
+            format: 'plain-text',
+            length: 'short'
+          });
+          const summary = await summarizer.summarize(text);
+          summarizer.destroy();
+          return summary || text;
+        }
+      } catch (err) {
+        return text;
+      }
+    }
+
+    if (text.length > 160) {
+      const parts = text.split(/[.!?]+/);
+      return parts[0] ? parts[0].trim() + '.' : text;
+    }
+
+    return text;
+  }
+
   function initStreamAudioPlayer() {
     if (!('speechSynthesis' in window)) return;
 
@@ -62,7 +93,7 @@
       streamBtn.textContent = i18n.play;
     };
 
-    const speakNextCard = () => {
+    const speakNextCard = async () => {
       if (!isPlaying || currentIndex >= visibleCards.length) {
         stopPlayback();
         return;
@@ -72,13 +103,17 @@
       const title = card.querySelector('h3, h2')?.textContent.trim() || '';
       const company = card.querySelector('.card-company')?.textContent.trim() || '';
       const salary = card.querySelector('.salary-figure')?.textContent.trim() || '';
-      const desc = card.querySelector('.card-text-summary, p')?.textContent.trim() || '';
+      const rawDesc = card.querySelector('.card-text-summary, p')?.textContent.trim() || '';
+
+      const desc = await getAiExecutiveSummary(rawDesc, isBg);
+
+      if (!isPlaying) return;
 
       let phrase = '';
       if (salary) {
         phrase = isBg
-          ? `Обява ${currentIndex + 1}: ${title}${company ? ' в ' + company : ''}. Брутна заплата: ${salary}.`
-          : `Vacancy ${currentIndex + 1}: ${title}${company ? ' at ' + company : ''}. Gross monthly salary: ${salary}.`;
+          ? `Обява ${currentIndex + 1}: ${title}${company ? ' в ' + company : ''}. Брутна заплата: ${salary}. ${desc}`
+          : `Vacancy ${currentIndex + 1}: ${title}${company ? ' at ' + company : ''}. Gross monthly salary: ${salary}. ${desc}`;
       } else {
         phrase = isBg
           ? `Секция ${currentIndex + 1}: ${title}. ${desc}`
