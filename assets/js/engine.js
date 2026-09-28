@@ -1,8 +1,6 @@
 (() => {
   'use strict';
 
-  const ENABLE_AI = true;
-
   let liveAnnouncer = null;
 
   document.addEventListener('DOMContentLoaded', () => {
@@ -41,8 +39,8 @@
     }
   }
 
-  function getFastSummary(text) {
-    if (!ENABLE_AI || !text) return '';
+  function getCleanSummary(text) {
+    if (!text) return '';
     const clean = text.replace(/\s+/g, ' ').trim();
     if (clean.length <= 140) return clean;
     const sentences = clean.split(/[.!?]+/);
@@ -59,8 +57,7 @@
     const i18n = {
       lang: isBg ? 'bg-BG' : 'en-US',
       play: isBg ? '🔊 Слушай потока' : '🔊 Listen to Stream',
-      stop: isBg ? '⏹ Спри четенето' : '⏹ Stop Listening',
-      intro: isBg ? 'Активиран локален асистент. Стартиране на потока.' : 'Local assistant active. Starting stream.'
+      stop: isBg ? '⏹ Спри четенето' : '⏹ Stop Listening'
     };
 
     let isPlaying = false;
@@ -85,7 +82,7 @@
       const salary = card.querySelector('.salary-figure')?.textContent.trim() || '';
       const rawDesc = card.querySelector('.card-text-summary, p')?.textContent.trim() || '';
 
-      const desc = getFastSummary(rawDesc);
+      const desc = getCleanSummary(rawDesc);
 
       let phrase = '';
       if (salary) {
@@ -131,17 +128,7 @@
       isPlaying = true;
       currentIndex = 0;
       streamBtn.textContent = i18n.stop;
-
-      if (ENABLE_AI) {
-        const introUtterance = new SpeechSynthesisUtterance(i18n.intro);
-        introUtterance.lang = i18n.lang;
-        introUtterance.rate = 0.95;
-        introUtterance.onend = speakNextCard;
-        introUtterance.onerror = speakNextCard;
-        window.speechSynthesis.speak(introUtterance);
-      } else {
-        speakNextCard();
-      }
+      speakNextCard();
     });
   }
 
