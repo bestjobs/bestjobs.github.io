@@ -47,8 +47,8 @@ const generateIndividualPages = () => {
     const chipsEnHtml = job.chips_en.map((c) => `<span class="chip-item">${c}</span>`).join('\n          ');
     const chipsBgHtml = job.chips_bg.map((c) => `<span class="chip-item">${c}</span>`).join('\n          ');
 
-    const vipBadgeEn = job.vip ? '<a href="/bestjobs/help/#vip" class="vip-tag" title="Learn what a VIP listing is and how to syndicate across network">🌟 VIP FAST-TRACK</a>' : '';
-    const vipBadgeBg = job.vip ? '<a href="/bestjobs/bg/help/#vip" class="vip-tag" title="Научете какво представлява VIP позицията и синдикацията">🌟 VIP СКОРОСТНО НАЕМАНЕ</a>' : '';
+    const vipBadgeEn = job.vip ? '<a href="/bestjobs/help/#vip" class="vip-tag" title="VIP Fast-Track Placement">🌟 VIP FAST-TRACK</a>' : '';
+    const vipBadgeBg = job.vip ? '<a href="/bestjobs/bg/help/#vip" class="vip-tag" title="VIP Скоростно наемане">🌟 VIP СКОРОСТНО НАЕМАНЕ</a>' : '';
 
     const canonicalEn = `https://bestjobs.bg/bestjobs/${folderType}/${job.slug}/`;
     const canonicalBg = `https://bestjobs.bg/bestjobs/bg/${folderType}/${job.slug}/`;
@@ -225,7 +225,7 @@ const updateCatalogIndexes = () => {
   const cardsEn = activeJobs.map((job) => {
     const vipClass = job.vip ? ' vip-card' : '';
     const vipBadge = job.vip ? `\n              <div class="meta-badges-inline">\n                <a href="/bestjobs/help/#vip" class="vip-tag" title="VIP Fast-Track Placement">🌟 VIP FAST-TRACK</a>\n              </div>` : '';
-    const vipReach = job.vip ? `\n            <div class="vip-reach-badge">📡 Syndicate: DobrichNews &amp; Dobruja</div>` : '';
+    const vipReach = job.vip ? `\n            <div class="vip-reach-badge">📡 Syndicate: <a href="https://mobikom.bg" target="_blank" rel="noopener" title="Mobikom Bulgaria Institutional Hub">mobikom.bg</a> &bull; <a href="https://www.dobrichnews.com" target="_blank" rel="noopener noreferrer" title="Real-time daily news in North-East Bulgaria">dobrichnews.com</a> &bull; <a href="https://www.dobruja.com" target="_blank" rel="noopener noreferrer" title="Agricultural preservation, regional traditions and culture">dobruja.com</a></div>` : '';
     const chips = job.chips_en.map((c) => `<span class="chip-item">${c}</span>`).join('\n              ');
 
     return `          <article class="job-card${vipClass}" data-slug="${job.slug}" data-industry="${job.industry}" data-city="${job.city}" data-type="${job.type}" data-date="${job.date}">
@@ -257,7 +257,7 @@ const updateCatalogIndexes = () => {
   const cardsBg = activeJobs.map((job) => {
     const vipClass = job.vip ? ' vip-card' : '';
     const vipBadge = job.vip ? `\n              <div class="meta-badges-inline">\n                <a href="/bestjobs/bg/help/#vip" class="vip-tag" title="VIP Скоростно наемане">🌟 VIP СКОРОСТНО НАЕМАНЕ</a>\n              </div>` : '';
-    const vipReach = job.vip ? `\n            <div class="vip-reach-badge">📡 Синдикация: DobrichNews &amp; Dobruja</div>` : '';
+    const vipReach = job.vip ? `\n            <div class="vip-reach-badge">📡 Синдикация: <a href="https://mobikom.bg" target="_blank" rel="noopener" title="Мобиком България — Институционален хъб">mobikom.bg</a> &bull; <a href="https://www.dobrichnews.com" target="_blank" rel="noopener noreferrer" title="Ежедневни регионални новини от Североизточна България">dobrichnews.com</a> &bull; <a href="https://www.dobruja.com" target="_blank" rel="noopener noreferrer" title="Земеделски традиции, фолклор и добруджанска памет">dobruja.com</a></div>` : '';
     const chips = job.chips_bg.map((c) => `<span class="chip-item">${c}</span>`).join('\n              ');
 
     return `          <article class="job-card${vipClass}" data-slug="${job.slug}" data-industry="${job.industry}" data-city="${job.city}" data-type="${job.type}" data-date="${job.date}">
@@ -347,7 +347,7 @@ ${allItemsXml.trimEnd()}
   <channel>
     <title>BestJobs Bulgaria - VIP Priority Network Feed</title>
     <link>https://bestjobs.bg/bestjobs/</link>
-    <description>Syndicated priority verified postings for DobrichNews.com and Dobruja.com media consortium.</description>
+    <description>Syndicated priority verified postings for dobrichnews.com, dobruja.com, and mobikom.bg media consortium.</description>
     <language>en-US</language>
     <lastBuildDate>${now}</lastBuildDate>
 ${vipItemsXml.trimEnd()}
