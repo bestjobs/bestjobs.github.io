@@ -247,8 +247,8 @@ const updateCatalogIndexes = () => {
               ${job.desc_en}
             </div>
             <div class="card-footer-actions">
-              <a href="/bestjobs/v/${job.slug}/" class="card-spec-link" title="Open complete technical specification for ${escapeXml(job.title_en)}">Read Full Job &rarr;</a>
-              <a href="mailto:${job.email}?subject=${encodeURIComponent(`Application: ${job.title_en} (Ref: ${job.id})`)}" class="btn-direct-apply" title="Apply directly to ${escapeXml(job.company_en)} via email">Apply with Email &rarr;</a>
+              <a href="/bestjobs/v/${job.slug}/" class="card-spec-link" title="Open complete technical specification for ${escapeXml(job.title_en)}">View Job &rarr;</a>
+              <a href="mailto:${job.email}?subject=${encodeURIComponent(`Application: ${job.title_en} (Ref: ${job.id})`)}" class="btn-direct-apply" title="Apply directly to ${escapeXml(job.company_en)} via email">Apply &rarr;</a>
             </div>
           </article>`;
   }).join('\n\n');
@@ -278,8 +278,8 @@ const updateCatalogIndexes = () => {
               ${job.desc_bg}
             </div>
             <div class="card-footer-actions">
-              <a href="/bestjobs/bg/v/${job.slug}/" class="card-spec-link" title="Отворете пълната техническа спецификация за ${escapeXml(job.title_bg)}">Виж цялата обява &rarr;</a>
-              <a href="mailto:${job.email}?subject=${encodeURIComponent(`Кандидатура: ${job.title_bg} (Реф. №: ${job.id})`)}" class="btn-direct-apply" title="Кандидатствайте директно към ${escapeXml(job.company_bg)} по имейл">Кандидатствай по имейл &rarr;</a>
+              <a href="/bestjobs/bg/v/${job.slug}/" class="card-spec-link" title="Отворете пълната техническа спецификация за ${escapeXml(job.title_bg)}">Преглед &rarr;</a>
+              <a href="mailto:${job.email}?subject=${encodeURIComponent(`Кандидатура: ${job.title_bg} (Реф. №: ${job.id})`)}" class="btn-direct-apply" title="Кандидатствайте директно към ${escapeXml(job.company_bg)} по имейл">Кандидатствай &rarr;</a>
             </div>
           </article>`;
   }).join('\n\n');
