@@ -392,15 +392,22 @@ nav ul {
   min-width: 0;
   overflow-wrap: anywhere;
   word-break: normal;
-  transition: border-color 0.15s ease, transform 0.15s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+  transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
 }
 .portal-card:hover, .job-card:hover {
   border-color: var(--primary);
-  transform: translateY(-2px);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0, 82, 204, 0.12);
 }
 .job-card.vip-card {
   background: var(--vip-bg);
   border-color: var(--vip-border);
+}
+.job-card.vip-card:hover {
+  border-color: #f59e0b;
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(245, 158, 11, 0.25);
 }
 .card-eyebrow {
   font-size: 0.74rem;
@@ -544,6 +551,10 @@ nav ul {
   column-gap: 1rem;
   padding: 0.6rem 1rem;
 }
+.grid-cards[data-view="rows"] .job-card:hover,
+.grid-cards[data-view="rows"] .portal-card:hover {
+  transform: translateX(4px) translateY(0);
+}
 .grid-cards[data-view="rows"] .card-chips-row,
 .grid-cards[data-view="rows"] .card-text-summary,
 .grid-cards[data-view="rows"] .card-subtitle {
@@ -576,6 +587,12 @@ nav ul {
   border-radius: 0;
   background: transparent;
   padding: 0.75rem 1rem;
+  box-shadow: none;
+}
+.grid-cards[data-view="ticker"] .job-card:hover,
+.grid-cards[data-view="ticker"] .portal-card:hover {
+  transform: none;
+  background: var(--bg);
 }
 .grid-cards[data-view="ticker"] .job-card:last-child,
 .grid-cards[data-view="ticker"] .portal-card:last-child {
