@@ -4,6 +4,7 @@
   document.addEventListener('DOMContentLoaded', () => {
     initStreamAudioPlayer();
     initFilterSystem();
+    initViewSwitcher();
   });
 
   function initStreamAudioPlayer() {
@@ -15,11 +16,8 @@
     const isBg = (document.documentElement.lang || '').toLowerCase().startsWith('bg');
     const i18n = {
       lang: isBg ? 'bg-BG' : 'en-US',
-      play: isBg ? '🔊 Слушай обявите' : '🔊 Listen to Vacancy Stream',
-      stop: isBg ? '⏹ Спри четенето' : '⏹ Stop Listening',
-      phrase: (idx, title, comp, sal) => isBg
-        ? `Обява ${idx}: ${title} в ${comp}. Брутна заплата: ${sal}.`
-        : `Vacancy ${idx}: ${title} at ${comp}. Gross monthly salary: ${sal}.`
+      play: isBg ? '🔊 Слушай потока' : '🔊 Listen to Stream',
+      stop: isBg ? '⏹ Спри четенето' : '⏹ Stop Listening'
     };
 
     let isPlaying = false;
@@ -42,8 +40,20 @@
       const title = card.querySelector('h3')?.textContent.trim() || '';
       const company = card.querySelector('.card-company')?.textContent.trim() || '';
       const salary = card.querySelector('.salary-figure')?.textContent.trim() || '';
+      const desc = card.querySelector('.card-text-summary, p')?.textContent.trim() || '';
 
-      const utterance = new SpeechSynthesisUtterance(i18n.phrase(currentIndex + 1, title, company, salary));
+      let phrase = '';
+      if (salary) {
+        phrase = isBg
+          ? `Обява ${currentIndex + 1}: ${title}${company ? ' в ' + company : ''}. Брутна заплата: ${salary}.`
+          : `Vacancy ${currentIndex + 1}: ${title}${company ? ' at ' + company : ''}. Gross monthly salary: ${salary}.`;
+      } else {
+        phrase = isBg
+          ? `Секция ${currentIndex + 1}: ${title}. ${desc}`
+          : `Section ${currentIndex + 1}: ${title}. ${desc}`;
+      }
+
+      const utterance = new SpeechSynthesisUtterance(phrase);
       utterance.lang = i18n.lang;
       utterance.rate = 0.95;
 
@@ -66,7 +76,7 @@
       }
 
       window.speechSynthesis.cancel();
-      visibleCards = Array.from(document.querySelectorAll('.job-card:not([hidden])'));
+      visibleCards = Array.from(document.querySelectorAll('.job-card:not([hidden]), .portal-card:not([hidden])'));
 
       if (visibleCards.length === 0) {
         stopPlayback();
@@ -86,6 +96,8 @@
     const typeSelect = document.getElementById('filter-type');
     const chipLinks = document.querySelectorAll('.chip-btn');
     const cards = document.querySelectorAll('.job-card');
+
+    if (!industrySelect && !citySelect && !typeSelect && chipLinks.length === 0) return;
 
     let activeTag = null;
 
@@ -136,6 +148,24 @@
         }
 
         applyFilters();
+      });
+    });
+  }
+
+  function initViewSwitcher() {
+    const container = document.getElementById('jobs-container');
+    const viewButtons = document.querySelectorAll('.view-btn');
+    if (!container || viewButtons.length === 0) return;
+
+    viewButtons.forEach((btn) => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const view = btn.getAttribute('data-view') || 'grid';
+
+        container.setAttribute('data-view', view);
+
+        viewButtons.forEach((b) => b.classList.remove('active'));
+        btn.classList.add('active');
       });
     });
   }
