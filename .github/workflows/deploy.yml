@@ -1,4 +1,4 @@
-name: Deploy Static BestJobs Portal
+name: Deploy Static BestJobs Portal 
 
 on:
   push:
