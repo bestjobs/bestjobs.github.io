@@ -47,8 +47,8 @@ const generateIndividualPages = () => {
     const chipsEnHtml = job.chips_en.map((c) => `<span class="chip-item">${c}</span>`).join('\n          ');
     const chipsBgHtml = job.chips_bg.map((c) => `<span class="chip-item">${c}</span>`).join('\n          ');
 
-    const vipBadgeEn = job.vip ? '<a href="/bestjobs/help/#vip" class="vip-tag" title="Learn what a VIP listing is and how to syndicate across network">🌟 VIP</a>' : '';
-    const vipBadgeBg = job.vip ? '<a href="/bestjobs/bg/help/#vip" class="vip-tag" title="Научете какво представлява VIP позицията и синдикацията">🌟 VIP</a>' : '';
+    const vipBadgeEn = job.vip ? '<a href="/bestjobs/help/#vip" class="vip-tag" title="Learn what a VIP listing is and how to syndicate across network">🌟 VIP FAST-TRACK</a>' : '';
+    const vipBadgeBg = job.vip ? '<a href="/bestjobs/bg/help/#vip" class="vip-tag" title="Научете какво представлява VIP позицията и синдикацията">🌟 VIP СКОРОСТНО НАЕМАНЕ</a>' : '';
 
     const canonicalEn = `https://bestjobs.bg/bestjobs/${folderType}/${job.slug}/`;
     const canonicalBg = `https://bestjobs.bg/bestjobs/bg/${folderType}/${job.slug}/`;
@@ -224,13 +224,14 @@ const updateCatalogIndexes = () => {
 
   const cardsEn = activeJobs.map((job) => {
     const vipClass = job.vip ? ' vip-card' : '';
-    const vipBadge = job.vip ? `\n              <div class="meta-badges-inline">\n                <a href="/bestjobs/help/#vip" class="vip-tag" title="Learn what a VIP listing is and how to syndicate across network">🌟 VIP</a>\n              </div>` : '';
+    const vipBadge = job.vip ? `\n              <div class="meta-badges-inline">\n                <a href="/bestjobs/help/#vip" class="vip-tag" title="VIP Fast-Track Placement">🌟 VIP FAST-TRACK</a>\n              </div>` : '';
+    const vipReach = job.vip ? `\n            <div class="vip-reach-badge">📡 Syndicate: DobrichNews &amp; Dobruja</div>` : '';
     const chips = job.chips_en.map((c) => `<span class="chip-item">${c}</span>`).join('\n              ');
 
     return `          <article class="job-card${vipClass}" data-slug="${job.slug}" data-industry="${job.industry}" data-city="${job.city}" data-type="${job.type}" data-date="${job.date}">
             <div class="card-meta-bar">
               <span>${job.id} &bull; ${job.industry.toUpperCase()} &bull; ${job.city.toUpperCase()}</span>${vipBadge}
-            </div>
+            </div>${vipReach}
             <div class="card-title-box">
               <h3>${job.title_en}</h3>
               <div class="card-subtitle">${job.subtitle_en}</div>
@@ -255,13 +256,14 @@ const updateCatalogIndexes = () => {
 
   const cardsBg = activeJobs.map((job) => {
     const vipClass = job.vip ? ' vip-card' : '';
-    const vipBadge = job.vip ? `\n              <div class="meta-badges-inline">\n                <a href="/bestjobs/bg/help/#vip" class="vip-tag" title="Научете какво представлява VIP позицията и синдикацията">🌟 VIP</a>\n              </div>` : '';
+    const vipBadge = job.vip ? `\n              <div class="meta-badges-inline">\n                <a href="/bestjobs/bg/help/#vip" class="vip-tag" title="VIP Скоростно наемане">🌟 VIP СКОРОСТНО НАЕМАНЕ</a>\n              </div>` : '';
+    const vipReach = job.vip ? `\n            <div class="vip-reach-badge">📡 Синдикация: DobrichNews &amp; Dobruja</div>` : '';
     const chips = job.chips_bg.map((c) => `<span class="chip-item">${c}</span>`).join('\n              ');
 
     return `          <article class="job-card${vipClass}" data-slug="${job.slug}" data-industry="${job.industry}" data-city="${job.city}" data-type="${job.type}" data-date="${job.date}">
             <div class="card-meta-bar">
               <span>${job.id} &bull; ${job.industry.toUpperCase()} &bull; ${job.city.toUpperCase()}</span>${vipBadge}
-            </div>
+            </div>${vipReach}
             <div class="card-title-box">
               <h3>${job.title_bg}</h3>
               <div class="card-subtitle">${job.subtitle_bg}</div>
