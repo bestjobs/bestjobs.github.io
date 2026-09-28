@@ -41,33 +41,12 @@
     }
   }
 
-  async function getAiExecutiveSummary(text, isBg) {
-    if (!ENABLE_AI) return text;
-
-    if ('ai' in window && 'summarizer' in window.ai) {
-      try {
-        const capabilities = await window.ai.summarizer.capabilities();
-        if (capabilities && capabilities.available !== 'no') {
-          const summarizer = await window.ai.summarizer.create({
-            type: 'key-points',
-            format: 'plain-text',
-            length: 'short'
-          });
-          const summary = await summarizer.summarize(text);
-          summarizer.destroy();
-          return summary || text;
-        }
-      } catch (err) {
-        return text;
-      }
-    }
-
-    if (text.length > 160) {
-      const parts = text.split(/[.!?]+/);
-      return parts[0] ? parts[0].trim() + '.' : text;
-    }
-
-    return text;
+  function getFastSummary(text) {
+    if (!ENABLE_AI || !text) return '';
+    const clean = text.replace(/\s+/g, ' ').trim();
+    if (clean.length <= 140) return clean;
+    const sentences = clean.split(/[.!?]+/);
+    return sentences[0] ? sentences[0].trim() + '.' : clean.slice(0, 140) + '...';
   }
 
   function initStreamAudioPlayer() {
@@ -80,7 +59,8 @@
     const i18n = {
       lang: isBg ? 'bg-BG' : 'en-US',
       play: isBg ? '🔊 Слушай потока' : '🔊 Listen to Stream',
-      stop: isBg ? '⏹ Спри четенето' : '⏹ Stop Listening'
+      stop: isBg ? '⏹ Спри четенето' : '⏹ Stop Listening',
+      intro: isBg ? 'Активиран локален асистент. Стартиране на потока.' : 'Local assistant active. Starting stream.'
     };
 
     let isPlaying = false;
@@ -93,7 +73,7 @@
       streamBtn.textContent = i18n.play;
     };
 
-    const speakNextCard = async () => {
+    const speakNextCard = () => {
       if (!isPlaying || currentIndex >= visibleCards.length) {
         stopPlayback();
         return;
@@ -105,9 +85,7 @@
       const salary = card.querySelector('.salary-figure')?.textContent.trim() || '';
       const rawDesc = card.querySelector('.card-text-summary, p')?.textContent.trim() || '';
 
-      const desc = await getAiExecutiveSummary(rawDesc, isBg);
-
-      if (!isPlaying) return;
+      const desc = getFastSummary(rawDesc);
 
       let phrase = '';
       if (salary) {
@@ -153,7 +131,17 @@
       isPlaying = true;
       currentIndex = 0;
       streamBtn.textContent = i18n.stop;
-      speakNextCard();
+
+      if (ENABLE_AI) {
+        const introUtterance = new SpeechSynthesisUtterance(i18n.intro);
+        introUtterance.lang = i18n.lang;
+        introUtterance.rate = 0.95;
+        introUtterance.onend = speakNextCard;
+        introUtterance.onerror = speakNextCard;
+        window.speechSynthesis.speak(introUtterance);
+      } else {
+        speakNextCard();
+      }
     });
   }
 
