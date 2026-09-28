@@ -326,7 +326,14 @@ const generateXmlFeeds = () => {
     allItemsXml += itemXml;
 
     if (job.vip) {
-      vipItemsXml += itemXml;
+      const vipItemXml = `    <item>
+      <title>${escapeXml(job.title_bg)} - ${escapeXml(job.company_bg)}</title>
+      <link>https://bestjobs.bg/bestjobs/bg/v/${escapeXml(job.slug)}/</link>
+      <guid isPermaLink="true">https://bestjobs.bg/bestjobs/bg/v/${escapeXml(job.slug)}/</guid>
+      <pubDate>${new Date(job.date).toUTCString()}</pubDate>
+      <description>${escapeXml(job.desc_bg)} Брутна заплата: ${job.salary_gross} EUR на месец.</description>
+    </item>\n`;
+      vipItemsXml += vipItemXml;
     }
   });
 
@@ -345,10 +352,10 @@ ${allItemsXml.trimEnd()}
   const vipFeed = `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0">
   <channel>
-    <title>BestJobs Bulgaria - VIP Priority Network Feed</title>
-    <link>https://bestjobs.bg/bestjobs/</link>
-    <description>Syndicated priority verified postings for dobrichnews.com, dobruja.com, and mobikom.bg media consortium.</description>
-    <language>en-US</language>
+    <title>BestJobs България - VIP Синдикиран кариерен поток</title>
+    <link>https://bestjobs.bg/bestjobs/bg/</link>
+    <description>Синдикиран VIP поток с проверени позиции за медийния консорциум: dobrichnews.com, dobruja.com и mobikom.bg.</description>
+    <language>bg</language>
     <lastBuildDate>${now}</lastBuildDate>
 ${vipItemsXml.trimEnd()}
   </channel>
