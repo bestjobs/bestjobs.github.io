@@ -80,6 +80,7 @@
       const title = card.querySelector('h3, h2')?.textContent.trim() || '';
       const company = card.querySelector('.card-company')?.textContent.trim() || '';
       const salary = card.querySelector('.salary-figure')?.textContent.trim() || '';
+      const netSalary = card.querySelector('.salary-net-calc')?.textContent.trim() || '';
       const rawDesc = card.querySelector('.card-text-summary, p')?.textContent.trim() || '';
 
       const desc = getCleanSummary(rawDesc);
@@ -87,8 +88,8 @@
       let phrase = '';
       if (salary) {
         phrase = isBg
-          ? `Обява ${currentIndex + 1}: ${title}${company ? ' в ' + company : ''}. Брутна заплата: ${salary}. ${desc}`
-          : `Vacancy ${currentIndex + 1}: ${title}${company ? ' at ' + company : ''}. Gross monthly salary: ${salary}. ${desc}`;
+          ? `Обява ${currentIndex + 1}: ${title}${company ? ' в ' + company : ''}. Брутна заплата: ${salary} ${netSalary ? ', нето ' + netSalary.replace(/[()~]/g, '') : ''}. ${desc}`
+          : `Vacancy ${currentIndex + 1}: ${title}${company ? ' at ' + company : ''}. Gross monthly salary: ${salary} ${netSalary ? ', net ' + netSalary.replace(/[()~]/g, '') : ''}. ${desc}`;
       } else {
         phrase = isBg
           ? `Секция ${currentIndex + 1}: ${title}. ${desc}`
