@@ -362,7 +362,8 @@ nav ul {
 }
 .btn-stream-audio:hover {
   border-color: var(--primary);
-  color: var(--primary);
+  color: var(--primary-fg);
+  background: var(--primary);
   text-decoration: none;
 }
 .grid-cards {
@@ -393,24 +394,28 @@ nav ul {
   min-width: 0;
   overflow-wrap: anywhere;
   word-break: normal;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
-  transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.04);
+  transform: translate3d(0, 0, 0);
+  transition: transform 0.22s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.22s ease, border-color 0.22s ease;
+  will-change: transform, box-shadow;
 }
 .portal-card:hover, .job-card:hover {
   border-color: var(--primary);
-  transform: translateY(-3px);
-  box-shadow: 0 8px 20px rgba(0, 82, 204, 0.12);
+  transform: translate3d(0, -6px, 0);
+  z-index: 5;
+  box-shadow: 0 14px 28px rgba(0, 82, 204, 0.18);
 }
 .job-card.vip-card {
   background: var(--vip-bg);
   border: 1px solid var(--vip-border);
   border-top: 3px solid var(--vip-border);
-  box-shadow: 0 4px 12px rgba(245, 158, 11, 0.08);
+  box-shadow: 0 4px 14px rgba(245, 158, 11, 0.12);
 }
 .job-card.vip-card:hover {
   border-color: var(--vip-border);
-  transform: translateY(-3px);
-  box-shadow: 0 10px 26px rgba(245, 158, 11, 0.22);
+  transform: translate3d(0, -6px, 0);
+  z-index: 6;
+  box-shadow: 0 16px 36px rgba(245, 158, 11, 0.35);
 }
 .card-eyebrow {
   font-size: 0.74rem;
@@ -453,6 +458,15 @@ nav ul {
   padding: 0.2rem 0.45rem;
   border-radius: 4px;
   line-height: 1.3;
+}
+.vip-reach-badge a {
+  color: var(--vip-gold);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  font-weight: 800;
+}
+.vip-reach-badge a:hover {
+  color: var(--primary-hover);
 }
 .card-title-box h3 {
   font-size: 1.08rem;
@@ -581,7 +595,7 @@ nav ul {
 }
 .grid-cards[data-view="rows"] .job-card:hover,
 .grid-cards[data-view="rows"] .portal-card:hover {
-  transform: translateX(4px) translateY(0);
+  transform: translate3d(5px, 0, 0);
 }
 .grid-cards[data-view="rows"] .card-chips-row,
 .grid-cards[data-view="rows"] .card-text-summary,
@@ -741,13 +755,13 @@ footer.site-footer {
 }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
-    transition: none !important;
-    transform: none !important;
+    transition-duration: 0.001ms;
+    animation-duration: 0.001ms;
   }
 }
 @media print {
   header.site-header, .filter-box, .stream-controls, .hero-actions, .conversion-banner, footer.site-footer {
-    display: none !important;
+    display: none;
   }
   body {
     background: #ffffff;
