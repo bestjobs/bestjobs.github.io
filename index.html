@@ -18,7 +18,6 @@
   <link rel="alternate" type="application/rss+xml" title="BestJobs VIP Network Feed" href="vip-jobs.xml">
 </head>
 <body>
-  <a href="#main-content" class="skip-link" title="Skip navigation directly to main portal content">Skip to content &darr;</a>
   <header class="site-header">
     <div class="shell nav-bar">
       <a href="/" class="brand-link" title="BestJobs Bulgaria — National Economic Portal Home">
@@ -49,7 +48,7 @@
       </nav>
     </div>
   </header>
-  <main id="main-content">
+  <main>
     <div class="shell">
       <section class="hero">
         <span class="hero-tag">SOVEREIGN ECONOMIC PORTAL &bull; EST. 2013</span>
@@ -65,91 +64,199 @@
       </section>
 
       <section aria-labelledby="subprojects-heading">
-        <h2 id="subprojects-heading">Federated Subprojects &amp; Strategic Commercial Wings</h2>
-        <div class="grid-cards">
+        <div class="stream-header-bar">
+          <h2 id="subprojects-heading">Federated Subprojects &amp; Strategic Commercial Wings</h2>
+          <div class="stream-controls">
+            <div class="view-switch-group" role="group" aria-label="Layout view mode selection">
+              <a href="#view-cards" class="view-btn active" data-view="grid" title="Switch layout to 3-column cards grid view">🔲 Cards</a>
+              <a href="#view-rows" class="view-btn" data-view="rows" title="Switch layout to compact horizontal single rows view">☰ Rows</a>
+              <a href="#view-accordion" class="view-btn" data-view="accordion" title="Switch layout to collapsible accordion drawer view">📜 Accordion</a>
+              <a href="#view-ticker" class="view-btn" data-view="ticker" title="Switch layout to dense textual bulletin ticker view">📰 Bulletin</a>
+            </div>
+            <a href="#listen-stream" id="btn-stream-audio" class="btn-stream-audio" title="Listen consecutively to all subproject descriptions without looking at screen">🔊 Listen to Portal Stream</a>
+          </div>
+        </div>
 
-          <article class="portal-card">
-            <span class="card-eyebrow">SUBPROJECT &bull; EMPLOYMENT</span>
-            <h3>Job Ads Board &bull; /bestjobs/</h3>
-            <p>Direct candidate-to-employer career board. 100% white economy, mandatory Euro (€) salary transparency, 18 social benefits, and zero recruiter mediation fees.</p>
-            <a href="/bestjobs/" class="portal-link" title="Access sovereign employment listings across 28 regions">Open Career Board &rarr;</a>
+        <div class="grid-cards" id="jobs-container">
+
+          <article class="portal-card job-card">
+            <div class="card-meta-bar">
+              <span class="card-eyebrow">SUBPROJECT &bull; EMPLOYMENT</span>
+            </div>
+            <div class="card-title-box">
+              <h3>Job Ads Board &bull; /bestjobs/</h3>
+            </div>
+            <div class="card-text-summary">
+              Direct candidate-to-employer career board. 100% white economy, mandatory Euro (€) salary transparency, 18 social benefits, and zero recruiter mediation fees.
+            </div>
+            <div class="card-footer-actions">
+              <a href="/bestjobs/" class="portal-link card-spec-link" title="Access sovereign employment listings across 28 regions">Open Career Board &rarr;</a>
+            </div>
           </article>
 
-          <article class="portal-card">
-            <span class="card-eyebrow">SUBPROJECT &bull; COMMERCE</span>
-            <h3>Virtual B2B Trade Mall &bull; /mall/</h3>
-            <p>Digital showrooms and permanent storefronts for verified Bulgarian producers, dairy plants, wineries, machine workshops, and certified master craftsmen.</p>
-            <a href="/mall/" class="portal-link" title="Explore regional producers and commercial showrooms">Enter Virtual Mall &rarr;</a>
+          <article class="portal-card job-card">
+            <div class="card-meta-bar">
+              <span class="card-eyebrow">SUBPROJECT &bull; COMMERCE</span>
+            </div>
+            <div class="card-title-box">
+              <h3>Virtual B2B Trade Mall &bull; /mall/</h3>
+            </div>
+            <div class="card-text-summary">
+              Digital showrooms and permanent storefronts for verified Bulgarian producers, dairy plants, wineries, machine workshops, and certified master craftsmen.
+            </div>
+            <div class="card-footer-actions">
+              <a href="/mall/" class="portal-link card-spec-link" title="Explore regional producers and commercial showrooms">Enter Virtual Mall &rarr;</a>
+            </div>
           </article>
 
-          <article class="portal-card">
-            <span class="card-eyebrow">SUBPROJECT &bull; ENERGY &amp; TECH</span>
-            <h3>Energy &amp; Industrial Storage &bull; /energy/</h3>
-            <p>Utility-scale Battery Energy Storage Systems (BESS), solar grid integration, daily wholesale electricity trends, and industrial petroleum distribution.</p>
-            <a href="/energy/" class="portal-link" title="Examine utility scale battery storage and power markets">Explore Energy Wing &rarr;</a>
+          <article class="portal-card job-card">
+            <div class="card-meta-bar">
+              <span class="card-eyebrow">SUBPROJECT &bull; ENERGY &amp; TECH</span>
+            </div>
+            <div class="card-title-box">
+              <h3>Energy &amp; Industrial Storage &bull; /energy/</h3>
+            </div>
+            <div class="card-text-summary">
+              Utility-scale Battery Energy Storage Systems (BESS), solar grid integration, daily wholesale electricity trends, and industrial petroleum distribution.
+            </div>
+            <div class="card-footer-actions">
+              <a href="/energy/" class="portal-link card-spec-link" title="Examine utility scale battery storage and power markets">Explore Energy Wing &rarr;</a>
+            </div>
           </article>
 
-          <article class="portal-card">
-            <span class="card-eyebrow">SUBPROJECT &bull; FINANCE &amp; FDI</span>
-            <h3>Capital Markets &amp; BSE &bull; /invest/</h3>
-            <p>Foreign direct investment gateway, Bulgarian Stock Exchange (BSE / BEAM) analytics, government treasury bonds, and dividend-yielding public equities.</p>
-            <a href="/invest/" class="portal-link" title="Discover sovereign capital market opportunities">Access Capital Desk &rarr;</a>
+          <article class="portal-card job-card">
+            <div class="card-meta-bar">
+              <span class="card-eyebrow">SUBPROJECT &bull; FINANCE &amp; FDI</span>
+            </div>
+            <div class="card-title-box">
+              <h3>Capital Markets &amp; BSE &bull; /invest/</h3>
+            </div>
+            <div class="card-text-summary">
+              Foreign direct investment gateway, Bulgarian Stock Exchange (BSE / BEAM) analytics, government treasury bonds, and dividend-yielding public equities.
+            </div>
+            <div class="card-footer-actions">
+              <a href="/invest/" class="portal-link card-spec-link" title="Discover sovereign capital market opportunities">Access Capital Desk &rarr;</a>
+            </div>
           </article>
 
-          <article class="portal-card">
-            <span class="card-eyebrow">SUBPROJECT &bull; REAL ASSETS</span>
-            <h3>Commercial Real Estate &bull; /property/</h3>
-            <p>Verified arable agricultural land parcels, grain elevator complexes, logistics warehouses, and industrial parks without broker commission fees.</p>
-            <a href="/property/" class="portal-link" title="Browse verified commercial property and farmland">View Property Exchange &rarr;</a>
+          <article class="portal-card job-card">
+            <div class="card-meta-bar">
+              <span class="card-eyebrow">SUBPROJECT &bull; REAL ASSETS</span>
+            </div>
+            <div class="card-title-box">
+              <h3>Commercial Real Estate &bull; /property/</h3>
+            </div>
+            <div class="card-text-summary">
+              Verified arable agricultural land parcels, grain elevator complexes, logistics warehouses, and industrial parks without broker commission fees.
+            </div>
+            <div class="card-footer-actions">
+              <a href="/property/" class="portal-link card-spec-link" title="Browse verified commercial property and farmland">View Property Exchange &rarr;</a>
+            </div>
           </article>
 
-          <article class="portal-card">
-            <span class="card-eyebrow">SUBPROJECT &bull; HEALTHCARE</span>
-            <h3>Medical Tourism &amp; Pharma &bull; /medical/</h3>
-            <p>Certified dental implantology centers, laser vision diagnostics, pharmaceutical manufacturers, and Pomorie Lake curative mineral lye balneology.</p>
-            <a href="/medical/" class="portal-link" title="Discover medical tourism and certified clinical centers">Explore Health Sector &rarr;</a>
+          <article class="portal-card job-card">
+            <div class="card-meta-bar">
+              <span class="card-eyebrow">SUBPROJECT &bull; HEALTHCARE</span>
+            </div>
+            <div class="card-title-box">
+              <h3>Medical Tourism &amp; Pharma &bull; /medical/</h3>
+            </div>
+            <div class="card-text-summary">
+              Certified dental implantology centers, laser vision diagnostics, pharmaceutical manufacturers, and Pomorie Lake curative mineral lye balneology.
+            </div>
+            <div class="card-footer-actions">
+              <a href="/medical/" class="portal-link card-spec-link" title="Discover medical tourism and certified clinical centers">Explore Health Sector &rarr;</a>
+            </div>
           </article>
 
-          <article class="portal-card">
-            <span class="card-eyebrow">SUBPROJECT &bull; ACADEMICS</span>
-            <h3>Education &amp; Scholarships &bull; /education/</h3>
-            <p>Universities, dual college curricula, European Erasmus+ partnerships, and employer-sponsored degree contracts under Article 95 of the Education Act.</p>
-            <a href="/education/" class="portal-link" title="Review accredited university degree programs">Academic Programs &rarr;</a>
+          <article class="portal-card job-card">
+            <div class="card-meta-bar">
+              <span class="card-eyebrow">SUBPROJECT &bull; ACADEMICS</span>
+            </div>
+            <div class="card-title-box">
+              <h3>Education &amp; Scholarships &bull; /education/</h3>
+            </div>
+            <div class="card-text-summary">
+              Universities, dual college curricula, European Erasmus+ partnerships, and employer-sponsored degree contracts under Article 95 of the Education Act.
+            </div>
+            <div class="card-footer-actions">
+              <a href="/education/" class="portal-link card-spec-link" title="Review accredited university degree programs">Academic Programs &rarr;</a>
+            </div>
           </article>
 
-          <article class="portal-card">
-            <span class="card-eyebrow">SUBPROJECT &bull; LEGAL ACQUIS</span>
-            <h3>EU Regulatory Law &bull; /legal/</h3>
-            <p>Harmonized repository synchronized with EUR-Lex directives: pay transparency mandates, labor code protections, AI compliance, and corporate trade law.</p>
-            <a href="/legal/" class="portal-link" title="Access synchronized European directives and labor laws">Open Legal Hub &rarr;</a>
+          <article class="portal-card job-card">
+            <div class="card-meta-bar">
+              <span class="card-eyebrow">SUBPROJECT &bull; LEGAL ACQUIS</span>
+            </div>
+            <div class="card-title-box">
+              <h3>EU Regulatory Law &bull; /legal/</h3>
+            </div>
+            <div class="card-text-summary">
+              Harmonized repository synchronized with EUR-Lex directives: pay transparency mandates, labor code protections, AI compliance, and corporate trade law.
+            </div>
+            <div class="card-footer-actions">
+              <a href="/legal/" class="portal-link card-spec-link" title="Access synchronized European directives and labor laws">Open Legal Hub &rarr;</a>
+            </div>
           </article>
 
-          <article class="portal-card">
-            <span class="card-eyebrow">SUBPROJECT &bull; SPORTS</span>
-            <h3>Sports &amp; Toto Combinatorics &bull; /sports/</h3>
-            <p>Athletic governance, cycling infrastructure, and pure mathematical combinatorics for the State Sports Lottery (Toto 6/49) with zero commercial casino gambling.</p>
-            <a href="/sports/" class="portal-link" title="Examine sports governance and lottery combinatorics">View Sports Wing &rarr;</a>
+          <article class="portal-card job-card">
+            <div class="card-meta-bar">
+              <span class="card-eyebrow">SUBPROJECT &bull; SPORTS</span>
+            </div>
+            <div class="card-title-box">
+              <h3>Sports &amp; Toto Combinatorics &bull; /sports/</h3>
+            </div>
+            <div class="card-text-summary">
+              Athletic governance, cycling infrastructure, and pure mathematical combinatorics for the State Sports Lottery (Toto 6/49) with zero commercial casino gambling.
+            </div>
+            <div class="card-footer-actions">
+              <a href="/sports/" class="portal-link card-spec-link" title="Examine sports governance and lottery combinatorics">View Sports Wing &rarr;</a>
+            </div>
           </article>
 
-          <article class="portal-card">
-            <span class="card-eyebrow">SUBPROJECT &bull; HERITAGE</span>
-            <h3>National Cultural Archive &bull; /culture/</h3>
-            <p>Agrarian traditions, regional folklore chronicles, and Black Sea ethnography curated in direct technical partnership with the Dobruja.com archive.</p>
-            <a href="/culture/" class="portal-link" title="Explore regional traditions and cultural chronicles">Explore Culture &rarr;</a>
+          <article class="portal-card job-card">
+            <div class="card-meta-bar">
+              <span class="card-eyebrow">SUBPROJECT &bull; HERITAGE</span>
+            </div>
+            <div class="card-title-box">
+              <h3>National Cultural Archive &bull; /culture/</h3>
+            </div>
+            <div class="card-text-summary">
+              Agrarian traditions, regional folklore chronicles, and Black Sea ethnography curated in direct technical partnership with the Dobruja.com archive.
+            </div>
+            <div class="card-footer-actions">
+              <a href="/culture/" class="portal-link card-spec-link" title="Explore regional traditions and cultural chronicles">Explore Culture &rarr;</a>
+            </div>
           </article>
 
-          <article class="portal-card">
-            <span class="card-eyebrow">RESEARCH &bull; INSIGHTS</span>
-            <h3>Research Monographs &bull; /blog/</h3>
-            <p>Analytical treatises examining the 35-hour workweek, the right to disconnect, workplace biochemistry, pension solvency, and corporate governance.</p>
-            <a href="/blog/" class="portal-link" title="Read research monographs and treatises">Read Monographs &rarr;</a>
+          <article class="portal-card job-card">
+            <div class="card-meta-bar">
+              <span class="card-eyebrow">RESEARCH &bull; INSIGHTS</span>
+            </div>
+            <div class="card-title-box">
+              <h3>Research Monographs &bull; /blog/</h3>
+            </div>
+            <div class="card-text-summary">
+              Analytical treatises examining the 35-hour workweek, the right to disconnect, workplace biochemistry, pension solvency, and corporate governance.
+            </div>
+            <div class="card-footer-actions">
+              <a href="/blog/" class="portal-link card-spec-link" title="Read research monographs and treatises">Read Monographs &rarr;</a>
+            </div>
           </article>
 
-          <article class="portal-card">
-            <span class="card-eyebrow">COMMUNICATION &bull; DISPATCH</span>
-            <h3>Ani Ivanova Desk &bull; /contact/</h3>
-            <p>Institutional macroeconomic dispatch and corporate media syndication. Voluntary subscriber desk operating without dynamic tracking databases.</p>
-            <a href="/contact/#dispatch" class="portal-link" title="Subscribe to Chief Editor Ani Ivanova macroeconomic dispatch">Subscribe to Dispatch &rarr;</a>
+          <article class="portal-card job-card">
+            <div class="card-meta-bar">
+              <span class="card-eyebrow">COMMUNICATION &bull; DISPATCH</span>
+            </div>
+            <div class="card-title-box">
+              <h3>Ani Ivanova Desk &bull; /contact/</h3>
+            </div>
+            <div class="card-text-summary">
+              Institutional macroeconomic dispatch and corporate media syndication. Voluntary subscriber desk operating without dynamic tracking databases.
+            </div>
+            <div class="card-footer-actions">
+              <a href="/contact/#dispatch" class="portal-link card-spec-link" title="Subscribe to Chief Editor Ani Ivanova macroeconomic dispatch">Subscribe to Dispatch &rarr;</a>
+            </div>
           </article>
 
         </div>
@@ -227,6 +334,7 @@
       </div>
     </div>
   </footer>
+  <script src="assets/js/engine.js" defer></script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"BestJobs Bulgaria","url":"https://bestjobs.bg/","description":"Sovereign National Economic Portal in Bulgaria coordinating classified job advertising, regional B2B trade, energy, capital investments, and EU regulatory law.","publisher":{"@type":"Organization","name":"BestJobs Bulgaria","url":"https://bestjobs.bg/","logo":"https://bestjobs.bg/apple-touch-icon.png","sameAs":["https://mobikom.bg","https://www.dobrichnews.com","https://www.dobruja.com"]}}</script>
 </body>
 </html>
