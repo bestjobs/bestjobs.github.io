@@ -9,8 +9,9 @@
   --primary-hover: light-dark(#0747a6, #7dd3fc);
   --primary-fg: light-dark(#ffffff, #0b0f19);
   --wage: light-dark(#059669, #34d399);
-  --vip-bg: light-dark(#fffdf5, #1c1917);
-  --vip-border: light-dark(#f59e0b, #d97706);
+  --vip-bg: light-dark(#fffcf0, #18140c);
+  --vip-border: #f59e0b;
+  --vip-gold: light-dark(#b45309, #fbbf24);
   --danger: light-dark(#dc2626, #f87171);
   --max-w: 1100px;
   --max-w-prose: 800px;
@@ -402,12 +403,14 @@ nav ul {
 }
 .job-card.vip-card {
   background: var(--vip-bg);
-  border-color: var(--vip-border);
+  border: 1px solid var(--vip-border);
+  border-top: 3px solid var(--vip-border);
+  box-shadow: 0 4px 12px rgba(245, 158, 11, 0.08);
 }
 .job-card.vip-card:hover {
-  border-color: #f59e0b;
+  border-color: var(--vip-border);
   transform: translateY(-3px);
-  box-shadow: 0 8px 24px rgba(245, 158, 11, 0.25);
+  box-shadow: 0 10px 26px rgba(245, 158, 11, 0.22);
 }
 .card-eyebrow {
   font-size: 0.74rem;
@@ -428,23 +431,28 @@ nav ul {
   color: var(--primary);
   letter-spacing: 0.03em;
 }
-.meta-badges-inline {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.35rem;
-}
-.verified-tag {
-  color: var(--wage);
-  font-size: 0.72rem;
-  font-weight: 800;
+.vip-card .card-meta-bar span {
+  color: var(--vip-gold);
 }
 .vip-tag {
-  background: var(--vip-border);
+  background: linear-gradient(135deg, #f59e0b, #d97706);
   color: #000000;
-  padding: 0.08rem 0.35rem;
-  border-radius: 3px;
+  padding: 0.15rem 0.45rem;
+  border-radius: 4px;
   font-size: 0.68rem;
   font-weight: 900;
+  letter-spacing: 0.02em;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+}
+.vip-reach-badge {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--vip-gold);
+  background: light-dark(rgba(245, 158, 11, 0.1), rgba(245, 158, 11, 0.15));
+  border: 1px solid light-dark(rgba(245, 158, 11, 0.3), rgba(245, 158, 11, 0.4));
+  padding: 0.2rem 0.45rem;
+  border-radius: 4px;
+  line-height: 1.3;
 }
 .card-title-box h3 {
   font-size: 1.08rem;
@@ -476,6 +484,9 @@ nav ul {
   font-weight: 800;
   color: var(--wage);
 }
+.vip-card .salary-figure {
+  color: var(--vip-gold);
+}
 .salary-net-calc {
   font-size: 0.82rem;
   color: var(--muted);
@@ -497,6 +508,9 @@ nav ul {
   color: var(--text);
   white-space: nowrap;
 }
+.vip-card .chip-item {
+  border-color: light-dark(rgba(245, 158, 11, 0.3), rgba(245, 158, 11, 0.4));
+}
 .card-text-summary {
   font-size: 0.9rem;
   color: var(--muted);
@@ -513,6 +527,9 @@ nav ul {
   border-top: 1px solid var(--border);
   margin-top: auto;
 }
+.vip-card .card-footer-actions {
+  border-top-color: light-dark(rgba(245, 158, 11, 0.25), rgba(245, 158, 11, 0.35));
+}
 .card-spec-link, .portal-link {
   font-size: 0.82rem;
   font-weight: 700;
@@ -521,6 +538,9 @@ nav ul {
   min-height: 38px;
   display: inline-flex;
   align-items: center;
+}
+.vip-card .card-spec-link {
+  color: var(--vip-gold);
 }
 .btn-direct-apply {
   background: var(--primary);
@@ -538,6 +558,14 @@ nav ul {
   background: var(--primary-hover);
   color: var(--primary-fg);
   text-decoration: none;
+}
+.vip-card .btn-direct-apply {
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+  color: #000000;
+}
+.vip-card .btn-direct-apply:hover {
+  background: #d97706;
+  color: #000000;
 }
 .grid-cards[data-view="rows"] {
   grid-template-columns: 1fr;
@@ -557,7 +585,8 @@ nav ul {
 }
 .grid-cards[data-view="rows"] .card-chips-row,
 .grid-cards[data-view="rows"] .card-text-summary,
-.grid-cards[data-view="rows"] .card-subtitle {
+.grid-cards[data-view="rows"] .card-subtitle,
+.grid-cards[data-view="rows"] .vip-reach-badge {
   display: none;
 }
 .grid-cards[data-view="rows"] .card-footer-actions {
