@@ -41,20 +41,26 @@ const renderTemplate = (tpl, vars) => {
 
 const generateIndividualPages = () => {
   jobs.forEach((job) => {
+    const isExpired = job.expired === true;
+    const folderType = isExpired ? 'archive' : 'v';
+
     const chipsEnHtml = job.chips_en.map((c) => `<span class="chip-item">${c}</span>`).join('\n          ');
     const chipsBgHtml = job.chips_bg.map((c) => `<span class="chip-item">${c}</span>`).join('\n          ');
 
-    const vipBadgeEn = job.vip ? '<a href="../../bestjobs/help/#vip" class="vip-tag" title="Learn what a VIP listing is and how to syndicate across network">🌟 VIP</a>' : '';
-    const vipBadgeBg = job.vip ? '<a href="../../../bestjobs/bg/help/#vip" class="vip-tag" title="Научете какво представлява VIP позицията и синдикацията">🌟 VIP</a>' : '';
+    const vipBadgeEn = job.vip ? '<a href="/bestjobs/help/#vip" class="vip-tag" title="Learn what a VIP listing is and how to syndicate across network">🌟 VIP</a>' : '';
+    const vipBadgeBg = job.vip ? '<a href="/bestjobs/bg/help/#vip" class="vip-tag" title="Научете какво представлява VIP позицията и синдикацията">🌟 VIP</a>' : '';
+
+    const canonicalEn = `https://bestjobs.bg/bestjobs/${folderType}/${job.slug}/`;
+    const canonicalBg = `https://bestjobs.bg/bestjobs/bg/${folderType}/${job.slug}/`;
 
     const varsEn = {
       LANG: 'en',
       META_TITLE: `${job.title_en} | ${job.company_en} • BestJobs Bulgaria`,
       META_DESC: `${job.title_en} vacancy at ${job.company_en}. Gross monthly salary: ${job.salary_gross} € per month. Direct verified email application.`,
-      CANONICAL_URL: `https://bestjobs.bg/bestjobs/${job.slug}/`,
-      HREFLANG_EN: `https://bestjobs.bg/bestjobs/${job.slug}/`,
-      HREFLANG_BG: `https://bestjobs.bg/bestjobs/bg/${job.slug}/`,
-      ROOT_PATH: '../../',
+      CANONICAL_URL: canonicalEn,
+      HREFLANG_EN: canonicalEn,
+      HREFLANG_BG: canonicalBg,
+      ROOT_PATH: '../../../',
       BOARD_PATH: 'bestjobs/',
       LOGO_TITLE: 'BestJobs Bulgaria — Job Ads Board',
       NAV_ARIA: 'Job Board Navigation',
@@ -65,15 +71,15 @@ const generateIndividualPages = () => {
       VACANCIES_TEXT: 'Vacancies',
       POST_TITLE: 'Post Vacancy Ad Directly',
       POST_TEXT: '+ Post a Job',
-      BLOG_TITLE: 'Career Advice and Labor Insights',
-      BLOG_TEXT: 'Career Advice',
-      HELP_TITLE: 'Employer and Candidate Documentation',
+      BLOG_TITLE: 'Central Research Monographs Catalog',
+      BLOG_TEXT: 'Monographs',
+      HELP_TITLE: 'Unified Documentation for Candidates and Employers',
       HELP_TEXT: 'Help Desk',
       CONTACT_TITLE: 'Official Communication Desks',
       CONTACT_TEXT: 'Contact',
       ABOUT_TITLE: 'Historical Lineage and Governance',
       ABOUT_TEXT: 'About Us',
-      LANG_TOGGLE_HREF: `../../bestjobs/bg/${job.slug}/`,
+      LANG_TOGGLE_HREF: `/bestjobs/bg/${folderType}/${job.slug}/`,
       LANG_TOGGLE_HREFLANG: 'bg',
       LANG_TOGGLE_TITLE: 'Превключете към българската версия на обявата',
       LANG_TOGGLE_TEXT: 'Български (BG)',
@@ -97,12 +103,12 @@ const generateIndividualPages = () => {
       DATE_LABEL_KEY: 'Publication Date',
       DATE_VALUE: job.date,
       VALIDITY_LABEL_KEY: 'Listing Validity Period',
-      VALIDITY_VALUE: 'Immutable 30-Day Cycle (Archived permanently thereafter)',
+      VALIDITY_VALUE: isExpired ? 'ARCHIVED / POSITION CLOSED' : 'Immutable 30-Day Cycle',
       PAYMENT_STANDARD_KEY: 'Remuneration Standard',
       PAYMENT_STANDARD_VALUE: '100% White Economy • Official Bank Wire Remittance',
-      APPLY_MAILTO: `mailto:${job.email}?subject=${encodeURIComponent(`Application: ${job.title_en} (Ref: ${job.id})`)}`,
-      APPLY_TITLE: `Apply directly to ${job.company_en} via email`,
-      APPLY_TEXT: 'Apply with Email',
+      APPLY_MAILTO: isExpired ? '#' : `mailto:${job.email}?subject=${encodeURIComponent(`Application: ${job.title_en} (Ref: ${job.id})`)}`,
+      APPLY_TITLE: isExpired ? 'This vacancy is closed and archived' : `Apply directly to ${job.company_en} via email`,
+      APPLY_TEXT: isExpired ? 'Position Closed' : 'Apply with Email',
       BACK_TITLE: 'Return to active vacancy stream',
       BACK_TEXT: 'Back to Vacancies',
       SHIELD_HEADING: 'Regulatory Notice • ZNZ Intermediation Shield',
@@ -129,10 +135,10 @@ const generateIndividualPages = () => {
       LANG: 'bg',
       META_TITLE: `${job.title_bg} | ${job.company_bg} • BestJobs България`,
       META_DESC: `Обява за ${job.title_bg} в ${job.company_bg}. Брутна заплата: ${job.salary_gross} € на месец. Директно кандидатстване по имейл без посредници.`,
-      CANONICAL_URL: `https://bestjobs.bg/bestjobs/bg/${job.slug}/`,
-      HREFLANG_EN: `https://bestjobs.bg/bestjobs/${job.slug}/`,
-      HREFLANG_BG: `https://bestjobs.bg/bestjobs/bg/${job.slug}/`,
-      ROOT_PATH: '../../../',
+      CANONICAL_URL: canonicalBg,
+      HREFLANG_EN: canonicalEn,
+      HREFLANG_BG: canonicalBg,
+      ROOT_PATH: '../../../../',
       BOARD_PATH: 'bestjobs/bg/',
       LOGO_TITLE: 'BestJobs България — Табло за обяви за работа',
       NAV_ARIA: 'Навигация в кариерния борд',
@@ -143,15 +149,15 @@ const generateIndividualPages = () => {
       VACANCIES_TEXT: 'Свободни позиции',
       POST_TITLE: 'Публикувайте обява за свободна позиция',
       POST_TEXT: '+ Публикувай обява',
-      BLOG_TITLE: 'Кариерни анализи и трудови монографии',
-      BLOG_TEXT: 'Кариерен блог',
-      HELP_TITLE: 'Документация и тарифи за работодатели',
+      BLOG_TITLE: 'Каталог на научните трудови монографии',
+      BLOG_TEXT: 'Монографии',
+      HELP_TITLE: 'Документация за кандидати и работодатели',
       HELP_TEXT: 'Помощен център',
-      CONTACT_TITLE: 'Официални координационни бюра',
+      CONTACT_TITLE: 'Официални координационни бюра и контакти',
       CONTACT_TEXT: 'Контакти',
-      ABOUT_TITLE: 'Институционална история и консорциум',
+      ABOUT_TITLE: 'История, принципи и управление на консорциума',
       ABOUT_TEXT: 'За нас',
-      LANG_TOGGLE_HREF: `../../${job.slug}/`,
+      LANG_TOGGLE_HREF: `/bestjobs/${folderType}/${job.slug}/`,
       LANG_TOGGLE_HREFLANG: 'en',
       LANG_TOGGLE_TITLE: 'Switch to English listing version',
       LANG_TOGGLE_TEXT: 'English (EN)',
@@ -175,12 +181,12 @@ const generateIndividualPages = () => {
       DATE_LABEL_KEY: 'Дата на обявяване',
       DATE_VALUE: job.date,
       VALIDITY_LABEL_KEY: 'Срок на валидност на обявата',
-      VALIDITY_VALUE: 'Неотменим 30-дневен цикъл (трайно архивиране след 31-вия ден)',
+      VALIDITY_VALUE: isExpired ? 'ИЗТЕКЛА ОБЯВА / ПОЗИЦИЯТА Е ЗАТВОРЕНА' : 'Неотменим 30-дневен цикъл',
       PAYMENT_STANDARD_KEY: 'Стандарт на възнаграждението',
       PAYMENT_STANDARD_VALUE: '100% Бяла икономика • Официален банков превод в Евро (€)',
-      APPLY_MAILTO: `mailto:${job.email}?subject=${encodeURIComponent(`Кандидатура: ${job.title_bg} (Реф. №: ${job.id})`)}`,
-      APPLY_TITLE: `Кандидатствайте директно към ${job.company_bg} чрез имейл`,
-      APPLY_TEXT: 'Кандидатствай по имейл',
+      APPLY_MAILTO: isExpired ? '#' : `mailto:${job.email}?subject=${encodeURIComponent(`Кандидатура: ${job.title_bg} (Реф. №: ${job.id})`)}`,
+      APPLY_TITLE: isExpired ? 'Тази позиция е затворена и архивирана' : `Кандидатствайте директно към ${job.company_bg} чрез имейл`,
+      APPLY_TEXT: isExpired ? 'Позицията е затворена' : 'Кандидатствай по имейл',
       BACK_TITLE: 'Обратно към потока с всички активни обяви',
       BACK_TEXT: 'Обратно към обявите',
       SHIELD_HEADING: 'Правна клауза • Защитен щит по ЗНЗ',
@@ -203,18 +209,20 @@ const generateIndividualPages = () => {
       EMPLOYERS_TITLE: 'Бюро за обслужване на работодатели и VIP синдикация'
     };
 
-    const enDir = path.join(ROOT_DIR, 'bestjobs', job.slug);
+    const enDir = path.join(ROOT_DIR, 'bestjobs', folderType, job.slug);
     ensureDir(enDir);
     fs.writeFileSync(path.join(enDir, 'index.html'), renderTemplate(template, varsEn), 'utf8');
 
-    const bgDir = path.join(ROOT_DIR, 'bestjobs', 'bg', job.slug);
+    const bgDir = path.join(ROOT_DIR, 'bestjobs', 'bg', folderType, job.slug);
     ensureDir(bgDir);
     fs.writeFileSync(path.join(bgDir, 'index.html'), renderTemplate(template, varsBg), 'utf8');
   });
 };
 
 const updateCatalogIndexes = () => {
-  const cardsEn = jobs.map((job) => {
+  const activeJobs = jobs.filter((j) => !j.expired);
+
+  const cardsEn = activeJobs.map((job) => {
     const vipClass = job.vip ? ' vip-card' : '';
     const vipBadge = job.vip ? `\n              <div class="meta-badges-inline">\n                <a href="/bestjobs/help/#vip" class="vip-tag" title="Learn what a VIP listing is and how to syndicate across network">🌟 VIP</a>\n              </div>` : '';
     const chips = job.chips_en.map((c) => `<span class="chip-item">${c}</span>`).join('\n              ');
@@ -239,13 +247,13 @@ const updateCatalogIndexes = () => {
               ${job.desc_en}
             </div>
             <div class="card-footer-actions">
-              <a href="/bestjobs/${job.slug}/" class="card-spec-link" title="Open complete technical specification for ${escapeXml(job.title_en)}">Read Full Job &rarr;</a>
+              <a href="/bestjobs/v/${job.slug}/" class="card-spec-link" title="Open complete technical specification for ${escapeXml(job.title_en)}">Read Full Job &rarr;</a>
               <a href="mailto:${job.email}?subject=${encodeURIComponent(`Application: ${job.title_en} (Ref: ${job.id})`)}" class="btn-direct-apply" title="Apply directly to ${escapeXml(job.company_en)} via email">Apply with Email &rarr;</a>
             </div>
           </article>`;
   }).join('\n\n');
 
-  const cardsBg = jobs.map((job) => {
+  const cardsBg = activeJobs.map((job) => {
     const vipClass = job.vip ? ' vip-card' : '';
     const vipBadge = job.vip ? `\n              <div class="meta-badges-inline">\n                <a href="/bestjobs/bg/help/#vip" class="vip-tag" title="Научете какво представлява VIP позицията и синдикацията">🌟 VIP</a>\n              </div>` : '';
     const chips = job.chips_bg.map((c) => `<span class="chip-item">${c}</span>`).join('\n              ');
@@ -270,7 +278,7 @@ const updateCatalogIndexes = () => {
               ${job.desc_bg}
             </div>
             <div class="card-footer-actions">
-              <a href="/bestjobs/bg/${job.slug}/" class="card-spec-link" title="Отворете пълната техническа спецификация за ${escapeXml(job.title_bg)}">Виж цялата обява &rarr;</a>
+              <a href="/bestjobs/bg/v/${job.slug}/" class="card-spec-link" title="Отворете пълната техническа спецификация за ${escapeXml(job.title_bg)}">Виж цялата обява &rarr;</a>
               <a href="mailto:${job.email}?subject=${encodeURIComponent(`Кандидатура: ${job.title_bg} (Реф. №: ${job.id})`)}" class="btn-direct-apply" title="Кандидатствайте директно към ${escapeXml(job.company_bg)} по имейл">Кандидатствай по имейл &rarr;</a>
             </div>
           </article>`;
@@ -299,17 +307,18 @@ const updateCatalogIndexes = () => {
 
 const generateXmlFeeds = () => {
   const now = new Date().toUTCString();
+  const activeJobs = jobs.filter((j) => !j.expired);
 
   let allItemsXml = '';
   let vipItemsXml = '';
 
-  jobs.forEach((job) => {
+  activeJobs.forEach((job) => {
     const itemXml = `    <item>
       <title>${escapeXml(job.title_en)} - ${escapeXml(job.company_en)}</title>
-      <link>https://bestjobs.bg/bestjobs/${escapeXml(job.slug)}/</link>
-      <guid isPermaLink="true">https://bestjobs.bg/bestjobs/${escapeXml(job.slug)}/</guid>
+      <link>https://bestjobs.bg/bestjobs/v/${escapeXml(job.slug)}/</link>
+      <guid isPermaLink="true">https://bestjobs.bg/bestjobs/v/${escapeXml(job.slug)}/</guid>
       <pubDate>${new Date(job.date).toUTCString()}</pubDate>
-      <description>${escapeXml(job.desc_en)} Gross Salary: ${job.salary_gross} EUR/mo.</description>
+      <description>${escapeXml(job.desc_en)} Gross Salary: ${job.salary_gross} EUR per month.</description>
     </item>\n`;
 
     allItemsXml += itemXml;
@@ -355,33 +364,22 @@ const generateSitemapXml = () => {
     { url: 'https://bestjobs.bg/bg/', priority: '1.0', changefreq: 'daily' },
     { url: 'https://bestjobs.bg/bestjobs/', priority: '0.9', changefreq: 'daily' },
     { url: 'https://bestjobs.bg/bestjobs/bg/', priority: '0.9', changefreq: 'daily' },
-    { url: 'https://bestjobs.bg/mall/', priority: '0.8', changefreq: 'weekly' },
-    { url: 'https://bestjobs.bg/mall/bg/', priority: '0.8', changefreq: 'weekly' },
-    { url: 'https://bestjobs.bg/energy/', priority: '0.8', changefreq: 'weekly' },
-    { url: 'https://bestjobs.bg/energy/bg/', priority: '0.8', changefreq: 'weekly' },
-    { url: 'https://bestjobs.bg/invest/', priority: '0.8', changefreq: 'weekly' },
-    { url: 'https://bestjobs.bg/invest/bg/', priority: '0.8', changefreq: 'weekly' },
-    { url: 'https://bestjobs.bg/property/', priority: '0.8', changefreq: 'weekly' },
-    { url: 'https://bestjobs.bg/property/bg/', priority: '0.8', changefreq: 'weekly' },
-    { url: 'https://bestjobs.bg/medical/', priority: '0.8', changefreq: 'weekly' },
-    { url: 'https://bestjobs.bg/medical/bg/', priority: '0.8', changefreq: 'weekly' },
-    { url: 'https://bestjobs.bg/education/', priority: '0.8', changefreq: 'weekly' },
-    { url: 'https://bestjobs.bg/education/bg/', priority: '0.8', changefreq: 'weekly' },
-    { url: 'https://bestjobs.bg/sports/', priority: '0.8', changefreq: 'weekly' },
-    { url: 'https://bestjobs.bg/sports/bg/', priority: '0.8', changefreq: 'weekly' },
-    { url: 'https://bestjobs.bg/culture/', priority: '0.8', changefreq: 'weekly' },
-    { url: 'https://bestjobs.bg/culture/bg/', priority: '0.8', changefreq: 'weekly' },
-    { url: 'https://bestjobs.bg/legal/', priority: '0.8', changefreq: 'weekly' },
-    { url: 'https://bestjobs.bg/legal/bg/', priority: '0.8', changefreq: 'weekly' },
+    { url: 'https://bestjobs.bg/about/', priority: '0.7', changefreq: 'monthly' },
+    { url: 'https://bestjobs.bg/bg/about/', priority: '0.7', changefreq: 'monthly' },
     { url: 'https://bestjobs.bg/blog/', priority: '0.8', changefreq: 'weekly' },
     { url: 'https://bestjobs.bg/bg/blog/', priority: '0.8', changefreq: 'weekly' },
-    { url: 'https://bestjobs.bg/about/', priority: '0.5', changefreq: 'monthly' },
-    { url: 'https://bestjobs.bg/bg/about/', priority: '0.5', changefreq: 'monthly' },
-    { url: 'https://bestjobs.bg/contact/', priority: '0.5', changefreq: 'monthly' },
-    { url: 'https://bestjobs.bg/bg/contact/', priority: '0.5', changefreq: 'monthly' },
-    { url: 'https://bestjobs.bg/privacy/', priority: '0.3', changefreq: 'monthly' },
-    { url: 'https://bestjobs.bg/terms/', priority: '0.3', changefreq: 'monthly' },
-    { url: 'https://bestjobs.bg/gdpr/', priority: '0.3', changefreq: 'monthly' }
+    { url: 'https://bestjobs.bg/help/', priority: '0.8', changefreq: 'weekly' },
+    { url: 'https://bestjobs.bg/bg/help/', priority: '0.8', changefreq: 'weekly' },
+    { url: 'https://bestjobs.bg/accessibility/', priority: '0.6', changefreq: 'monthly' },
+    { url: 'https://bestjobs.bg/bg/accessibility/', priority: '0.6', changefreq: 'monthly' },
+    { url: 'https://bestjobs.bg/privacy/', priority: '0.5', changefreq: 'monthly' },
+    { url: 'https://bestjobs.bg/bg/privacy/', priority: '0.5', changefreq: 'monthly' },
+    { url: 'https://bestjobs.bg/terms/', priority: '0.5', changefreq: 'monthly' },
+    { url: 'https://bestjobs.bg/bg/terms/', priority: '0.5', changefreq: 'monthly' },
+    { url: 'https://bestjobs.bg/gdpr/', priority: '0.5', changefreq: 'monthly' },
+    { url: 'https://bestjobs.bg/bg/gdpr/', priority: '0.5', changefreq: 'monthly' },
+    { url: 'https://bestjobs.bg/contact/', priority: '0.7', changefreq: 'monthly' },
+    { url: 'https://bestjobs.bg/bg/contact/', priority: '0.7', changefreq: 'monthly' }
   ];
 
   let xml = `<?xml version="1.0" encoding="UTF-8"?>
@@ -398,18 +396,19 @@ const generateSitemapXml = () => {
   });
 
   jobs.forEach((job) => {
+    const folderType = job.expired ? 'archive' : 'v';
     xml += `  <url>
-    <loc>https://bestjobs.bg/bestjobs/${escapeXml(job.slug)}/</loc>
+    <loc>https://bestjobs.bg/bestjobs/${folderType}/${escapeXml(job.slug)}/</loc>
     <lastmod>${job.date}</lastmod>
-    <changefreq>never</changefreq>
-    <priority>0.7</priority>
+    <changefreq>${job.expired ? 'never' : 'weekly'}</changefreq>
+    <priority>${job.expired ? '0.3' : '0.7'}</priority>
   </url>\n`;
 
     xml += `  <url>
-    <loc>https://bestjobs.bg/bestjobs/bg/${escapeXml(job.slug)}/</loc>
+    <loc>https://bestjobs.bg/bestjobs/bg/${folderType}/${escapeXml(job.slug)}/</loc>
     <lastmod>${job.date}</lastmod>
-    <changefreq>never</changefreq>
-    <priority>0.7</priority>
+    <changefreq>${job.expired ? 'never' : 'weekly'}</changefreq>
+    <priority>${job.expired ? '0.3' : '0.7'}</priority>
   </url>\n`;
   });
 
