@@ -39,10 +39,20 @@ const renderTemplate = (tpl, vars) => {
   return output;
 };
 
+const getDatePath = (dateStr) => {
+  const d = new Date(dateStr || Date.now());
+  const year = d.getFullYear();
+  const month = String(d.getMonth() + 1).padStart(2, '0');
+  const day = String(d.getDate()).padStart(2, '0');
+  return { year, month, day, pathStr: `${year}/${month}/${day}` };
+};
+
 const generateIndividualPages = () => {
   jobs.forEach((job) => {
     const isExpired = job.expired === true;
     const folderType = isExpired ? 'archive' : 'v';
+    const dp = getDatePath(job.date);
+    const datePath = dp.pathStr;
 
     const chipsEnHtml = job.chips_en.map((c) => `<span class="chip-item">${c}</span>`).join('\n          ');
     const chipsBgHtml = job.chips_bg.map((c) => `<span class="chip-item">${c}</span>`).join('\n          ');
@@ -50,22 +60,17 @@ const generateIndividualPages = () => {
     const vipBadgeEn = job.vip ? '<a href="/bestjobs/help/#vip" class="vip-tag" title="VIP Fast-Track Placement">🌟 VIP FAST-TRACK</a>' : '';
     const vipBadgeBg = job.vip ? '<a href="/bestjobs/bg/help/#vip" class="vip-tag" title="VIP Скоростно наемане">🌟 VIP СКОРОСТНО НАЕМАНЕ</a>' : '';
 
-    const canonicalEn = `https://bestjobs.bg/bestjobs/${folderType}/${job.slug}/`;
-    const canonicalBg = `https://bestjobs.bg/bestjobs/bg/${folderType}/${job.slug}/`;
-
-    const salaryEn = typeof job.salary_gross === 'number' ? `${job.salary_gross} € per month` : job.salary_gross;
-    const salaryBg = typeof job.salary_gross === 'number' ? `${job.salary_gross} € на месец` : job.salary_gross;
-    const netEn = typeof job.salary_net === 'number' ? `(net ~${job.salary_net} €)` : job.salary_net;
-    const netBg = typeof job.salary_net === 'number' ? `(нето ~${job.salary_net} €)` : job.salary_net;
+    const canonicalEn = `https://bestjobs.bg/bestjobs/${folderType}/${datePath}/${job.slug}/`;
+    const canonicalBg = `https://bestjobs.bg/bestjobs/bg/${folderType}/${datePath}/${job.slug}/`;
 
     const varsEn = {
       LANG: 'en',
       META_TITLE: `${job.title_en} | ${job.company_en} • BestJobs Bulgaria`,
-      META_DESC: `${job.title_en} vacancy at ${job.company_en}. Remuneration: ${salaryEn}. Direct verified email application.`,
+      META_DESC: `${job.title_en} vacancy at ${job.company_en}. Remuneration: ${job.salary_gross}. Direct verified email application.`,
       CANONICAL_URL: canonicalEn,
       HREFLANG_EN: canonicalEn,
       HREFLANG_BG: canonicalBg,
-      ROOT_PATH: '../../../',
+      ROOT_PATH: '../../../../../',
       BOARD_PATH: 'bestjobs/',
       LOGO_TITLE: 'BestJobs Bulgaria — Job Ads Board',
       NAV_ARIA: 'Job Board Navigation',
@@ -84,7 +89,7 @@ const generateIndividualPages = () => {
       CONTACT_TEXT: 'Contact',
       ABOUT_TITLE: 'Historical Lineage and Governance',
       ABOUT_TEXT: 'About Us',
-      LANG_TOGGLE_HREF: `/bestjobs/bg/${folderType}/${job.slug}/`,
+      LANG_TOGGLE_HREF: `/bestjobs/bg/${folderType}/${datePath}/${job.slug}/`,
       LANG_TOGGLE_HREFLANG: 'bg',
       LANG_TOGGLE_TITLE: 'Превключете към българската версия на обявата',
       LANG_TOGGLE_TEXT: 'Български (BG)',
@@ -97,8 +102,8 @@ const generateIndividualPages = () => {
       TITLE: job.title_en,
       SUBTITLE: job.subtitle_en,
       COMPANY: job.company_en,
-      SALARY_GROSS: salaryEn,
-      SALARY_NET: netEn,
+      SALARY_GROSS: job.salary_gross,
+      SALARY_NET: job.salary_net,
       CHIPS_HTML: chipsEnHtml,
       DESC_HEADING: 'Position Overview & Responsibilities',
       DESC: job.desc_en,
@@ -139,7 +144,7 @@ const generateIndividualPages = () => {
     const varsBg = {
       LANG: 'bg',
       META_TITLE: `${job.title_bg} | ${job.company_bg} • BestJobs България`,
-      META_DESC: `Обява за ${job.title_bg} в ${job.company_bg}. Възнаграждение: ${salaryBg}. Директно кандидатстване по имейл без посредници.`,
+      META_DESC: `Обява за ${job.title_bg} в ${job.company_bg}. Възнаграждение: ${job.salary_gross}. Директно кандидатстване по имейл без посредници.`,
       CANONICAL_URL: canonicalBg,
       HREFLANG_EN: canonicalEn,
       HREFLANG_BG: canonicalBg,
@@ -162,7 +167,7 @@ const generateIndividualPages = () => {
       CONTACT_TEXT: 'Контакти',
       ABOUT_TITLE: 'История, принципи и управление на консорциума',
       ABOUT_TEXT: 'За нас',
-      LANG_TOGGLE_HREF: `/bestjobs/${folderType}/${job.slug}/`,
+      LANG_TOGGLE_HREF: `/bestjobs/${folderType}/${datePath}/${job.slug}/`,
       LANG_TOGGLE_HREFLANG: 'en',
       LANG_TOGGLE_TITLE: 'Switch to English listing version',
       LANG_TOGGLE_TEXT: 'English (EN)',
@@ -175,8 +180,8 @@ const generateIndividualPages = () => {
       TITLE: job.title_bg,
       SUBTITLE: job.subtitle_bg,
       COMPANY: job.company_bg,
-      SALARY_GROSS: salaryBg,
-      SALARY_NET: netBg,
+      SALARY_GROSS: job.salary_gross,
+      SALARY_NET: job.salary_net,
       CHIPS_HTML: chipsBgHtml,
       DESC_HEADING: 'Описание на длъжността и ключови отговорности',
       DESC: job.desc_bg,
@@ -189,7 +194,7 @@ const generateIndividualPages = () => {
       VALIDITY_VALUE: isExpired ? 'ИЗТЕКЛА ОБЯВА / ПОЗИЦИЯТА Е ЗАТВОРЕНА' : 'Неотменим 30-дневен цикъл',
       PAYMENT_STANDARD_KEY: 'Стандарт на възнаграждението',
       PAYMENT_STANDARD_VALUE: '100% Бяла икономика • Официално изплащане по договор',
-      APPLY_MAILTO: isExpired ? '#' : `mailto:${job.email}?subject=${encodeURIComponent(`Кандидатура: ${job.title_bg} (Реф. №: ${job.id} чрез BestJobs.bg)`)}&body=${encodeURIComponent(`Уважаема конкурсна комисия / Уважаеми работодател,\n\nС настоящото подавам своята кандидатура за обявената позиция „${job.title_bg}“ (Референтен №: ${job.id}), публикувана в Националния стопански портал BestJobs.bg.\n\nМоля, разгледайте приложените документи за участие.\n\nС уважение,`)}`,
+      APPLY_MAILTO: isExpired ? '#' : `mailto:${job.email}?subject=${encodeURIComponent(`Кандидатура: ${job.title_bg} (Реф. №: ${job.id} чрез BestJobs.bg)`)}&body=${encodeURIComponent(`Уважаема конкурсна комисия / Уважаеми работодател,\n\nПодавам своята кандидатура за длъжността „${job.title_bg}“ (Реф. №: ${job.id}) чрез BestJobs.bg.\n\nС уважение,`)}`,
       APPLY_TITLE: isExpired ? 'Тази позиция е затворена и архивирана' : `Кандидатствайте директно към ${job.company_bg} чрез имейл`,
       APPLY_TEXT: isExpired ? 'Позицията е затворена' : 'Кандидатствай по имейл',
       BACK_TITLE: 'Обратно към потока с всички активни обяви',
@@ -214,11 +219,11 @@ const generateIndividualPages = () => {
       EMPLOYERS_TITLE: 'Бюро за обслужване на работодатели и VIP синдикация'
     };
 
-    const enDir = path.join(ROOT_DIR, 'bestjobs', folderType, job.slug);
+    const enDir = path.join(ROOT_DIR, 'bestjobs', folderType, datePath, job.slug);
     ensureDir(enDir);
     fs.writeFileSync(path.join(enDir, 'index.html'), renderTemplate(template, varsEn), 'utf8');
 
-    const bgDir = path.join(ROOT_DIR, 'bestjobs', 'bg', folderType, job.slug);
+    const bgDir = path.join(ROOT_DIR, 'bestjobs', 'bg', folderType, datePath, job.slug);
     ensureDir(bgDir);
     fs.writeFileSync(path.join(bgDir, 'index.html'), renderTemplate(template, varsBg), 'utf8');
   });
@@ -232,8 +237,7 @@ const updateCatalogIndexes = () => {
     const vipBadge = job.vip ? `\n              <div class="meta-badges-inline">\n                <a href="/bestjobs/help/#vip" class="vip-tag" title="VIP Fast-Track Placement">🌟 VIP FAST-TRACK</a>\n              </div>` : '';
     const vipReach = job.vip ? `\n            <div class="vip-reach-badge">📡 Syndicate: <a href="https://mobikom.bg" target="_blank" rel="noopener" title="Mobikom Bulgaria Institutional Hub">mobikom.bg</a> &bull; <a href="https://www.dobrichnews.com" target="_blank" rel="noopener noreferrer" title="Real-time daily news in North-East Bulgaria">dobrichnews.com</a> &bull; <a href="https://www.dobruja.com" target="_blank" rel="noopener noreferrer" title="Agricultural preservation, regional traditions and culture">dobruja.com</a></div>` : '';
     const chips = job.chips_en.map((c) => `<span class="chip-item">${c}</span>`).join('\n              ');
-    const salStr = typeof job.salary_gross === 'number' ? `${job.salary_gross} € per month` : job.salary_gross;
-    const netStr = typeof job.salary_net === 'number' ? `(net ~${job.salary_net} €)` : job.salary_net;
+    const datePath = getDatePath(job.date).pathStr;
 
     return `          <article class="job-card${vipClass}" data-slug="${job.slug}" data-industry="${job.industry}" data-city="${job.city}" data-type="${job.type}" data-date="${job.date}">
             <div class="card-meta-bar">
@@ -245,8 +249,8 @@ const updateCatalogIndexes = () => {
               <div class="card-company">${job.company_en}</div>
             </div>
             <div class="card-salary-box">
-              <span class="salary-figure">${salStr}</span>
-              <span class="salary-net-calc">${netStr}</span>
+              <span class="salary-figure">${job.salary_gross}</span>
+              <span class="salary-net-calc">${job.salary_net}</span>
             </div>
             <div class="card-chips-row">
               ${chips}
@@ -255,8 +259,8 @@ const updateCatalogIndexes = () => {
               ${job.desc_en}
             </div>
             <div class="card-footer-actions">
-              <a href="/bestjobs/v/${job.slug}/" class="card-spec-link" title="Open complete technical specification for ${escapeXml(job.title_en)}">View Job &rarr;</a>
-              <a href="mailto:${job.email}?subject=${encodeURIComponent(`Application: ${job.title_en} (Ref: ${job.id} via BestJobs.bg)`)}&body=${encodeURIComponent(`Dear Hiring Authority,\n\nI hereby submit my application for the position of "${job.title_en}" (Reference ID: ${job.id}) published on BestJobs.bg.\n\nSincerely,`)}" class="btn-direct-apply" title="Apply directly to ${escapeXml(job.company_en)} via email">Apply &rarr;</a>
+              <a href="/bestjobs/v/${datePath}/${job.slug}/" class="card-spec-link" title="Open complete technical specification for ${escapeXml(job.title_en)}">View Job &rarr;</a>
+              <a href="mailto:${job.email}?subject=${encodeURIComponent(`Application: ${job.title_en} (Ref: ${job.id})`)}" class="btn-direct-apply" title="Apply directly to ${escapeXml(job.company_en)} via email">Apply &rarr;</a>
             </div>
           </article>`;
   }).join('\n\n');
@@ -266,8 +270,7 @@ const updateCatalogIndexes = () => {
     const vipBadge = job.vip ? `\n              <div class="meta-badges-inline">\n                <a href="/bestjobs/bg/help/#vip" class="vip-tag" title="VIP Скоростно наемане">🌟 VIP СКОРОСТНО НАЕМАНЕ</a>\n              </div>` : '';
     const vipReach = job.vip ? `\n            <div class="vip-reach-badge">📡 Синдикация: <a href="https://mobikom.bg" target="_blank" rel="noopener" title="Мобиком България — Институционален хъб">mobikom.bg</a> &bull; <a href="https://www.dobrichnews.com" target="_blank" rel="noopener noreferrer" title="Ежедневни регионални новини от Североизточна България">dobrichnews.com</a> &bull; <a href="https://www.dobruja.com" target="_blank" rel="noopener noreferrer" title="Земеделски традиции, фолклор и добруджанска памет">dobruja.com</a></div>` : '';
     const chips = job.chips_bg.map((c) => `<span class="chip-item">${c}</span>`).join('\n              ');
-    const salStr = typeof job.salary_gross === 'number' ? `${job.salary_gross} € на месец` : job.salary_gross;
-    const netStr = typeof job.salary_net === 'number' ? `(нето ~${job.salary_net} €)` : job.salary_net;
+    const datePath = getDatePath(job.date).pathStr;
 
     return `          <article class="job-card${vipClass}" data-slug="${job.slug}" data-industry="${job.industry}" data-city="${job.city}" data-type="${job.type}" data-date="${job.date}">
             <div class="card-meta-bar">
@@ -279,8 +282,8 @@ const updateCatalogIndexes = () => {
               <div class="card-company">${job.company_bg}</div>
             </div>
             <div class="card-salary-box">
-              <span class="salary-figure">${salStr}</span>
-              <span class="salary-net-calc">${netStr}</span>
+              <span class="salary-figure">${job.salary_gross}</span>
+              <span class="salary-net-calc">${job.salary_net}</span>
             </div>
             <div class="card-chips-row">
               ${chips}
@@ -289,8 +292,8 @@ const updateCatalogIndexes = () => {
               ${job.desc_bg}
             </div>
             <div class="card-footer-actions">
-              <a href="/bestjobs/bg/v/${job.slug}/" class="card-spec-link" title="Отворете пълната техническа спецификация за ${escapeXml(job.title_bg)}">Преглед &rarr;</a>
-              <a href="mailto:${job.email}?subject=${encodeURIComponent(`Кандидатура: ${job.title_bg} (Реф. №: ${job.id} чрез BestJobs.bg)`)}&body=${encodeURIComponent(`Уважаема конкурсна комисия / Уважаеми работодател,\n\nПодавам своята кандидатура за длъжността „${job.title_bg}“ (Реф. №: ${job.id}) чрез BestJobs.bg.\n\nС уважение,`)}" class="btn-direct-apply" title="Кандидатствайте директно към ${escapeXml(job.company_bg)} по имейл">Кандидатствай &rarr;</a>
+              <a href="/bestjobs/bg/v/${datePath}/${job.slug}/" class="card-spec-link" title="Отворете пълната техническа спецификация за ${escapeXml(job.title_bg)}">Преглед &rarr;</a>
+              <a href="mailto:${job.email}?subject=${encodeURIComponent(`Кандидатура: ${job.title_bg} (Реф. №: ${job.id})`)}" class="btn-direct-apply" title="Кандидатствайте директно към ${escapeXml(job.company_en)} по имейл">Кандидатствай &rarr;</a>
             </div>
           </article>`;
   }).join('\n\n');
@@ -324,26 +327,24 @@ const generateXmlFeeds = () => {
   let vipItemsXml = '';
 
   activeJobs.forEach((job) => {
-    const salStr = typeof job.salary_gross === 'number' ? `${job.salary_gross} €` : job.salary_gross;
-
+    const datePath = getDatePath(job.date).pathStr;
     const itemXml = `    <item>
       <title>${escapeXml(job.title_en)} - ${escapeXml(job.company_en)}</title>
-      <link>https://bestjobs.bg/bestjobs/v/${escapeXml(job.slug)}/</link>
-      <guid isPermaLink="true">https://bestjobs.bg/bestjobs/v/${escapeXml(job.slug)}/</guid>
+      <link>https://bestjobs.bg/bestjobs/v/${datePath}/${escapeXml(job.slug)}/</link>
+      <guid isPermaLink="true">https://bestjobs.bg/bestjobs/v/${datePath}/${escapeXml(job.slug)}/</guid>
       <pubDate>${new Date(job.date).toUTCString()}</pubDate>
-      <description>${escapeXml(job.desc_en)} Remuneration: ${escapeXml(salStr)}.</description>
+      <description>${escapeXml(job.desc_en)} Remuneration: ${escapeXml(job.salary_gross)}.</description>
     </item>\n`;
 
     allItemsXml += itemXml;
 
     if (job.vip) {
-      const salBgStr = typeof job.salary_gross === 'number' ? `${job.salary_gross} € на месец` : job.salary_gross;
       const vipItemXml = `    <item>
       <title>${escapeXml(job.title_bg)} - ${escapeXml(job.company_bg)}</title>
-      <link>https://bestjobs.bg/bestjobs/bg/v/${escapeXml(job.slug)}/</link>
-      <guid isPermaLink="true">https://bestjobs.bg/bestjobs/bg/v/${escapeXml(job.slug)}/</guid>
+      <link>https://bestjobs.bg/bestjobs/bg/v/${datePath}/${escapeXml(job.slug)}/</link>
+      <guid isPermaLink="true">https://bestjobs.bg/bestjobs/bg/v/${datePath}/${escapeXml(job.slug)}/</guid>
       <pubDate>${new Date(job.date).toUTCString()}</pubDate>
-      <description>${escapeXml(job.desc_bg)} Възнаграждение: ${escapeXml(salBgStr)}.</description>
+      <description>${escapeXml(job.desc_bg)} Възнаграждение: ${escapeXml(job.salary_gross)}.</description>
     </item>\n`;
       vipItemsXml += vipItemXml;
     }
@@ -377,8 +378,25 @@ ${vipItemsXml.trimEnd()}
   fs.writeFileSync(path.join(ROOT_DIR, 'vip-jobs.xml'), vipFeed, 'utf8');
 };
 
-const generateSitemapXml = () => {
+const generateSitemapIndex = () => {
   const today = new Date().toISOString().split('T')[0];
+  const MAX_PER_MAP = 45000;
+
+  const groupedByMonth = {};
+  jobs.forEach((job) => {
+    const dp = getDatePath(job.date);
+    const key = `${dp.year}-${dp.month}`;
+    if (!groupedByMonth[key]) groupedByMonth[key] = [];
+    groupedByMonth[key].push(job);
+  });
+
+  let sitemapIndexXml = `<?xml version="1.0" encoding="UTF-8"?>
+<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <sitemap>
+    <loc>https://bestjobs.bg/sitemap-static.xml</loc>
+    <lastmod>${today}</lastmod>
+  </sitemap>
+`;
 
   const staticRoutes = [
     { url: 'https://bestjobs.bg/', priority: '1.0', changefreq: 'daily' },
@@ -403,42 +421,55 @@ const generateSitemapXml = () => {
     { url: 'https://bestjobs.bg/bg/contact/', priority: '0.7', changefreq: 'monthly' }
   ];
 
-  let xml = `<?xml version="1.0" encoding="UTF-8"?>
+  let staticXml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 `;
-
   staticRoutes.forEach((route) => {
-    xml += `  <url>
+    staticXml += `  <url>
     <loc>${route.url}</loc>
     <lastmod>${today}</lastmod>
     <changefreq>${route.changefreq}</changefreq>
     <priority>${route.priority}</priority>
   </url>\n`;
   });
+  staticXml += `</urlset>\n`;
+  fs.writeFileSync(path.join(ROOT_DIR, 'sitemap-static.xml'), staticXml, 'utf8');
 
-  jobs.forEach((job) => {
-    const folderType = job.expired ? 'archive' : 'v';
-    xml += `  <url>
-    <loc>https://bestjobs.bg/bestjobs/${folderType}/${escapeXml(job.slug)}/</loc>
+  for (const [monthKey, monthJobs] of Object.entries(groupedByMonth)) {
+    const subMapFileName = `sitemap-jobs-${monthKey}.xml`;
+    sitemapindexXml += `  <sitemap>
+    <loc>https://bestjobs.bg/${subMapFileName}</loc>
+    <lastmod>${today}</lastmod>
+  </sitemap>\n`;
+
+    let subXml = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+`;
+    monthJobs.forEach((job) => {
+      const folderType = job.expired ? 'archive' : 'v';
+      const datePath = getDatePath(job.date).pathStr;
+      subXml += `  <url>
+    <loc>https://bestjobs.bg/bestjobs/${folderType}/${datePath}/${escapeXml(job.slug)}/</loc>
     <lastmod>${job.date}</lastmod>
     <changefreq>${job.expired ? 'never' : 'weekly'}</changefreq>
     <priority>${job.expired ? '0.3' : '0.7'}</priority>
   </url>\n`;
-
-    xml += `  <url>
-    <loc>https://bestjobs.bg/bestjobs/bg/${folderType}/${escapeXml(job.slug)}/</loc>
+      subXml += `  <url>
+    <loc>https://bestjobs.bg/bestjobs/bg/${folderType}/${datePath}/${escapeXml(job.slug)}/</loc>
     <lastmod>${job.date}</lastmod>
     <changefreq>${job.expired ? 'never' : 'weekly'}</changefreq>
     <priority>${job.expired ? '0.3' : '0.7'}</priority>
   </url>\n`;
-  });
+    });
+    subXml += `</urlset>\n`;
+    fs.writeFileSync(path.join(ROOT_DIR, subMapFileName), subXml, 'utf8');
+  }
 
-  xml += `</urlset>\n`;
-
-  fs.writeFileSync(path.join(ROOT_DIR, 'sitemap.xml'), xml, 'utf8');
+  sitemapindexXml += `</sitemapindex>\n`;
+  fs.writeFileSync(path.join(ROOT_DIR, 'sitemap.xml'), sitemapindexXml, 'utf8');
 };
 
 generateIndividualPages();
 updateCatalogIndexes();
 generateXmlFeeds();
-generateSitemapXml();
+generateSitemapIndex();
