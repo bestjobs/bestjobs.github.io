@@ -148,27 +148,53 @@
     const isBg = (document.documentElement.lang || '').toLowerCase().startsWith('bg');
     let activeTag = null;
 
+    const tagSynonyms = {
+      'disconnect': ['disconnect', 'изключване'],
+      'medical': ['medical', 'прегледи', 'медицински'],
+      'transit': ['transit', 'транспорт', 'shuttle'],
+      'bike': ['bike', 'велосипед'],
+      'smoke-free': ['smoke-free', 'непушачи'],
+      'fruits': ['fruits', 'плодове', 'вода'],
+      'dental': ['dental', 'дентален', 'зъболекар'],
+      'housing': ['housing', 'жилищна', 'квартира'],
+      '4-day': ['4-day', '4-дневна', 'седмица'],
+      'car': ['car', 'автомобил', 'служебен'],
+      'insurance': ['insurance', 'здравно', 'осигуряване'],
+      'bonus': ['bonus', 'бонус', 'резултати'],
+      'tuition': ['tuition', 'обучителни', 'квалификация'],
+      'kindergarten': ['kindergarten', 'градина', 'детска'],
+      'relocation': ['relocation', 'релокация', 'преместване'],
+      'mental': ['mental', 'възстановяване', 'психологическо'],
+      'sabbatical': ['sabbatical', 'сабатикъл', 'творчески'],
+      'sober': ['sober', 'трезвост', 'алкохол'],
+      'flight': ['flight', 'полет', 'самолетни'],
+      'tax-free': ['tax-free', 'необлагаем', 'дипломатически'],
+      'child-edu': ['child-edu', 'образование', 'деца'],
+      'flexitime': ['flexitime', 'гъвкаво', 'плаващо'],
+      'eco-transit': ['eco-transit', 'екологичен', 'зелен']
+    };
+
     const applyFilters = () => {
       const sInd = industrySelect?.value || '';
       const sCity = citySelect?.value || '';
       const sType = typeSelect?.value || '';
-      const searchTag = activeTag ? activeTag.toLowerCase() : null;
 
       let matchCount = 0;
+      const synonyms = activeTag ? (tagSynonyms[activeTag] || [activeTag]) : [];
 
       for (let i = 0; i < cards.length; i++) {
         const card = cards[i];
         const ind = card.getAttribute('data-industry') || '';
         const city = card.getAttribute('data-city') || '';
         const type = card.getAttribute('data-type') || '';
-        const chips = searchTag ? (card.querySelector('.card-chips-row')?.textContent.toLowerCase() || '') : '';
+        const cardText = card.textContent.toLowerCase();
 
-        const visible = (!sInd || ind === sInd) &&
-                        (!sCity || city === sCity) &&
-                        (!sType || type === sType) &&
-                        (!searchTag || chips.includes(searchTag));
+        const matchesInd = !sInd || ind === sInd;
+        const matchesCity = !sCity || city === sCity;
+        const matchesType = !sType || type === sType;
+        const matchesTag = !activeTag || synonyms.some(term => cardText.includes(term.toLowerCase()));
 
-        if (visible) {
+        if (matchesInd && matchesCity && matchesType && matchesTag) {
           card.removeAttribute('hidden');
           matchCount++;
         } else {
@@ -196,9 +222,7 @@
           activeTag = null;
           link.classList.remove('active');
         } else {
-          for (let i = 0; i < chipLinks.length; i++) {
-            chipLinks[i].classList.remove('active');
-          }
+          chipLinks.forEach((other) => other.classList.remove('active'));
           activeTag = tag;
           link.classList.add('active');
         }
