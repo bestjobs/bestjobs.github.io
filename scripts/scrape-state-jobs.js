@@ -118,59 +118,56 @@ const runAggregator = async () => {
   const html = await fetchHtml(iisdaUrl);
 
   if (html) {
-    const blockRegex = /<tr[^>]*>([\s\S]*?)<\/tr>/gi;
+    const linkRegex = /<a[^>]*href=["']([^"']*competitions\/show_competition[^"']*)["'][^>]*>([\s\S]*?)<\/a>/gi;
     let match;
     let newCount = 0;
 
-    while ((match = blockRegex.exec(html)) !== null && newCount < 15) {
-      const row = match[1];
-      if (row.includes('<th>') || !row.includes('href=')) continue;
+    while ((match = linkRegex.exec(html)) !== null && newCount < 25) {
+      const competitionUrl = match[1];
+      const titleBg = match[2].replace(/<[^>]+>/g, '').trim();
 
-      const linkMatch = row.match(/<a[^>]*href=["']([^"']+)["'][^>]*>([\s\S]*?)<\/a>/i);
-      const textClean = row.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+      const surroundingText = html.slice(Math.max(0, match.index - 100), Math.min(html.length, match.index + 500));
+      const textClean = surroundingText.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
 
-      if (linkMatch) {
-        const titleBg = linkMatch[2].replace(/<[^>]+>/g, '').trim();
-        const parts = textClean.split(' ');
-        const orgBg = parts.slice(1, 7).join(' ') || 'Държавна администрация на Република България';
+      const orgMatch = textClean.match(/Административна структура:\s*([^\.]+)/i);
+      const orgBg = orgMatch ? orgMatch[1].trim() : 'Държавна администрация на Република България';
 
-        const sector = detectSector(titleBg + ' ' + textClean);
-        const city = detectCity(textClean);
-        const latinSlug = transliterate(titleBg).slice(0, 45);
-        const uniqueId = `BJ-${Date.now().toString().slice(-4)}${newCount}`;
-        const fullSlug = `${uniqueId}-${latinSlug}`;
+      const sector = detectSector(titleBg + ' ' + orgBg);
+      const city = detectCity(textClean);
+      const latinSlug = transliterate(titleBg).slice(0, 45);
+      const uniqueId = `BJ-${Date.now().toString().slice(-4)}${newCount}`;
+      const fullSlug = `${uniqueId}-${latinSlug}`;
 
-        const exists = currentJobs.some((j) => j.title_bg.toLowerCase() === titleBg.toLowerCase());
+      const exists = currentJobs.some((j) => j.title_bg.toLowerCase() === titleBg.toLowerCase());
 
-        if (!exists && titleBg.length > 4) {
-          const salaryGross = 1380;
-          const salaryNet = calculateNet(salaryGross);
+      if (!exists && titleBg.length > 4) {
+        const salaryGross = 1380;
+        const salaryNet = calculateNet(salaryGross);
 
-          currentJobs.unshift({
-            id: uniqueId,
-            slug: fullSlug,
-            vip: false,
-            expired: false,
-            date: new Date().toISOString().split('T')[0],
-            city: city,
-            industry: sector,
-            type: 'civil-service',
-            salary_gross: salaryGross,
-            salary_net: salaryNet,
-            email: 'ras@government.bg',
-            title_en: titleBg,
-            subtitle_en: orgBg,
-            company_en: `${orgBg} (government.bg)`,
-            desc_en: `Official state competitive employment procedure published under the State Servant Act. Application documents route directly to the institutional registry. Remuneration strictly in Euro (€).`,
-            chips_en: ['🩺 Medical Exams', '📴 Disconnect', '🏥 Full Health'],
-            title_bg: titleBg,
-            subtitle_bg: orgBg,
-            company_bg: `${orgBg} (government.bg)`,
-            desc_bg: `Официална конкурсна процедура за държавна служба, обявена по реда на Закона за държавния служител. Документите за участие се подават директно към съответната администрация. Възнаграждение в чисто евро (€).`,
-            chips_bg: ['🩺 Медицински прегледи', '📴 Право на изключване', '🏥 Здравно осигуряване']
-          });
-          newCount++;
-        }
+        currentJobs.unshift({
+          id: uniqueId,
+          slug: fullSlug,
+          vip: false,
+          expired: false,
+          date: new Date().toISOString().split('T')[0],
+          city: city,
+          industry: sector,
+          type: 'civil-service',
+          salary_gross: salaryGross,
+          salary_net: salaryNet,
+          email: 'ras@government.bg',
+          title_en: titleBg,
+          subtitle_en: orgBg,
+          company_en: `${orgBg} (government.bg)`,
+          desc_en: `Official public competitive employment procedure published under the State Servant Act. Application documents route directly via authenticated email. Remuneration strictly in Euro (€).`,
+          chips_en: ['🩺 Medical Exams', '📴 Disconnect', '🏥 Full Health'],
+          title_bg: titleBg,
+          subtitle_bg: orgBg,
+          company_bg: `${orgBg} (government.bg)`,
+          desc_bg: `Официална конкурсна процедура за държавна служба по реда на Закона за държавния служител. Документите за участие се подават директно чрез официален имейл адрес. Възнаграждение в чисто евро (€).`,
+          chips_bg: ['🩺 Медицински прегледи', '📴 Право на изключване', '🏥 Здравно осигуряване']
+        });
+        newCount++;
       }
     }
   }
