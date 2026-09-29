@@ -53,10 +53,15 @@ const generateIndividualPages = () => {
     const canonicalEn = `https://bestjobs.bg/bestjobs/${folderType}/${job.slug}/`;
     const canonicalBg = `https://bestjobs.bg/bestjobs/bg/${folderType}/${job.slug}/`;
 
+    const salaryEn = typeof job.salary_gross === 'number' ? `${job.salary_gross} € per month` : job.salary_gross;
+    const salaryBg = typeof job.salary_gross === 'number' ? `${job.salary_gross} € на месец` : job.salary_gross;
+    const netEn = typeof job.salary_net === 'number' ? `(net ~${job.salary_net} €)` : job.salary_net;
+    const netBg = typeof job.salary_net === 'number' ? `(нето ~${job.salary_net} €)` : job.salary_net;
+
     const varsEn = {
       LANG: 'en',
       META_TITLE: `${job.title_en} | ${job.company_en} • BestJobs Bulgaria`,
-      META_DESC: `${job.title_en} vacancy at ${job.company_en}. Gross monthly salary: ${job.salary_gross} € per month. Direct verified email application.`,
+      META_DESC: `${job.title_en} vacancy at ${job.company_en}. Remuneration: ${salaryEn}. Direct verified email application.`,
       CANONICAL_URL: canonicalEn,
       HREFLANG_EN: canonicalEn,
       HREFLANG_BG: canonicalBg,
@@ -92,21 +97,21 @@ const generateIndividualPages = () => {
       TITLE: job.title_en,
       SUBTITLE: job.subtitle_en,
       COMPANY: job.company_en,
-      SALARY_GROSS: `${job.salary_gross} € per month`,
-      SALARY_NET: `(net ~${job.salary_net} €)`,
+      SALARY_GROSS: salaryEn,
+      SALARY_NET: netEn,
       CHIPS_HTML: chipsEnHtml,
       DESC_HEADING: 'Position Overview & Responsibilities',
       DESC: job.desc_en,
       METADATA_HEADING: 'Statutory Employment Profile',
       TYPE_LABEL_KEY: 'Working Arrangement',
-      TYPE_VALUE: job.type === 'civil-service' ? 'Civil Service (State Servant Act)' : 'Labor Code Contract (Art. 67 KT)',
+      TYPE_VALUE: job.type === 'civil-service' ? 'Civil Service / Institutional Appointment' : 'Direct Full-Time Contract',
       DATE_LABEL_KEY: 'Publication Date',
       DATE_VALUE: job.date,
       VALIDITY_LABEL_KEY: 'Listing Validity Period',
       VALIDITY_VALUE: isExpired ? 'ARCHIVED / POSITION CLOSED' : 'Immutable 30-Day Cycle',
       PAYMENT_STANDARD_KEY: 'Remuneration Standard',
-      PAYMENT_STANDARD_VALUE: '100% White Economy • Official Bank Wire Remittance',
-      APPLY_MAILTO: isExpired ? '#' : `mailto:${job.email}?subject=${encodeURIComponent(`Application: ${job.title_en} (Ref: ${job.id})`)}`,
+      PAYMENT_STANDARD_VALUE: '100% White Economy • Official Direct Remittance',
+      APPLY_MAILTO: isExpired ? '#' : `mailto:${job.email}?subject=${encodeURIComponent(`Application: ${job.title_en} (Ref: ${job.id} via BestJobs.bg)`)}&body=${encodeURIComponent(`Dear Hiring Authority,\n\nI hereby submit my application for the position of "${job.title_en}" (Reference ID: ${job.id}) published on the BestJobs.bg Sovereign Portal.\n\nPlease find my qualifications attached.\n\nSincerely,`)}`,
       APPLY_TITLE: isExpired ? 'This vacancy is closed and archived' : `Apply directly to ${job.company_en} via email`,
       APPLY_TEXT: isExpired ? 'Position Closed' : 'Apply with Email',
       BACK_TITLE: 'Return to active vacancy stream',
@@ -134,7 +139,7 @@ const generateIndividualPages = () => {
     const varsBg = {
       LANG: 'bg',
       META_TITLE: `${job.title_bg} | ${job.company_bg} • BestJobs България`,
-      META_DESC: `Обява за ${job.title_bg} в ${job.company_bg}. Брутна заплата: ${job.salary_gross} € на месец. Директно кандидатстване по имейл без посредници.`,
+      META_DESC: `Обява за ${job.title_bg} в ${job.company_bg}. Възнаграждение: ${salaryBg}. Директно кандидатстване по имейл без посредници.`,
       CANONICAL_URL: canonicalBg,
       HREFLANG_EN: canonicalEn,
       HREFLANG_BG: canonicalBg,
@@ -170,21 +175,21 @@ const generateIndividualPages = () => {
       TITLE: job.title_bg,
       SUBTITLE: job.subtitle_bg,
       COMPANY: job.company_bg,
-      SALARY_GROSS: `${job.salary_gross} € на месец`,
-      SALARY_NET: `(нето ~${job.salary_net} €)`,
+      SALARY_GROSS: salaryBg,
+      SALARY_NET: netBg,
       CHIPS_HTML: chipsBgHtml,
       DESC_HEADING: 'Описание на длъжността и ключови отговорности',
       DESC: job.desc_bg,
       METADATA_HEADING: 'Нормативни параметри на заетостта',
       TYPE_LABEL_KEY: 'Вид правоотношение',
-      TYPE_VALUE: job.type === 'civil-service' ? 'Служебно правоотношение (Закон за държавния служител)' : 'Трудов договор (чл. 67 от Кодекса на труда)',
+      TYPE_VALUE: job.type === 'civil-service' ? 'Служебно / Институционално правоотношение' : 'Директен трудов договор',
       DATE_LABEL_KEY: 'Дата на обявяване',
       DATE_VALUE: job.date,
       VALIDITY_LABEL_KEY: 'Срок на валидност на обявата',
       VALIDITY_VALUE: isExpired ? 'ИЗТЕКЛА ОБЯВА / ПОЗИЦИЯТА Е ЗАТВОРЕНА' : 'Неотменим 30-дневен цикъл',
       PAYMENT_STANDARD_KEY: 'Стандарт на възнаграждението',
-      PAYMENT_STANDARD_VALUE: '100% Бяла икономика • Официален банков превод в Евро (€)',
-      APPLY_MAILTO: isExpired ? '#' : `mailto:${job.email}?subject=${encodeURIComponent(`Кандидатура: ${job.title_bg} (Реф. №: ${job.id})`)}`,
+      PAYMENT_STANDARD_VALUE: '100% Бяла икономика • Официално изплащане по договор',
+      APPLY_MAILTO: isExpired ? '#' : `mailto:${job.email}?subject=${encodeURIComponent(`Кандидатура: ${job.title_bg} (Реф. №: ${job.id} чрез BestJobs.bg)`)}&body=${encodeURIComponent(`Уважаема конкурсна комисия / Уважаеми работодател,\n\nС настоящото подавам своята кандидатура за обявената позиция „${job.title_bg}“ (Референтен №: ${job.id}), публикувана в Националния стопански портал BestJobs.bg.\n\nМоля, разгледайте приложените документи за участие.\n\nС уважение,`)}`,
       APPLY_TITLE: isExpired ? 'Тази позиция е затворена и архивирана' : `Кандидатствайте директно към ${job.company_bg} чрез имейл`,
       APPLY_TEXT: isExpired ? 'Позицията е затворена' : 'Кандидатствай по имейл',
       BACK_TITLE: 'Обратно към потока с всички активни обяви',
@@ -227,6 +232,8 @@ const updateCatalogIndexes = () => {
     const vipBadge = job.vip ? `\n              <div class="meta-badges-inline">\n                <a href="/bestjobs/help/#vip" class="vip-tag" title="VIP Fast-Track Placement">🌟 VIP FAST-TRACK</a>\n              </div>` : '';
     const vipReach = job.vip ? `\n            <div class="vip-reach-badge">📡 Syndicate: <a href="https://mobikom.bg" target="_blank" rel="noopener" title="Mobikom Bulgaria Institutional Hub">mobikom.bg</a> &bull; <a href="https://www.dobrichnews.com" target="_blank" rel="noopener noreferrer" title="Real-time daily news in North-East Bulgaria">dobrichnews.com</a> &bull; <a href="https://www.dobruja.com" target="_blank" rel="noopener noreferrer" title="Agricultural preservation, regional traditions and culture">dobruja.com</a></div>` : '';
     const chips = job.chips_en.map((c) => `<span class="chip-item">${c}</span>`).join('\n              ');
+    const salStr = typeof job.salary_gross === 'number' ? `${job.salary_gross} € per month` : job.salary_gross;
+    const netStr = typeof job.salary_net === 'number' ? `(net ~${job.salary_net} €)` : job.salary_net;
 
     return `          <article class="job-card${vipClass}" data-slug="${job.slug}" data-industry="${job.industry}" data-city="${job.city}" data-type="${job.type}" data-date="${job.date}">
             <div class="card-meta-bar">
@@ -238,8 +245,8 @@ const updateCatalogIndexes = () => {
               <div class="card-company">${job.company_en}</div>
             </div>
             <div class="card-salary-box">
-              <span class="salary-figure">${job.salary_gross} € per month</span>
-              <span class="salary-net-calc">(net ~${job.salary_net} €)</span>
+              <span class="salary-figure">${salStr}</span>
+              <span class="salary-net-calc">${netStr}</span>
             </div>
             <div class="card-chips-row">
               ${chips}
@@ -249,7 +256,7 @@ const updateCatalogIndexes = () => {
             </div>
             <div class="card-footer-actions">
               <a href="/bestjobs/v/${job.slug}/" class="card-spec-link" title="Open complete technical specification for ${escapeXml(job.title_en)}">View Job &rarr;</a>
-              <a href="mailto:${job.email}?subject=${encodeURIComponent(`Application: ${job.title_en} (Ref: ${job.id})`)}" class="btn-direct-apply" title="Apply directly to ${escapeXml(job.company_en)} via email">Apply &rarr;</a>
+              <a href="mailto:${job.email}?subject=${encodeURIComponent(`Application: ${job.title_en} (Ref: ${job.id} via BestJobs.bg)`)}&body=${encodeURIComponent(`Dear Hiring Authority,\n\nI hereby submit my application for the position of "${job.title_en}" (Reference ID: ${job.id}) published on BestJobs.bg.\n\nSincerely,`)}" class="btn-direct-apply" title="Apply directly to ${escapeXml(job.company_en)} via email">Apply &rarr;</a>
             </div>
           </article>`;
   }).join('\n\n');
@@ -259,6 +266,8 @@ const updateCatalogIndexes = () => {
     const vipBadge = job.vip ? `\n              <div class="meta-badges-inline">\n                <a href="/bestjobs/bg/help/#vip" class="vip-tag" title="VIP Скоростно наемане">🌟 VIP СКОРОСТНО НАЕМАНЕ</a>\n              </div>` : '';
     const vipReach = job.vip ? `\n            <div class="vip-reach-badge">📡 Синдикация: <a href="https://mobikom.bg" target="_blank" rel="noopener" title="Мобиком България — Институционален хъб">mobikom.bg</a> &bull; <a href="https://www.dobrichnews.com" target="_blank" rel="noopener noreferrer" title="Ежедневни регионални новини от Североизточна България">dobrichnews.com</a> &bull; <a href="https://www.dobruja.com" target="_blank" rel="noopener noreferrer" title="Земеделски традиции, фолклор и добруджанска памет">dobruja.com</a></div>` : '';
     const chips = job.chips_bg.map((c) => `<span class="chip-item">${c}</span>`).join('\n              ');
+    const salStr = typeof job.salary_gross === 'number' ? `${job.salary_gross} € на месец` : job.salary_gross;
+    const netStr = typeof job.salary_net === 'number' ? `(нето ~${job.salary_net} €)` : job.salary_net;
 
     return `          <article class="job-card${vipClass}" data-slug="${job.slug}" data-industry="${job.industry}" data-city="${job.city}" data-type="${job.type}" data-date="${job.date}">
             <div class="card-meta-bar">
@@ -270,8 +279,8 @@ const updateCatalogIndexes = () => {
               <div class="card-company">${job.company_bg}</div>
             </div>
             <div class="card-salary-box">
-              <span class="salary-figure">${job.salary_gross} € на месец</span>
-              <span class="salary-net-calc">(нето ~${job.salary_net} €)</span>
+              <span class="salary-figure">${salStr}</span>
+              <span class="salary-net-calc">${netStr}</span>
             </div>
             <div class="card-chips-row">
               ${chips}
@@ -281,7 +290,7 @@ const updateCatalogIndexes = () => {
             </div>
             <div class="card-footer-actions">
               <a href="/bestjobs/bg/v/${job.slug}/" class="card-spec-link" title="Отворете пълната техническа спецификация за ${escapeXml(job.title_bg)}">Преглед &rarr;</a>
-              <a href="mailto:${job.email}?subject=${encodeURIComponent(`Кандидатура: ${job.title_bg} (Реф. №: ${job.id})`)}" class="btn-direct-apply" title="Кандидатствайте директно към ${escapeXml(job.company_bg)} по имейл">Кандидатствай &rarr;</a>
+              <a href="mailto:${job.email}?subject=${encodeURIComponent(`Кандидатура: ${job.title_bg} (Реф. №: ${job.id} чрез BestJobs.bg)`)}&body=${encodeURIComponent(`Уважаема конкурсна комисия / Уважаеми работодател,\n\nПодавам своята кандидатура за длъжността „${job.title_bg}“ (Реф. №: ${job.id}) чрез BestJobs.bg.\n\nС уважение,`)}" class="btn-direct-apply" title="Кандидатствайте директно към ${escapeXml(job.company_bg)} по имейл">Кандидатствай &rarr;</a>
             </div>
           </article>`;
   }).join('\n\n');
@@ -315,23 +324,26 @@ const generateXmlFeeds = () => {
   let vipItemsXml = '';
 
   activeJobs.forEach((job) => {
+    const salStr = typeof job.salary_gross === 'number' ? `${job.salary_gross} €` : job.salary_gross;
+
     const itemXml = `    <item>
       <title>${escapeXml(job.title_en)} - ${escapeXml(job.company_en)}</title>
       <link>https://bestjobs.bg/bestjobs/v/${escapeXml(job.slug)}/</link>
       <guid isPermaLink="true">https://bestjobs.bg/bestjobs/v/${escapeXml(job.slug)}/</guid>
       <pubDate>${new Date(job.date).toUTCString()}</pubDate>
-      <description>${escapeXml(job.desc_en)} Gross Salary: ${job.salary_gross} EUR per month.</description>
+      <description>${escapeXml(job.desc_en)} Remuneration: ${escapeXml(salStr)}.</description>
     </item>\n`;
 
     allItemsXml += itemXml;
 
     if (job.vip) {
+      const salBgStr = typeof job.salary_gross === 'number' ? `${job.salary_gross} € на месец` : job.salary_gross;
       const vipItemXml = `    <item>
       <title>${escapeXml(job.title_bg)} - ${escapeXml(job.company_bg)}</title>
       <link>https://bestjobs.bg/bestjobs/bg/v/${escapeXml(job.slug)}/</link>
       <guid isPermaLink="true">https://bestjobs.bg/bestjobs/bg/v/${escapeXml(job.slug)}/</guid>
       <pubDate>${new Date(job.date).toUTCString()}</pubDate>
-      <description>${escapeXml(job.desc_bg)} Брутна заплата: ${job.salary_gross} EUR на месец.</description>
+      <description>${escapeXml(job.desc_bg)} Възнаграждение: ${escapeXml(salBgStr)}.</description>
     </item>\n`;
       vipItemsXml += vipItemXml;
     }
@@ -342,7 +354,7 @@ const generateXmlFeeds = () => {
   <channel>
     <title>BestJobs Bulgaria - All Vacancies Feed</title>
     <link>https://bestjobs.bg/bestjobs/</link>
-    <description>Verified direct employment postings across Bulgaria with transparent Euro compensation.</description>
+    <description>Verified direct employment postings across Bulgaria and global institutions.</description>
     <language>en-US</language>
     <lastBuildDate>${now}</lastBuildDate>
 ${allItemsXml.trimEnd()}
