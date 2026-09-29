@@ -6,11 +6,16 @@ const ROOT_DIR = path.resolve(__dirname, '..');
 const JOBS_FILE = path.join(ROOT_DIR, 'data', 'jobs.json');
 
 const ensureDirectoryStructure = () => {
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = String(now.getMonth() + 1).padStart(2, '0');
+  const day = String(now.getDate()).padStart(2, '0');
+
   const dirs = [
-    path.join(ROOT_DIR, 'bestjobs', 'v'),
-    path.join(ROOT_DIR, 'bestjobs', 'archive'),
-    path.join(ROOT_DIR, 'bestjobs', 'bg', 'v'),
-    path.join(ROOT_DIR, 'bestjobs', 'bg', 'archive')
+    path.join(ROOT_DIR, 'bestjobs', 'v', String(year), month, day),
+    path.join(ROOT_DIR, 'bestjobs', 'archive', String(year), month, day),
+    path.join(ROOT_DIR, 'bestjobs', 'bg', 'v', String(year), month, day),
+    path.join(ROOT_DIR, 'bestjobs', 'bg', 'archive', String(year), month, day)
   ];
 
   dirs.forEach((dir) => {
@@ -27,7 +32,7 @@ let currentJobs = JSON.parse(rawJobs);
 const detectSector = (text) => {
   const t = text.toLowerCase();
   if (t.includes('space') || t.includes('космо') || t.includes('байконур') || t.includes('nasa') || t.includes('esa') || t.includes('авио') || t.includes('карго') || t.includes('boeing')) return 'space-aerospace';
-  if (t.includes('аец') || t.includes('nuclear') || t.includes('яядрен') || t.includes('edf') || t.includes('iaea') || t.includes('маае') || t.includes('westinghouse')) return 'nuclear-energy';
+  if (t.includes('аец') || t.includes('nuclear') || t.includes('ядрен') || t.includes('edf') || t.includes('iaea') || t.includes('маае') || t.includes('westinghouse')) return 'nuclear-energy';
   if (t.includes('telecom') || t.includes('телеком') || t.includes('vodafone') || t.includes('deutsche telekom') || t.includes('orange') || t.includes('оптика') || t.includes('5g')) return 'telecom-infrastructure';
   if (t.includes('signal') || t.includes('telegram') || t.includes('crypto') || t.includes('крипто') || t.includes('infosec') || t.includes('сигурност')) return 'privacy-messaging-crypto';
   if (t.includes('tiktok') || t.includes('bytedance') || t.includes('social') || t.includes('социалн') || t.includes('алгоритм')) return 'social-media-algorithms';
@@ -178,7 +183,7 @@ const runAggregator = async () => {
           title_en: titleBg,
           subtitle_en: orgBg,
           company_en: `${orgBg} (government.bg)`,
-          desc_en: `Official public competitive employment procedure published under the State Servant Act. Remuneration in contract currency. Direct application.`,
+          desc_en: `Official public competitive employment procedure published underй the State Servant Act. Remuneration in contract currency. Direct application.`,
           chips_en: ['🩺 Medical Exams', '📴 Disconnect', '🏥 Full Health'],
           title_bg: titleBg,
           subtitle_bg: orgBg,
