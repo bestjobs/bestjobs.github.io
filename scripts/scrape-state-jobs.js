@@ -26,11 +26,11 @@ let currentJobs = JSON.parse(rawJobs);
 
 const calculateNet = (gross) => Math.round(gross * 0.776);
 
-const detectSector = (title, org) => {
-  const t = (title + ' ' + org).toLowerCase();
-  if (t.includes('болниц') || t.includes('мбал') || t.includes('умбал') || t.includes('цсмп') || t.includes('лекар') || t.includes('медицинск') || t.includes('здравн')) return 'healthcare';
-  if (t.includes('съд') || t.includes('прокурор') || t.includes('всс') || t.includes('вписвания') || t.includes('кадастър') || t.includes('агкк')) return 'judiciary';
-  if (t.includes('отбран') || t.includes('армия') || t.includes('воен') || t.includes('мвр') || t.includes('полици') || t.includes('пожарн') || t.includes('пбзн')) return 'defense-security';
+const detectSector = (text) => {
+  const t = text.toLowerCase();
+  if (t.includes('болниц') || t.includes('мбал') || t.includes('умбал') || t.includes('цсмп') || t.includes('лекар') || t.includes('медицинск') || t.includes('здравн') || t.includes('нзок')) return 'healthcare';
+  if (t.includes('съд') || t.includes('прокурор') || t.includes('всс') || t.includes('вписвания') || t.includes('кадастър') || t.includes('агкк') || t.includes('право')) return 'judiciary';
+  if (t.includes('отбран') || t.includes('армия') || t.includes('воен') || t.includes('мвр') || t.includes('полици') || t.includes('пожарн') || t.includes('пбзн') || t.includes('сигурност')) return 'defense-security';
   if (t.includes('професор') || t.includes('доцент') || t.includes('асистент') || t.includes('докторант') || t.includes('бан') || t.includes('университет') || t.includes('нацид')) return 'academic';
   if (t.includes('училищ') || t.includes('мон') || t.includes('руо') || t.includes('педагог') || t.includes('учител')) return 'education';
   if (t.includes('бдж') || t.includes('нкжи') || t.includes('рвд') || t.includes('bulatsa') || t.includes('пристанищ') || t.includes('летищ') || t.includes('апи') || t.includes('транспорт')) return 'transport-infrastructure';
@@ -77,7 +77,14 @@ const purgeExpiredJobs = (jobsList) => {
 
 const fetchHtml = (url) => {
   return new Promise((resolve) => {
-    https.get(url, { headers: { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) BestJobs-State-Scraper/1.0 (+https://bestjobs.bg)' } }, (res) => {
+    const req = https.get(url, {
+      timeout: 15000,
+      headers: {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36',
+        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+        'Accept-Language': 'bg,en;q=0.9'
+      }
+    }, (res) => {
       if (res.statusCode >= 300 && res.statusCode < 400 && res.headers.location) {
         return resolve(fetchHtml(res.headers.location));
       }
@@ -85,7 +92,10 @@ const fetchHtml = (url) => {
       let data = '';
       res.on('data', (chunk) => { data += chunk; });
       res.on('end', () => resolve(data));
-    }).on('error', () => resolve(''));
+    });
+
+    req.on('error', () => resolve(''));
+    req.on('timeout', () => { req.destroy(); resolve(''); });
   });
 };
 
@@ -104,36 +114,36 @@ const runAggregator = async () => {
   ensureDirectoryStructure();
   currentJobs = purgeExpiredJobs(currentJobs);
 
-  const iisdaUrl = 'https://iisda.government.bg/competitions/all_competitions';
+  const iisdaUrl = 'https://iisda.government.bg/competitions/competitions_list';
   const html = await fetchHtml(iisdaUrl);
 
   if (html) {
-    const regex = /<tr[^>]*>([\s\S]*?)<\/tr>/gi;
+    const blockRegex = /<tr[^>]*>([\s\S]*?)<\/tr>/gi;
     let match;
     let newCount = 0;
 
-    while ((match = regex.exec(html)) !== null && newCount < 15) {
+    while ((match = blockRegex.exec(html)) !== null && newCount < 15) {
       const row = match[1];
       if (row.includes('<th>') || !row.includes('href=')) continue;
 
-      const titleMatch = row.match(/<a[^>]*>([\s\S]*?)<\/a>/i);
-      const textMatch = row.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+      const linkMatch = row.match(/<a[^>]*href=["']([^"']+)["'][^>]*>([\s\S]*?)<\/a>/i);
+      const textClean = row.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
 
-      if (titleMatch) {
-        const titleBg = titleMatch[1].replace(/<[^>]+>/g, '').trim();
-        const parts = textMatch.split(' ');
-        const orgBg = parts.slice(1, 6).join(' ') || 'Държавна администрация на Република България';
-        
-        const sector = detectSector(titleBg, textMatch);
-        const city = detectCity(textMatch);
+      if (linkMatch) {
+        const titleBg = linkMatch[2].replace(/<[^>]+>/g, '').trim();
+        const parts = textClean.split(' ');
+        const orgBg = parts.slice(1, 7).join(' ') || 'Държавна администрация на Република България';
+
+        const sector = detectSector(titleBg + ' ' + textClean);
+        const city = detectCity(textClean);
         const latinSlug = transliterate(titleBg).slice(0, 45);
         const uniqueId = `BJ-${Date.now().toString().slice(-4)}${newCount}`;
         const fullSlug = `${uniqueId}-${latinSlug}`;
 
         const exists = currentJobs.some((j) => j.title_bg.toLowerCase() === titleBg.toLowerCase());
 
-        if (!exists && titleBg.length > 5) {
-          const salaryGross = 1350;
+        if (!exists && titleBg.length > 4) {
+          const salaryGross = 1380;
           const salaryNet = calculateNet(salaryGross);
 
           currentJobs.unshift({
@@ -151,12 +161,12 @@ const runAggregator = async () => {
             title_en: titleBg,
             subtitle_en: orgBg,
             company_en: `${orgBg} (government.bg)`,
-            desc_en: `Official public sector competitive procedure organized under the State Servant Act. Remuneration strictly in Euro (€).`,
+            desc_en: `Official state competitive employment procedure published under the State Servant Act. Application documents route directly to the institutional registry. Remuneration strictly in Euro (€).`,
             chips_en: ['🩺 Medical Exams', '📴 Disconnect', '🏥 Full Health'],
             title_bg: titleBg,
             subtitle_bg: orgBg,
             company_bg: `${orgBg} (government.bg)`,
-            desc_bg: `Официална конкурсна процедура за държавни служители по Закона за държавния служител в публичната администрация. Възнаграждение в чисто евро (€).`,
+            desc_bg: `Официална конкурсна процедура за държавна служба, обявена по реда на Закона за държавния служител. Документите за участие се подават директно към съответната администрация. Възнаграждение в чисто евро (€).`,
             chips_bg: ['🩺 Медицински прегледи', '📴 Право на изключване', '🏥 Здравно осигуряване']
           });
           newCount++;
