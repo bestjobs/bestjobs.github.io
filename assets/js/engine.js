@@ -8,6 +8,7 @@
     initStreamAudioPlayer();
     initFilterSystem();
     initViewSwitcher();
+    initLoadMore();
   });
 
   function initLiveAnnouncer() {
@@ -140,6 +141,7 @@
     const typeSelect = document.getElementById('filter-type');
     const chipLinks = document.querySelectorAll('.chip-btn');
     const cards = document.querySelectorAll('.job-card');
+    const loadMoreBtn = document.getElementById('btn-load-more');
 
     if (!industrySelect && !citySelect && !typeSelect && chipLinks.length === 0) return;
 
@@ -172,6 +174,10 @@
         } else {
           card.setAttribute('hidden', '');
         }
+      }
+
+      if (loadMoreBtn) {
+        loadMoreBtn.setAttribute('hidden', '');
       }
 
       announce(isBg ? `Филтрирани: ${matchCount} резултата.` : `Filtered: ${matchCount} results.`);
@@ -227,6 +233,37 @@
 
         announce(viewLabels[view] || view);
       });
+    });
+  }
+
+  function initLoadMore() {
+    const loadMoreBtn = document.getElementById('btn-load-more');
+    const cards = Array.from(document.querySelectorAll('.job-card'));
+    if (!loadMoreBtn || cards.length <= 21) {
+      if (loadMoreBtn) loadMoreBtn.setAttribute('hidden', '');
+      return;
+    }
+
+    const PAGE_SIZE = 21;
+    let visibleCount = PAGE_SIZE;
+
+    for (let i = PAGE_SIZE; i < cards.length; i++) {
+      cards[i].setAttribute('hidden', '');
+    }
+
+    loadMoreBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+
+      const nextBatch = cards.slice(visibleCount, visibleCount + PAGE_SIZE);
+      nextBatch.forEach(c => c.removeAttribute('hidden'));
+
+      visibleCount += nextBatch.length;
+
+      if (visibleCount >= cards.length) {
+        loadMoreBtn.setAttribute('hidden', '');
+      }
+
+      announce(`Заредени още ${nextBatch.length} позиции.`);
     });
   }
 })();
