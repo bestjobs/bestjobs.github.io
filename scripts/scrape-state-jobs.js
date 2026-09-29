@@ -5,8 +5,26 @@ const https = require('https');
 const ROOT_DIR = path.resolve(__dirname, '..');
 const JOBS_FILE = path.join(ROOT_DIR, 'data', 'jobs.json');
 
+const ensureDirectoryStructure = () => {
+  const dirs = [
+    path.join(ROOT_DIR, 'bestjobs', 'v'),
+    path.join(ROOT_DIR, 'bestjobs', 'archive'),
+    path.join(ROOT_DIR, 'bestjobs', 'bg', 'v'),
+    path.join(ROOT_DIR, 'bestjobs', 'bg', 'archive')
+  ];
+
+  dirs.forEach((dir) => {
+    if (!fs.existsSync(dir)) {
+      fs.mkdirSync(dir, { recursive: true });
+      fs.writeFileSync(path.join(dir, '.gitkeep'), '', 'utf8');
+    }
+  });
+};
+
 const rawJobs = fs.readFileSync(JOBS_FILE, 'utf8');
 let currentJobs = JSON.parse(rawJobs);
+
+const calculateNet = (gross) => Math.round(gross * 0.776);
 
 const purgeExpiredJobs = (jobsList) => {
   const now = new Date();
@@ -22,11 +40,9 @@ const purgeExpiredJobs = (jobsList) => {
 };
 
 const fetchJson = (url) => {
-  return new Promise((resolve, reject) => {
-    https.get(url, { headers: { 'User-Agent': 'BestJobs-Aggregator/1.0 (+https://bestjobs.bg)' } }, (res) => {
-      if (res.statusCode !== 200) {
-        return resolve([]);
-      }
+  return new Promise((resolve) => {
+    https.get(url, { headers: { 'User-Agent': 'BestJobs-Autonomous-Aggregator/1.0 (+https://bestjobs.bg)' } }, (res) => {
+      if (res.statusCode !== 200) return resolve([]);
       let data = '';
       res.on('data', (chunk) => { data += chunk; });
       res.on('end', () => {
@@ -41,17 +57,18 @@ const fetchJson = (url) => {
 };
 
 const runAggregator = async () => {
+  ensureDirectoryStructure();
   currentJobs = purgeExpiredJobs(currentJobs);
 
   const openDataUrl = 'https://data.egov.bg/api/list/competitions';
-  const remoteCompetitions = await fetchJson(openDataUrl);
+  const remoteData = await fetchJson(openDataUrl);
 
-  if (Array.isArray(remoteCompetitions) && remoteCompetitions.length > 0) {
-    remoteCompetitions.forEach((item) => {
+  if (Array.isArray(remoteData) && remoteData.length > 0) {
+    remoteData.forEach((item) => {
       const exists = currentJobs.some((j) => j.id === item.id || j.slug === item.slug);
       if (!exists && item.title_bg && item.salary_gross) {
         const salaryGross = Number(item.salary_gross) || 1200;
-        const salaryNet = Number(item.salary_net) || Math.round(salaryGross * 0.776);
+        const salaryNet = Number(item.salary_net) || calculateNet(salaryGross);
         currentJobs.unshift({
           id: item.id || `BJ-${Date.now().toString().slice(-4)}`,
           slug: item.slug || `BJ-${Date.now().toString().slice(-4)}-state-competition`,
