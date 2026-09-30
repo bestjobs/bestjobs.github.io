@@ -7,6 +7,8 @@
     initLiveAnnouncer();
     initStreamAudioPlayer();
     initArticleVoiceReader();
+    initWebShare();
+    initPrintSlip();
     initAntiBotGate();
     initFilterSystem();
     initViewSwitcher();
@@ -50,6 +52,47 @@
     return sentences[0] ? sentences[0].trim() + '.' : clean.slice(0, 140) + '...';
   }
 
+  function initWebShare() {
+    const shareBtn = document.getElementById('btn-share-page');
+    if (!shareBtn) return;
+
+    const isBg = (document.documentElement.lang || '').toLowerCase().startsWith('bg');
+
+    shareBtn.addEventListener('click', async (e) => {
+      e.preventDefault();
+      const shareData = {
+        title: document.title,
+        text: document.querySelector('meta[name="description"]')?.getAttribute('content') || document.title,
+        url: window.location.href
+      };
+
+      if (navigator.share) {
+        try {
+          await navigator.share(shareData);
+          announce(isBg ? 'Успешно споделяне.' : 'Shared successfully.');
+        } catch (err) {}
+      } else if (navigator.clipboard) {
+        try {
+          await navigator.clipboard.writeText(window.location.href);
+          const orig = shareBtn.textContent;
+          shareBtn.textContent = isBg ? '✓ Копирано' : '✓ Copied';
+          setTimeout(() => { shareBtn.textContent = orig; }, 2000);
+          announce(isBg ? 'Линкът е копиран в клипборда.' : 'Link copied to clipboard.');
+        } catch (err) {}
+      }
+    });
+  }
+
+  function initPrintSlip() {
+    const printBtn = document.getElementById('btn-print-slip');
+    if (!printBtn) return;
+
+    printBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      window.print();
+    });
+  }
+
   function initAntiBotGate() {
     const gateBox = document.querySelector('.anti-bot-gate');
     if (!gateBox) return;
@@ -67,7 +110,7 @@
 
     if (equationEl) equationEl.textContent = `${num1} + ${num2}`;
 
-    if (selectEl) {
+    if (selectEl && applyBtn) {
       const options = [expected - 1, expected, expected + 2, expected + 1].sort(() => Math.random() - 0.5);
       const uniqueOptions = Array.from(new Set(options)).filter(n => n > 0);
 
@@ -231,7 +274,7 @@
     const industrySelect = document.getElementById('filter-industry');
     const citySelect = document.getElementById('filter-city');
     const typeSelect = document.getElementById('filter-type');
-    const chipLinks = document.querySelectorAll('.chip-btn');
+    const chipLinks = Array.from(document.querySelectorAll('.chip-btn'));
     const searchBtn = document.getElementById('btn-filter-search');
     const resetBtn = document.getElementById('btn-filter-reset');
     const cards = Array.from(document.querySelectorAll('.job-card'));
@@ -250,7 +293,7 @@
       'smoke-free': ['smoke-free', 'непушачи'],
       'fruits': ['fruits', 'плодове', 'вода'],
       'dental': ['dental', 'дентален', 'зъболекар'],
-      'housing': ['housing', 'жилищна', 'квартира'],
+      'housing': ['housing', 'жилищна', 'квартира', 'осигурено жилище'],
       '4-day': ['4-day', '4-дневна', 'седмица'],
       'car': ['car', 'автомобил', 'служебен'],
       'insurance': ['insurance', 'здравно', 'осигуряване'],
@@ -263,9 +306,9 @@
       'sober': ['sober', 'трезвост', 'алкохол'],
       'flight': ['flight', 'полет', 'самолетни'],
       'tax-free': ['tax-free', 'необлагаем', 'дипломатически'],
-      'child-edu': ['child-edu', 'образование', 'деца'],
+      'child-edu': ['child-edu', 'образование', 'деца', 'обучение на деца'],
       'flexitime': ['flexitime', 'гъвкаво', 'плаващо'],
-      'eco-transit': ['eco-transit', 'екологичен', 'зелен']
+      'eco-transit': ['eco-transit', 'екологичен', 'зелен', 'еко транспорт']
     };
 
     const applyMultiFilter = (e) => {
@@ -341,6 +384,8 @@
           activeTag = tag;
           link.classList.add('active');
         }
+
+        applyMultiFilter();
       });
     });
 
