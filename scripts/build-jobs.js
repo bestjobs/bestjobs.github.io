@@ -154,6 +154,10 @@ const generateIndividualPages = () => {
       LANG_FOOTER_TEXT: 'Българска версия (BG)',
       VOICE_READ_TITLE: 'Listen to the full job description aloud',
       VOICE_READ_TEXT: '🔊 Read Aloud',
+      SHARE_TITLE: 'Share this vacancy across apps or copy link',
+      SHARE_TEXT: 'Share',
+      PRINT_TITLE: 'Print official verification slip or save as PDF',
+      PRINT_TEXT: 'Print Slip',
       ID: job.id,
       SECTOR_LABEL: (job.industry || 'PUBLIC-SECTOR').toUpperCase(),
       CITY_LABEL: (job.city || 'SOFIA').toUpperCase(),
@@ -231,6 +235,10 @@ const generateIndividualPages = () => {
       LANG_FOOTER_TEXT: 'English Version (EN)',
       VOICE_READ_TITLE: 'Изслушване на пълното описание на обявата на глас',
       VOICE_READ_TEXT: '🔊 Прочети на глас',
+      SHARE_TITLE: 'Споделете тази обява в приложения или копирайте линк',
+      SHARE_TEXT: 'Сподели',
+      PRINT_TITLE: 'Отпечатайте официален информационен лист или запазете в PDF',
+      PRINT_TEXT: 'Печат',
       ID: job.id,
       SECTOR_LABEL: (job.industry || 'PUBLIC-SECTOR').toUpperCase(),
       CITY_LABEL: (job.city || 'SOFIA').toUpperCase(),
@@ -279,8 +287,8 @@ const generateIndividualPages = () => {
     let renderedBg = renderTemplate(template, varsBg);
 
     if (isExpired) {
-      renderedEn = renderedEn.replace('<article class="audit-box"', `<article class="audit-box">${curtainStampEn}`);
-      renderedBg = renderedBg.replace('<article class="audit-box"', `<article class="audit-box">${curtainStampBg}`);
+      renderedEn = renderedEn.replace('<article class="audit-box print-slip-box"', `<article class="audit-box print-slip-box">${curtainStampEn}`);
+      renderedBg = renderedBg.replace('<article class="audit-box print-slip-box"', `<article class="audit-box print-slip-box">${curtainStampBg}`);
     }
 
     const enDir = path.join(ROOT_DIR, 'bestjobs', 'job', datePath, job.slug);
