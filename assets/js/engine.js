@@ -283,7 +283,7 @@
     if (!industrySelect && !citySelect && !typeSelect && chipLinks.length === 0) return;
 
     const isBg = (document.documentElement.lang || '').toLowerCase().startsWith('bg');
-    let activeTag = null;
+    let activeTags = [];
 
     const tagSynonyms = {
       'disconnect': ['disconnect', 'изключване'],
@@ -319,7 +319,6 @@
       const sType = (typeSelect?.value || '').toLowerCase().trim();
 
       let matchCount = 0;
-      const synonyms = activeTag ? (tagSynonyms[activeTag] || [activeTag]) : [];
 
       cards.forEach((card) => {
         const ind = (card.getAttribute('data-industry') || '').toLowerCase().trim();
@@ -330,9 +329,17 @@
         const matchesInd = !sInd || ind === sInd;
         const matchesCity = !sCity || city === sCity;
         const matchesType = !sType || type === sType;
-        const matchesTag = !activeTag || synonyms.some(term => cardText.includes(term.toLowerCase()));
+        
+        let matchesAllTags = true;
+        if (activeTags.length > 0) {
+          activeTags.forEach(tag => {
+            const synonyms = tagSynonyms[tag] || [tag];
+            const hasTag = synonyms.some(term => cardText.includes(term.toLowerCase()));
+            if (!hasTag) matchesAllTags = false;
+          });
+        }
 
-        if (matchesInd && matchesCity && matchesType && matchesTag) {
+        if (matchesInd && matchesCity && matchesType && matchesAllTags) {
           card.removeAttribute('hidden');
           matchCount++;
         } else {
@@ -353,7 +360,7 @@
       if (citySelect) citySelect.value = '';
       if (typeSelect) typeSelect.value = '';
 
-      activeTag = null;
+      activeTags = [];
       chipLinks.forEach(c => c.classList.remove('active'));
 
       cards.forEach((card, idx) => {
@@ -375,17 +382,14 @@
       link.addEventListener('click', (e) => {
         e.preventDefault();
         const tag = link.getAttribute('data-tag');
-
-        if (activeTag === tag) {
-          activeTag = null;
+        
+        if (activeTags.includes(tag)) {
+          activeTags = activeTags.filter(t => t !== tag);
           link.classList.remove('active');
         } else {
-          chipLinks.forEach((other) => other.classList.remove('active'));
-          activeTag = tag;
+          activeTags.push(tag);
           link.classList.add('active');
         }
-
-        applyMultiFilter();
       });
     });
 
