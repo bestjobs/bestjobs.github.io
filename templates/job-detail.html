@@ -56,10 +56,14 @@
           <a href="{{ROOT_PATH}}{{BOARD_PATH}}" title="{{VACANCIES_TITLE}}">{{VACANCIES_TEXT}}</a> &rsaquo;
           <span style="color: var(--muted);">{{ID}}</span>
         </div>
-        <a href="#read-article" id="btn-read-article" class="btn-stream-audio" title="{{VOICE_READ_TITLE}}">{{VOICE_READ_TEXT}}</a>
+        <div class="article-tools-bar">
+          <a href="#share" id="btn-share-page" class="btn-stream-audio" title="{{SHARE_TITLE}}">📲 {{SHARE_TEXT}}</a>
+          <a href="#print" id="btn-print-slip" class="btn-stream-audio" title="{{PRINT_TITLE}}">🖨️ {{PRINT_TEXT}}</a>
+          <a href="#read-article" id="btn-read-article" class="btn-stream-audio" title="{{VOICE_READ_TITLE}}">{{VOICE_READ_TEXT}}</a>
+        </div>
       </nav>
 
-      <article class="audit-box" style="margin-block: 0 2rem; border-left: 4px solid var(--primary);">
+      <article class="audit-box print-slip-box" style="margin-block: 0 2rem; border-left: 4px solid var(--primary);">
         <div class="card-meta-bar" style="margin-bottom: 0.75rem;">
           <span>{{ID}} &bull; {{SECTOR_LABEL}} &bull; {{CITY_LABEL}}</span>
           <div class="meta-badges-inline">
@@ -100,6 +104,19 @@
             <li><strong>{{PAYMENT_STANDARD_KEY}}:</strong> {{PAYMENT_STANDARD_VALUE}}</li>
           </ul>
         </section>
+
+        <div class="print-qr-strip">
+          <div class="print-qr-code">
+            <svg viewBox="0 0 100 100" width="80" height="80" role="img" aria-label="Official QR Link">
+              <rect width="100" height="100" fill="#ffffff"/>
+              <path d="M10 10 h30 v30 h-30 z M15 15 v20 h20 v-20 z M20 20 h10 v10 h-10 z M60 10 h30 v30 h-30 z M65 15 v20 h20 v-20 z M70 20 h10 v10 h-10 z M10 60 h30 v30 h-30 z M15 65 v20 h20 v-20 z M20 70 h10 v10 h-10 z M50 15 h5 v5 h-5 z M50 25 h10 v5 h-10 z M55 35 h5 v10 h-5 z M60 50 h15 v5 h-15 z M80 50 h10 v10 h-10 z M50 65 h10 v10 h-10 z M70 65 h15 v5 h-15 z M50 80 h5 v10 h-5 z M65 80 h15 v10 h-15 z" fill="#000000"/>
+            </svg>
+          </div>
+          <div class="print-qr-meta">
+            <strong>BestJobs.bg &bull; Official Digital Verification Slip</strong><br>
+            <span>Reference ID: {{ID}} &bull; Canonical URL: {{CANONICAL_URL}}</span>
+          </div>
+        </div>
 
         {{APPLICATION_GATE_HTML}}
       </article>
