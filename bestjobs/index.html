@@ -11,11 +11,11 @@
   <link rel="alternate" hreflang="en" href="https://bestjobs.bg/bestjobs/">
   <link rel="alternate" hreflang="bg" href="https://bestjobs.bg/bestjobs/bg/">
   <link rel="alternate" hreflang="x-default" href="https://bestjobs.bg/bestjobs/">
-  <link rel="stylesheet" href="../assets/css/style.css">
-  <link rel="icon" type="image/x-icon" href="../favicon.ico">
-  <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
-  <link rel="alternate" type="application/rss+xml" title="BestJobs Vacancies Feed" href="../all-jobs.xml">
-  <link rel="alternate" type="application/rss+xml" title="BestJobs VIP Network Feed" href="../vip-jobs.xml">
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="alternate" type="application/rss+xml" title="BestJobs Vacancies Feed" href="/all-jobs.xml">
+  <link rel="alternate" type="application/rss+xml" title="BestJobs VIP Network Feed" href="/vip-jobs.xml">
 </head>
 <body>
   <header class="site-header">
@@ -37,7 +37,7 @@
         <input type="checkbox" id="nav-toggle" class="nav-toggle" aria-label="Toggle Navigation Drawer">
         <label for="nav-toggle" class="nav-toggle-label" title="Open Navigation Menu">&#9776;</label>
         <ul>
-          <li><a href="/" class="nav-link" title="Return to Portal Home">Portal Home</a></li>
+          <li><a href="/" class="nav-link" title="Return to Global Economic Portal Home">Portal Home</a></li>
           <li><a href="/about/" class="nav-link" title="Institutional Heritage and Governance">About Us</a></li>
           <li><a href="/blog/" class="nav-link" title="Central Research Monographs Catalog">Monographs</a></li>
           <li><a href="/help/" class="nav-link" title="Unified Documentation for Candidates and Employers">Help Desk</a></li>
@@ -50,11 +50,11 @@
   <main>
     <div class="shell">
       <section class="hero">
-        <span class="hero-tag">SOVEREIGN NATIONAL &amp; GLOBAL CAREER HUB &bull; EST. 2013</span>
+        <span class="hero-tag">SOVEREIGN GLOBAL ECONOMIC PORTAL &bull; EST. 2013</span>
         <h1>Direct Employment Board &bull; Bulgaria &amp; Global Hub</h1>
         <p class="hero-lead">Transparent Compensation in Original Currencies &bull; Verified Institutional Contacts &bull; Zero Cookies.</p>
         <p>
-          Uniting Bulgarian public administrations, international UN/WHO missions, civil nuclear operators, Ivy League universities, and Big Tech. Resumes route cleanly to hiring authorities without intermediary broker fees.
+          Uniting Bulgarian public administrations, cross-border Balkan industries, international UN/WHO missions, civil nuclear operators, Ivy League universities, and Big Tech. Resumes route cleanly to hiring authorities without intermediary broker fees.
         </p>
         <div class="hero-actions">
           <a href="/bestjobs/post/" class="nav-btn" title="Open direct job announcement submission form">+ Post Job Announcement &rarr;</a>
@@ -71,6 +71,7 @@
           <select id="filter-industry" class="select-control" aria-label="Filter by Industry Sector">
             <option value="">All Global &amp; Institutional Sectors</option>
             <option value="public-sector-bg">Bulgarian Public Sector (МС, НАП, Митници, АСП, АОП, Общини)</option>
+            <option value="defense-security">Defense, Armed Forces, Police &amp; Fire Safety (МО, Армия, МВР, ГДПБЗН)</option>
             <option value="telecom-infrastructure">Telecoms &amp; Submarine Optics (Deutsche Telekom, Vodafone, AT&amp;T)</option>
             <option value="privacy-messaging-crypto">Cryptography &amp; Infosec (Signal, Telegram, Zero-Knowledge)</option>
             <option value="social-media-algorithms">Social Platforms &amp; AI Algorithms (TikTok/ByteDance, X, Reddit)</option>
@@ -79,13 +80,14 @@
             <option value="nuclear-energy">Nuclear Power &amp; SMR Engineering (EDF, Westinghouse, Kozloduy, IAEA)</option>
             <option value="elite-universities">Ivy League &amp; Oxbridge Academia (Harvard, Oxford, Cambridge, MIT, Sorbonne)</option>
             <option value="world-hospitals">World-Class Hospitals &amp; Clinics (Mayo Clinic, Charité, Johns Hopkins)</option>
+            <option value="international-ngos">International NGOs &amp; Foundations (Red Cross, Amnesty, Greenpeace, WWF)</option>
             <option value="global-tv-news">International 24/7 TV &amp; Wire Media (CNN, Al Jazeera, Reuters, Bloomberg)</option>
             <option value="haute-couture-luxury">Haute Couture &amp; Luxury Houses (Chanel, Cardin, Dior, Rolex, LVMH)</option>
             <option value="iconic-hospitality">Iconic Grand Hotels (Hôtel Negresco, Masséna Nice, Ritz Paris, Burj Al Arab)</option>
             <option value="michelin-culinary">Fine Dining &amp; Executive Kitchens (Hell's Kitchen, Gordon Ramsay, Ducasse)</option>
             <option value="cinema-actors-hollywood">Cinema &amp; Actor Studios (Hollywood SAG-AFTRA, Bollywood, Nu Boyana)</option>
             <option value="master-architecture">Master Architecture &amp; BIM (Foster+Partners, Zaha Hadid, Gensler)</option>
-            <option value="royal-heritage-museums">Royal Palaces &amp; World Museums (Windsor Castle, Louvre, Hermitage)</option>
+            <option value="royal-heritage-museums">Royal Palaces &amp; World Museums (Windsor Castle, Louvre, Hermitage, UNESCO)</option>
             <option value="global-banking-funds">Sovereign Wealth &amp; Investment Banks (BlackRock, Goldman Sachs, World Bank, IMF)</option>
             <option value="cross-border-balkans">Cross-Border Regional Enterprises (Turkey, Serbia, N. Macedonia, Romania, Moldova)</option>
           </select>
@@ -143,9 +145,9 @@
             <optgroup label="Americas &amp; Caribbean">
               <option value="world-usa">USA (Washington, New York, Silicon Valley, Boston)</option>
               <option value="world-canada">Canada (Toronto, Montreal, Vancouver, Ottawa)</option>
-              <option value="world-mexico">Mexico (Mexico City, Monterrey)</option>
+              <option value="world-argentina">Argentina (Buenos Aires, Córdoba)</option>
               <option value="world-brazil">Brazil (São Paulo, Rio de Janeiro)</option>
-              <option value="world-chile">Chile &amp; Argentina (Santiago, Buenos Aires)</option>
+              <option value="world-mexico">Mexico (Mexico City, Monterrey)</option>
               <option value="world-cuba">Cuba &amp; Caribbean (Havana, Bahamas, St. Barths)</option>
             </optgroup>
             <optgroup label="Middle East &amp; Gulf Energy">
@@ -181,29 +183,29 @@
         </div>
 
         <div class="bonus-chips-wrap">
-          <a href="#filter-disconnect" class="chip-btn" data-tag="disconnect" title="Filter by strict ban on off-hours communications">📴 Right to Disconnect</a>
-          <a href="#filter-medical" class="chip-btn" data-tag="medical" title="Filter by statutory annual preventive medical examinations">🩺 Annual Medical Exams</a>
-          <a href="#filter-transit" class="chip-btn" data-tag="transit" title="Filter by dedicated corporate shuttle transit">🚌 Shuttle Transit</a>
-          <a href="#filter-bike" class="chip-btn" data-tag="bike" title="Filter by monthly cash allowance for bicycle commuting">🚴 Bike Allowance</a>
-          <a href="#filter-smoke-free" class="chip-btn" data-tag="smoke-free" title="Filter by bonus leave for non-smokers">🚭 Smoke-Free Bonus</a>
-          <a href="#filter-fruits" class="chip-btn" data-tag="fruits" title="Filter by daily fresh orchard fruits and filtered water">🍎 Fruits &amp; Water</a>
-          <a href="#filter-dental" class="chip-btn" data-tag="dental" title="Filter by corporate dental plan coverage">🦷 Dental Plan</a>
-          <a href="#filter-housing" class="chip-btn" data-tag="housing" title="Filter by employer provided housing or rent subsidy">🏠 Housing Included</a>
-          <a href="#filter-4-day" class="chip-btn" data-tag="4-day" title="Filter by compressed 4-day working schedule">🗓️ 4-Day Week</a>
-          <a href="#filter-car" class="chip-btn" data-tag="car" title="Filter by provided company car and fuel coverage">🚗 Company Car</a>
-          <a href="#filter-insurance" class="chip-btn" data-tag="insurance" title="Filter by full private health and hospital coverage">🏥 Health Insurance</a>
-          <a href="#filter-bonus" class="chip-btn" data-tag="bonus" title="Filter by explicit performance-linked bonuses">📈 Performance Bonus</a>
-          <a href="#filter-tuition" class="chip-btn" data-tag="tuition" title="Filter by university tuition and certification support">🎓 Tuition Aid</a>
-          <a href="#filter-kindergarten" class="chip-btn" data-tag="kindergarten" title="Filter by company nursery or kindergarten support">👶 Kindergarten Subsidy</a>
-          <a href="#filter-relocation" class="chip-btn" data-tag="relocation" title="Filter by full relocation assistance package">📦 Relocation Package</a>
-          <a href="#filter-mental" class="chip-btn" data-tag="mental" title="Filter by paid mental health recharge days">🧠 Mental Health Days</a>
-          <a href="#filter-sabbatical" class="chip-btn" data-tag="sabbatical" title="Filter by time-bank accrued sabbatical options">⏳ Paid Sabbatical</a>
-          <a href="#filter-sober" class="chip-btn" data-tag="sober" title="Filter by alcohol-free professional workplace culture">🍷 Sober Workplace</a>
-          <a href="#filter-flight" class="chip-btn" data-tag="flight" title="Filter by annual flight allowances">✈️ Flight Allowance</a>
-          <a href="#filter-tax-free" class="chip-btn" data-tag="tax-free" title="Filter by tax-free diplomatic or international salary">🛡️ Tax-Free Income</a>
-          <a href="#filter-child-edu" class="chip-btn" data-tag="child-edu" title="Filter by child education funding">📚 Child Education</a>
-          <a href="#filter-flexitime" class="chip-btn" data-tag="flexitime" title="Filter by core hours and flexitime">⏳ Flexitime</a>
-          <a href="#filter-eco-transit" class="chip-btn" data-tag="eco-transit" title="Filter by green EV or bicycle subsidies">🌱 Eco Transit</a>
+          <a href="#filter-disconnect" class="chip-btn" data-tag="disconnect" title="Statutory prohibition on off-hours employer communications, calls, and emails">📴 Right to Disconnect</a>
+          <a href="#filter-medical" class="chip-btn" data-tag="medical" title="Comprehensive annual preventive medical and diagnostic check-ups funded by employer">🩺 Annual Medical Exams</a>
+          <a href="#filter-transit" class="chip-btn" data-tag="transit" title="Dedicated corporate shuttle transit network between residential hubs and facility">🚌 Shuttle Transit</a>
+          <a href="#filter-bike" class="chip-btn" data-tag="bike" title="Monthly cash allowance and infrastructure support for bicycle commuting">🚴 Bike Allowance</a>
+          <a href="#filter-smoke-free" class="chip-btn" data-tag="smoke-free" title="Additional paid annual leave bonus for non-smoking staff promoting healthy living">🚭 Smoke-Free Bonus</a>
+          <a href="#filter-fruits" class="chip-btn" data-tag="fruits" title="Daily delivery of fresh seasonal orchard fruits and multi-stage filtered water">🍎 Fruits &amp; Water</a>
+          <a href="#filter-dental" class="chip-btn" data-tag="dental" title="Extended corporate dental health insurance covering preventive and surgical care">🦷 Dental Plan</a>
+          <a href="#filter-housing" class="chip-btn" data-tag="housing" title="Employer-provided municipal or corporate family housing apartment free of charge">🏠 Housing Included</a>
+          <a href="#filter-4-day" class="chip-btn" data-tag="4-day" title="Compressed 4-day working schedule (100:80:100 model: 100% pay for 80% time)">🗓️ 4-Day Week</a>
+          <a href="#filter-car" class="chip-btn" data-tag="car" title="Company vehicle provided with full corporate fuel card coverage for business and personal use">🚗 Company Car</a>
+          <a href="#filter-insurance" class="chip-btn" data-tag="insurance" title="Top-tier private health insurance with unlimited hospital and outpatient coverage">🏥 Health Insurance</a>
+          <a href="#filter-bonus" class="chip-btn" data-tag="bonus" title="Statutory performance-linked quarterly and annual financial profit bonuses">📈 Performance Bonus</a>
+          <a href="#filter-tuition" class="chip-btn" data-tag="tuition" title="100% employer funding for higher education degrees and international certifications">🎓 Tuition Aid</a>
+          <a href="#filter-kindergarten" class="chip-btn" data-tag="kindergarten" title="Corporate kindergarten nursery on-site or full monthly childcare vouchers">👶 Kindergarten Subsidy</a>
+          <a href="#filter-relocation" class="chip-btn" data-tag="relocation" title="Complete relocation allowance covering moving logistics, visas, and settling-in grants">📦 Relocation Package</a>
+          <a href="#filter-mental" class="chip-btn" data-tag="mental" title="Dedicated paid recharge days for psychological well-being and burnout prevention">🧠 Mental Health Days</a>
+          <a href="#filter-sabbatical" class="chip-btn" data-tag="sabbatical" title="Time-banking account model enabling fully paid 6-to-12 month sabbatical leave">⏳ Paid Sabbatical</a>
+          <a href="#filter-sober" class="chip-btn" data-tag="sober" title="Strictly professional, clear-headed workplace culture free of alcohol pressure">🍷 Sober Workplace</a>
+          <a href="#filter-flight" class="chip-btn" data-tag="flight" title="Annual paid international flights for employee and family to home country">✈️ Flight Allowance</a>
+          <a href="#filter-tax-free" class="chip-btn" data-tag="tax-free" title="Diplomatic or international tax-exempt salary structure under international treaties">🛡️ Tax-Free Income</a>
+          <a href="#filter-child-edu" class="chip-btn" data-tag="child-edu" title="Full coverage of international school or university tuition fees for dependent children">📚 Child Education</a>
+          <a href="#filter-flexitime" class="chip-btn" data-tag="flexitime" title="Autonomous working hours arrangement based on core hours and deliverable output">⏳ Flexitime</a>
+          <a href="#filter-eco-transit" class="chip-btn" data-tag="eco-transit" title="Targeted financial subsidy for electric vehicle leasing or public rail commuting">🌱 Eco Transit</a>
         </div>
 
         <div class="filter-actions-bar">
@@ -228,150 +230,7 @@
 
         <div class="grid-cards" id="jobs-container">
 <!-- JOBS_CONTAINER_START -->
-          <article class="job-card vip-card" data-slug="BJ-1001-chief-financial-expert" data-industry="defense-security" data-city="sofia" data-type="civil-service" data-date="2026-09-29">
-            <div class="card-meta-bar">
-              <span>BJ-1001 &bull; DEFENSE-SECURITY &bull; SOFIA</span>
-              <div class="meta-badges-inline">
-                <a href="/bestjobs/help/#vip" class="vip-tag" title="VIP Fast-Track Placement">🌟 VIP FAST-TRACK</a>
-              </div>
-            </div>
-            <div class="vip-reach-badge">📡 Syndicate: <a href="https://mobikom.bg" target="_blank" rel="noopener" title="Mobikom Bulgaria Institutional Hub">mobikom.bg</a> &bull; <a href="https://www.dobrichnews.com" target="_blank" rel="noopener noreferrer" title="Real-time daily news in North-East Bulgaria">dobrichnews.com</a> &bull; <a href="https://www.dobruja.com" target="_blank" rel="noopener noreferrer" title="Agricultural preservation, regional traditions and culture">dobruja.com</a></div>
-            <div class="card-title-box">
-              <h3>Chief Financial Expert</h3>
-              <div class="card-subtitle">Accounting & Budget Directorate</div>
-              <div class="card-company">Ministry of Defense (mod.bg)</div>
-            </div>
-            <div class="card-salary-box">
-              <span class="salary-figure">1388 € per month</span>
-              <span class="salary-net-calc">(net ~1077 €)</span>
-            </div>
-            <div class="card-chips-row">
-              <span class="chip-item">🩺 Medical Exams</span>
-              <span class="chip-item">🏥 Full Health</span>
-              <span class="chip-item">📴 Disconnect</span>
-            </div>
-            <div class="card-text-summary">
-              Oversight of military budget execution, state asset audits, and treasury accounting under the State Servant Act.
-            </div>
-            <div class="card-footer-actions">
-              <a href="/bestjobs/job/2026/09/29/01/BJ-1001-chief-financial-expert/" class="card-spec-link" title="Open complete technical specification for Chief Financial Expert">View Full Job &rarr;</a>
-            </div>
-          </article>
-
-          <article class="job-card vip-card" data-slug="BJ-1002-state-social-policy-expert" data-industry="defense-security" data-city="sofia" data-type="civil-service" data-date="2026-09-29">
-            <div class="card-meta-bar">
-              <span>BJ-1002 &bull; DEFENSE-SECURITY &bull; SOFIA</span>
-              <div class="meta-badges-inline">
-                <a href="/bestjobs/help/#vip" class="vip-tag" title="VIP Fast-Track Placement">🌟 VIP FAST-TRACK</a>
-              </div>
-            </div>
-            <div class="vip-reach-badge">📡 Syndicate: <a href="https://mobikom.bg" target="_blank" rel="noopener" title="Mobikom Bulgaria Institutional Hub">mobikom.bg</a> &bull; <a href="https://www.dobrichnews.com" target="_blank" rel="noopener noreferrer" title="Real-time daily news in North-East Bulgaria">dobrichnews.com</a> &bull; <a href="https://www.dobruja.com" target="_blank" rel="noopener noreferrer" title="Agricultural preservation, regional traditions and culture">dobruja.com</a></div>
-            <div class="card-title-box">
-              <h3>State Social Policy Expert</h3>
-              <div class="card-subtitle">Social Activities & Veterans Affairs</div>
-              <div class="card-company">Ministry of Defense (mod.bg)</div>
-            </div>
-            <div class="card-salary-box">
-              <span class="salary-figure">1654 € per month</span>
-              <span class="salary-net-calc">(net ~1283 €)</span>
-            </div>
-            <div class="card-chips-row">
-              <span class="chip-item">🩺 Medical Exams</span>
-              <span class="chip-item">🚌 Shuttle Transit</span>
-              <span class="chip-item">📴 Disconnect</span>
-            </div>
-            <div class="card-text-summary">
-              Policy formulation for armed forces housing funds, social rehabilitation, and veteran support programs across the country.
-            </div>
-            <div class="card-footer-actions">
-              <a href="/bestjobs/job/2026/09/29/01/BJ-1002-state-social-policy-expert/" class="card-spec-link" title="Open complete technical specification for State Social Policy Expert">View Full Job &rarr;</a>
-            </div>
-          </article>
-
-          <article class="job-card vip-card" data-slug="BJ-1003-chief-inspector-regional-development" data-industry="public-sector-bg" data-city="sofia" data-type="civil-service" data-date="2026-09-29">
-            <div class="card-meta-bar">
-              <span>BJ-1003 &bull; PUBLIC-SECTOR-BG &bull; SOFIA</span>
-              <div class="meta-badges-inline">
-                <a href="/bestjobs/help/#vip" class="vip-tag" title="VIP Fast-Track Placement">🌟 VIP FAST-TRACK</a>
-              </div>
-            </div>
-            <div class="vip-reach-badge">📡 Syndicate: <a href="https://mobikom.bg" target="_blank" rel="noopener" title="Mobikom Bulgaria Institutional Hub">mobikom.bg</a> &bull; <a href="https://www.dobrichnews.com" target="_blank" rel="noopener noreferrer" title="Real-time daily news in North-East Bulgaria">dobrichnews.com</a> &bull; <a href="https://www.dobruja.com" target="_blank" rel="noopener noreferrer" title="Agricultural preservation, regional traditions and culture">dobruja.com</a></div>
-            <div class="card-title-box">
-              <h3>Chief Inspector • Regional Works</h3>
-              <div class="card-subtitle">Inspectorate & Administrative Control</div>
-              <div class="card-company">Ministry of Regional Development (mrrb.bg)</div>
-            </div>
-            <div class="card-salary-box">
-              <span class="salary-figure">1207 € per month</span>
-              <span class="salary-net-calc">(net ~937 €)</span>
-            </div>
-            <div class="card-chips-row">
-              <span class="chip-item">🩺 Medical Exams</span>
-              <span class="chip-item">🚗 Company Car</span>
-              <span class="chip-item">📴 Disconnect</span>
-            </div>
-            <div class="card-text-summary">
-              Administrative inspection of infrastructure projects, municipal funding audits, and anti-corruption compliance.
-            </div>
-            <div class="card-footer-actions">
-              <a href="/bestjobs/job/2026/09/29/01/BJ-1003-chief-inspector-regional-development/" class="card-spec-link" title="Open complete technical specification for Chief Inspector • Regional Works">View Full Job &rarr;</a>
-            </div>
-          </article>
-
-          <article class="job-card" data-slug="BJ-1004-lead-physician-internal-medicine" data-industry="world-hospitals" data-city="dobrich" data-type="labor-code" data-date="2026-09-29">
-            <div class="card-meta-bar">
-              <span>BJ-1004 &bull; WORLD-HOSPITALS &bull; DOBRICH</span>
-            </div>
-            <div class="card-title-box">
-              <h3>Lead Physician • Internal Medicine</h3>
-              <div class="card-subtitle">Department of Internal Diseases & Diagnostics</div>
-              <div class="card-company">Multiprofile Hospital for Active Treatment Dobrich (mbal-dobrich.com)</div>
-            </div>
-            <div class="card-salary-box">
-              <span class="salary-figure">2450 € per month</span>
-              <span class="salary-net-calc">(net ~1901 €)</span>
-            </div>
-            <div class="card-chips-row">
-              <span class="chip-item">🏠 Housing Included</span>
-              <span class="chip-item">🩺 Medical Exams</span>
-              <span class="chip-item">🏥 Full Health</span>
-              <span class="chip-item">📈 Performance Bonus</span>
-            </div>
-            <div class="card-text-summary">
-              Clinical inpatient diagnostics, emergency consultations, and clinical team supervision with employer-provided municipal housing.
-            </div>
-            <div class="card-footer-actions">
-              <a href="/bestjobs/job/2026/09/29/01/BJ-1004-lead-physician-internal-medicine/" class="card-spec-link" title="Open complete technical specification for Lead Physician • Internal Medicine">View Full Job &rarr;</a>
-            </div>
-          </article>
-
-          <article class="job-card" data-slug="BJ-1005-unesco-cultural-heritage-officer" data-industry="royal-heritage-museums" data-city="eu-france" data-type="civil-service" data-date="2026-09-29">
-            <div class="card-meta-bar">
-              <span>BJ-1005 &bull; ROYAL-HERITAGE-MUSEUMS &bull; EU-FRANCE</span>
-            </div>
-            <div class="card-title-box">
-              <h3>Programme Specialist • World Cultural Heritage</h3>
-              <div class="card-subtitle">Culture Sector • World Heritage Centre</div>
-              <div class="card-company">UNESCO Headquarters Paris (unesco.org)</div>
-            </div>
-            <div class="card-salary-box">
-              <span class="salary-figure">5,400 € per month</span>
-              <span class="salary-net-calc">5,400 € (Tax-Free)</span>
-            </div>
-            <div class="card-chips-row">
-              <span class="chip-item">🛡️ Tax-Free Income</span>
-              <span class="chip-item">✈️ Flight Allowance</span>
-              <span class="chip-item">📚 Child Education</span>
-              <span class="chip-item">📴 Disconnect</span>
-            </div>
-            <div class="card-text-summary">
-              Evaluation of World Heritage conservation reports, field monitoring missions, and international convention compliance.
-            </div>
-            <div class="card-footer-actions">
-              <a href="/bestjobs/job/2026/09/29/01/BJ-1005-unesco-cultural-heritage-officer/" class="card-spec-link" title="Open complete technical specification for Programme Specialist • World Cultural Heritage">View Full Job &rarr;</a>
-            </div>
-          </article>
-        <!-- JOBS_CONTAINER_END -->
+<!-- JOBS_CONTAINER_END -->
         </div>
 
         <div class="stream-load-bar">
@@ -408,7 +267,7 @@
             <li><a href="https://mobikom.bg" target="_blank" rel="noopener" title="Mobikom Bulgaria — Institutional Master Portal">mobikom.bg &bull; Institutional Hub</a></li>
             <li><a href="https://www.dobrichnews.com" target="_blank" rel="noopener noreferrer" title="Real-time daily news in North-East Bulgaria">dobrichnews.com &bull; Daily News</a></li>
             <li><a href="https://www.dobruja.com" target="_blank" rel="noopener noreferrer" title="Agricultural preservation, regional traditions and culture">dobruja.com &bull; Cultural Review</a></li>
-            <li><a href="../all-jobs.xml" title="Subscribe to open RSS feed of all current vacancies">&#128246; Open Vacancy RSS Feed</a></li>
+            <li><a href="/all-jobs.xml" title="{{RSS_ALL_TITLE}}">&#128246; Open Vacancy RSS Feed</a></li>
           </ul>
         </div>
 
@@ -431,7 +290,7 @@
             <li><a href="/contact/#dispatch" title="Chief Editor Ani Ivanova Market Dispatch Desk">Ani Ivanova &bull; Market Dispatch</a></li>
             <li><a href="/contact/#candidates" title="Candidate support and verification desk">Candidate Support Desk</a></li>
             <li><a href="/contact/#employers" title="Employer B2B listing support and VIP syndication">Employers B2B Desk</a></li>
-            <li><a href="../vip-jobs.xml" title="Syndicated VIP feed for media partners">&#128246; VIP Syndication Feed</a></li>
+            <li><a href="/vip-jobs.xml" title="Syndicated VIP feed for media partners">&#128246; VIP Syndication Feed</a></li>
           </ul>
         </div>
       </div>
@@ -454,6 +313,6 @@
       </div>
     </div>
   </footer>
-  <script src="../assets/js/engine.js" defer></script>
+  <script src="/assets/js/engine.js" defer></script>
 </body>
 </html>
