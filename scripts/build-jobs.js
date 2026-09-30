@@ -48,6 +48,12 @@ const getDatePath = (dateStr, index = 0) => {
   return { year, month, day, shard, pathStr: `${year}/${month}/${day}/${shard}` };
 };
 
+const formatFullDescriptionHtml = (descText) => {
+  if (!descText) return '';
+  const paragraphs = descText.split(/\n\n+/);
+  return paragraphs.map(p => `<p>${p.replace(/\n/g, '<br>')}</p>`).join('\n');
+};
+
 const generateIndividualPages = () => {
   jobs.forEach((job, idx) => {
     const isExpired = job.expired === true;
@@ -67,6 +73,9 @@ const generateIndividualPages = () => {
     const salaryBg = typeof job.salary_gross === 'number' ? `${job.salary_gross} € на месец` : (job.salary_gross || 'По договаряне');
     const netEn = typeof job.salary_net === 'number' ? `(net ~${job.salary_net} €)` : (job.salary_net || '');
     const netBg = typeof job.salary_net === 'number' ? `(нето ~${job.salary_net} €)` : (job.salary_net || '');
+
+    const fullDescEn = formatFullDescriptionHtml(job.full_desc_en || job.desc_en);
+    const fullDescBg = formatFullDescriptionHtml(job.full_desc_bg || job.desc_bg);
 
     const curtainStampEn = isExpired ? '<div class="curtain-stamp">EXPIRED ADVERTISEMENT / POSITION CLOSED</div>' : '';
     const curtainStampBg = isExpired ? '<div class="curtain-stamp">ИЗТЕКЛА ОБЯВА / ПОЗИЦИЯТА Е ЗАТВОРЕНА</div>' : '';
@@ -99,9 +108,11 @@ const generateIndividualPages = () => {
       ABOUT_TEXT: 'About Us',
       LANG_TOGGLE_HREF: `/bestjobs/bg/job/${datePath}/${job.slug}/`,
       LANG_TOGGLE_HREFLANG: 'bg',
-      LANG_TOGGLE_TITLE: 'Превключете към българската версия на обявата',
+      LANG_TOGGLE_TITLE: 'Switch to Bulgarian version',
       LANG_TOGGLE_TEXT: 'Български (BG)',
       LANG_FOOTER_TEXT: 'Българска версия (BG)',
+      VOICE_READ_TITLE: 'Listen to the full job description aloud',
+      VOICE_READ_TEXT: '🔊 Read Aloud',
       ID: job.id,
       SECTOR_LABEL: (job.industry || 'PUBLIC-SECTOR').toUpperCase(),
       CITY_LABEL: (job.city || 'SOFIA').toUpperCase(),
@@ -113,8 +124,8 @@ const generateIndividualPages = () => {
       SALARY_GROSS: salaryEn,
       SALARY_NET: netEn,
       CHIPS_HTML: chipsEnHtml,
-      DESC_HEADING: 'Position Overview & Responsibilities',
-      DESC: job.desc_en || '',
+      DESC_HEADING: 'Detailed Job Description & Requirements',
+      FULL_CONTENT_HTML: fullDescEn,
       METADATA_HEADING: 'Statutory Employment Profile',
       TYPE_LABEL_KEY: 'Working Arrangement',
       TYPE_VALUE: job.type === 'civil-service' ? 'Civil Service / Institutional Appointment' : 'Direct Full-Time Contract',
@@ -127,6 +138,7 @@ const generateIndividualPages = () => {
       APPLY_MAILTO: isExpired ? '#closed' : `mailto:${job.email}?subject=${encodeURIComponent(`Application: ${job.title_en} (Ref: ${job.id} via BestJobs.bg)`)}&body=${encodeURIComponent(`Dear Hiring Authority,\n\nI hereby submit my application for the position of "${job.title_en}" (Reference ID: ${job.id}) published on the BestJobs.bg Sovereign Portal.\n\nPlease find my qualifications attached.\n\nSincerely,`)}`,
       APPLY_TITLE: isExpired ? 'This vacancy is closed and archived' : `Apply directly to ${job.company_en} via email`,
       APPLY_TEXT: isExpired ? 'Position Closed' : 'Apply with Email',
+      APPLY_CLASS: isExpired ? 'closed' : '',
       BACK_TITLE: 'Return to active vacancy stream',
       BACK_TEXT: 'Back to Vacancies',
       SHIELD_HEADING: 'Regulatory Notice • ZNZ Intermediation Shield',
@@ -180,6 +192,8 @@ const generateIndividualPages = () => {
       LANG_TOGGLE_TITLE: 'Switch to English listing version',
       LANG_TOGGLE_TEXT: 'English (EN)',
       LANG_FOOTER_TEXT: 'English Version (EN)',
+      VOICE_READ_TITLE: 'Изслушване на пълното описание на обявата на глас',
+      VOICE_READ_TEXT: '🔊 Прочети на глас',
       ID: job.id,
       SECTOR_LABEL: (job.industry || 'PUBLIC-SECTOR').toUpperCase(),
       CITY_LABEL: (job.city || 'SOFIA').toUpperCase(),
@@ -191,8 +205,8 @@ const generateIndividualPages = () => {
       SALARY_GROSS: salaryBg,
       SALARY_NET: netBg,
       CHIPS_HTML: chipsBgHtml,
-      DESC_HEADING: 'Описание на длъжността и ключови отговорности',
-      DESC: job.desc_bg || '',
+      DESC_HEADING: 'Пълно описание на длъжността и изисквания',
+      FULL_CONTENT_HTML: fullDescBg,
       METADATA_HEADING: 'Нормативни параметри на заетостта',
       TYPE_LABEL_KEY: 'Вид правоотношение',
       TYPE_VALUE: job.type === 'civil-service' ? 'Служебно / Институционално правоотношение' : 'Директен трудов договор',
@@ -202,9 +216,10 @@ const generateIndividualPages = () => {
       VALIDITY_VALUE: isExpired ? 'ИЗТЕКЛА ОБЯВА / ПОЗИЦИЯТА Е ЗАТВОРЕНА' : 'Неотменим 30-дневен цикъл',
       PAYMENT_STANDARD_KEY: 'Стандарт на възнаграждението',
       PAYMENT_STANDARD_VALUE: '100% Бяла икономика • Официално изплащане по договор',
-      APPLY_MAILTO: isExpired ? '#closed' : `mailto:${job.email}?subject=${encodeURIComponent(`Кандидатура: ${job.title_bg} (Реф. №: ${job.id} чрез BestJobs.bg)`)}&body=${encodeURIComponent(`Уважаема конкурсна комисия / Уважаеми работодател,\n\nПодавам своята кандидатура за длъжността „${job.title_bg}“ (Реф. №: ${job.id}) чрез BestJobs.bg.\n\nС уважение,`)}`,
+      APPLY_MAILTO: isExpired ? '#closed' : `mailto:${job.email}?subject=${encodeURIComponent(`Кандидатура: ${job.title_bg} (Реф. №: ${job.id} чрез BestJobs.bg)`)}&body=${encodeURIComponent(`Уважаема конкурсна комисия / Уважаеми работодател,\n\nПодавам своята кандидатура за длъжността „${job.title_bg}“ (Реф. №: ${job.id}) чрез BestJobs.bg.\n\nМоля, разгледайте приложените документи за участие.\n\nС уважение,`)}`,
       APPLY_TITLE: isExpired ? 'Тази позиция е затворена и архивирана' : `Кандидатствайте директно към ${job.company_bg} чрез имейл`,
       APPLY_TEXT: isExpired ? 'Позицията е затворена' : 'Кандидатствай по имейл',
+      APPLY_CLASS: isExpired ? 'closed' : '',
       BACK_TITLE: 'Обратно към потока с всички активни обяви',
       BACK_TEXT: 'Обратно към обявите',
       SHIELD_HEADING: 'Правна клауза • Защитен щит по ЗНЗ',
