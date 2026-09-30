@@ -56,7 +56,7 @@
           <a href="{{ROOT_PATH}}{{BOARD_PATH}}" title="{{VACANCIES_TITLE}}">{{VACANCIES_TEXT}}</a> &rsaquo;
           <span style="color: var(--muted);">{{ID}}</span>
         </div>
-        <a href="#read-article" id="btn-read-article" class="btn-stream-audio" title="Listen to this job specification aloud">🔊 Read Aloud</a>
+        <a href="#read-article" id="btn-read-article" class="btn-stream-audio" title="{{VOICE_READ_TITLE}}">{{VOICE_READ_TEXT}}</a>
       </nav>
 
       <article class="audit-box" style="margin-block: 0 2rem; border-left: 4px solid var(--primary);">
@@ -82,8 +82,10 @@
         </div>
 
         <section style="margin-bottom: 2rem;">
-          <h2 style="font-size: 1.2rem; margin-top: 0;">{{DESC_HEADING}}</h2>
-          <p style="font-size: 1.05rem; line-height: 1.6; color: var(--text); margin-top: 0.5rem;">{{DESC}}</p>
+          <h2 style="font-size: 1.25rem; margin-top: 0; padding-bottom: 0.35rem; border-bottom: 1px solid var(--border);">{{DESC_HEADING}}</h2>
+          <div style="font-size: 1.05rem; line-height: 1.7; color: var(--text); margin-top: 0.85rem; text-wrap: pretty;">
+            {{FULL_CONTENT_HTML}}
+          </div>
         </section>
 
         <section style="margin-bottom: 2rem; background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.25rem;">
@@ -97,7 +99,7 @@
         </section>
 
         <div style="display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; padding-top: 1rem; border-top: 1px solid var(--border);">
-          <a href="{{APPLY_MAILTO}}" class="nav-btn" style="padding: 0.65rem 1.25rem; font-size: 1rem;" title="{{APPLY_TITLE}}">{{APPLY_TEXT}} &rarr;</a>
+          <a href="{{APPLY_MAILTO}}" class="nav-btn {{APPLY_CLASS}}" style="padding: 0.65rem 1.25rem; font-size: 1rem;" title="{{APPLY_TITLE}}">{{APPLY_TEXT}} &rarr;</a>
           <a href="{{ROOT_PATH}}{{BOARD_PATH}}" class="nav-link" title="{{BACK_TITLE}}">&larr; {{BACK_TEXT}}</a>
         </div>
       </article>
