@@ -11,16 +11,17 @@
   <link rel="alternate" hreflang="en" href="{{HREFLANG_EN}}">
   <link rel="alternate" hreflang="bg" href="{{HREFLANG_BG}}">
   <link rel="alternate" hreflang="x-default" href="{{CANONICAL_URL}}">
-  <link rel="stylesheet" href="{{ROOT_PATH}}assets/css/style.css">
-  <link rel="icon" type="image/x-icon" href="{{ROOT_PATH}}favicon.ico">
-  <link rel="apple-touch-icon" sizes="180x180" href="{{ROOT_PATH}}apple-touch-icon.png">
-  <link rel="alternate" type="application/rss+xml" title="BestJobs Vacancies Feed" href="{{ROOT_PATH}}all-jobs.xml">
-  <link rel="alternate" type="application/rss+xml" title="BestJobs VIP Network Feed" href="{{ROOT_PATH}}vip-jobs.xml">
+  <style>body{font-family:system-ui,-apple-system,sans-serif;line-height:1.6;max-width:1100px;margin:0 auto;padding:1.25rem;color:#0f172a;background:#fff}a{color:#0052cc;text-decoration:none}article{border:1px solid #dbe2ea;padding:1.25rem;border-radius:6px;margin-bottom:1.5rem}</style>
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="alternate" type="application/rss+xml" title="BestJobs Vacancies Feed" href="/all-jobs.xml">
+  <link rel="alternate" type="application/rss+xml" title="BestJobs VIP Network Feed" href="/vip-jobs.xml">
 </head>
 <body>
   <header class="site-header">
     <div class="shell nav-bar">
-      <a href="{{ROOT_PATH}}{{BOARD_PATH}}" class="brand-link" title="{{LOGO_TITLE}}">
+      <a href="/{{BOARD_PATH}}" class="brand-link" title="{{LOGO_TITLE}}">
         <svg viewBox="0 0 240 46" width="220" height="42" class="brand-logo-svg" role="img" aria-label="BestJobs Bulgaria Logo">
           <g transform="translate(4, 3)">
             <circle cx="8" cy="20" r="4" fill="#0052cc" />
@@ -37,12 +38,12 @@
         <input type="checkbox" id="nav-toggle" class="nav-toggle" aria-label="Toggle Navigation Drawer">
         <label for="nav-toggle" class="nav-toggle-label" title="Open Navigation Menu">&#9776;</label>
         <ul>
-          <li><a href="{{ROOT_PATH}}" class="nav-link" title="{{PORTAL_HOME_TITLE}}">{{PORTAL_HOME_TEXT}}</a></li>
-          <li><a href="{{ROOT_PATH}}{{BOARD_PATH}}" class="nav-link" title="{{VACANCIES_TITLE}}">{{VACANCIES_TEXT}}</a></li>
-          <li><a href="{{ROOT_PATH}}{{BOARD_PATH}}post/" class="nav-btn" title="{{POST_TITLE}}">{{POST_TEXT}}</a></li>
-          <li><a href="{{ROOT_PATH}}blog/" class="nav-link" title="{{BLOG_TITLE}}">{{BLOG_TEXT}}</a></li>
-          <li><a href="{{ROOT_PATH}}help/" class="nav-link" title="{{HELP_TITLE}}">{{HELP_TEXT}}</a></li>
-          <li><a href="{{ROOT_PATH}}contact/" class="nav-link" title="{{CONTACT_TITLE}}">{{CONTACT_TEXT}}</a></li>
+          <li><a href="{{PORTAL_HOME_HREF}}" class="nav-link" title="{{PORTAL_HOME_TITLE}}">{{PORTAL_HOME_TEXT}}</a></li>
+          <li><a href="/{{BOARD_PATH}}" class="nav-link" title="{{VACANCIES_TITLE}}">{{VACANCIES_TEXT}}</a></li>
+          <li><a href="/{{BOARD_PATH}}post/" class="nav-btn" title="{{POST_TITLE}}">{{POST_TEXT}}</a></li>
+          <li><a href="{{BLOG_HREF}}" class="nav-link" title="{{BLOG_TITLE}}">{{BLOG_TEXT}}</a></li>
+          <li><a href="{{HELP_HREF}}" class="nav-link" title="{{HELP_TITLE}}">{{HELP_TEXT}}</a></li>
+          <li><a href="{{CONTACT_HREF}}" class="nav-link" title="{{CONTACT_TITLE}}">{{CONTACT_TEXT}}</a></li>
           <li><a href="{{LANG_TOGGLE_HREF}}" class="lang-toggle" hreflang="{{LANG_TOGGLE_HREFLANG}}" title="{{LANG_TOGGLE_TITLE}}">{{LANG_TOGGLE_TEXT}}</a></li>
         </ul>
       </nav>
@@ -50,10 +51,15 @@
   </header>
   <main>
     <div class="shell">
-      <nav aria-label="Breadcrumbs" style="margin-bottom: 1.25rem; font-size: 0.85rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem;">
+      <div class="print-only-banner">
+        <div style="font-size: 2.2rem; font-weight: 900; letter-spacing: -0.02em; color: #000000;">BESTJOBS.BG &bull; GLOBAL ECONOMIC PORTAL</div>
+        <div style="font-size: 0.95rem; font-weight: 700; color: #333333; margin-bottom: 1rem; border-bottom: 2px solid #000000; padding-bottom: 0.5rem;">Official Job Specification Document &bull; {{CANONICAL_URL}}</div>
+      </div>
+
+      <nav aria-label="Breadcrumbs" class="breadcrumbs-bar" style="margin-bottom: 1.25rem; font-size: 0.85rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem;">
         <div>
-          <a href="{{ROOT_PATH}}" title="{{PORTAL_HOME_TITLE}}">{{PORTAL_HOME_TEXT_PLAIN}}</a> &rsaquo;
-          <a href="{{ROOT_PATH}}{{BOARD_PATH}}" title="{{VACANCIES_TITLE}}">{{VACANCIES_TEXT}}</a> &rsaquo;
+          <a href="{{PORTAL_HOME_HREF}}" title="{{PORTAL_HOME_TITLE}}">{{PORTAL_HOME_TEXT_PLAIN}}</a> &rsaquo;
+          <a href="/{{BOARD_PATH}}" title="{{VACANCIES_TITLE}}">{{VACANCIES_TEXT}}</a> &rsaquo;
           <span style="color: var(--muted);">{{ID}}</span>
         </div>
         <div class="article-tools-bar">
@@ -141,52 +147,52 @@
             <li><a href="https://mobikom.bg" target="_blank" rel="noopener" title="Mobikom Bulgaria — Institutional Master Portal">mobikom.bg &bull; Institutional Hub</a></li>
             <li><a href="https://www.dobrichnews.com" target="_blank" rel="noopener noreferrer" title="Real-time daily news in North-East Bulgaria">dobrichnews.com &bull; Daily News</a></li>
             <li><a href="https://www.dobruja.com" target="_blank" rel="noopener noreferrer" title="Agricultural preservation, regional traditions and culture">dobruja.com &bull; Cultural Review</a></li>
-            <li><a href="{{ROOT_PATH}}all-jobs.xml" title="{{RSS_ALL_TITLE}}">&#128246; {{RSS_ALL_TEXT}}</a></li>
+            <li><a href="/all-jobs.xml" title="{{RSS_ALL_TITLE}}">&#128246; {{RSS_ALL_TEXT}}</a></li>
           </ul>
         </div>
 
         <div class="footer-col">
           <h4>Platform Navigation</h4>
           <ul>
-            <li><a href="{{ROOT_PATH}}" title="{{PORTAL_HOME_TITLE}}">{{PORTAL_HOME_TEXT_PLAIN}}</a></li>
-            <li><a href="{{ROOT_PATH}}{{BOARD_PATH}}" title="{{VACANCIES_TITLE}}">{{VACANCIES_TEXT}}</a></li>
-            <li><a href="{{ROOT_PATH}}{{BOARD_PATH}}post/" title="{{POST_TITLE}}">{{POST_TEXT}}</a></li>
-            <li><a href="{{ROOT_PATH}}blog/" title="{{BLOG_TITLE}}">{{BLOG_TEXT}}</a></li>
-            <li><a href="{{ROOT_PATH}}about/" title="{{ABOUT_TITLE}}">{{ABOUT_TEXT}}</a></li>
-            <li><a href="{{ROOT_PATH}}help/" title="{{HELP_TITLE}}">{{HELP_TEXT}}</a></li>
-            <li><a href="{{ROOT_PATH}}contact/" title="{{CONTACT_TITLE}}">{{CONTACT_TEXT}}</a></li>
+            <li><a href="{{PORTAL_HOME_HREF}}" title="{{PORTAL_HOME_TITLE}}">{{PORTAL_HOME_TEXT_PLAIN}}</a></li>
+            <li><a href="/{{BOARD_PATH}}" title="{{VACANCIES_TITLE}}">{{VACANCIES_TEXT}}</a></li>
+            <li><a href="/{{BOARD_PATH}}post/" title="{{POST_TITLE}}">{{POST_TEXT}}</a></li>
+            <li><a href="{{BLOG_HREF}}" title="{{BLOG_TITLE}}">{{BLOG_TEXT}}</a></li>
+            <li><a href="{{ABOUT_HREF}}" title="{{ABOUT_TITLE}}">{{ABOUT_TEXT}}</a></li>
+            <li><a href="{{HELP_HREF}}" title="{{HELP_TITLE}}">{{HELP_TEXT}}</a></li>
+            <li><a href="{{CONTACT_HREF}}" title="{{CONTACT_TITLE}}">{{CONTACT_TEXT}}</a></li>
           </ul>
         </div>
 
         <div class="footer-col">
           <h4>Operations &amp; Syndication</h4>
           <ul>
-            <li><a href="{{ROOT_PATH}}contact/#dispatch" title="{{DISPATCH_TITLE}}">Ani Ivanova &bull; Market Dispatch</a></li>
-            <li><a href="{{ROOT_PATH}}contact/#candidates" title="{{CANDIDATES_TITLE}}">Candidate Support Desk</a></li>
-            <li><a href="{{ROOT_PATH}}contact/#employers" title="{{EMPLOYERS_TITLE}}">Employers B2B Desk</a></li>
-            <li><a href="{{ROOT_PATH}}vip-jobs.xml" title="{{RSS_VIP_TITLE}}">&#128246; VIP Syndication Feed</a></li>
+            <li><a href="{{CONTACT_HREF}}#dispatch" title="{{DISPATCH_TITLE}}">Ani Ivanova &bull; Market Dispatch</a></li>
+            <li><a href="{{CONTACT_HREF}}#candidates" title="{{CANDIDATES_TITLE}}">Candidate Support Desk</a></li>
+            <li><a href="{{CONTACT_HREF}}#employers" title="{{EMPLOYERS_TITLE}}">Employers B2B Desk</a></li>
+            <li><a href="/vip-jobs.xml" title="{{RSS_VIP_TITLE}}">&#128246; VIP Syndication Feed</a></li>
           </ul>
         </div>
       </div>
 
       <nav class="footer-legal-bar" aria-label="Legal &amp; Policy Navigation">
-        <a href="{{ROOT_PATH}}privacy/" title="{{PRIVACY_TITLE}}">{{PRIVACY_TEXT}}</a>
+        <a href="{{PRIVACY_HREF}}" title="{{PRIVACY_TITLE}}">{{PRIVACY_TEXT}}</a>
         <span class="legal-sep">&bull;</span>
-        <a href="{{ROOT_PATH}}terms/" title="{{TERMS_TITLE}}">{{TERMS_TEXT}}</a>
+        <a href="{{TERMS_HREF}}" title="{{TERMS_TITLE}}">{{TERMS_TEXT}}</a>
         <span class="legal-sep">&bull;</span>
-        <a href="{{ROOT_PATH}}gdpr/" title="{{GDPR_TITLE}}">GDPR</a>
+        <a href="{{GDPR_HREF}}" title="{{GDPR_TITLE}}">GDPR</a>
         <span class="legal-sep">&bull;</span>
-        <a href="{{ROOT_PATH}}accessibility/" title="Directive (EU) 2019/882 and WCAG 2.2 accessibility statement">Accessibility</a>
+        <a href="{{ACCESSIBILITY_HREF}}" title="{{ACCESSIBILITY_TITLE}}">{{ACCESSIBILITY_TEXT}}</a>
         <span class="legal-sep">&bull;</span>
         <a href="{{LANG_TOGGLE_HREF}}" hreflang="{{LANG_TOGGLE_HREFLANG}}" title="{{LANG_TOGGLE_TITLE}}">{{LANG_FOOTER_TEXT}}</a>
       </nav>
 
       <div class="footer-bottom">
         <p>&copy; 2026 bestjobs.bg. Open-source under MIT License (github.com/bestjobs). Part of <a href="https://mobikom.bg/about/" target="_blank" rel="noopener" title="Mobikom Bulgaria Consortium governance and heritage">Mobikom Bulgaria Consortium</a>. Zero-cookie architecture.</p>
-        <a href="{{ROOT_PATH}}contact/" title="{{CONTACT_TITLE}}">{{CONTACT_TEXT}} &rarr;</a>
+        <a href="{{CONTACT_HREF}}" title="{{CONTACT_TITLE}}">{{CONTACT_TEXT}} &rarr;</a>
       </div>
     </div>
   </footer>
-  <script src="{{ROOT_PATH}}assets/js/engine.js" defer></script>
+  <script src="/assets/js/engine.js" defer></script>
 </body>
 </html>
