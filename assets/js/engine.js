@@ -6,6 +6,8 @@
   document.addEventListener('DOMContentLoaded', () => {
     initLiveAnnouncer();
     initStreamAudioPlayer();
+    initArticleVoiceReader();
+    initAntiBotGate();
     initFilterSystem();
     initViewSwitcher();
     initLoadMore();
@@ -46,6 +48,96 @@
     if (clean.length <= 140) return clean;
     const sentences = clean.split(/[.!?]+/);
     return sentences[0] ? sentences[0].trim() + '.' : clean.slice(0, 140) + '...';
+  }
+
+  function initAntiBotGate() {
+    const gateBox = document.querySelector('.anti-bot-gate');
+    if (!gateBox) return;
+
+    const num1 = Math.floor(Math.random() * 6) + 1;
+    const num2 = Math.floor(Math.random() * 5) + 1;
+    const expected = num1 + num2;
+
+    const equationEl = gateBox.querySelector('.math-equation');
+    const selectEl = gateBox.querySelector('.math-select');
+    const applyBtn = gateBox.querySelector('.gate-actions-row .btn-direct-apply');
+    const mailtoHref = gateBox.getAttribute('data-mailto') || '#';
+    const btnActiveText = gateBox.getAttribute('data-btn-text') || 'Apply with Email &rarr;';
+    const isBg = (gateBox.getAttribute('data-lang') || 'en') === 'bg';
+
+    if (equationEl) equationEl.textContent = `${num1} + ${num2}`;
+
+    if (selectEl) {
+      const options = [expected - 1, expected, expected + 2, expected + 1].sort(() => Math.random() - 0.5);
+      const uniqueOptions = Array.from(new Set(options)).filter(n => n > 0);
+
+      uniqueOptions.forEach(optVal => {
+        const opt = document.createElement('option');
+        opt.value = String(optVal);
+        opt.textContent = String(optVal);
+        selectEl.appendChild(opt);
+      });
+
+      selectEl.addEventListener('change', () => {
+        if (parseInt(selectEl.value, 10) === expected) {
+          applyBtn.classList.remove('disabled');
+          applyBtn.setAttribute('href', mailtoHref);
+          applyBtn.innerHTML = btnActiveText;
+          applyBtn.setAttribute('title', isBg ? 'Кандидатствайте директно по имейл' : 'Send application directly via email');
+          announce(isBg ? 'Проверката е успешна. Бутонът за кандидатстване е отключен.' : 'Verification passed. Application button unlocked.');
+        } else {
+          applyBtn.classList.add('disabled');
+          applyBtn.setAttribute('href', '#apply');
+          applyBtn.textContent = isBg ? 'Грешен отговор &bull; Опитайте отново' : 'Incorrect &bull; Try Again';
+          announce(isBg ? 'Грешен отговор на проверката.' : 'Incorrect math answer.');
+        }
+      });
+    }
+  }
+
+  function initArticleVoiceReader() {
+    if (!('speechSynthesis' in window)) return;
+    const btn = document.getElementById('btn-read-article');
+    if (!btn) return;
+
+    const isBg = (document.documentElement.lang || '').toLowerCase().startsWith('bg');
+    let isSpeaking = false;
+
+    const stopArticleVoice = () => {
+      window.speechSynthesis.cancel();
+      isSpeaking = false;
+      btn.textContent = isBg ? '🔊 Прочети на глас' : '🔊 Read Aloud';
+    };
+
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+
+      if (isSpeaking || window.speechSynthesis.speaking) {
+        stopArticleVoice();
+        return;
+      }
+
+      const contentBox = document.querySelector('article.audit-box, main .shell, main .shell-prose');
+      if (!contentBox) return;
+
+      const title = contentBox.querySelector('h1')?.textContent.trim() || '';
+      const textNodes = Array.from(contentBox.querySelectorAll('p, li'));
+      const textToRead = textNodes.map(n => n.textContent.trim()).filter(Boolean).join('. ');
+
+      const fullText = `${title}. ${textToRead}`;
+      const utterance = new SpeechSynthesisUtterance(fullText);
+      utterance.lang = isBg ? 'bg-BG' : 'en-US';
+      utterance.rate = 0.95;
+
+      isSpeaking = true;
+      btn.textContent = isBg ? '⏹ Спри четенето' : '⏹ Stop Reading';
+
+      utterance.onend = stopArticleVoice;
+      utterance.onerror = stopArticleVoice;
+
+      window.speechSynthesis.cancel();
+      window.speechSynthesis.speak(utterance);
+    });
   }
 
   function initStreamAudioPlayer() {
@@ -90,8 +182,8 @@
       let phrase = '';
       if (salary) {
         phrase = isBg
-          ? `Обява ${currentIndex + 1}: ${title}${company ? ' в ' + company : ''}. Брутна заплата: ${salary}${cleanNet ? ', чисто приблизително ' + cleanNet : ''}. ${desc}`
-          : `Vacancy ${currentIndex + 1}: ${title}${company ? ' at ' + company : ''}. Gross monthly salary: ${salary}${cleanNet ? ', net approx ' + cleanNet : ''}. ${desc}`;
+          ? `Обява ${currentIndex + 1}: ${title}${company ? ' в ' + company : ''}. Възнаграждение: ${salary}${cleanNet ? ', чисто ' + cleanNet : ''}. ${desc}`
+          : `Vacancy ${currentIndex + 1}: ${title}${company ? ' at ' + company : ''}. Remuneration: ${salary}${cleanNet ? ', net ' + cleanNet : ''}. ${desc}`;
       } else {
         phrase = isBg
           ? `Секция ${currentIndex + 1}: ${title}. ${desc}`
@@ -140,7 +232,9 @@
     const citySelect = document.getElementById('filter-city');
     const typeSelect = document.getElementById('filter-type');
     const chipLinks = document.querySelectorAll('.chip-btn');
-    const cards = document.querySelectorAll('.job-card');
+    const searchBtn = document.getElementById('btn-filter-search');
+    const resetBtn = document.getElementById('btn-filter-reset');
+    const cards = Array.from(document.querySelectorAll('.job-card'));
     const loadMoreBtn = document.getElementById('btn-load-more');
 
     if (!industrySelect && !citySelect && !typeSelect && chipLinks.length === 0) return;
@@ -174,19 +268,20 @@
       'eco-transit': ['eco-transit', 'екологичен', 'зелен']
     };
 
-    const applyFilters = () => {
-      const sInd = industrySelect?.value || '';
-      const sCity = citySelect?.value || '';
-      const sType = typeSelect?.value || '';
+    const applyMultiFilter = (e) => {
+      if (e) e.preventDefault();
+
+      const sInd = (industrySelect?.value || '').toLowerCase().trim();
+      const sCity = (citySelect?.value || '').toLowerCase().trim();
+      const sType = (typeSelect?.value || '').toLowerCase().trim();
 
       let matchCount = 0;
       const synonyms = activeTag ? (tagSynonyms[activeTag] || [activeTag]) : [];
 
-      for (let i = 0; i < cards.length; i++) {
-        const card = cards[i];
-        const ind = card.getAttribute('data-industry') || '';
-        const city = card.getAttribute('data-city') || '';
-        const type = card.getAttribute('data-type') || '';
+      cards.forEach((card) => {
+        const ind = (card.getAttribute('data-industry') || '').toLowerCase().trim();
+        const city = (card.getAttribute('data-city') || '').toLowerCase().trim();
+        const type = (card.getAttribute('data-type') || '').toLowerCase().trim();
         const cardText = card.textContent.toLowerCase();
 
         const matchesInd = !sInd || ind === sInd;
@@ -200,18 +295,38 @@
         } else {
           card.setAttribute('hidden', '');
         }
-      }
+      });
 
       if (loadMoreBtn) {
         loadMoreBtn.setAttribute('hidden', '');
       }
 
-      announce(isBg ? `Филтрирани: ${matchCount} резултата.` : `Filtered: ${matchCount} results.`);
+      announce(isBg ? `Намерени резултати: ${matchCount}` : `Matched results: ${matchCount}`);
     };
 
-    industrySelect?.addEventListener('change', applyFilters);
-    citySelect?.addEventListener('change', applyFilters);
-    typeSelect?.addEventListener('change', applyFilters);
+    const resetFilters = (e) => {
+      if (e) e.preventDefault();
+      if (industrySelect) industrySelect.value = '';
+      if (citySelect) citySelect.value = '';
+      if (typeSelect) typeSelect.value = '';
+
+      activeTag = null;
+      chipLinks.forEach(c => c.classList.remove('active'));
+
+      cards.forEach((card, idx) => {
+        if (idx < 21) {
+          card.removeAttribute('hidden');
+        } else {
+          card.setAttribute('hidden', '');
+        }
+      });
+
+      if (loadMoreBtn && cards.length > 21) {
+        loadMoreBtn.removeAttribute('hidden');
+      }
+
+      announce(isBg ? 'Филтрите са нулирани.' : 'Filters reset.');
+    };
 
     chipLinks.forEach((link) => {
       link.addEventListener('click', (e) => {
@@ -226,10 +341,16 @@
           activeTag = tag;
           link.classList.add('active');
         }
-
-        applyFilters();
       });
     });
+
+    if (searchBtn) {
+      searchBtn.addEventListener('click', applyMultiFilter);
+    }
+
+    if (resetBtn) {
+      resetBtn.addEventListener('click', resetFilters);
+    }
   }
 
   function initViewSwitcher() {
@@ -287,7 +408,7 @@
         loadMoreBtn.setAttribute('hidden', '');
       }
 
-      announce(`Заредени още ${nextBatch.length} позиции.`);
+      announce(`Показани още ${nextBatch.length} позиции.`);
     });
   }
 })();
