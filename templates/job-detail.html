@@ -50,10 +50,13 @@
   </header>
   <main>
     <div class="shell">
-      <nav aria-label="Breadcrumbs" style="margin-bottom: 1.25rem; font-size: 0.85rem;">
-        <a href="{{ROOT_PATH}}" title="{{PORTAL_HOME_TITLE}}">{{PORTAL_HOME_TEXT_PLAIN}}</a> &rsaquo;
-        <a href="{{ROOT_PATH}}{{BOARD_PATH}}" title="{{VACANCIES_TITLE}}">{{VACANCIES_TEXT}}</a> &rsaquo;
-        <span style="color: var(--muted);">{{ID}}</span>
+      <nav aria-label="Breadcrumbs" style="margin-bottom: 1.25rem; font-size: 0.85rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem;">
+        <div>
+          <a href="{{ROOT_PATH}}" title="{{PORTAL_HOME_TITLE}}">{{PORTAL_HOME_TEXT_PLAIN}}</a> &rsaquo;
+          <a href="{{ROOT_PATH}}{{BOARD_PATH}}" title="{{VACANCIES_TITLE}}">{{VACANCIES_TEXT}}</a> &rsaquo;
+          <span style="color: var(--muted);">{{ID}}</span>
+        </div>
+        <a href="#read-article" id="btn-read-article" class="btn-stream-audio" title="Listen to this job specification aloud">🔊 Read Aloud</a>
       </nav>
 
       <article class="audit-box" style="margin-block: 0 2rem; border-left: 4px solid var(--primary);">
@@ -165,5 +168,6 @@
       </div>
     </div>
   </footer>
+  <script src="{{ROOT_PATH}}assets/js/engine.js" defer></script>
 </body>
 </html>
