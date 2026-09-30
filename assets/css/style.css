@@ -564,6 +564,7 @@ nav ul {
   border-radius: 4px;
   color: var(--text);
   white-space: nowrap;
+  cursor: help;
 }
 .vip-card .chip-item {
   border-color: light-dark(rgba(245, 158, 11, 0.3), rgba(245, 158, 11, 0.4));
@@ -622,14 +623,6 @@ nav ul {
   color: var(--muted);
   cursor: not-allowed;
   pointer-events: none;
-}
-.vip-card .btn-direct-apply {
-  background: linear-gradient(135deg, #f59e0b, #d97706);
-  color: #000000;
-}
-.vip-card .btn-direct-apply:hover {
-  background: #d97706;
-  color: #000000;
 }
 .curtain-stamp {
   display: inline-block;
