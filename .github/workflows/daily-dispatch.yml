@@ -1,0 +1,31 @@
+name: Ani Ivanova Daily Dispatch
+
+on:
+  schedule:
+    - cron: '0 6 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  publish-dispatch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Source Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js Runtime
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: Install Mail Transport
+        run: npm install nodemailer
+
+      - name: Generate and Send Daily Analysis to Blogger Media
+        env:
+          SENDER_MAIL_PASS: ${{ secrets.SENDER_MAIL_PASS }}
+          BLOGGER_SECRET_DOBRICH: ${{ secrets.BLOGGER_SECRET_DOBRICH }}
+          BLOGGER_SECRET_DOBRUJA: ${{ secrets.BLOGGER_SECRET_DOBRUJA }}
+        run: node scripts/daily-dispatch.js
