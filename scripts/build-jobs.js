@@ -80,6 +80,47 @@ const generateIndividualPages = () => {
     const curtainStampEn = isExpired ? '<div class="curtain-stamp">EXPIRED ADVERTISEMENT / POSITION CLOSED</div>' : '';
     const curtainStampBg = isExpired ? '<div class="curtain-stamp">ИЗТЕКЛА ОБЯВА / ПОЗИЦИЯТА Е ЗАТВОРЕНА</div>' : '';
 
+    const extLinkHtml = job.external_url ? ` &bull; <a href="${job.external_url}" rel="nofollow sponsored noopener noreferrer" target="_blank" style="color:var(--primary);font-size:0.9rem;" title="Official verified website of ${escapeXml(job.company_en)}">${escapeXml(job.external_url.replace(/^https?:\/\//, ''))} &rarr;</a>` : '';
+
+    const mailtoEn = `mailto:${job.email}?subject=${encodeURIComponent(`Application: ${job.title_en} (Ref: ${job.id} via BestJobs.bg)`)}&body=${encodeURIComponent(`Dear Hiring Authority,\n\nI hereby submit my application for the position of "${job.title_en}" (Reference ID: ${job.id}) published on the BestJobs.bg Sovereign Portal.\n\nPlease find my qualifications attached.\n\nSincerely,`)}`;
+    const mailtoBg = `mailto:${job.email}?subject=${encodeURIComponent(`Кандидатура: ${job.title_bg} (Реф. №: ${job.id} чрез BestJobs.bg)`)}&body=${encodeURIComponent(`Уважаема конкурсна комисия / Уважаеми работодател,\n\nПодавам своята кандидатура за длъжността „${job.title_bg}“ (Реф. №: ${job.id}) чрез BestJobs.bg.\n\nМоля, разгледайте приложените документи за участие.\n\nС уважение,`)}`;
+
+    const gateHtmlEn = isExpired ? `
+        <div style="display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; padding-top: 1rem; border-top: 1px solid var(--border);">
+          <span class="btn-direct-apply closed" style="padding: 0.65rem 1.25rem; font-size: 1rem;">Position Closed</span>
+          <a href="/bestjobs/" class="nav-link" title="Return to active vacancy stream">&larr; Back to Vacancies</a>
+        </div>` : `
+        <div class="anti-bot-gate" data-mailto="${escapeXml(mailtoEn)}" data-btn-text="Apply with Email &rarr;" data-lang="en">
+          <div class="math-challenge-box">
+            <span class="math-question">Cybersecurity check: <strong class="math-equation">...</strong> =</span>
+            <select class="select-control math-select" aria-label="Select correct math answer to unlock application button">
+              <option value="">Select answer</option>
+            </select>
+          </div>
+          <div class="gate-actions-row">
+            <a href="#apply" class="nav-btn btn-direct-apply disabled" style="padding: 0.65rem 1.25rem; font-size: 1rem;" title="Solve math verification above to unlock application">Locked &bull; Solve Math Check</a>
+            <a href="/bestjobs/" class="nav-link" title="Return to active vacancy stream">&larr; Back to Vacancies</a>
+          </div>
+        </div>`;
+
+    const gateHtmlBg = isExpired ? `
+        <div style="display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; padding-top: 1rem; border-top: 1px solid var(--border);">
+          <span class="btn-direct-apply closed" style="padding: 0.65rem 1.25rem; font-size: 1rem;">Позицията е затворена</span>
+          <a href="/bestjobs/bg/" class="nav-link" title="Обратно към потока с всички активни обяви">&larr; Обратно към обявите</a>
+        </div>` : `
+        <div class="anti-bot-gate" data-mailto="${escapeXml(mailtoBg)}" data-btn-text="Кандидатствай по имейл &rarr;" data-lang="bg">
+          <div class="math-challenge-box">
+            <span class="math-question">Защита от спам ботове: <strong class="math-equation">...</strong> =</span>
+            <select class="select-control math-select" aria-label="Изберете верния математически отговор за отключване на бутона за кандидатстване">
+              <option value="">Изберете отговор</option>
+            </select>
+          </div>
+          <div class="gate-actions-row">
+            <a href="#apply" class="nav-btn btn-direct-apply disabled" style="padding: 0.65rem 1.25rem; font-size: 1rem;" title="Решете математическата проверка по-горе за отключване на имейла">Заключено &bull; Решете проверката</a>
+            <a href="/bestjobs/bg/" class="nav-link" title="Обратно към потока с всички активни обяви">&larr; Обратно към обявите</a>
+          </div>
+        </div>`;
+
     const varsEn = {
       LANG: 'en',
       META_TITLE: `${job.title_en} | ${job.company_en} • BestJobs Bulgaria`,
@@ -121,6 +162,7 @@ const generateIndividualPages = () => {
       TITLE: job.title_en,
       SUBTITLE: job.subtitle_en || '',
       COMPANY: job.company_en,
+      EXTERNAL_WEBSITE_LINK: extLinkHtml,
       SALARY_GROSS: salaryEn,
       SALARY_NET: netEn,
       CHIPS_HTML: chipsEnHtml,
@@ -135,12 +177,7 @@ const generateIndividualPages = () => {
       VALIDITY_VALUE: isExpired ? 'ARCHIVED / POSITION CLOSED' : 'Immutable 30-Day Cycle',
       PAYMENT_STANDARD_KEY: 'Remuneration Standard',
       PAYMENT_STANDARD_VALUE: '100% White Economy • Official Direct Remittance',
-      APPLY_MAILTO: isExpired ? '#closed' : `mailto:${job.email}?subject=${encodeURIComponent(`Application: ${job.title_en} (Ref: ${job.id} via BestJobs.bg)`)}&body=${encodeURIComponent(`Dear Hiring Authority,\n\nI hereby submit my application for the position of "${job.title_en}" (Reference ID: ${job.id}) published on the BestJobs.bg Sovereign Portal.\n\nPlease find my qualifications attached.\n\nSincerely,`)}`,
-      APPLY_TITLE: isExpired ? 'This vacancy is closed and archived' : `Apply directly to ${job.company_en} via email`,
-      APPLY_TEXT: isExpired ? 'Position Closed' : 'Apply with Email',
-      APPLY_CLASS: isExpired ? 'closed' : '',
-      BACK_TITLE: 'Return to active vacancy stream',
-      BACK_TEXT: 'Back to Vacancies',
+      APPLICATION_GATE_HTML: gateHtmlEn,
       SHIELD_HEADING: 'Regulatory Notice • ZNZ Intermediation Shield',
       SHIELD_ITEM1_KEY: 'Decentralized Bulletin',
       SHIELD_ITEM1_VAL: 'BestJobs.bg operates strictly as a classified job bulletin and does not mediate employment under the Employment Promotion Act (ЗНЗ).',
@@ -202,6 +239,7 @@ const generateIndividualPages = () => {
       TITLE: job.title_bg,
       SUBTITLE: job.subtitle_bg || '',
       COMPANY: job.company_bg,
+      EXTERNAL_WEBSITE_LINK: extLinkHtml,
       SALARY_GROSS: salaryBg,
       SALARY_NET: netBg,
       CHIPS_HTML: chipsBgHtml,
@@ -216,12 +254,7 @@ const generateIndividualPages = () => {
       VALIDITY_VALUE: isExpired ? 'ИЗТЕКЛА ОБЯВА / ПОЗИЦИЯТА Е ЗАТВОРЕНА' : 'Неотменим 30-дневен цикъл',
       PAYMENT_STANDARD_KEY: 'Стандарт на възнаграждението',
       PAYMENT_STANDARD_VALUE: '100% Бяла икономика • Официално изплащане по договор',
-      APPLY_MAILTO: isExpired ? '#closed' : `mailto:${job.email}?subject=${encodeURIComponent(`Кандидатура: ${job.title_bg} (Реф. №: ${job.id} чрез BestJobs.bg)`)}&body=${encodeURIComponent(`Уважаема конкурсна комисия / Уважаеми работодател,\n\nПодавам своята кандидатура за длъжността „${job.title_bg}“ (Реф. №: ${job.id}) чрез BestJobs.bg.\n\nМоля, разгледайте приложените документи за участие.\n\nС уважение,`)}`,
-      APPLY_TITLE: isExpired ? 'Тази позиция е затворена и архивирана' : `Кандидатствайте директно към ${job.company_bg} чрез имейл`,
-      APPLY_TEXT: isExpired ? 'Позицията е затворена' : 'Кандидатствай по имейл',
-      APPLY_CLASS: isExpired ? 'closed' : '',
-      BACK_TITLE: 'Обратно към потока с всички активни обяви',
-      BACK_TEXT: 'Обратно към обявите',
+      APPLICATION_GATE_HTML: gateHtmlBg,
       SHIELD_HEADING: 'Правна клауза • Защитен щит по ЗНЗ',
       SHIELD_ITEM1_KEY: 'Децентрализиран бюлетин',
       SHIELD_ITEM1_VAL: 'BestJobs.bg оперира стриктно като класифициран рекламен бюлетин и не осъществява трудово посредничество по смисъла на Закона за насърчаване на заетостта (ЗНЗ).',
@@ -292,8 +325,7 @@ const updateCatalogIndexes = () => {
               ${job.desc_en || ''}
             </div>
             <div class="card-footer-actions">
-              <a href="/bestjobs/job/${datePath}/${job.slug}/" class="card-spec-link" title="Open complete technical specification for ${escapeXml(job.title_en)}">View Job &rarr;</a>
-              <a href="mailto:${job.email}?subject=${encodeURIComponent(`Application: ${job.title_en} (Ref: ${job.id})`)}" class="btn-direct-apply" title="Apply directly to ${escapeXml(job.company_en)} via email">Apply &rarr;</a>
+              <a href="/bestjobs/job/${datePath}/${job.slug}/" class="card-spec-link" title="Open complete technical specification for ${escapeXml(job.title_en)}">View Full Job &rarr;</a>
             </div>
           </article>`;
   }).join('\n\n');
@@ -327,8 +359,7 @@ const updateCatalogIndexes = () => {
               ${job.desc_bg || ''}
             </div>
             <div class="card-footer-actions">
-              <a href="/bestjobs/bg/job/${datePath}/${job.slug}/" class="card-spec-link" title="Отворете пълната техническа спецификация за ${escapeXml(job.title_bg)}">Преглед &rarr;</a>
-              <a href="mailto:${job.email}?subject=${encodeURIComponent(`Кандидатура: ${job.title_bg} (Реф. №: ${job.id})`)}" class="btn-direct-apply" title="Кандидатствайте директно към ${escapeXml(job.company_bg)} по имейл">Кандидатствай &rarr;</a>
+              <a href="/bestjobs/bg/job/${datePath}/${job.slug}/" class="card-spec-link" title="Отворете пълната техническа спецификация за ${escapeXml(job.title_bg)}">Преглед на обявата &rarr;</a>
             </div>
           </article>`;
   }).join('\n\n');
