@@ -297,8 +297,45 @@ nav ul {
 }
 .chip-btn:hover, .chip-btn.active {
   border-color: var(--primary);
-  color: var(--primary);
+  color: var(--primary-fg);
+  background: var(--primary);
   text-decoration: none;
+}
+.filter-actions-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+  flex-wrap: wrap;
+}
+.btn-filter-search {
+  background: var(--primary);
+  color: var(--primary-fg);
+  font-size: 0.9rem;
+  font-weight: 800;
+  padding: 0.5rem 1.15rem;
+  border-radius: var(--radius);
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+}
+.btn-filter-search:hover {
+  background: var(--primary-hover);
+  color: var(--primary-fg);
+  text-decoration: none;
+}
+.btn-filter-reset {
+  color: var(--muted);
+  font-size: 0.85rem;
+  font-weight: 700;
+  padding: 0.4rem 0.75rem;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+}
+.btn-filter-reset:hover {
+  color: var(--danger);
+  text-decoration: underline;
 }
 .stream-header-bar {
   display: flex;
@@ -573,6 +610,11 @@ nav ul {
   color: var(--primary-fg);
   text-decoration: none;
 }
+.btn-direct-apply.closed {
+  background: var(--border);
+  color: var(--muted);
+  cursor: not-allowed;
+}
 .vip-card .btn-direct-apply {
   background: linear-gradient(135deg, #f59e0b, #d97706);
   color: #000000;
@@ -580,6 +622,18 @@ nav ul {
 .vip-card .btn-direct-apply:hover {
   background: #d97706;
   color: #000000;
+}
+.curtain-stamp {
+  display: inline-block;
+  background: var(--danger);
+  color: #ffffff;
+  font-size: 0.85rem;
+  font-weight: 900;
+  letter-spacing: 0.05em;
+  padding: 0.35rem 0.85rem;
+  border-radius: var(--radius);
+  margin-bottom: 1.25rem;
+  text-transform: uppercase;
 }
 .grid-cards[data-view="rows"] {
   grid-template-columns: 1fr;
