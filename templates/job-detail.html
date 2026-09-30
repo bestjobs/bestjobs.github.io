@@ -70,7 +70,10 @@
 
         <h1 style="font-size: clamp(1.6rem, 3.5vw, 2.1rem); margin-bottom: 0.25rem;">{{TITLE}}</h1>
         <div style="font-size: 1.15rem; font-weight: 700; color: var(--text); margin-bottom: 0.35rem;">{{SUBTITLE}}</div>
-        <div style="font-size: 1rem; color: var(--muted); font-weight: 600; margin-bottom: 1.25rem;">{{COMPANY}}</div>
+        <div style="font-size: 1rem; color: var(--muted); font-weight: 600; margin-bottom: 1.25rem;">
+          {{COMPANY}}
+          {{EXTERNAL_WEBSITE_LINK}}
+        </div>
 
         <div class="card-salary-box" style="margin-bottom: 1.25rem; padding: 0.75rem; background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius); display: inline-flex; align-items: baseline; gap: 0.65rem;">
           <span class="salary-figure" style="font-size: 1.45rem;">{{SALARY_GROSS}}</span>
@@ -98,10 +101,7 @@
           </ul>
         </section>
 
-        <div style="display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; padding-top: 1rem; border-top: 1px solid var(--border);">
-          <a href="{{APPLY_MAILTO}}" class="nav-btn {{APPLY_CLASS}}" style="padding: 0.65rem 1.25rem; font-size: 1rem;" title="{{APPLY_TITLE}}">{{APPLY_TEXT}} &rarr;</a>
-          <a href="{{ROOT_PATH}}{{BOARD_PATH}}" class="nav-link" title="{{BACK_TITLE}}">&larr; {{BACK_TEXT}}</a>
-        </div>
+        {{APPLICATION_GATE_HTML}}
       </article>
 
       <section class="audit-box" aria-labelledby="standards-heading">
