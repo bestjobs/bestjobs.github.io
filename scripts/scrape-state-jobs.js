@@ -12,10 +12,8 @@ const ensureDirectoryStructure = () => {
   const day = String(now.getDate()).padStart(2, '0');
 
   const dirs = [
-    path.join(ROOT_DIR, 'bestjobs', 'v', String(year), month, day),
-    path.join(ROOT_DIR, 'bestjobs', 'archive', String(year), month, day),
-    path.join(ROOT_DIR, 'bestjobs', 'bg', 'v', String(year), month, day),
-    path.join(ROOT_DIR, 'bestjobs', 'bg', 'archive', String(year), month, day)
+    path.join(ROOT_DIR, 'bestjobs', 'job', String(year), month, day),
+    path.join(ROOT_DIR, 'bestjobs', 'bg', 'job', String(year), month, day)
   ];
 
   dirs.forEach((dir) => {
@@ -38,15 +36,16 @@ const detectSector = (text) => {
   if (t.includes('tiktok') || t.includes('bytedance') || t.includes('social') || t.includes('социалн') || t.includes('алгоритм')) return 'social-media-algorithms';
   if (t.includes('google') || t.includes('apple') || t.includes('microsoft') || t.includes('amazon') || t.includes('nvidia') || t.includes('tesla') || t.includes('cloud')) return 'big-tech-cloud';
   if (t.includes('harvard') || t.includes('oxford') || t.includes('cambridge') || t.includes('sorbonne') || t.includes('mit') || t.includes('професор') || t.includes('доцент') || t.includes('бан')) return 'elite-universities';
-  if (t.includes('mayo clinic') || t.includes('charit') || t.includes('болниц') || t.includes('лекар') || t.includes('мбал') || t.includes('умбал') || t.includes('клиник') || t.includes('цсмп')) return 'world-hospitals';
+  if (t.includes('mayo clinic') || t.includes('charit') || t.includes('болниц') || t.includes('лекар') || t.includes('мбал') || t.includes('умбал') || t.includes('клиник') || t.includes('цсмп') || t.includes('мсф') || t.includes('msf')) return 'world-hospitals';
   if (t.includes('cnn') || t.includes('al jazeera') || t.includes('reuters') || t.includes('bloomberg') || t.includes('bbc') || t.includes('меди') || t.includes('новин')) return 'global-tv-news';
   if (t.includes('chanel') || t.includes('cardin') || t.includes('dior') || t.includes('rolex') || t.includes('lvmh') || t.includes('мода') || t.includes('дизайн')) return 'haute-couture-luxury';
   if (t.includes('negresco') || t.includes('massena') || t.includes('ritz') || t.includes('burj al arab') || t.includes('хотел') || t.includes('курорт') || t.includes('ривиера') || t.includes('кариби')) return 'iconic-hospitality';
   if (t.includes('hell') || t.includes('ramsay') || t.includes('ducasse') || t.includes('michelin') || t.includes('кулинар') || t.includes('ресторант') || t.includes('готвач')) return 'michelin-culinary';
   if (t.includes('hollywood') || t.includes('bollywood') || t.includes('кино') || t.includes('актьор') || t.includes('студио') || t.includes('бояна')) return 'cinema-actors-hollywood';
   if (t.includes('foster') || t.includes('hadid') || t.includes('gensler') || t.includes('архитект') || t.includes('строител') || t.includes('bim')) return 'master-architecture';
-  if (t.includes('лувър') || t.includes('louvre') || t.includes('ермитаж') || t.includes('музей') || t.includes('дворец') || t.includes('замък') || t.includes('windsor')) return 'royal-heritage-museums';
+  if (t.includes('лувър') || t.includes('louvre') || t.includes('ермитаж') || t.includes('музей') || t.includes('дворец') || t.includes('замък') || t.includes('windsor') || t.includes('unesco') || t.includes('юнеско')) return 'royal-heritage-museums';
   if (t.includes('blackrock') || t.includes('goldman') || t.includes('world bank') || t.includes('imf') || t.includes('мвф') || t.includes('банка') || t.includes('борса')) return 'global-banking-funds';
+  if (t.includes('amnesty') || t.includes('greenpeace') || t.includes('червен кръст') || t.includes('red cross') || t.includes('wwf') || t.includes('нпо')) return 'international-ngos';
   if (t.includes('турция') || t.includes('сърбия') || t.includes('македония') || t.includes('румъния') || t.includes('молдова')) return 'cross-border-balkans';
   return 'public-sector-bg';
 };
@@ -59,6 +58,7 @@ const detectCity = (text) => {
   if (t.includes('берлин') || t.includes('мюнхен') || t.includes('berlin')) return 'eu-germany';
   if (t.includes('вашингтон') || t.includes('ню йорк') || t.includes('бостън') || t.includes('usa')) return 'world-usa';
   if (t.includes('торонто') || t.includes('монреал') || t.includes('canada')) return 'world-canada';
+  if (t.includes('буенос айрес') || t.includes('кордоба') || t.includes('argentina')) return 'world-argentina';
   if (t.includes('дубай') || t.includes('абу даби') || t.includes('dubai')) return 'middle-east-uae';
   if (t.includes('доха') || t.includes('qatar')) return 'middle-east-qatar';
   if (t.includes('тел авив') || t.includes('israel')) return 'middle-east-israel';
@@ -182,21 +182,3 @@ const runAggregator = async () => {
           email: 'ras@government.bg',
           title_en: titleBg,
           subtitle_en: orgBg,
-          company_en: `${orgBg} (government.bg)`,
-          desc_en: `Official public competitive employment procedure published underй the State Servant Act. Remuneration in contract currency. Direct application.`,
-          chips_en: ['🩺 Medical Exams', '📴 Disconnect', '🏥 Full Health'],
-          title_bg: titleBg,
-          subtitle_bg: orgBg,
-          company_bg: `${orgBg} (government.bg)`,
-          desc_bg: `Официална конкурсна процедура за държавна служба по реда на Закона за държавния служител. Документите за участие се подават директно чрез официален имейл адрес.`,
-          chips_bg: ['🩺 Медицински прегледи', '📴 Право на изключване', '🏥 Здравно осигуряване']
-        });
-        newCount++;
-      }
-    }
-  }
-
-  fs.writeFileSync(JOBS_FILE, JSON.stringify(currentJobs, null, 2), 'utf8');
-};
-
-runAggregator();
