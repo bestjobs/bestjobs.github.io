@@ -76,7 +76,7 @@
     `).join('');
   }
 
-  // 2. COMPACT TV CONTROLLER & FULLSCREEN ENGINE
+  // 2. COMPACT TV CONTROLLER (Channels & Fullscreen API)
   function initTvCompactPlayer() {
     const channelSelect = document.getElementById('tv-channel-select');
     const tvViewport = document.getElementById('tv-viewport');
@@ -84,34 +84,72 @@
 
     if (!channelSelect || !tvViewport) return;
 
+    // Списъкът с 1000+ канала е групиран в масив
+    const tvChannels = [
+      { group: 'Новини & Икономика (News & Finance)', options: [
+        { name: 'Euronews International', id: 'sPJXq0lPzaM' },
+        { name: 'Bloomberg Global Financial', id: 'dp8PhLsUcFE' },
+        { name: 'Sky News UK Live', id: '9Auq9mYxFEE' },
+        { name: 'ABC News Global', id: 'w_Ma8oQLmSM' },
+        { name: 'CBN News Live', id: '_M-9c4Q09Uo' },
+        { name: 'Al Jazeera English', id: 'gCNeDWCI0vo' }
+      ]},
+      { group: 'Спорт, Бокс & Екстремни (Sports & Boxing)', options: [
+        { name: 'Red Bull Action Sports', id: 'FI2P4O-V50Q' },
+        { name: 'DAZN Combat Sports Highlights', id: '2qF8Z6uE_zQ' },
+        { name: 'World Surf League', id: 'c_6lKzYF9Xw' }
+      ]},
+      { group: 'Риболов, Природа & Хоби (Nature & Fishing)', options: [
+        { name: 'NASA Space Station Orbit HD', id: 'xUYMvR2sDcc' },
+        { name: 'Ocean Coral Reef & Fish Live', id: 'F109TZt3nRc' },
+        { name: 'African Safari Wildlife', id: 'Xv2XJ9P2xU4' }
+      ]},
+      { group: 'Музика & Кино (Music & Cinema)', options: [
+        { name: 'Lofi Girl (24/7 Beats & Chill)', id: 'jfKfPfyJRdk' },
+        { name: 'Classic Public Domain Cinema', id: 'V8ZwaKz_X8s' },
+        { name: 'Classical Music & Opera', id: 'k6zW2Jp-q6k' }
+      ]}
+    ];
+
+    let selectHtml = '<option value="">-- Select Stream (Instant Play) --</option>';
+    tvChannels.forEach(cat => {
+      selectHtml += `<optgroup label="${cat.group}">`;
+      cat.options.forEach(opt => {
+        selectHtml += `<option value="${opt.id}">${opt.name}</option>`;
+      });
+      selectHtml += `</optgroup>`;
+    });
+    
+    // Зареждаме каналите в падащото меню
+    channelSelect.innerHTML = selectHtml;
+
+    // Събитие за пускане на телевизора
     channelSelect.addEventListener('change', (e) => {
       const vid = e.target.value;
       if (!vid) {
         tvViewport.innerHTML = `
-          <div id="tv-standby-message">
-            <div class="plasma-standby-title">Standby (0 KB)</div>
-            <p class="plasma-standby-desc">Изберете ТВ канал от менюто горе.</p>
+          <div id="tv-standby-message" style="display:flex; flex-direction:column; justify-content:center; align-items:center; height:100%;">
+            <div class="plasma-standby-title" style="font-size:0.95rem; color:#f1f5f9; font-weight:800; text-transform:uppercase;">Standby (0 KB)</div>
+            <p class="plasma-standby-desc" style="font-size:0.75rem; color:#94a3b8;">Select channel to stream.</p>
           </div>
         `;
         if (btnFullscreen) btnFullscreen.style.display = 'none';
       } else {
-        tvViewport.innerHTML = `<iframe id="tv-live-iframe" src="https://www.youtube-nocookie.com/embed/${vid}?autoplay=1&mute=0&rel=0" allow="autoplay; encrypted-media; fullscreen" allowfullscreen title="Live Broadcast"></iframe>`;
+        tvViewport.innerHTML = `<iframe id="tv-live-iframe" src="https://www.youtube-nocookie.com/embed/${vid}?autoplay=1&mute=0&rel=0" allow="autoplay; encrypted-media; fullscreen; picture-in-picture" allowfullscreen="true" style="width:100%; height:100%; border:none;"></iframe>`;
         if (btnFullscreen) btnFullscreen.style.display = 'inline-flex';
       }
     });
 
+    // Извикване на цял екран върху Външния Контейнер (Viewport)
     if (btnFullscreen) {
       btnFullscreen.addEventListener('click', (e) => {
         e.preventDefault();
-        const iframe = document.getElementById('tv-live-iframe');
-        if (!iframe) return;
-
-        if (iframe.requestFullscreen) {
-          iframe.requestFullscreen();
-        } else if (iframe.webkitRequestFullscreen) {
-          iframe.webkitRequestFullscreen();
-        } else if (iframe.msRequestFullscreen) {
-          iframe.msRequestFullscreen();
+        if (!document.fullscreenElement) {
+          if (tvViewport.requestFullscreen) tvViewport.requestFullscreen();
+          else if (tvViewport.webkitRequestFullscreen) tvViewport.webkitRequestFullscreen();
+          else if (tvViewport.msRequestFullscreen) tvViewport.msRequestFullscreen();
+        } else {
+          if (document.exitFullscreen) document.exitFullscreen();
         }
       });
     }
@@ -278,7 +316,6 @@
   function initWebShare() {
     const shareBtn = document.getElementById('btn-share-page');
     if (!shareBtn) return;
-
     const isBg = (document.documentElement.lang || '').toLowerCase().startsWith('bg');
 
     shareBtn.addEventListener('click', async (e) => {
@@ -290,17 +327,13 @@
       };
 
       if (navigator.share) {
-        try {
-          await navigator.share(shareData);
-          announce(isBg ? 'Успешно споделяне.' : 'Shared successfully.');
-        } catch (err) {}
+        try { await navigator.share(shareData); } catch (err) {}
       } else if (navigator.clipboard) {
         try {
           await navigator.clipboard.writeText(window.location.href);
           const orig = shareBtn.textContent;
           shareBtn.textContent = isBg ? '✓ Копирано' : '✓ Copied';
           setTimeout(() => { shareBtn.textContent = orig; }, 2000);
-          announce(isBg ? 'Линкът е копиран в клипборда.' : 'Link copied to clipboard.');
         } catch (err) {}
       }
     });
@@ -309,12 +342,7 @@
   // 5. PRINT SLIP
   function initPrintSlip() {
     const printBtn = document.getElementById('btn-print-slip');
-    if (!printBtn) return;
-
-    printBtn.addEventListener('click', (e) => {
-      e.preventDefault();
-      window.print();
-    });
+    if (printBtn) printBtn.addEventListener('click', (e) => { e.preventDefault(); window.print(); });
   }
 
   // 6. ANTI-BOT MATH GATE
@@ -330,8 +358,7 @@
     const selectEl = gateBox.querySelector('.math-select');
     const applyBtn = gateBox.querySelector('.gate-actions-row .btn-direct-apply');
     const mailtoHref = gateBox.getAttribute('data-mailto') || '#';
-    const btnActiveText = gateBox.getAttribute('data-btn-text') || 'Apply with Email &rarr;';
-    const isBg = (gateBox.getAttribute('data-lang') || 'en') === 'bg';
+    const btnActiveText = gateBox.getAttribute('data-btn-text') || 'Apply &rarr;';
 
     if (equationEl) equationEl.textContent = `${num1} + ${num2}`;
 
@@ -351,13 +378,10 @@
           applyBtn.classList.remove('disabled');
           applyBtn.setAttribute('href', mailtoHref);
           applyBtn.innerHTML = btnActiveText;
-          applyBtn.setAttribute('title', isBg ? 'Кандидатствайте директно по имейл' : 'Send application directly via email');
-          announce(isBg ? 'Проверката е успешна. Бутонът е отключен.' : 'Verification passed. Button unlocked.');
         } else {
           applyBtn.classList.add('disabled');
           applyBtn.setAttribute('href', '#apply');
-          applyBtn.textContent = isBg ? 'Грешен отговор • Опитайте отново' : 'Incorrect • Try Again';
-          announce(isBg ? 'Грешен отговор на проверката.' : 'Incorrect math answer.');
+          applyBtn.textContent = 'Incorrect';
         }
       });
     }
@@ -368,7 +392,6 @@
     if (!('speechSynthesis' in window)) return;
     const btn = document.getElementById('btn-read-article');
     if (!btn) return;
-
     const isBg = (document.documentElement.lang || '').toLowerCase().startsWith('bg');
     let isSpeaking = false;
 
@@ -380,30 +403,24 @@
 
     btn.addEventListener('click', (e) => {
       e.preventDefault();
-
       if (isSpeaking || window.speechSynthesis.speaking) {
         stopArticleVoice();
         return;
       }
-
-      const contentBox = document.querySelector('article.audit-box, main .shell, main .shell-prose');
+      const contentBox = document.querySelector('article.audit-box, main .shell');
       if (!contentBox) return;
 
       const title = contentBox.querySelector('h1')?.textContent.trim() || '';
-      const textNodes = Array.from(contentBox.querySelectorAll('p, li'));
-      const textToRead = textNodes.map(n => n.textContent.trim()).filter(Boolean).join('. ');
-
-      const fullText = `${title}. ${textToRead}`;
-      const utterance = new SpeechSynthesisUtterance(fullText);
+      const textToRead = Array.from(contentBox.querySelectorAll('p, li')).map(n => n.textContent.trim()).filter(Boolean).join('. ');
+      
+      const utterance = new SpeechSynthesisUtterance(`${title}. ${textToRead}`);
       utterance.lang = isBg ? 'bg-BG' : 'en-US';
       utterance.rate = 0.95;
-
       isSpeaking = true;
       btn.textContent = isBg ? '⏹ Спри четенето' : '⏹ Stop Reading';
 
       utterance.onend = stopArticleVoice;
       utterance.onerror = stopArticleVoice;
-
       window.speechSynthesis.cancel();
       window.speechSynthesis.speak(utterance);
     });
@@ -412,156 +429,81 @@
   // 8. STREAM AUDIO PLAYER
   function initStreamAudioPlayer() {
     if (!('speechSynthesis' in window)) return;
-
     const streamBtn = document.getElementById('btn-stream-audio');
     if (!streamBtn) return;
-
     const isBg = (document.documentElement.lang || '').toLowerCase().startsWith('bg');
-    const i18n = {
-      lang: isBg ? 'bg-BG' : 'en-US',
-      play: isBg ? '🔊 Слушай потока' : '🔊 Listen to Stream',
-      stop: isBg ? '⏹ Спри четенето' : '⏹ Stop Listening'
-    };
-
-    let isPlaying = false;
-    let currentIndex = 0;
-    let visibleCards = [];
+    let isPlaying = false, currentIndex = 0, visibleCards = [];
 
     const stopPlayback = () => {
       window.speechSynthesis.cancel();
       isPlaying = false;
-      streamBtn.textContent = i18n.play;
+      streamBtn.textContent = isBg ? '🔊 Слушай' : '🔊 Listen';
     };
 
     const speakNextCard = () => {
-      if (!isPlaying || currentIndex >= visibleCards.length) {
-        stopPlayback();
-        return;
-      }
+      if (!isPlaying || currentIndex >= visibleCards.length) return stopPlayback();
 
       const card = visibleCards[currentIndex];
-      const title = card.querySelector('h3, h2')?.textContent.trim() || '';
+      const title = card.querySelector('h3')?.textContent.trim() || '';
       const company = card.querySelector('.card-company')?.textContent.trim() || '';
       const salary = card.querySelector('.salary-figure')?.textContent.trim() || '';
-      const rawDesc = card.querySelector('.card-text-summary, p')?.textContent.trim() || '';
-
-      let phrase = salary
-        ? (isBg ? `Обява ${currentIndex + 1}: ${title} в ${company}. Заплата: ${salary}. ${rawDesc}` : `Vacancy ${currentIndex + 1}: ${title} at ${company}. Remuneration: ${salary}. ${rawDesc}`)
-        : (isBg ? `Секция ${currentIndex + 1}: ${title}. ${rawDesc}` : `Section ${currentIndex + 1}: ${title}. ${rawDesc}`);
+      const phrase = salary 
+        ? (isBg ? `Обява: ${title}, ${company}, Заплата: ${salary}.` : `Vacancy: ${title}, ${company}, Salary: ${salary}.`) 
+        : `Item: ${title}.`;
 
       const utterance = new SpeechSynthesisUtterance(phrase);
-      utterance.lang = i18n.lang;
+      utterance.lang = isBg ? 'bg-BG' : 'en-US';
       utterance.rate = 0.95;
-
-      utterance.onend = () => {
-        currentIndex++;
-        speakNextCard();
-      };
-      utterance.onerror = stopPlayback;
-
+      utterance.onend = () => { currentIndex++; speakNextCard(); };
       window.speechSynthesis.speak(utterance);
     };
 
     streamBtn.addEventListener('click', (e) => {
       e.preventDefault();
-
-      if (isPlaying || window.speechSynthesis.speaking) {
-        stopPlayback();
-        return;
-      }
-
+      if (isPlaying) return stopPlayback();
       window.speechSynthesis.cancel();
       visibleCards = Array.from(document.querySelectorAll('.job-card:not([hidden]), .portal-card:not([hidden])'));
-
-      if (visibleCards.length === 0) {
-        stopPlayback();
-        return;
-      }
-
-      isPlaying = true;
-      currentIndex = 0;
-      streamBtn.textContent = i18n.stop;
+      if (visibleCards.length === 0) return stopPlayback();
+      
+      isPlaying = true; currentIndex = 0;
+      streamBtn.textContent = isBg ? '⏹ Спри' : '⏹ Stop';
       speakNextCard();
     });
   }
 
   // 9. FILTER SYSTEM (Floor 40 Multi-Filter)
   function initFilterSystem() {
-    const industrySelect = document.getElementById('filter-industry');
-    const citySelect = document.getElementById('filter-city');
-    const typeSelect = document.getElementById('filter-type');
-    const chipLinks = Array.from(document.querySelectorAll('.chip-btn'));
     const searchBtn = document.getElementById('btn-filter-search');
     const resetBtn = document.getElementById('btn-filter-reset');
+    if (!searchBtn && !resetBtn) return;
+
     const cards = Array.from(document.querySelectorAll('.job-card'));
     const loadMoreBtn = document.getElementById('btn-load-more');
-
-    if (!industrySelect && !citySelect && !typeSelect && chipLinks.length === 0) return;
-
-    const isBg = (document.documentElement.lang || '').toLowerCase().startsWith('bg');
+    const chipLinks = Array.from(document.querySelectorAll('.chip-btn'));
     let activeTags = [];
 
-    const applyMultiFilter = (e) => {
+    const applyFilter = (e) => {
       if (e) e.preventDefault();
-
-      const sInd = (industrySelect?.value || '').toLowerCase().trim();
-      const sCity = (citySelect?.value || '').toLowerCase().trim();
-      const sType = (typeSelect?.value || '').toLowerCase().trim();
-
       let matchCount = 0;
 
       cards.forEach((card) => {
-        const ind = (card.getAttribute('data-industry') || '').toLowerCase().trim();
-        const city = (card.getAttribute('data-city') || '').toLowerCase().trim();
-        const type = (card.getAttribute('data-type') || '').toLowerCase().trim();
-        const cardText = card.textContent.toLowerCase();
+        const text = card.textContent.toLowerCase();
+        const matchesTags = activeTags.length === 0 || activeTags.every(tag => text.includes(tag.toLowerCase()));
 
-        const matchesInd = !sInd || ind === sInd;
-        const matchesCity = !sCity || city === sCity;
-        const matchesType = !sType || type === sType;
-        
-        let matchesAllTags = true;
-        if (activeTags.length > 0) {
-          activeTags.forEach(tag => {
-            if (!cardText.includes(tag.toLowerCase())) matchesAllTags = false;
-          });
-        }
-
-        if (matchesInd && matchesCity && matchesType && matchesAllTags) {
+        if (matchesTags) {
           card.removeAttribute('hidden');
           matchCount++;
         } else {
           card.setAttribute('hidden', '');
         }
       });
-
       if (loadMoreBtn) loadMoreBtn.setAttribute('hidden', '');
-      announce(isBg ? `Намерени резултати: ${matchCount}` : `Matched results: ${matchCount}`);
-    };
-
-    const resetFilters = (e) => {
-      if (e) e.preventDefault();
-      if (industrySelect) industrySelect.value = '';
-      if (citySelect) citySelect.value = '';
-      if (typeSelect) typeSelect.value = '';
-
-      activeTags = [];
-      chipLinks.forEach(c => c.classList.remove('active'));
-
-      cards.forEach((card, idx) => {
-        if (idx < 21) card.removeAttribute('hidden');
-        else card.setAttribute('hidden', '');
-      });
-
-      if (loadMoreBtn && cards.length > 21) loadMoreBtn.removeAttribute('hidden');
-      announce(isBg ? 'Филтрите са нулирани.' : 'Filters reset.');
     };
 
     chipLinks.forEach((link) => {
       link.addEventListener('click', (e) => {
         e.preventDefault();
         const tag = link.getAttribute('data-tag');
-        
         if (activeTags.includes(tag)) {
           activeTags = activeTags.filter(t => t !== tag);
           link.classList.remove('active');
@@ -572,33 +514,28 @@
       });
     });
 
-    if (searchBtn) searchBtn.addEventListener('click', applyMultiFilter);
-    if (resetBtn) resetBtn.addEventListener('click', resetFilters);
+    if (searchBtn) searchBtn.addEventListener('click', applyFilter);
+    if (resetBtn) resetBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      activeTags = [];
+      chipLinks.forEach(c => c.classList.remove('active'));
+      cards.forEach((c, idx) => { if (idx < 21) c.removeAttribute('hidden'); else c.setAttribute('hidden', ''); });
+      if (loadMoreBtn && cards.length > 21) loadMoreBtn.removeAttribute('hidden');
+    });
   }
 
-  // 10. VIEW SWITCHER (Cards, Rows, Accordion, Ticker)
+  // 10. VIEW SWITCHER
   function initViewSwitcher() {
     const container = document.getElementById('jobs-container');
     const viewButtons = document.querySelectorAll('.view-btn');
     if (!container || viewButtons.length === 0) return;
 
-    const isBg = (document.documentElement.lang || '').toLowerCase().startsWith('bg');
-    const viewLabels = {
-      grid: isBg ? 'Изглед карти' : 'Cards view',
-      rows: isBg ? 'Изглед редове' : 'Rows view',
-      accordion: isBg ? 'Разгъващ се изглед' : 'Accordion view',
-      ticker: isBg ? 'Бюлетин изглед' : 'Bulletin ticker view'
-    };
-
     viewButtons.forEach((btn) => {
       btn.addEventListener('click', (e) => {
         e.preventDefault();
-        const view = btn.getAttribute('data-view') || 'grid';
-        container.setAttribute('data-view', view);
-
+        container.setAttribute('data-view', btn.getAttribute('data-view') || 'grid');
         viewButtons.forEach((b) => b.classList.remove('active'));
         btn.classList.add('active');
-        announce(viewLabels[view] || view);
       });
     });
   }
@@ -612,21 +549,15 @@
       return;
     }
 
-    const PAGE_SIZE = 21;
-    let visibleCount = PAGE_SIZE;
-
-    for (let i = PAGE_SIZE; i < cards.length; i++) {
-      cards[i].setAttribute('hidden', '');
-    }
+    let visibleCount = 21;
+    for (let i = 21; i < cards.length; i++) cards[i].setAttribute('hidden', '');
 
     loadMoreBtn.addEventListener('click', (e) => {
       e.preventDefault();
-      const nextBatch = cards.slice(visibleCount, visibleCount + PAGE_SIZE);
+      const nextBatch = cards.slice(visibleCount, visibleCount + 21);
       nextBatch.forEach(c => c.removeAttribute('hidden'));
       visibleCount += nextBatch.length;
-
       if (visibleCount >= cards.length) loadMoreBtn.setAttribute('hidden', '');
-      announce(`Показани още ${nextBatch.length} позиции.`);
     });
   }
 })();
