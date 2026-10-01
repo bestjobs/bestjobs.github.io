@@ -39,13 +39,12 @@ const renderTemplate = (tpl, vars) => {
   return output;
 };
 
-const getDatePath = (dateStr, index = 0) => {
+const getDatePath = (dateStr) => {
   const d = new Date(dateStr || Date.now());
   const year = d.getFullYear();
   const month = String(d.getMonth() + 1).padStart(2, '0');
   const day = String(d.getDate()).padStart(2, '0');
-  const shard = String(Math.floor(index / 900) + 1).padStart(2, '0');
-  return { year, month, day, shard, pathStr: `${year}/${month}/${day}/${shard}` };
+  return { year, month, day, pathStr: `${year}/${month}/${day}` };
 };
 
 const formatFullDescriptionHtml = (descText) => {
@@ -54,14 +53,124 @@ const formatFullDescriptionHtml = (descText) => {
   return paragraphs.map(p => `<p>${p.replace(/\n/g, '<br>')}</p>`).join('\n');
 };
 
+const chipDefinitions = {
+  '📴 Disconnect': {
+    enTitle: 'Statutory prohibition on off-hours employer communications, calls, and emails',
+    bgTitle: 'Законова забрана за служебни обаждания, имейли и съобщения в извънработно време и почивни дни'
+  },
+  '🩺 Medical Exams': {
+    enTitle: 'Comprehensive annual preventive medical and diagnostic check-ups funded by employer',
+    bgTitle: 'Ежегодни разширени профилактични медицински и диагностични прегледи за сметка на работодателя'
+  },
+  '🚌 Shuttle Transit': {
+    enTitle: 'Dedicated corporate shuttle transit network between residential hubs and facility',
+    bgTitle: 'Осигурен организиран служебен транспорт по фиксирани маршрути между населените места и базата'
+  },
+  '🚴 Bike Allowance': {
+    enTitle: 'Monthly cash allowance and infrastructure support for bicycle commuting',
+    bgTitle: 'Месечна финансова добавка и осигурен паркинг за служители, придвижващи се с велосипед'
+  },
+  '🚭 Smoke-Free Bonus': {
+    enTitle: 'Additional paid annual leave bonus for non-smoking staff promoting healthy living',
+    bgTitle: 'Допълнителни платени дни годишен отпуск като бонус за служители, които не пушат'
+  },
+  '🍎 Fruits & Water': {
+    enTitle: 'Daily delivery of fresh seasonal orchard fruits and multi-stage filtered water',
+    bgTitle: 'Ежедневни пресни градински плодове, натурални сокове и филтрирана вода на работното място'
+  },
+  '🦷 Dental Plan': {
+    enTitle: 'Extended corporate dental health insurance covering preventive and surgical care',
+    bgTitle: 'Допълнително корпоративно здравно покритие за дентално лечение и профилактика'
+  },
+  '🏠 Housing Included': {
+    enTitle: 'Employer-provided municipal or corporate family housing apartment free of charge',
+    bgTitle: 'Предоставено безплатно ведомствено семейно жилище или пълна месечна субсидия за наем'
+  },
+  '🗓️ 4-Day Week': {
+    enTitle: 'Compressed 4-day working schedule (100:80:100 model: 100% pay for 80% time)',
+    bgTitle: 'Сгъстен 4-дневен работен график (модел 100:80:100 — 100% възнаграждение за 80% време)'
+  },
+  '🚗 Company Car': {
+    enTitle: 'Company vehicle provided with full corporate fuel card coverage for business and personal use',
+    bgTitle: 'Предоставен служебен автомобил с поемане на горивото за служебни и лични нужди'
+  },
+  '🏥 Full Health': {
+    enTitle: 'Top-tier private health insurance with unlimited hospital and outpatient coverage',
+    bgTitle: 'Пълно луксозно доброволно здравно осигуряване с неограничен болничен и извънболничен лимит'
+  },
+  '📈 Performance Bonus': {
+    enTitle: 'Statutory performance-linked quarterly and annual financial profit bonuses',
+    bgTitle: 'Регламентирани тримесечни и годишни финансови бонуси обвързани с постигнати резултати'
+  },
+  '🎓 Tuition Aid': {
+    enTitle: '100% employer funding for higher education degrees and international certifications',
+    bgTitle: '100% финансиране на висше образование, магистратури и международни професионални сертификати'
+  },
+  '👶 Kindergarten Subsidy': {
+    enTitle: 'Corporate kindergarten nursery on-site or full monthly childcare vouchers',
+    bgTitle: 'Фирмена детска ясла/градина в базата или пълно поемане на месечните детски такси'
+  },
+  '📦 Relocation Package': {
+    enTitle: 'Complete relocation allowance covering moving logistics, visas, and settling-in grants',
+    bgTitle: 'Пълен релокационен пакет: покриване на транспортни разходи, наем и първоначален грант'
+  },
+  '🧠 Mental Health Days': {
+    enTitle: 'Dedicated paid recharge days for psychological well-being and burnout prevention',
+    bgTitle: 'Платени дни за психологическо възстановяване и превенция на професионално прегаряне'
+  },
+  '⏳ Paid Sabbatical': {
+    enTitle: 'Time-banking account model enabling fully paid 6-to-12 month sabbatical leave',
+    bgTitle: 'Времева банкова сметка (Zeitwertkonto), осигуряваща от 6 до 12 месеца платен творчески отпуск'
+  },
+  '🍷 Sober Workplace': {
+    enTitle: 'Strictly professional, clear-headed workplace culture free of alcohol pressure',
+    bgTitle: 'Професионална работна среда без консумация на алкохол и без корпоративен натиск'
+  },
+  '✈️ Flight Allowance': {
+    enTitle: 'Annual paid international flights for employee and family to home country',
+    bgTitle: 'Ежегодни платени самолетни билети за служителя и семейството до родната страна'
+  },
+  '🛡️ Tax-Free Income': {
+    enTitle: 'Diplomatic or international tax-exempt salary structure under international treaties',
+    bgTitle: 'Необлагаем дипломатически или международен доход съгласно международни конвенции'
+  },
+  '📚 Child Education': {
+    enTitle: 'Full coverage of international school or university tuition fees for dependent children',
+    bgTitle: 'Пълно поемане на таксите за международно училище или колеж на децата на служителя'
+  },
+  '⏳ Flexitime': {
+    enTitle: 'Autonomous working hours arrangement based on core hours and deliverable output',
+    bgTitle: 'Автономно управление на работното време на база задължителни часове и резултати'
+  },
+  '🌱 Eco Transit': {
+    enTitle: 'Targeted financial subsidy for electric vehicle leasing or public rail commuting',
+    bgTitle: 'Целева субсидия за лизинг на електромобил или карти за обществен железопътен транспорт'
+  }
+};
+
+const renderChipsHtml = (chipsArray, lang) => {
+  if (!chipsArray || !chipsArray.length) return '';
+  return chipsArray.map(chipText => {
+    let matchedTitle = '';
+    for (const [key, val] of Object.entries(chipDefinitions)) {
+      if (chipText.toLowerCase().includes(key.toLowerCase().replace(/^[^\w\sа-яА-ЯёЁ]+/, '').trim())) {
+        matchedTitle = lang === 'bg' ? val.bgTitle : val.enTitle;
+        break;
+      }
+    }
+    const titleAttr = matchedTitle ? ` title="${escapeXml(matchedTitle)}"` : '';
+    return `<span class="chip-item"${titleAttr}>${chipText}</span>`;
+  }).join('\n          ');
+};
+
 const generateIndividualPages = () => {
-  jobs.forEach((job, idx) => {
+  jobs.forEach((job) => {
     const isExpired = job.expired === true;
-    const dp = getDatePath(job.date, idx);
+    const dp = getDatePath(job.date);
     const datePath = dp.pathStr;
 
-    const chipsEnHtml = (job.chips_en || []).map((c) => `<span class="chip-item">${c}</span>`).join('\n          ');
-    const chipsBgHtml = (job.chips_bg || []).map((c) => `<span class="chip-item">${c}</span>`).join('\n          ');
+    const chipsEnHtml = renderChipsHtml(job.chips_en, 'en');
+    const chipsBgHtml = renderChipsHtml(job.chips_bg, 'bg');
 
     const vipBadgeEn = job.vip ? '<a href="/bestjobs/help/#vip" class="vip-tag" title="VIP Fast-Track Placement">🌟 VIP FAST-TRACK</a>' : '';
     const vipBadgeBg = job.vip ? '<a href="/bestjobs/bg/help/#vip" class="vip-tag" title="VIP Скоростно наемане">🌟 VIP СКОРОСТНО НАЕМАНЕ</a>' : '';
@@ -92,7 +201,7 @@ const generateIndividualPages = () => {
         </div>` : `
         <div class="anti-bot-gate" data-mailto="${escapeXml(mailtoEn)}" data-btn-text="Apply with Email &rarr;" data-lang="en">
           <div class="math-challenge-box">
-            <span class="math-question">Cybersecurity check: <strong class="math-equation">...</strong> =</span>
+            <span class="math-question">Cybersecurity verification: <strong class="math-equation">...</strong> =</span>
             <select class="select-control math-select" aria-label="Select correct math answer to unlock application button">
               <option value="">Select answer</option>
             </select>
@@ -128,25 +237,41 @@ const generateIndividualPages = () => {
       CANONICAL_URL: canonicalEn,
       HREFLANG_EN: canonicalEn,
       HREFLANG_BG: canonicalBg,
-      ROOT_PATH: '../../../../../../',
+      ROOT_PATH: '/assets/',
       BOARD_PATH: 'bestjobs/',
-      LOGO_TITLE: 'BestJobs Bulgaria — Job Ads Board',
-      NAV_ARIA: 'Job Board Navigation',
-      PORTAL_HOME_TITLE: 'Return to Portal Home',
+      PORTAL_HOME_HREF: '/',
+      PORTAL_HOME_TITLE: 'Return to Global Economic Portal Home',
       PORTAL_HOME_TEXT: '&larr; Portal Home',
       PORTAL_HOME_TEXT_PLAIN: 'Portal Home',
       VACANCIES_TITLE: 'Current Active Vacancies Stream',
       VACANCIES_TEXT: 'Vacancies',
       POST_TITLE: 'Post Vacancy Ad Directly',
       POST_TEXT: '+ Post a Job',
+      BLOG_HREF: '/bestjobs/blog/',
       BLOG_TITLE: 'Central Research Monographs Catalog',
       BLOG_TEXT: 'Monographs',
+      HELP_HREF: '/bestjobs/help/',
       HELP_TITLE: 'Unified Documentation for Candidates and Employers',
       HELP_TEXT: 'Help Desk',
+      CONTACT_HREF: '/bestjobs/contact/',
       CONTACT_TITLE: 'Official Communication Desks',
       CONTACT_TEXT: 'Contact',
+      ABOUT_HREF: '/bestjobs/about/',
       ABOUT_TITLE: 'Historical Lineage and Governance',
       ABOUT_TEXT: 'About Us',
+      PRIVACY_HREF: '/privacy/',
+      PRIVACY_TITLE: 'Zero-cookie architecture and privacy notice',
+      PRIVACY_TEXT: 'Privacy Policy',
+      TERMS_HREF: '/terms/',
+      TERMS_TITLE: 'Operational guidelines and employment board rules',
+      TERMS_TEXT: 'Terms of Service',
+      GDPR_HREF: '/gdpr/',
+      GDPR_TITLE: 'Regulation (EU) 2016/679 compliance declaration',
+      ACCESSIBILITY_HREF: '/accessibility/',
+      ACCESSIBILITY_TITLE: 'Directive (EU) 2019/882 and WCAG 2.2 accessibility statement',
+      ACCESSIBILITY_TEXT: 'Accessibility',
+      LOGO_TITLE: 'BestJobs Bulgaria — Job Ads Board',
+      NAV_ARIA: 'Job Board Navigation',
       LANG_TOGGLE_HREF: `/bestjobs/bg/job/${datePath}/${job.slug}/`,
       LANG_TOGGLE_HREFLANG: 'bg',
       LANG_TOGGLE_TITLE: 'Switch to Bulgarian version',
@@ -159,7 +284,7 @@ const generateIndividualPages = () => {
       PRINT_TITLE: 'Print official verification slip or save as PDF',
       PRINT_TEXT: 'Print Slip',
       ID: job.id,
-      SECTOR_LABEL: (job.industry || 'PUBLIC-SECTOR').toUpperCase(),
+      SECTOR_LABEL: (job.industry || 'PUBLIC-SECTOR-BG').toUpperCase(),
       CITY_LABEL: (job.city || 'SOFIA').toUpperCase(),
       VIP_BADGE: vipBadgeEn,
       VERIFIED_LABEL: 'Verified Direct Counterparty',
@@ -192,11 +317,6 @@ const generateIndividualPages = () => {
       RSS_ALL_TITLE: 'Subscribe to open RSS feed of all current vacancies',
       RSS_ALL_TEXT: 'Open Vacancy RSS Feed',
       RSS_VIP_TITLE: 'Syndicated VIP feed for media partners',
-      PRIVACY_TITLE: 'Zero-cookie architecture and strict no-tracking privacy notice',
-      PRIVACY_TEXT: 'Privacy Policy',
-      TERMS_TITLE: 'Operational guidelines and employment board rules',
-      TERMS_TEXT: 'Terms of Service',
-      GDPR_TITLE: 'Regulation (EU) 2016/679 compliance declaration',
       DISPATCH_TITLE: 'Chief Editor Ani Ivanova Market Dispatch Desk',
       CANDIDATES_TITLE: 'Candidate support and verification desk',
       EMPLOYERS_TITLE: 'Employer B2B listing support and VIP syndication'
@@ -209,25 +329,41 @@ const generateIndividualPages = () => {
       CANONICAL_URL: canonicalBg,
       HREFLANG_EN: canonicalEn,
       HREFLANG_BG: canonicalBg,
-      ROOT_PATH: '../../../../../../',
+      ROOT_PATH: '/assets/',
       BOARD_PATH: 'bestjobs/bg/',
-      LOGO_TITLE: 'BestJobs България — Табло за обяви за работа',
-      NAV_ARIA: 'Навигация в кариерния борд',
-      PORTAL_HOME_TITLE: 'Към началната страница на националния портал',
+      PORTAL_HOME_HREF: '/bg/',
+      PORTAL_HOME_TITLE: 'Към началната страница на Световния стопански портал',
       PORTAL_HOME_TEXT: '&larr; Портал Начало',
       PORTAL_HOME_TEXT_PLAIN: 'Портал Начало',
       VACANCIES_TITLE: 'Поток от активни работни позиции',
       VACANCIES_TEXT: 'Свободни позиции',
       POST_TITLE: 'Публикувайте обява за свободна позиция',
       POST_TEXT: '+ Публикувай обява',
+      BLOG_HREF: '/bestjobs/bg/blog/',
       BLOG_TITLE: 'Каталог на научните трудови монографии',
       BLOG_TEXT: 'Монографии',
-      HELP_TITLE: 'Документация за кандидати и работодатели',
+      HELP_HREF: '/bestjobs/bg/help/',
+      HELP_TITLE: 'Учебник за Кандидати и Компании',
       HELP_TEXT: 'Помощен център',
+      CONTACT_HREF: '/bestjobs/bg/contact/',
       CONTACT_TITLE: 'Официални координационни бюра и контакти',
       CONTACT_TEXT: 'Контакти',
-      ABOUT_TITLE: 'История, принципи и управление на консорциума',
+      ABOUT_HREF: '/bestjobs/bg/about/',
+      ABOUT_TITLE: 'История и управление на BestJobs.bg',
       ABOUT_TEXT: 'За нас',
+      PRIVACY_HREF: '/privacy/',
+      PRIVACY_TITLE: 'Политика за поверителност и нулеви бисквитки',
+      PRIVACY_TEXT: 'Поверителност',
+      TERMS_HREF: '/terms/',
+      TERMS_TITLE: 'Общи условия и правила за публикуване',
+      TERMS_TEXT: 'Общи условия',
+      GDPR_HREF: '/gdpr/',
+      GDPR_TITLE: 'Декларация за съответствие с Регламент (ЕС) 2016/679',
+      ACCESSIBILITY_HREF: '/accessibility/',
+      ACCESSIBILITY_TITLE: 'Декларация за цифрова достъпност по Директива (ЕС) 2019/882',
+      ACCESSIBILITY_TEXT: 'Достъпност',
+      LOGO_TITLE: 'BestJobs България — Табло за обяви за работа',
+      NAV_ARIA: 'Навигация в кариерния борд',
       LANG_TOGGLE_HREF: `/bestjobs/job/${datePath}/${job.slug}/`,
       LANG_TOGGLE_HREFLANG: 'en',
       LANG_TOGGLE_TITLE: 'Switch to English listing version',
@@ -240,7 +376,7 @@ const generateIndividualPages = () => {
       PRINT_TITLE: 'Отпечатайте официален информационен лист или запазете в PDF',
       PRINT_TEXT: 'Печат',
       ID: job.id,
-      SECTOR_LABEL: (job.industry || 'PUBLIC-SECTOR').toUpperCase(),
+      SECTOR_LABEL: (job.industry || 'PUBLIC-SECTOR-BG').toUpperCase(),
       CITY_LABEL: (job.city || 'SOFIA').toUpperCase(),
       VIP_BADGE: vipBadgeBg,
       VERIFIED_LABEL: 'Проверен директен работодател',
@@ -273,11 +409,6 @@ const generateIndividualPages = () => {
       RSS_ALL_TITLE: 'Абонирайте се за отворения RSS поток с всички позиции',
       RSS_ALL_TEXT: 'Отворен RSS поток с позиции',
       RSS_VIP_TITLE: 'Синдикиран VIP фийд за медийните партньори',
-      PRIVACY_TITLE: 'Политика за поверителност и нулеви бисквитки',
-      PRIVACY_TEXT: 'Поверителност',
-      TERMS_TITLE: 'Общи условия и правила за публикуване',
-      TERMS_TEXT: 'Общи условия',
-      GDPR_TITLE: 'Декларация за съответствие с Регламент (ЕС) 2016/679',
       DISPATCH_TITLE: 'Бюро за макроикономически бюлетин на главния редактор Ани Иванова',
       CANDIDATES_TITLE: 'Бюро за поддръжка на кандидати и трудови права',
       EMPLOYERS_TITLE: 'Бюро за обслужване на работодатели и VIP синдикация'
@@ -304,18 +435,18 @@ const generateIndividualPages = () => {
 const updateCatalogIndexes = () => {
   const activeJobs = jobs.filter((j) => !j.expired);
 
-  const cardsEn = activeJobs.map((job, idx) => {
+  const cardsEn = activeJobs.map((job) => {
     const vipClass = job.vip ? ' vip-card' : '';
     const vipBadge = job.vip ? `\n              <div class="meta-badges-inline">\n                <a href="/bestjobs/help/#vip" class="vip-tag" title="VIP Fast-Track Placement">🌟 VIP FAST-TRACK</a>\n              </div>` : '';
     const vipReach = job.vip ? `\n            <div class="vip-reach-badge">📡 Syndicate: <a href="https://mobikom.bg" target="_blank" rel="noopener" title="Mobikom Bulgaria Institutional Hub">mobikom.bg</a> &bull; <a href="https://www.dobrichnews.com" target="_blank" rel="noopener noreferrer" title="Real-time daily news in North-East Bulgaria">dobrichnews.com</a> &bull; <a href="https://www.dobruja.com" target="_blank" rel="noopener noreferrer" title="Agricultural preservation, regional traditions and culture">dobruja.com</a></div>` : '';
-    const chips = (job.chips_en || []).map((c) => `<span class="chip-item">${c}</span>`).join('\n              ');
-    const datePath = getDatePath(job.date, idx).pathStr;
+    const chips = renderChipsHtml(job.chips_en, 'en');
+    const datePath = getDatePath(job.date).pathStr;
     const salaryVal = typeof job.salary_gross === 'number' ? `${job.salary_gross} € per month` : (job.salary_gross || 'Competitive');
     const netVal = typeof job.salary_net === 'number' ? `(net ~${job.salary_net} €)` : (job.salary_net || '');
 
     return `          <article class="job-card${vipClass}" data-slug="${job.slug}" data-industry="${job.industry}" data-city="${job.city}" data-type="${job.type}" data-date="${job.date}">
             <div class="card-meta-bar">
-              <span>${job.id} &bull; ${(job.industry || 'PUBLIC-SECTOR').toUpperCase()} &bull; ${(job.city || 'SOFIA').toUpperCase()}</span>${vipBadge}
+              <span>${job.id} &bull; ${(job.industry || 'PUBLIC-SECTOR-BG').toUpperCase()} &bull; ${(job.city || 'SOFIA').toUpperCase()}</span>${vipBadge}
             </div>${vipReach}
             <div class="card-title-box">
               <h3>${job.title_en}</h3>
@@ -338,18 +469,18 @@ const updateCatalogIndexes = () => {
           </article>`;
   }).join('\n\n');
 
-  const cardsBg = activeJobs.map((job, idx) => {
+  const cardsBg = activeJobs.map((job) => {
     const vipClass = job.vip ? ' vip-card' : '';
     const vipBadge = job.vip ? `\n              <div class="meta-badges-inline">\n                <a href="/bestjobs/bg/help/#vip" class="vip-tag" title="VIP Скоростно наемане">🌟 VIP СКОРОСТНО НАЕМАНЕ</a>\n              </div>` : '';
     const vipReach = job.vip ? `\n            <div class="vip-reach-badge">📡 Синдикация: <a href="https://mobikom.bg" target="_blank" rel="noopener" title="Мобиком България — Институционален хъб">mobikom.bg</a> &bull; <a href="https://www.dobrichnews.com" target="_blank" rel="noopener noreferrer" title="Ежедневни регионални новини от Североизточна България">dobrichnews.com</a> &bull; <a href="https://www.dobruja.com" target="_blank" rel="noopener noreferrer" title="Земеделски традиции, фолклор и добруджанска памет">dobruja.com</a></div>` : '';
-    const chips = (job.chips_bg || []).map((c) => `<span class="chip-item">${c}</span>`).join('\n              ');
-    const datePath = getDatePath(job.date, idx).pathStr;
+    const chips = renderChipsHtml(job.chips_bg, 'bg');
+    const datePath = getDatePath(job.date).pathStr;
     const salaryVal = typeof job.salary_gross === 'number' ? `${job.salary_gross} € на месец` : (job.salary_gross || 'По договаряне');
     const netVal = typeof job.salary_net === 'number' ? `(нето ~${job.salary_net} €)` : (job.salary_net || '');
 
     return `          <article class="job-card${vipClass}" data-slug="${job.slug}" data-industry="${job.industry}" data-city="${job.city}" data-type="${job.type}" data-date="${job.date}">
             <div class="card-meta-bar">
-              <span>${job.id} &bull; ${(job.industry || 'PUBLIC-SECTOR').toUpperCase()} &bull; ${(job.city || 'SOFIA').toUpperCase()}</span>${vipBadge}
+              <span>${job.id} &bull; ${(job.industry || 'PUBLIC-SECTOR-BG').toUpperCase()} &bull; ${(job.city || 'SOFIA').toUpperCase()}</span>${vipBadge}
             </div>${vipReach}
             <div class="card-title-box">
               <h3>${job.title_bg}</h3>
@@ -400,8 +531,8 @@ const generateXmlFeeds = () => {
   let allItemsXml = '';
   let vipItemsXml = '';
 
-  activeJobs.forEach((job, idx) => {
-    const dp = getDatePath(job.date, idx);
+  activeJobs.forEach((job) => {
+    const dp = getDatePath(job.date);
     const datePath = dp.pathStr;
     const salStr = typeof job.salary_gross === 'number' ? `${job.salary_gross} € per month` : (job.salary_gross || 'Competitive');
 
@@ -502,12 +633,13 @@ const generateSitemapIndex = () => {
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 `;
   staticRoutes.forEach((route) => {
-    staticXml += `  <url>
+    xmlUrl = `  <url>
     <loc>${route.url}</loc>
     <lastmod>${today}</lastmod>
     <changefreq>${route.changefreq}</changefreq>
     <priority>${route.priority}</priority>
   </url>\n`;
+    staticXml += xmlUrl;
   });
   staticXml += `</urlset>\n`;
   fs.writeFileSync(path.join(ROOT_DIR, 'sitemap-static.xml'), staticXml, 'utf8');
@@ -522,17 +654,18 @@ const generateSitemapIndex = () => {
     let subXml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 `;
-    monthJobs.forEach((job, idx) => {
-      const dp = getDatePath(job.date, idx);
+    monthJobs.forEach((job) => {
+      const folderType = 'job';
+      const dp = getDatePath(job.date);
       const datePath = dp.pathStr;
       subXml += `  <url>
-    <loc>https://bestjobs.bg/bestjobs/job/${datePath}/${escapeXml(job.slug)}/</loc>
+    <loc>https://bestjobs.bg/bestjobs/${folderType}/${datePath}/${escapeXml(job.slug)}/</loc>
     <lastmod>${job.date}</lastmod>
     <changefreq>${job.expired ? 'never' : 'weekly'}</changefreq>
     <priority>${job.expired ? '0.3' : '0.7'}</priority>
   </url>\n`;
       subXml += `  <url>
-    <loc>https://bestjobs.bg/bestjobs/bg/job/${datePath}/${escapeXml(job.slug)}/</loc>
+    <loc>https://bestjobs.bg/bestjobs/bg/${folderType}/${datePath}/${escapeXml(job.slug)}/</loc>
     <lastmod>${job.date}</lastmod>
     <changefreq>${job.expired ? 'never' : 'weekly'}</changefreq>
     <priority>${job.expired ? '0.3' : '0.7'}</priority>
