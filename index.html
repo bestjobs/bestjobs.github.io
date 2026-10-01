@@ -3,338 +3,669 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BestJobs | National Economic Portal Bulgaria &bull; Zero Cookies</title>
-  <meta name="description" content="BestJobs.bg: Sovereign National Economic Portal in Bulgaria coordinating classified job advertising, regional B2B trade, energy, capital investments, and EU regulatory law.">
-  <meta name="theme-color" content="#0052cc">
+  <title>Global Economic Gateway | BestJobs Skyscraper &bull; Grand Lobby</title>
+  <meta name="description" content="The Grand Lobby of BestJobs Digital Skyscraper. Sovereign 7,777-floor economic tower for employment, B2B commerce, energy infrastructure, and direct classifieds.">
+  <meta name="theme-color" content="#0b0f19">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://bestjobs.bg/">
   <link rel="alternate" hreflang="en" href="https://bestjobs.bg/">
   <link rel="alternate" hreflang="bg" href="https://bestjobs.bg/bg/">
   <link rel="alternate" hreflang="x-default" href="https://bestjobs.bg/">
-  <link rel="stylesheet" href="assets/css/style.css">
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
-  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
-  <link rel="alternate" type="application/rss+xml" title="BestJobs Master Feed" href="all-jobs.xml">
-  <link rel="alternate" type="application/rss+xml" title="BestJobs VIP Network Feed" href="vip-jobs.xml">
+  <style>
+    :root {
+      --bg: #0b0f19;
+      --bg-card: #131b2e;
+      --text: #f1f5f9;
+      --muted: #94a3b8;
+      --gold: #f59e0b;
+      --gold-glow: rgba(245, 158, 11, 0.15);
+      --border: #1e293b;
+      --blue: #38bdf8;
+      --green: #10b981;
+      --font: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      padding: 1rem;
+    }
+    a { color: var(--blue); text-decoration: none; transition: color 0.15s ease; }
+    a:hover { color: #7dd3fc; text-decoration: underline; }
+    .lobby-wrapper { width: 100%; max-width: 1400px; margin-inline: auto; display: flex; flex-direction: column; gap: 1.5rem; }
+    
+    /* Header */
+    .lobby-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 1rem;
+    }
+    .brand-svg { width: 220px; height: 42px; display: block; }
+    .lang-link {
+      font-size: 0.85rem;
+      font-weight: 700;
+      padding: 0.4rem 0.8rem;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      color: var(--text);
+    }
+    .lang-link:hover { border-color: var(--blue); text-decoration: none; }
+
+    /* Grand Intro */
+    .grand-intro {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--gold);
+      border-radius: 6px;
+      padding: 1.25rem 1.5rem;
+    }
+    .grand-intro h1 { font-size: clamp(1.4rem, 3vw, 1.85rem); font-weight: 800; text-transform: uppercase; margin-bottom: 0.5rem; color: var(--text); }
+    .grand-intro p { font-size: 0.95rem; color: var(--muted); margin-bottom: 0.75rem; text-wrap: pretty; }
+    .grand-intro p:last-child { margin-bottom: 0; }
+
+    /* Plasma TV Wide Screen */
+    .tv-deck {
+      background: #000;
+      border: 2px solid var(--border);
+      border-top: 4px solid #ef4444;
+      border-radius: 8px;
+      padding: 1rem;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+    }
+    .tv-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-bottom: 0.75rem;
+    }
+    .tv-badge {
+      font-size: 0.75rem;
+      font-weight: 800;
+      color: #ef4444;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .tv-badge::before { content: ""; width: 8px; height: 8px; background: #ef4444; border-radius: 50%; display: inline-block; }
+    .tv-select-wrap { display: flex; align-items: center; gap: 0.5rem; }
+    .tv-select {
+      background: var(--bg-card);
+      color: var(--text);
+      border: 1px solid var(--border);
+      padding: 0.4rem 0.75rem;
+      font-size: 0.85rem;
+      font-weight: 600;
+      border-radius: 4px;
+      font-family: inherit;
+      cursor: pointer;
+    }
+    .tv-screen-box {
+      width: 100%;
+      aspect-ratio: 16/9;
+      max-height: 520px;
+      background: radial-gradient(circle at center, #1a2333 0%, #000000 100%);
+      border-radius: 6px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: var(--muted);
+      text-align: center;
+      padding: 1.5rem;
+      border: 1px solid #111827;
+      overflow: hidden;
+      position: relative;
+    }
+    .tv-screen-box iframe { width: 100%; height: 100%; border: none; border-radius: 4px; }
+
+    /* 3-Column Wings Architecture */
+    .lobby-layout {
+      display: grid;
+      grid-template-columns: 280px 1fr 280px;
+      gap: 1.5rem;
+      align-items: start;
+    }
+    @media (max-width: 1080px) {
+      .lobby-layout { grid-template-columns: 1fr; }
+    }
+
+    /* Left Wing: Concierge */
+    .wing-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+    .wing-box h2 {
+      font-size: 0.9rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text);
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 0.4rem;
+    }
+    .concierge-list { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+    .concierge-item a {
+      display: block;
+      padding: 0.6rem 0.75rem;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text);
+      line-height: 1.35;
+    }
+    .concierge-item a:hover {
+      border-color: var(--gold);
+      color: var(--gold);
+      text-decoration: none;
+    }
+    .concierge-tag { display: block; font-size: 0.68rem; font-weight: 800; color: var(--gold); text-transform: uppercase; }
+
+    /* Center: Elevator Shaft & Keypad */
+    .elevator-hub {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+    .flight-board {
+      background: #000;
+      border: 2px solid #334155;
+      border-radius: 6px;
+      padding: 0.85rem 1.25rem;
+      box-shadow: inset 0 0 15px rgba(0,0,0,0.8);
+    }
+    .flight-label { font-size: 0.7rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 0.25rem; }
+    .flight-display {
+      font-family: monospace;
+      font-size: 1.35rem;
+      font-weight: 900;
+      color: var(--green);
+      text-shadow: 0 0 8px rgba(16, 185, 129, 0.6);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      min-height: 38px;
+      display: flex;
+      align-items: center;
+    }
+
+    .floors-direct-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 0.5rem;
+    }
+    .floor-link {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.75rem 1rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      color: var(--text);
+      font-size: 0.85rem;
+      font-weight: 700;
+    }
+    .floor-link:hover { border-color: var(--blue); color: var(--blue); text-decoration: none; }
+    .floor-link.penthouse { border-color: var(--gold); background: var(--gold-glow); color: var(--gold); }
+    .floor-link.penthouse:hover { background: rgba(245, 158, 11, 0.25); }
+
+    /* Keypad Console */
+    .keypad-wrapper {
+      background: #0f172a;
+      border: 2px solid #334155;
+      border-radius: 8px;
+      padding: 1.25rem;
+      max-width: 380px;
+      margin-inline: auto;
+      width: 100%;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+    }
+    .keypad-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.6rem;
+      margin-top: 0.75rem;
+    }
+    .key-anchor {
+      display: grid;
+      place-items: center;
+      min-height: 52px;
+      background: #1e293b;
+      border: 1px solid #475569;
+      border-radius: 6px;
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--text);
+      cursor: pointer;
+      user-select: none;
+    }
+    .key-anchor:hover { background: #334155; text-decoration: none; }
+    .key-anchor:active { background: #0b0f19; transform: translateY(1px); }
+    .key-anchor.action-clear { font-size: 0.8rem; background: #334155; color: #f87171; }
+    .key-anchor.action-go { font-size: 0.95rem; background: #059669; border-color: #10b981; color: #fff; grid-column: span 2; }
+    .key-anchor.action-go:hover { background: #10b981; }
+
+    /* Right Wing: Syndicate Aside */
+    .aside-media-list { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+    .aside-media-item a {
+      display: block;
+      padding: 0.65rem 0.75rem;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      font-size: 0.82rem;
+      color: var(--text);
+    }
+    .aside-media-item a strong { display: block; color: var(--blue); font-size: 0.86rem; }
+    .aside-media-item a:hover { border-color: var(--blue); text-decoration: none; }
+
+    /* Footer */
+    footer.lobby-footer {
+      border-top: 1px solid var(--border);
+      padding-top: 1.25rem;
+      margin-top: auto;
+      font-size: 0.8rem;
+      color: var(--muted);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+  </style>
 </head>
 <body>
-  <header class="site-header">
-    <div class="shell nav-bar">
-      <a href="/" class="brand-link" title="BestJobs Bulgaria — National Economic Portal Home">
-        <svg viewBox="0 0 240 46" width="220" height="42" class="brand-logo-svg" role="img" aria-label="BestJobs Bulgaria Logo">
-          <g transform="translate(4, 3)">
-            <circle cx="8" cy="20" r="4" fill="#0052cc" />
-            <circle cx="22" cy="10" r="4" fill="#0052cc" />
-            <circle cx="22" cy="30" r="4" fill="#dc2626" />
-            <circle cx="36" cy="20" r="4" fill="#0052cc" />
-            <path d="M8 20 L22 10 L36 20 L22 30 Z M22 10 L22 30" stroke="#0052cc" stroke-width="2" fill="none" />
-            <text x="48" y="24" font-size="22" font-weight="800" fill="currentColor" letter-spacing="-0.02em">bestjobs</text>
-            <text x="50" y="36" font-size="8.2" font-weight="700" fill="#0052cc" letter-spacing="0.12em">BULGARIA</text>
-          </g>
-        </svg>
-      </a>
-      <nav aria-label="Primary Navigation">
-        <input type="checkbox" id="nav-toggle" class="nav-toggle" aria-label="Toggle Navigation Drawer">
-        <label for="nav-toggle" class="nav-toggle-label" title="Open Navigation Menu">&#9776;</label>
-        <ul>
-          <li><a href="/" class="nav-link" aria-current="page" title="National Gateway Portal">Portal Home</a></li>
-          <li><a href="/bestjobs/" class="nav-link" title="Direct Employment Board and Vacancies">Job Board</a></li>
-          <li><a href="/blog/" class="nav-link" title="Research Monographs and Labor Analysis">Monographs</a></li>
-          <li><a href="/about/" class="nav-link" title="Corporate Governance and History">About Us</a></li>
-          <li><a href="/help/" class="nav-link" title="Candidate and Employer Documentation">Help Desk</a></li>
-          <li><a href="/contact/" class="nav-btn" title="Official Communication Desks">Contact</a></li>
-          <li><a href="/bg/" class="lang-toggle" hreflang="bg" title="Превключете към официалния български портал">Български (BG)</a></li>
-        </ul>
-      </nav>
-    </div>
+
+<div class="lobby-wrapper">
+
+  <!-- Header -->
+  <header class="lobby-header">
+    <a href="/" class="brand-link" title="BestJobs Digital Skyscraper &bull; Grand Lobby">
+      <svg viewBox="0 0 240 46" class="brand-svg" role="img" aria-label="BestJobs Skyscraper Logo">
+        <g transform="translate(4, 3)">
+          <circle cx="8" cy="20" r="4" fill="#38bdf8" />
+          <circle cx="22" cy="10" r="4" fill="#38bdf8" />
+          <circle cx="22" cy="30" r="4" fill="#dc2626" />
+          <circle cx="36" cy="20" r="4" fill="#38bdf8" />
+          <path d="M8 20 L22 10 L36 20 L22 30 Z M22 10 L22 30" stroke="#38bdf8" stroke-width="2" fill="none" />
+          <text x="48" y="24" font-size="22" font-weight="800" fill="#f1f5f9" letter-spacing="-0.02em">bestjobs</text>
+          <text x="50" y="36" font-size="8.2" font-weight="700" fill="#38bdf8" letter-spacing="0.12em">BULGARIA</text>
+        </g>
+      </svg>
+    </a>
+    <nav aria-label="Language & Help">
+      <a href="/bg/" class="lang-link" hreflang="bg" title="Преминете към българската версия на фоайето">Български (BG)</a>
+    </nav>
   </header>
-  <main>
-    <div class="shell">
-      <section class="hero">
-        <span class="hero-tag">SOVEREIGN ECONOMIC PORTAL &bull; EST. 2013</span>
-        <h1>BestJobs | National Economic Portal</h1>
-        <p class="hero-lead">The Sovereign Gateway for White-Economy Business, Direct Employment, Energy Infrastructure &amp; Global Trade in Bulgaria.</p>
-        <p>
-          BestJobs.bg unites regional enterprise, high-speed classified employment advertising, and strategic B2B trade. We operate with zero tracking cookies, mandatory Euro (€) standards, and verified legal entities. Explore the decoupled federated wings below to connect directly with Bulgarian industry, commerce, and capital.
-        </p>
-        <div class="hero-actions">
-          <a href="/bestjobs/" class="nav-btn" title="Browse verified employment ads with Euro salaries">Explore Job Board (/bestjobs/) &rarr;</a>
-          <a href="/mall/" class="nav-link" title="Discover verified regional producers and virtual showrooms">Visit Virtual Trade Mall &rarr;</a>
-        </div>
-      </section>
 
-      <section aria-labelledby="subprojects-heading">
-        <div class="stream-header-bar">
-          <h2 id="subprojects-heading">Federated Subprojects &amp; Strategic Commercial Wings</h2>
-          <div class="stream-controls">
-            <div class="view-switch-group" role="group" aria-label="Layout view mode selection">
-              <a href="#view-cards" class="view-btn active" data-view="grid" title="Switch layout to 3-column cards grid view">🔲 Cards</a>
-              <a href="#view-rows" class="view-btn" data-view="rows" title="Switch layout to compact horizontal single rows view">☰ Rows</a>
-              <a href="#view-accordion" class="view-btn" data-view="accordion" title="Switch layout to collapsible accordion drawer view">📜 Accordion</a>
-              <a href="#view-ticker" class="view-btn" data-view="ticker" title="Switch layout to dense textual bulletin ticker view">📰 Bulletin</a>
-            </div>
-            <a href="#listen-stream" id="btn-stream-audio" class="btn-stream-audio" title="Listen consecutively to all subproject descriptions without looking at screen">🔊 Listen to Portal Stream</a>
-          </div>
-        </div>
+  <!-- Grand Welcome Manifesto -->
+  <section class="grand-intro">
+    <h1>The Digital Economic Tower &bull; Grand Lobby</h1>
+    <p>
+      Welcome to the central lobby of the BestJobs digital skyscraper. Directly before you is our wide plasma marquee featuring 1,000 global live streams selectable from the console (our portal initial load is under 35 KB; high-definition video streams transmit hundreds of gigabytes strictly on demand).
+    </p>
+    <p>
+      Beneath the screen lies the master panel coordinating all 28 elevator shafts across 7,777 floors, transporting you anywhere in under 5 seconds depending on Internet network conditions. To your left is the 24/7 Concierge Desk securing VIP privileges (opera boxes at La Scala and courtside NBA tickets). To your right sits the executive boardroom of Mobikom and our accredited media syndicate (<a href="https://www.dobrichnews.com" target="_blank" rel="noopener noreferrer" title="DobrichNews Daily Media">dobrichnews.com</a> &amp; <a href="https://www.dobruja.com" target="_blank" rel="noopener noreferrer" title="Dobruja Cultural Review">dobruja.com</a>). Floor 40 hosts our sovereign Career Board, while our Virtual B2B Mall on Floor 30 empowers enterprises to lease clean, 140-character storefront showcases with 10,000-word corporate dossiers at 10.00 &euro; per day with guaranteed fair-play randomization. Whole-floor enterprise leases operate strictly on the formula: <em>Floor Number = Euros per Day</em>, or strategic equity-for-floor partnerships for emerging startups.
+    </p>
+  </section>
 
-        <div class="grid-cards" id="jobs-container">
-
-          <article class="portal-card job-card">
-            <div class="card-meta-bar">
-              <span class="card-eyebrow">SUBPROJECT &bull; EMPLOYMENT</span>
-            </div>
-            <div class="card-title-box">
-              <h3>Job Ads Board &bull; /bestjobs/</h3>
-            </div>
-            <div class="card-text-summary">
-              Direct candidate-to-employer career board. 100% white economy, mandatory Euro (€) salary transparency, 18 social benefits, and zero recruiter mediation fees.
-            </div>
-            <div class="card-footer-actions">
-              <a href="/bestjobs/" class="portal-link card-spec-link" title="Access sovereign employment listings across 28 regions">Open Career Board &rarr;</a>
-            </div>
-          </article>
-
-          <article class="portal-card job-card">
-            <div class="card-meta-bar">
-              <span class="card-eyebrow">SUBPROJECT &bull; COMMERCE</span>
-            </div>
-            <div class="card-title-box">
-              <h3>Virtual B2B Trade Mall &bull; /mall/</h3>
-            </div>
-            <div class="card-text-summary">
-              Digital showrooms and permanent storefronts for verified Bulgarian producers, dairy plants, wineries, machine workshops, and certified master craftsmen.
-            </div>
-            <div class="card-footer-actions">
-              <a href="/mall/" class="portal-link card-spec-link" title="Explore regional producers and commercial showrooms">Enter Virtual Mall &rarr;</a>
-            </div>
-          </article>
-
-          <article class="portal-card job-card">
-            <div class="card-meta-bar">
-              <span class="card-eyebrow">SUBPROJECT &bull; ENERGY &amp; TECH</span>
-            </div>
-            <div class="card-title-box">
-              <h3>Energy &amp; Industrial Storage &bull; /energy/</h3>
-            </div>
-            <div class="card-text-summary">
-              Utility-scale Battery Energy Storage Systems (BESS), solar grid integration, daily wholesale electricity trends, and industrial petroleum distribution.
-            </div>
-            <div class="card-footer-actions">
-              <a href="/energy/" class="portal-link card-spec-link" title="Examine utility scale battery storage and power markets">Explore Energy Wing &rarr;</a>
-            </div>
-          </article>
-
-          <article class="portal-card job-card">
-            <div class="card-meta-bar">
-              <span class="card-eyebrow">SUBPROJECT &bull; FINANCE &amp; FDI</span>
-            </div>
-            <div class="card-title-box">
-              <h3>Capital Markets &amp; BSE &bull; /invest/</h3>
-            </div>
-            <div class="card-text-summary">
-              Foreign direct investment gateway, Bulgarian Stock Exchange (BSE / BEAM) analytics, government treasury bonds, and dividend-yielding public equities.
-            </div>
-            <div class="card-footer-actions">
-              <a href="/invest/" class="portal-link card-spec-link" title="Discover sovereign capital market opportunities">Access Capital Desk &rarr;</a>
-            </div>
-          </article>
-
-          <article class="portal-card job-card">
-            <div class="card-meta-bar">
-              <span class="card-eyebrow">SUBPROJECT &bull; REAL ASSETS</span>
-            </div>
-            <div class="card-title-box">
-              <h3>Commercial Real Estate &bull; /property/</h3>
-            </div>
-            <div class="card-text-summary">
-              Verified arable agricultural land parcels, grain elevator complexes, logistics warehouses, and industrial parks without broker commission fees.
-            </div>
-            <div class="card-footer-actions">
-              <a href="/property/" class="portal-link card-spec-link" title="Browse verified commercial property and farmland">View Property Exchange &rarr;</a>
-            </div>
-          </article>
-
-          <article class="portal-card job-card">
-            <div class="card-meta-bar">
-              <span class="card-eyebrow">SUBPROJECT &bull; HEALTHCARE</span>
-            </div>
-            <div class="card-title-box">
-              <h3>Medical Tourism &amp; Pharma &bull; /medical/</h3>
-            </div>
-            <div class="card-text-summary">
-              Certified dental implantology centers, laser vision diagnostics, pharmaceutical manufacturers, and Pomorie Lake curative mineral lye balneology.
-            </div>
-            <div class="card-footer-actions">
-              <a href="/medical/" class="portal-link card-spec-link" title="Discover medical tourism and certified clinical centers">Explore Health Sector &rarr;</a>
-            </div>
-          </article>
-
-          <article class="portal-card job-card">
-            <div class="card-meta-bar">
-              <span class="card-eyebrow">SUBPROJECT &bull; ACADEMICS</span>
-            </div>
-            <div class="card-title-box">
-              <h3>Education &amp; Scholarships &bull; /education/</h3>
-            </div>
-            <div class="card-text-summary">
-              Universities, dual college curricula, European Erasmus+ partnerships, and employer-sponsored degree contracts under Article 95 of the Education Act.
-            </div>
-            <div class="card-footer-actions">
-              <a href="/education/" class="portal-link card-spec-link" title="Review accredited university degree programs">Academic Programs &rarr;</a>
-            </div>
-          </article>
-
-          <article class="portal-card job-card">
-            <div class="card-meta-bar">
-              <span class="card-eyebrow">SUBPROJECT &bull; LEGAL ACQUIS</span>
-            </div>
-            <div class="card-title-box">
-              <h3>EU Regulatory Law &bull; /legal/</h3>
-            </div>
-            <div class="card-text-summary">
-              Harmonized repository synchronized with EUR-Lex directives: pay transparency mandates, labor code protections, AI compliance, and corporate trade law.
-            </div>
-            <div class="card-footer-actions">
-              <a href="/legal/" class="portal-link card-spec-link" title="Access synchronized European directives and labor laws">Open Legal Hub &rarr;</a>
-            </div>
-          </article>
-
-          <article class="portal-card job-card">
-            <div class="card-meta-bar">
-              <span class="card-eyebrow">SUBPROJECT &bull; SPORTS</span>
-            </div>
-            <div class="card-title-box">
-              <h3>Sports &amp; Toto Combinatorics &bull; /sports/</h3>
-            </div>
-            <div class="card-text-summary">
-              Athletic governance, cycling infrastructure, and pure mathematical combinatorics for the State Sports Lottery (Toto 6/49) with zero commercial casino gambling.
-            </div>
-            <div class="card-footer-actions">
-              <a href="/sports/" class="portal-link card-spec-link" title="Examine sports governance and lottery combinatorics">View Sports Wing &rarr;</a>
-            </div>
-          </article>
-
-          <article class="portal-card job-card">
-            <div class="card-meta-bar">
-              <span class="card-eyebrow">SUBPROJECT &bull; HERITAGE</span>
-            </div>
-            <div class="card-title-box">
-              <h3>National Cultural Archive &bull; /culture/</h3>
-            </div>
-            <div class="card-text-summary">
-              Agrarian traditions, regional folklore chronicles, and Black Sea ethnography curated in direct technical partnership with the Dobruja.com archive.
-            </div>
-            <div class="card-footer-actions">
-              <a href="/culture/" class="portal-link card-spec-link" title="Explore regional traditions and cultural chronicles">Explore Culture &rarr;</a>
-            </div>
-          </article>
-
-          <article class="portal-card job-card">
-            <div class="card-meta-bar">
-              <span class="card-eyebrow">RESEARCH &bull; INSIGHTS</span>
-            </div>
-            <div class="card-title-box">
-              <h3>Research Monographs &bull; /blog/</h3>
-            </div>
-            <div class="card-text-summary">
-              Analytical treatises examining the 35-hour workweek, the right to disconnect, workplace biochemistry, pension solvency, and corporate governance.
-            </div>
-            <div class="card-footer-actions">
-              <a href="/blog/" class="portal-link card-spec-link" title="Read research monographs and treatises">Read Monographs &rarr;</a>
-            </div>
-          </article>
-
-          <article class="portal-card job-card">
-            <div class="card-meta-bar">
-              <span class="card-eyebrow">COMMUNICATION &bull; DISPATCH</span>
-            </div>
-            <div class="card-title-box">
-              <h3>Ani Ivanova Desk &bull; /contact/</h3>
-            </div>
-            <div class="card-text-summary">
-              Institutional macroeconomic dispatch and corporate media syndication. Voluntary subscriber desk operating without dynamic tracking databases.
-            </div>
-            <div class="card-footer-actions">
-              <a href="/contact/#dispatch" class="portal-link card-spec-link" title="Subscribe to Chief Editor Ani Ivanova macroeconomic dispatch">Subscribe to Dispatch &rarr;</a>
-            </div>
-          </article>
-
-        </div>
-      </section>
-
-      <section class="audit-box" aria-labelledby="standards-heading">
-        <h3 id="standards-heading">Institutional Principles &bull; Sovereign White Economy</h3>
-        <ul class="audit-list">
-          <li><strong>Zero Cash Transactions:</strong> All economic operations enforce 100% official bank wire settlement in Euro (€). Unofficial cash transactions are banned.</li>
-          <li><strong>Pay-to-Play Verification:</strong> Commercial inclusion requires verified bank transfer to our institutional IBAN, guaranteeing authentic counterparty legitimacy.</li>
-          <li><strong>Zero User Profiling:</strong> We deploy no tracking cookies, analytics pixels, or client telemetry. States execute transiently in volatile RAM.</li>
-          <li><strong>Closed Consortium Interlinking:</strong> Outbound link equity remains strictly confined within our 4 verified properties: mobikom.bg, dobrichnews.com, dobruja.com, and bestjobs.bg.</li>
-          <li><strong>Regulatory Notice (ЗНЗ Shield):</strong> BestJobs.bg operates strictly as a decentralized classified job advertising bulletin. The platform does not perform employment mediation, recruitment agency services, or candidate screening under the Employment Promotion Act (ЗНЗ). All employment relationships are established directly between candidate and hiring employer.</li>
-        </ul>
-      </section>
-
-      <section class="conversion-banner" aria-labelledby="syndicate-heading">
-        <div>
-          <h3 id="syndicate-heading">Corporate Media Syndication &bull; Multi-Platform Reach</h3>
-          <p>Feature your enterprise, production facility, or high-level vacancy across DobrichNews.com, Dobruja.com, and the BestJobs master stream.</p>
-        </div>
-        <a href="/contact/#employers" class="nav-btn" title="Initiate corporate media syndication via verified bank transfer">Book Corporate Syndicate &rarr;</a>
-      </section>
-    </div>
-  </main>
-  <footer class="site-footer">
-    <div class="shell">
-      <div class="footer-grid">
-        <div class="footer-col">
-          <h4>Sovereign Media Consortium</h4>
-          <ul>
-            <li><a href="https://mobikom.bg" target="_blank" rel="noopener" title="Mobikom Bulgaria — Institutional Root Gateway">mobikom.bg &bull; Institutional Hub</a></li>
-            <li><a href="https://www.dobrichnews.com" target="_blank" rel="noopener noreferrer" title="Real-time daily news in North-East Bulgaria">dobrichnews.com &bull; Daily News</a></li>
-            <li><a href="https://www.dobruja.com" target="_blank" rel="noopener noreferrer" title="Agricultural preservation, regional traditions and culture">dobruja.com &bull; Cultural Review</a></li>
-            <li><a href="all-jobs.xml" title="Subscribe to open RSS feed of all current vacancies">&#128246; Master Vacancy Feed</a></li>
-          </ul>
-        </div>
-        <div class="footer-col">
-          <h4>Portal Directory</h4>
-          <ul>
-            <li><a href="/bestjobs/" title="Direct Employment Board">Job Ads Board</a></li>
-            <li><a href="/mall/" title="Virtual B2B Trade Mall">Virtual B2B Mall</a></li>
-            <li><a href="/energy/" title="Industrial Battery Storage BESS">Energy &amp; Storage</a></li>
-            <li><a href="/invest/" title="Capital Markets and BSE Securities">Investments &amp; Stocks</a></li>
-            <li><a href="/property/" title="Commercial and Agricultural Real Estate">Property Exchange</a></li>
-            <li><a href="/medical/" title="Medical Tourism and Clinical Centers">Medical &amp; Balneology</a></li>
-          </ul>
-        </div>
-        <div class="footer-col">
-          <h4>Governance &amp; Desks</h4>
-          <ul>
-            <li><a href="/legal/" title="EUR-Lex Directives and Labor Law">EU Legal Hub</a></li>
-            <li><a href="/blog/" title="Central Research and Insights Blog">Research Monographs</a></li>
-            <li><a href="/about/" title="Platform Heritage and Corporate Framework">About History</a></li>
-            <li><a href="/help/" title="Unified Documentation for Candidates and Employers">Help Documentation</a></li>
-            <li><a href="/contact/#dispatch" title="Chief Editor Ani Ivanova Dispatch">Ani Ivanova Desk</a></li>
-            <li><a href="/contact/" title="Official contact emails and IBAN details">Contact Operations</a></li>
-          </ul>
-        </div>
-      </div>
-      <nav class="footer-legal-bar" aria-label="Legal &amp; Policy Navigation">
-        <a href="/privacy/" title="Zero-cookie architecture and strict no-tracking privacy notice">Privacy Policy</a>
-        <span class="legal-sep">&bull;</span>
-        <a href="/terms/" title="Operational guidelines and employment board rules">Terms of Service</a>
-        <span class="legal-sep">&bull;</span>
-        <a href="/gdpr/" title="Regulation (EU) 2016/679 compliance declaration">GDPR Compliance</a>
-        <span class="legal-sep">&bull;</span>
-        <a href="/accessibility/" title="Directive (EU) 2019/882 and WCAG 2.2 accessibility statement">Accessibility</a>
-        <span class="legal-sep">&bull;</span>
-        <a href="/bg/" hreflang="bg" title="Преминете към официалния български портал на BestJobs">Български Портал (BG)</a>
-      </nav>
-      <div class="footer-bottom">
-        <p>&copy; 2026 bestjobs.bg. Open-source under MIT License (github.com/bestjobs). Part of <a href="https://mobikom.bg/about/" target="_blank" rel="noopener" title="Mobikom Bulgaria Consortium governance and heritage">Mobikom Bulgaria Consortium</a>. Zero-cookie architecture.</p>
-        <a href="/contact/" title="Reach official operations desk">Reach Operations Desk &rarr;</a>
+  <!-- Wide Plasma TV Screen -->
+  <section class="tv-deck" aria-label="Global Economic Live Broadcast">
+    <div class="tv-bar">
+      <span class="tv-badge">Global Plasma Marquee &bull; 0 KB Standby</span>
+      <div class="tv-select-wrap">
+        <label for="tv-channel-select" style="font-size:0.8rem; font-weight:700; color:var(--muted);">Select Broadcast:</label>
+        <select id="tv-channel-select" class="tv-select" title="Choose from curated international broadcasting streams">
+          <option value="">-- Screen Standby (Off) --</option>
+          <option value="sPJXq0lPzaM">Euronews International (Live)</option>
+          <option value="dp8PhLsUcFE">Bloomberg Global Financial (Live)</option>
+          <option value="xUYMvR2sDcc">NASA Space Station High-Definition Orbit</option>
+          <option value="gCNeDWCI0vo">Al Jazeera Global English (Live)</option>
+          <option value="b1f3yO5W4gQ">DW News International (Live)</option>
+        </select>
       </div>
     </div>
+    <div class="tv-screen-box" id="tv-viewport">
+      <div id="tv-standby-message">
+        <p style="font-size: 1.1rem; font-weight: 700; color: var(--text);">Plasma Display in 0 KB Energy-Saving Standby</p>
+        <p style="font-size: 0.85rem; margin-top: 0.35rem;">Select a channel from the menu above to initiate the live video broadcast.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3-Column Wings -->
+  <div class="lobby-layout">
+
+    <!-- Left Wing: Concierge Desk -->
+    <section class="wing-box" aria-labelledby="concierge-heading">
+      <h2 id="concierge-heading">Concierge &amp; VIP Desks</h2>
+      <p style="font-size: 0.78rem; color: var(--muted);">24/7 Sovereign protocol for premier worldwide arrangements:</p>
+      <ul class="concierge-list" id="concierge-dynamic-list">
+        <!-- Injected via JavaScript Array Variable -->
+      </ul>
+    </section>
+
+    <!-- Center: Shaft Navigation & Keypad -->
+    <main class="elevator-hub" aria-label="Skyscraper Elevator Control">
+      
+      <!-- Real-Time Flight Board Display -->
+      <div class="flight-board">
+        <div class="flight-label">Elevator Bank #01 &bull; Active Floor &amp; Transit Status</div>
+        <div class="flight-display" id="flight-readout">STATIONARY &bull; FLOOR 00 (LOBBY)</div>
+      </div>
+
+      <!-- Key Commercial Direct Portals -->
+      <div class="floors-direct-grid">
+        <a href="https://mobikom.bg" target="_blank" rel="noopener" class="floor-link penthouse" title="Floor 7777+ &bull; Mobikom Bulgaria Executive Penthouse">
+          <span>👑 Floor 7777+ &bull; Mobikom Penthouse</span> <span>&uarr;</span>
+        </a>
+        <a href="/floor/100/" class="floor-link" data-floor="100" data-name="Casino &amp; Sports Gaming Hub" title="Floor 100 &bull; Sovereign Gaming and Betting Hub">
+          <span>🎰 Floor 100 &bull; Gaming &amp; Betting</span> <span>&rarr;</span>
+        </a>
+        <a href="/floor/50/" class="floor-link" data-floor="50" data-name="Industrial Energy &amp; BESS Grid" title="Floor 50 &bull; Industrial Energy and BESS Systems">
+          <span>⚡ Floor 50 &bull; Energy &amp; BESS</span> <span>&rarr;</span>
+        </a>
+        <a href="/bestjobs/" class="floor-link" data-floor="40" data-name="Career Board (BestJobs)" title="Floor 40 &bull; BestJobs Career Board">
+          <span>🏢 Floor 40 &bull; Career Board</span> <span>&rarr;</span>
+        </a>
+        <a href="/mall/" class="floor-link" data-floor="30" data-name="B2B Virtual Showcase Mall" title="Floor 30 &bull; Virtual B2B Enterprise Mall">
+          <span>🏬 Floor 30 &bull; Virtual B2B Mall</span> <span>&rarr;</span>
+        </a>
+        <a href="/floor/10/" class="floor-link" data-floor="10" data-name="Entertainment &amp; Number Lotteries" title="Floor 10 &bull; Entertainment, Toto &amp; Lotteries">
+          <span>🎟️ Floor 10 &bull; Lotteries &amp; Fun</span> <span>&rarr;</span>
+        </a>
+        <a href="/floor/0/" class="floor-link" data-floor="0" data-name="Central Cashier &amp; Settlement" style="border-style:dashed;" title="Floor 0 &bull; Central Cashier, IBAN KYC Desk">
+          <span>🏛️ Floor 0 &bull; Cashier &amp; IBAN</span> <span>&darr;</span>
+        </a>
+        <a href="/floor/-1/" class="floor-link" data-floor="-1" data-name="Digital Wardrobe &amp; Text Cache" style="border-style:dashed; color:var(--muted);" title="Floor -1 &bull; Digital Wardrobe">
+          <span>🔽 Floor -1 &bull; Digital Wardrobe</span> <span>&darr;</span>
+        </a>
+        <a href="/floor/-3/" class="floor-link" data-floor="-3" data-name="Lost &amp; Found Permanent Archives" style="border-style:dashed; color:var(--muted);" title="Floor -3 &bull; Lost and Found &amp; SEO Archives">
+          <span>🔽 Floor -3 &bull; Lost &amp; Found</span> <span>&darr;</span>
+        </a>
+      </div>
+
+      <!-- Numeric Keypad Console -->
+      <div class="keypad-wrapper">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.4rem;">
+          <span style="font-size:0.75rem; font-weight:800; color:var(--muted); text-transform:uppercase;">Destination Entry</span>
+          <span style="font-size:0.75rem; font-family:monospace; color:var(--gold);" id="keypad-buffer">----</span>
+        </div>
+        <div class="keypad-grid">
+          <a class="key-anchor num-key" data-digit="1" title="Key 1">1</a>
+          <a class="key-anchor num-key" data-digit="2" title="Key 2">2</a>
+          <a class="key-anchor num-key" data-digit="3" title="Key 3">3</a>
+          <a class="key-anchor num-key" data-digit="4" title="Key 4">4</a>
+          <a class="key-anchor num-key" data-digit="5" title="Key 5">5</a>
+          <a class="key-anchor num-key" data-digit="6" title="Key 6">6</a>
+          <a class="key-anchor num-key" data-digit="7" title="Key 7">7</a>
+          <a class="key-anchor num-key" data-digit="8" title="Key 8">8</a>
+          <a class="key-anchor num-key" data-digit="9" title="Key 9">9</a>
+          <a class="key-anchor action-clear" id="key-clear" title="Clear Keypad Buffer">CLEAR</a>
+          <a class="key-anchor num-key" data-digit="0" title="Key 0">0</a>
+          <a class="key-anchor action-go" id="key-go" title="Engage Elevator Transit">ASCEND &rarr;</a>
+        </div>
+      </div>
+
+    </main>
+
+    <!-- Right Wing: Syndicate Aside -->
+    <aside class="wing-box" aria-label="Accredited Media Syndicate">
+      <h2>Mobikom Media Syndicate</h2>
+      <p style="font-size: 0.78rem; color: var(--muted);">Direct sovereign consortium broadcast nodes:</p>
+      <ul class="aside-media-list">
+        <li class="aside-media-item">
+          <a href="https://mobikom.bg" target="_blank" rel="noopener" title="Mobikom Bulgaria &bull; Master Institutional Portal">
+            <strong>mobikom.bg</strong>
+            Institutional governance, infrastructure and spectrum management.
+          </a>
+        </li>
+        <li class="aside-media-item">
+          <a href="https://www.dobrichnews.com" target="_blank" rel="noopener noreferrer" title="DobrichNews Daily Media &bull; Real-time regional reporting">
+            <strong>dobrichnews.com</strong>
+            Accredited daily news and corporate syndication partner.
+          </a>
+        </li>
+        <li class="aside-media-item">
+          <a href="https://www.dobruja.com" target="_blank" rel="noopener noreferrer" title="Dobruja Cultural Review &bull; Regional agricultural history">
+            <strong>dobruja.com</strong>
+            Cultural repository, folklore, and agricultural heritage.
+          </a>
+        </li>
+        <li class="aside-media-item">
+          <a href="/bestjobs/" title="BestJobs Career Gateway">
+            <strong>bestjobs.bg</strong>
+            Direct career board for transparent European employment.
+          </a>
+        </li>
+      </ul>
+    </aside>
+
+  </div>
+
+  <!-- Footer -->
+  <footer class="lobby-footer">
+    <div>&copy; 2026 BestJobs Bulgaria &bull; Architecture under MIT License. Governed by Mobikom Bulgaria Consortium.</div>
+    <nav aria-label="Legal Desks">
+      <a href="/privacy/" title="Strict zero-cookie and GDPR Article 25 compliance">Zero-Cookie Policy</a> &bull;
+      <a href="/terms/" title="Skyscraper rules and floor lease tariffs">Terms &amp; Tariffs</a> &bull;
+      <a href="/floor/0/" title="Official bank coordinates and KYC verification">Cashier Desk</a>
+    </nav>
   </footer>
-  <script src="assets/js/engine.js" defer></script>
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"BestJobs Bulgaria","url":"https://bestjobs.bg/","description":"Sovereign National Economic Portal in Bulgaria coordinating classified job advertising, regional B2B trade, energy, capital investments, and EU regulatory law.","publisher":{"@type":"Organization","name":"BestJobs Bulgaria","url":"https://bestjobs.bg/","logo":"https://bestjobs.bg/apple-touch-icon.png","sameAs":["https://mobikom.bg","https://www.dobrichnews.com","https://www.dobruja.com"]}}</script>
+
+</div>
+
+<script>
+  'use strict';
+
+  // 1. CONCIERGE DYNAMIC DATA VARIABLE
+  const conciergeOffers = [
+    { title: 'Teatro alla Scala &bull; Milan', tag: 'VIP Royal Box', desc: 'Sovereign private box seating for premier seasonal operas.', href: '/floor/0/#concierge-scala' },
+    { title: 'Vienna State Opera &bull; Austria', tag: 'Direct Loge Access', desc: 'Exclusive executive bookings for classical philharmonic performances.', href: '/floor/0/#concierge-vienna' },
+    { title: 'NBA Finals &bull; Courtside Prime', tag: 'Floor Row 1', desc: 'Direct courtside baseline passes with private lounge hospitality.', href: '/floor/0/#concierge-nba' },
+    { title: 'EuroLeague Final Four', tag: 'Presidential Suite', desc: 'Full corporate hospitality lounge access for global championship matches.', href: '/floor/0/#concierge-euroleague' }
+  ];
+
+  const conciergeList = document.getElementById('concierge-dynamic-list');
+  if (conciergeList) {
+    conciergeList.innerHTML = conciergeOffers.map(item => `
+      <li class="concierge-item">
+        <a href="${item.href}" title="${item.title} - ${item.tag}">
+          <span class="concierge-tag">${item.tag}</span>
+          <strong>${item.title}</strong>
+          <span style="display:block; font-size:0.74rem; color:var(--muted); margin-top:2px;">${item.desc}</span>
+        </a>
+      </li>
+    `).join('');
+  }
+
+  // 2. PLASMA TV MARQUEE LOGIC (0 KB until user action)
+  const channelSelect = document.getElementById('tv-channel-select');
+  const tvViewport = document.getElementById('tv-viewport');
+
+  if (channelSelect && tvViewport) {
+    channelSelect.addEventListener('change', (e) => {
+      const vid = e.target.value;
+      if (!vid) {
+        tvViewport.innerHTML = `
+          <div id="tv-standby-message">
+            <p style="font-size: 1.1rem; font-weight: 700; color: var(--text);">Plasma Display in 0 KB Energy-Saving Standby</p>
+            <p style="font-size: 0.85rem; margin-top: 0.35rem;">Select a channel from the menu above to initiate the live video broadcast.</p>
+          </div>
+        `;
+      } else {
+        tvViewport.innerHTML = `<iframe src="https://www.youtube-nocookie.com/embed/${vid}?autoplay=1&mute=0&rel=0" allow="autoplay; encrypted-media" allowfullscreen title="Live Plasma Broadcast"></iframe>`;
+      }
+    });
+  }
+
+  // 3. ELEVATOR SOUND SYNTHESIS (Web Audio API - C4, E4, G4 Chords + Final Arrival Ding)
+  let audioCtx = null;
+  function getAudioContext() {
+    if (!audioCtx) {
+      const AudioContext = window.AudioContext || window.webkitAudioContext;
+      if (AudioContext) audioCtx = new AudioContext();
+    }
+    if (audioCtx && audioCtx.state === 'suspended') {
+      audioCtx.resume();
+    }
+    return audioCtx;
+  }
+
+  function playElevatorHarmony() {
+    const ctx = getAudioContext();
+    if (!ctx) return;
+
+    const now = ctx.currentTime;
+    // Harmonic Triad Chord: C4 (261.63Hz), E4 (329.63Hz), G4 (392.00Hz)
+    const freqs = [261.63, 329.63, 392.00];
+
+    freqs.forEach((freq, idx) => {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(freq, now + idx * 0.15);
+
+      gain.gain.setValueAtTime(0.001, now + idx * 0.15);
+      gain.gain.linearRampToValueAtTime(0.08, now + idx * 0.15 + 0.1);
+      gain.gain.exponentialRampToValueAtTime(0.0001, now + idx * 0.15 + 1.8);
+
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+
+      osc.start(now + idx * 0.15);
+      osc.stop(now + idx * 0.15 + 1.9);
+    });
+
+    // Arrival Ding (A5 - 880Hz Triangle Wave) after 1.8s
+    setTimeout(() => {
+      const dingOsc = ctx.createOscillator();
+      const dingGain = ctx.createGain();
+      dingOsc.type = 'triangle';
+      dingOsc.frequency.setValueAtTime(880, ctx.currentTime);
+      dingOsc.frequency.exponentialRampToValueAtTime(440, ctx.currentTime + 1.2);
+
+      dingGain.gain.setValueAtTime(0.2, ctx.currentTime);
+      dingGain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 1.2);
+
+      dingOsc.connect(dingGain);
+      dingGain.connect(ctx.destination);
+
+      dingOsc.start(ctx.currentTime);
+      dingOsc.stop(ctx.currentTime + 1.2);
+    }, 1800);
+  }
+
+  // 4. SPEEDOMETER (10 Floors Per Second Simulation)
+  const readout = document.getElementById('flight-readout');
+  const bufferDisplay = document.getElementById('keypad-buffer');
+  let currentBuffer = '';
+
+  const knownFloors = {
+    '7777': { name: 'Mobikom Penthouse', url: 'https://mobikom.bg' },
+    '100':  { name: 'Casino & Sports Gaming Hub', url: '/floor/100/' },
+    '50':   { name: 'Industrial Energy & BESS Grid', url: '/floor/50/' },
+    '40':   { name: 'Career Board (BestJobs)', url: '/bestjobs/' },
+    '30':   { name: 'B2B Virtual Showcase Mall', url: '/mall/' },
+    '10':   { name: 'Entertainment & Lotteries', url: '/floor/10/' },
+    '0':    { name: 'Central Cashier & IBAN Desk', url: '/floor/0/' },
+    '-1':   { name: 'Digital Wardrobe & Buffer', url: '/floor/-1/' },
+    '-3':   { name: 'Lost & Found Archives', url: '/floor/-3/' }
+  };
+
+  function executeElevatorTransit(targetFloorStr) {
+    playElevatorHarmony();
+
+    const targetNum = parseInt(targetFloorStr, 10);
+    const destination = knownFloors[targetFloorStr] || { 
+      name: `Floor ${targetFloorStr}`, 
+      url: `/floor/${targetFloorStr}/` 
+    };
+
+    let simulatedFloor = 0;
+    const step = targetNum >= 0 ? 1 : -1;
+    const intervalTime = 100; // 10 floors per second (100ms per step)
+    
+    readout.style.color = '#f59e0b';
+
+    const transitInterval = setInterval(() => {
+      if ((step > 0 && simulatedFloor < targetNum) || (step < 0 && simulatedFloor > targetNum)) {
+        simulatedFloor += (step * Math.max(1, Math.floor(Math.abs(targetNum - simulatedFloor) / 10)));
+        if ((step > 0 && simulatedFloor > targetNum) || (step < 0 && simulatedFloor < targetNum)) {
+          simulatedFloor = targetNum;
+        }
+        readout.textContent = `TRANSIT &bull; PASSING FLOOR ${simulatedFloor}...`;
+      } else {
+        clearInterval(transitInterval);
+        readout.style.color = '#10b981';
+        readout.textContent = `ARRIVED &bull; ${destination.name.toUpperCase()}`;
+        
+        setTimeout(() => {
+          window.location.href = destination.url;
+        }, 1200);
+      }
+    }, intervalTime);
+  }
+
+  // Keypad Handlers
+  document.querySelectorAll('.num-key').forEach(key => {
+    key.addEventListener('click', (e) => {
+      e.preventDefault();
+      if (currentBuffer.length < 4) {
+        currentBuffer += key.getAttribute('data-digit');
+        bufferDisplay.textContent = currentBuffer;
+      }
+    });
+  });
+
+  const clearBtn = document.getElementById('key-clear');
+  if (clearBtn) {
+    clearBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      currentBuffer = '';
+      bufferDisplay.textContent = '----';
+    });
+  }
+
+  const goBtn = document.getElementById('key-go');
+  if (goBtn) {
+    goBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      if (currentBuffer) {
+        executeElevatorTransit(currentBuffer);
+      }
+    });
+  }
+
+  // Direct Floor Link Interceptors
+  document.querySelectorAll('.floor-link[data-floor]').forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      const fl = link.getAttribute('data-floor');
+      executeElevatorTransit(fl);
+    });
+  });
+
+</script>
 </body>
 </html>
