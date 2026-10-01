@@ -2,9 +2,13 @@
   'use strict';
 
   let liveAnnouncer = null;
+  let audioCtx = null;
 
   document.addEventListener('DOMContentLoaded', () => {
     initLiveAnnouncer();
+    initElevatorSystem();
+    initTvCompactPlayer();
+    initConciergeDesk();
     initStreamAudioPlayer();
     initArticleVoiceReader();
     initWebShare();
@@ -15,6 +19,7 @@
     initLoadMore();
   });
 
+  // A11y Live Announcer
   function initLiveAnnouncer() {
     liveAnnouncer = document.getElementById('a11y-announcer');
     if (!liveAnnouncer) {
@@ -38,20 +43,238 @@
   function announce(msg) {
     if (liveAnnouncer) {
       liveAnnouncer.textContent = '';
-      setTimeout(() => {
-        liveAnnouncer.textContent = msg;
-      }, 50);
+      setTimeout(() => { liveAnnouncer.textContent = msg; }, 50);
     }
   }
 
-  function getCleanSummary(text) {
-    if (!text) return '';
-    const clean = text.replace(/\s+/g, ' ').trim();
-    if (clean.length <= 140) return clean;
-    const sentences = clean.split(/[.!?]+/);
-    return sentences[0] ? sentences[0].trim() + '.' : clean.slice(0, 140) + '...';
+  // 1. CONCIERGE DYNAMIC DESK
+  function initConciergeDesk() {
+    const listEl = document.getElementById('concierge-dynamic-list');
+    if (!listEl) return;
+
+    const isBg = (document.documentElement.lang || '').toLowerCase().startsWith('bg');
+    const conciergeOffers = isBg ? [
+      { title: 'Ла Скала &bull; Милано', tag: 'Кралска ВИП Ложа', desc: 'Персонални ложи за премиерни оперни заглавия.', href: '/floor/0/#concierge-scala' },
+      { title: 'Виенска държавна опера', tag: 'Централен балкон', desc: 'Ексклузивни места за виенската филхармония.', href: '/floor/0/#concierge-vienna' },
+      { title: 'NBA Финали &bull; Първи ред', tag: 'Floor Row 1', desc: 'Билети на самата линия с пълен клубен достъп.', href: '/floor/0/#concierge-nba' },
+      { title: 'Евролига &bull; Финална четворка', tag: 'Президентски апартамент', desc: 'ВИП ложи за шампионските мачове на Европа.', href: '/floor/0/#concierge-euroleague' }
+    ] : [
+      { title: 'Teatro alla Scala &bull; Milan', tag: 'VIP Royal Box', desc: 'Sovereign private box seating for premier seasonal operas.', href: '/floor/0/#concierge-scala' },
+      { title: 'Vienna State Opera &bull; Austria', tag: 'Direct Loge Access', desc: 'Exclusive executive bookings for classical philharmonic performances.', href: '/floor/0/#concierge-vienna' },
+      { title: 'NBA Finals &bull; Courtside Prime', tag: 'Floor Row 1', desc: 'Direct courtside baseline passes with private lounge hospitality.', href: '/floor/0/#concierge-nba' },
+      { title: 'EuroLeague Final Four', tag: 'Presidential Suite', desc: 'Full corporate hospitality lounge access for global championship matches.', href: '/floor/0/#concierge-euroleague' }
+    ];
+
+    listEl.innerHTML = conciergeOffers.map(item => `
+      <li class="concierge-entry-card">
+        <a href="${item.href}" title="${item.title} - ${item.tag}">
+          <span class="concierge-tier-tag">${item.tag}</span>
+          <strong>${item.title}</strong>
+          <span class="concierge-sub-desc">${item.desc}</span>
+        </a>
+      </li>
+    `).join('');
   }
 
+  // 2. COMPACT TV CONTROLLER & FULLSCREEN ENGINE
+  function initTvCompactPlayer() {
+    const channelSelect = document.getElementById('tv-channel-select');
+    const tvViewport = document.getElementById('tv-viewport');
+    const btnFullscreen = document.getElementById('btn-tv-fullscreen');
+
+    if (!channelSelect || !tvViewport) return;
+
+    channelSelect.addEventListener('change', (e) => {
+      const vid = e.target.value;
+      if (!vid) {
+        tvViewport.innerHTML = `
+          <div id="tv-standby-message">
+            <div class="plasma-standby-title">Standby (0 KB)</div>
+            <p class="plasma-standby-desc">Изберете ТВ канал от менюто горе.</p>
+          </div>
+        `;
+        if (btnFullscreen) btnFullscreen.style.display = 'none';
+      } else {
+        tvViewport.innerHTML = `<iframe id="tv-live-iframe" src="https://www.youtube-nocookie.com/embed/${vid}?autoplay=1&mute=0&rel=0" allow="autoplay; encrypted-media; fullscreen" allowfullscreen title="Live Broadcast"></iframe>`;
+        if (btnFullscreen) btnFullscreen.style.display = 'inline-flex';
+      }
+    });
+
+    if (btnFullscreen) {
+      btnFullscreen.addEventListener('click', (e) => {
+        e.preventDefault();
+        const iframe = document.getElementById('tv-live-iframe');
+        if (!iframe) return;
+
+        if (iframe.requestFullscreen) {
+          iframe.requestFullscreen();
+        } else if (iframe.webkitRequestFullscreen) {
+          iframe.webkitRequestFullscreen();
+        } else if (iframe.msRequestFullscreen) {
+          iframe.msRequestFullscreen();
+        }
+      });
+    }
+  }
+
+  // 3. ELEVATOR SOUND & SPEEDOMETER ENGINE (10 Floors / Second)
+  function getAudioContext() {
+    if (!audioCtx) {
+      const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+      if (AudioContextClass) audioCtx = new AudioContextClass();
+    }
+    if (audioCtx && audioCtx.state === 'suspended') {
+      audioCtx.resume();
+    }
+    return audioCtx;
+  }
+
+  function playElevatorSound() {
+    const ctx = getAudioContext();
+    if (!ctx) return;
+
+    const now = ctx.currentTime;
+    // Harmonic Triad Chord: C4 (261.63Hz), E4 (329.63Hz), G4 (392.00Hz)
+    const freqs = [261.63, 329.63, 392.00];
+
+    freqs.forEach((freq, idx) => {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(freq, now + idx * 0.15);
+
+      gain.gain.setValueAtTime(0.001, now + idx * 0.15);
+      gain.gain.linearRampToValueAtTime(0.07, now + idx * 0.15 + 0.1);
+      gain.gain.exponentialRampToValueAtTime(0.0001, now + idx * 0.15 + 1.8);
+
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+
+      osc.start(now + idx * 0.15);
+      osc.stop(now + idx * 0.15 + 1.9);
+    });
+
+    // Arrival Ding (A5 - 880Hz Triangle Wave)
+    setTimeout(() => {
+      const dingOsc = ctx.createOscillator();
+      const dingGain = ctx.createGain();
+      dingOsc.type = 'triangle';
+      dingOsc.frequency.setValueAtTime(880, ctx.currentTime);
+      dingOsc.frequency.exponentialRampToValueAtTime(440, ctx.currentTime + 1.2);
+
+      dingGain.gain.setValueAtTime(0.2, ctx.currentTime);
+      dingGain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 1.2);
+
+      dingOsc.connect(dingGain);
+      dingGain.connect(ctx.destination);
+
+      dingOsc.start(ctx.currentTime);
+      dingOsc.stop(ctx.currentTime + 1.2);
+    }, 1800);
+  }
+
+  function initElevatorSystem() {
+    const readout = document.getElementById('flight-readout');
+    const bufferDisplay = document.getElementById('keypad-buffer');
+    const isBg = (document.documentElement.lang || '').toLowerCase().startsWith('bg');
+    let currentBuffer = '';
+
+    const knownFloors = {
+      '7777': { name: isBg ? 'Пентхаус Мобиком' : 'Mobikom Penthouse', url: 'https://mobikom.bg' },
+      '100':  { name: isBg ? 'Етаж 100 • Казино & Залози' : 'Floor 100 • Gaming & Betting', url: '/floor/100/' },
+      '50':   { name: isBg ? 'Етаж 50 • Енергетика & BESS' : 'Floor 50 • Energy & BESS', url: '/floor/50/' },
+      '40':   { name: isBg ? 'Етаж 40 • Кариерен борд' : 'Floor 40 • Career Board', url: isBg ? '/bestjobs/bg/' : '/bestjobs/' },
+      '30':   { name: isBg ? 'Етаж 30 • B2B Мол Витрини' : 'Floor 30 • B2B Virtual Mall', url: isBg ? '/mall/bg/' : '/mall/' },
+      '10':   { name: isBg ? 'Етаж 10 • Тото & Игри' : 'Floor 10 • Lotteries & Fun', url: '/floor/10/' },
+      '0':    { name: isBg ? 'Етаж 0 • Каса & IBAN' : 'Floor 0 • Cashier & IBAN', url: '/floor/0/' },
+      '-1':   { name: isBg ? 'Етаж -1 • Дигитален гардероб' : 'Floor -1 • Digital Wardrobe', url: '/floor/-1/' },
+      '-3':   { name: isBg ? 'Етаж -3 • Загубени вещи & Архив' : 'Floor -3 • Lost & Found Archives', url: '/floor/-3/' }
+    };
+
+    function executeTransit(targetFloorStr) {
+      playElevatorSound();
+
+      const targetNum = parseInt(targetFloorStr, 10);
+      const destination = knownFloors[targetFloorStr] || { 
+        name: isBg ? `Етаж ${targetFloorStr}` : `Floor ${targetFloorStr}`, 
+        url: `/floor/${targetFloorStr}/` 
+      };
+
+      let simulatedFloor = 0;
+      const step = targetNum >= 0 ? 1 : -1;
+      const intervalTime = 100; // 100ms = 10 floors per second
+
+      if (readout) {
+        readout.style.color = 'var(--vip-gold)';
+      }
+
+      const transitInterval = setInterval(() => {
+        if ((step > 0 && simulatedFloor < targetNum) || (step < 0 && simulatedFloor > targetNum)) {
+          const delta = Math.max(1, Math.floor(Math.abs(targetNum - simulatedFloor) / 10));
+          simulatedFloor += (step * delta);
+
+          if ((step > 0 && simulatedFloor > targetNum) || (step < 0 && simulatedFloor < targetNum)) {
+            simulatedFloor = targetNum;
+          }
+          if (readout) {
+            readout.textContent = isBg ? `ТРАНЗИТ • ПРЕМИНАВА СЕ ЕТАЖ ${simulatedFloor}...` : `TRANSIT • PASSING FLOOR ${simulatedFloor}...`;
+          }
+        } else {
+          clearInterval(transitInterval);
+          if (readout) {
+            readout.style.color = 'var(--console-green)';
+            readout.textContent = isBg ? `ПРИСТИГАНЕ • ${destination.name.toUpperCase()}` : `ARRIVED • ${destination.name.toUpperCase()}`;
+          }
+          announce(isBg ? `Пристигнахте на ${destination.name}` : `Arrived at ${destination.name}`);
+          
+          setTimeout(() => {
+            window.location.href = destination.url;
+          }, 1100);
+        }
+      }, intervalTime);
+    }
+
+    // Keypad Handlers
+    document.querySelectorAll('.num-key').forEach(key => {
+      key.addEventListener('click', (e) => {
+        e.preventDefault();
+        if (currentBuffer.length < 4) {
+          currentBuffer += key.getAttribute('data-digit');
+          if (bufferDisplay) bufferDisplay.textContent = currentBuffer;
+        }
+      });
+    });
+
+    const clearBtn = document.getElementById('key-clear');
+    if (clearBtn) {
+      clearBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        currentBuffer = '';
+        if (bufferDisplay) bufferDisplay.textContent = '----';
+      });
+    }
+
+    const goBtn = document.getElementById('key-go');
+    if (goBtn) {
+      goBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        if (currentBuffer !== '') {
+          executeTransit(currentBuffer);
+        }
+      });
+    }
+
+    // Direct Portal Interceptors
+    document.querySelectorAll('.floor-portal-anchor[data-floor]').forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const fl = link.getAttribute('data-floor');
+        executeTransit(fl);
+      });
+    });
+  }
+
+  // 4. WEB SHARE API
   function initWebShare() {
     const shareBtn = document.getElementById('btn-share-page');
     if (!shareBtn) return;
@@ -83,6 +306,7 @@
     });
   }
 
+  // 5. PRINT SLIP
   function initPrintSlip() {
     const printBtn = document.getElementById('btn-print-slip');
     if (!printBtn) return;
@@ -93,6 +317,7 @@
     });
   }
 
+  // 6. ANTI-BOT MATH GATE
   function initAntiBotGate() {
     const gateBox = document.querySelector('.anti-bot-gate');
     if (!gateBox) return;
@@ -127,17 +352,18 @@
           applyBtn.setAttribute('href', mailtoHref);
           applyBtn.innerHTML = btnActiveText;
           applyBtn.setAttribute('title', isBg ? 'Кандидатствайте директно по имейл' : 'Send application directly via email');
-          announce(isBg ? 'Проверката е успешна. Бутонът за кандидатстване е отключен.' : 'Verification passed. Application button unlocked.');
+          announce(isBg ? 'Проверката е успешна. Бутонът е отключен.' : 'Verification passed. Button unlocked.');
         } else {
           applyBtn.classList.add('disabled');
           applyBtn.setAttribute('href', '#apply');
-          applyBtn.textContent = isBg ? 'Грешен отговор &bull; Опитайте отново' : 'Incorrect &bull; Try Again';
+          applyBtn.textContent = isBg ? 'Грешен отговор • Опитайте отново' : 'Incorrect • Try Again';
           announce(isBg ? 'Грешен отговор на проверката.' : 'Incorrect math answer.');
         }
       });
     }
   }
 
+  // 7. ARTICLE READ ALOUD (SpeechSynthesis)
   function initArticleVoiceReader() {
     if (!('speechSynthesis' in window)) return;
     const btn = document.getElementById('btn-read-article');
@@ -183,6 +409,7 @@
     });
   }
 
+  // 8. STREAM AUDIO PLAYER
   function initStreamAudioPlayer() {
     if (!('speechSynthesis' in window)) return;
 
@@ -216,22 +443,11 @@
       const title = card.querySelector('h3, h2')?.textContent.trim() || '';
       const company = card.querySelector('.card-company')?.textContent.trim() || '';
       const salary = card.querySelector('.salary-figure')?.textContent.trim() || '';
-      const rawNet = card.querySelector('.salary-net-calc')?.textContent.trim() || '';
       const rawDesc = card.querySelector('.card-text-summary, p')?.textContent.trim() || '';
 
-      const cleanNet = rawNet.replace(/[()~]/g, '').replace(/^(нето|net)\s*/i, '').trim();
-      const desc = getCleanSummary(rawDesc);
-
-      let phrase = '';
-      if (salary) {
-        phrase = isBg
-          ? `Обява ${currentIndex + 1}: ${title}${company ? ' в ' + company : ''}. Възнаграждение: ${salary}${cleanNet ? ', чисто ' + cleanNet : ''}. ${desc}`
-          : `Vacancy ${currentIndex + 1}: ${title}${company ? ' at ' + company : ''}. Remuneration: ${salary}${cleanNet ? ', net ' + cleanNet : ''}. ${desc}`;
-      } else {
-        phrase = isBg
-          ? `Секция ${currentIndex + 1}: ${title}. ${desc}`
-          : `Section ${currentIndex + 1}: ${title}. ${desc}`;
-      }
+      let phrase = salary
+        ? (isBg ? `Обява ${currentIndex + 1}: ${title} в ${company}. Заплата: ${salary}. ${rawDesc}` : `Vacancy ${currentIndex + 1}: ${title} at ${company}. Remuneration: ${salary}. ${rawDesc}`)
+        : (isBg ? `Секция ${currentIndex + 1}: ${title}. ${rawDesc}` : `Section ${currentIndex + 1}: ${title}. ${rawDesc}`);
 
       const utterance = new SpeechSynthesisUtterance(phrase);
       utterance.lang = i18n.lang;
@@ -241,7 +457,6 @@
         currentIndex++;
         speakNextCard();
       };
-
       utterance.onerror = stopPlayback;
 
       window.speechSynthesis.speak(utterance);
@@ -256,7 +471,7 @@
       }
 
       window.speechSynthesis.cancel();
-      visibleCards = Array.from(document.querySelectorAll('.job-card:not([hidden]), .portal-card:not([hidden]), article:not([hidden])'));
+      visibleCards = Array.from(document.querySelectorAll('.job-card:not([hidden]), .portal-card:not([hidden])'));
 
       if (visibleCards.length === 0) {
         stopPlayback();
@@ -270,6 +485,7 @@
     });
   }
 
+  // 9. FILTER SYSTEM (Floor 40 Multi-Filter)
   function initFilterSystem() {
     const industrySelect = document.getElementById('filter-industry');
     const citySelect = document.getElementById('filter-city');
@@ -284,32 +500,6 @@
 
     const isBg = (document.documentElement.lang || '').toLowerCase().startsWith('bg');
     let activeTags = [];
-
-    const tagSynonyms = {
-      'disconnect': ['disconnect', 'изключване'],
-      'medical': ['medical', 'прегледи', 'медицински'],
-      'transit': ['transit', 'транспорт', 'shuttle'],
-      'bike': ['bike', 'велосипед'],
-      'smoke-free': ['smoke-free', 'непушачи'],
-      'fruits': ['fruits', 'плодове', 'вода'],
-      'dental': ['dental', 'дентален', 'зъболекар'],
-      'housing': ['housing', 'жилищна', 'квартира', 'осигурено жилище'],
-      '4-day': ['4-day', '4-дневна', 'седмица'],
-      'car': ['car', 'автомобил', 'служебен'],
-      'insurance': ['insurance', 'здравно', 'осигуряване'],
-      'bonus': ['bonus', 'бонус', 'резултати'],
-      'tuition': ['tuition', 'обучителни', 'квалификация'],
-      'kindergarten': ['kindergarten', 'градина', 'детска'],
-      'relocation': ['relocation', 'релокация', 'преместване'],
-      'mental': ['mental', 'възстановяване', 'психологическо'],
-      'sabbatical': ['sabbatical', 'сабатикъл', 'творчески'],
-      'sober': ['sober', 'трезвост', 'алкохол'],
-      'flight': ['flight', 'полет', 'самолетни'],
-      'tax-free': ['tax-free', 'необлагаем', 'дипломатически'],
-      'child-edu': ['child-edu', 'образование', 'деца', 'обучение на деца'],
-      'flexitime': ['flexitime', 'гъвкаво', 'плаващо'],
-      'eco-transit': ['eco-transit', 'екологичен', 'зелен', 'еко транспорт']
-    };
 
     const applyMultiFilter = (e) => {
       if (e) e.preventDefault();
@@ -333,9 +523,7 @@
         let matchesAllTags = true;
         if (activeTags.length > 0) {
           activeTags.forEach(tag => {
-            const synonyms = tagSynonyms[tag] || [tag];
-            const hasTag = synonyms.some(term => cardText.includes(term.toLowerCase()));
-            if (!hasTag) matchesAllTags = false;
+            if (!cardText.includes(tag.toLowerCase())) matchesAllTags = false;
           });
         }
 
@@ -347,10 +535,7 @@
         }
       });
 
-      if (loadMoreBtn) {
-        loadMoreBtn.setAttribute('hidden', '');
-      }
-
+      if (loadMoreBtn) loadMoreBtn.setAttribute('hidden', '');
       announce(isBg ? `Намерени резултати: ${matchCount}` : `Matched results: ${matchCount}`);
     };
 
@@ -364,17 +549,11 @@
       chipLinks.forEach(c => c.classList.remove('active'));
 
       cards.forEach((card, idx) => {
-        if (idx < 21) {
-          card.removeAttribute('hidden');
-        } else {
-          card.setAttribute('hidden', '');
-        }
+        if (idx < 21) card.removeAttribute('hidden');
+        else card.setAttribute('hidden', '');
       });
 
-      if (loadMoreBtn && cards.length > 21) {
-        loadMoreBtn.removeAttribute('hidden');
-      }
-
+      if (loadMoreBtn && cards.length > 21) loadMoreBtn.removeAttribute('hidden');
       announce(isBg ? 'Филтрите са нулирани.' : 'Filters reset.');
     };
 
@@ -393,15 +572,11 @@
       });
     });
 
-    if (searchBtn) {
-      searchBtn.addEventListener('click', applyMultiFilter);
-    }
-
-    if (resetBtn) {
-      resetBtn.addEventListener('click', resetFilters);
-    }
+    if (searchBtn) searchBtn.addEventListener('click', applyMultiFilter);
+    if (resetBtn) resetBtn.addEventListener('click', resetFilters);
   }
 
+  // 10. VIEW SWITCHER (Cards, Rows, Accordion, Ticker)
   function initViewSwitcher() {
     const container = document.getElementById('jobs-container');
     const viewButtons = document.querySelectorAll('.view-btn');
@@ -419,17 +594,16 @@
       btn.addEventListener('click', (e) => {
         e.preventDefault();
         const view = btn.getAttribute('data-view') || 'grid';
-
         container.setAttribute('data-view', view);
 
         viewButtons.forEach((b) => b.classList.remove('active'));
         btn.classList.add('active');
-
         announce(viewLabels[view] || view);
       });
     });
   }
 
+  // 11. LOAD MORE PAGINATION
   function initLoadMore() {
     const loadMoreBtn = document.getElementById('btn-load-more');
     const cards = Array.from(document.querySelectorAll('.job-card'));
@@ -447,16 +621,11 @@
 
     loadMoreBtn.addEventListener('click', (e) => {
       e.preventDefault();
-
       const nextBatch = cards.slice(visibleCount, visibleCount + PAGE_SIZE);
       nextBatch.forEach(c => c.removeAttribute('hidden'));
-
       visibleCount += nextBatch.length;
 
-      if (visibleCount >= cards.length) {
-        loadMoreBtn.setAttribute('hidden', '');
-      }
-
+      if (visibleCount >= cards.length) loadMoreBtn.setAttribute('hidden', '');
       announce(`Показани още ${nextBatch.length} позиции.`);
     });
   }
