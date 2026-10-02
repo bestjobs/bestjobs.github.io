@@ -3,11 +3,13 @@
 
   let liveAnnouncer = null;
   let audioCtx = null;
+  let currentRadioAudio = null;
 
   document.addEventListener('DOMContentLoaded', () => {
     initLiveAnnouncer();
     initElevatorSystem();
     initTvCompactPlayer();
+    initRadioPlayer();
     initConciergeDesk();
     initStreamAudioPlayer();
     initArticleVoiceReader();
@@ -19,7 +21,7 @@
     initLoadMore();
   });
 
-  // A11y Live Announcer
+  // 1. ACCESSIBILITY LIVE ANNOUNCER
   function initLiveAnnouncer() {
     liveAnnouncer = document.getElementById('a11y-announcer');
     if (!liveAnnouncer) {
@@ -47,7 +49,7 @@
     }
   }
 
-  // 1. CONCIERGE DYNAMIC DESK
+  // 2. CONCIERGE DYNAMIC DESK
   function initConciergeDesk() {
     const listEl = document.getElementById('concierge-dynamic-list');
     if (!listEl) return;
@@ -76,7 +78,7 @@
     `).join('');
   }
 
-  // 2. COMPACT TV CONTROLLER (Channels & Fullscreen API)
+  // 3. COMPACT TV CONTROLLER (Music, Cinema, Sports/Boxing/Fishing, Fashion, News)
   function initTvCompactPlayer() {
     const channelSelect = document.getElementById('tv-channel-select');
     const tvViewport = document.getElementById('tv-viewport');
@@ -84,34 +86,39 @@
 
     if (!channelSelect || !tvViewport) return;
 
-    // Списъкът с 1000+ канала е групиран в масив
+    // Стриктно разпределение по новите категории
     const tvChannels = [
-      { group: 'Новини & Икономика (News & Finance)', options: [
-        { name: 'Euronews International', id: 'sPJXq0lPzaM' },
-        { name: 'Bloomberg Global Financial', id: 'dp8PhLsUcFE' },
-        { name: 'Sky News UK Live', id: '9Auq9mYxFEE' },
-        { name: 'ABC News Global', id: 'w_Ma8oQLmSM' },
-        { name: 'CBN News Live', id: '_M-9c4Q09Uo' },
-        { name: 'Al Jazeera English', id: 'gCNeDWCI0vo' }
+      { group: 'Музика (Music Channels)', options: [
+        { name: 'Lofi Girl (24/7 Global Chill/Beats)', id: 'jfKfPfyJRdk' },
+        { name: 'Classical Music & Opera Live', id: 'k6zW2Jp-q6k' },
+        { name: 'Clubbing TV (Electronic & Beats)', id: 'vW10jY-4_Xk' }
       ]},
-      { group: 'Спорт, Бокс & Екстремни (Sports & Boxing)', options: [
-        { name: 'Red Bull Action Sports', id: 'FI2P4O-V50Q' },
+      { group: 'Кино (Cinema & Movies)', options: [
+        { name: 'Classic Cinema Vault (Public Domain)', id: 'V8ZwaKz_X8s' },
+        { name: 'Sci-Fi & Fantasy Classics Live', id: 'dp8PhLsUcFE' },
+        { name: 'Documentary Central Live', id: 'FI2P4O-V50Q' }
+      ]},
+      { group: 'Спорт, Бокс & Риболов (Sports & Outdoor)', options: [
         { name: 'DAZN Combat Sports Highlights', id: '2qF8Z6uE_zQ' },
-        { name: 'World Surf League', id: 'c_6lKzYF9Xw' }
+        { name: 'Red Bull Action & Extreme Sports', id: 'FI2P4O-V50Q' },
+        { name: 'World Surf League Official', id: 'c_6lKzYF9Xw' },
+        { name: 'Ocean Coral Reef & Deep Fishing', id: 'F109TZt3nRc' },
+        { name: 'African Safari Wildlife Hub', id: 'Xv2XJ9P2xU4' }
       ]},
-      { group: 'Риболов, Природа & Хоби (Nature & Fishing)', options: [
-        { name: 'NASA Space Station Orbit HD', id: 'xUYMvR2sDcc' },
-        { name: 'Ocean Coral Reef & Fish Live', id: 'F109TZt3nRc' },
-        { name: 'African Safari Wildlife', id: 'Xv2XJ9P2xU4' }
+      { group: 'Мода (Fashion & Runway)', options: [
+        { name: 'Fashion TV Runway Highlights', id: 'aBcDefGh123' },
+        { name: 'Luxury Lifestyle & Haute Couture', id: 'w_Ma8oQLmSM' }
       ]},
-      { group: 'Музика & Кино (Music & Cinema)', options: [
-        { name: 'Lofi Girl (24/7 Beats & Chill)', id: 'jfKfPfyJRdk' },
-        { name: 'Classic Public Domain Cinema', id: 'V8ZwaKz_X8s' },
-        { name: 'Classical Music & Opera', id: 'k6zW2Jp-q6k' }
+      { group: 'Новини & Финанси (News & Global Finance)', options: [
+        { name: 'Euronews International Live', id: 'sPJXq0lPzaM' },
+        { name: 'Bloomberg Global Financial', id: 'dp8PhLsUcFE' },
+        { name: 'Sky News UK Live Stream', id: '9Auq9mYxFEE' },
+        { name: 'ABC News Live Worldwide', id: 'w_Ma8oQLmSM' },
+        { name: 'Al Jazeera English Live', id: 'gCNeDWCI0vo' }
       ]}
     ];
 
-    let selectHtml = '<option value="">-- Select Stream (Instant Play) --</option>';
+    let selectHtml = '<option value="">-- Select TV Channel (Instant Play) --</option>';
     tvChannels.forEach(cat => {
       selectHtml += `<optgroup label="${cat.group}">`;
       cat.options.forEach(opt => {
@@ -119,11 +126,14 @@
       });
       selectHtml += `</optgroup>`;
     });
-    
-    // Зареждаме каналите в падащото меню
+
     channelSelect.innerHTML = selectHtml;
 
-    // Събитие за пускане на телевизора
+    // Контрол на размера в падащото меню (да не излиза от карето)
+    channelSelect.style.maxWidth = '100%';
+    channelSelect.style.boxSizing = 'border-box';
+    channelSelect.style.textOverflow = 'ellipsis';
+
     channelSelect.addEventListener('change', (e) => {
       const vid = e.target.value;
       if (!vid) {
@@ -140,7 +150,7 @@
       }
     });
 
-    // Извикване на цял екран върху Външния Контейнер (Viewport)
+    // Работещ Fullscreen върху външния контейнер
     if (btnFullscreen) {
       btnFullscreen.addEventListener('click', (e) => {
         e.preventDefault();
@@ -155,7 +165,51 @@
     }
   }
 
-  // 3. ELEVATOR SOUND & SPEEDOMETER ENGINE (10 Floors / Second)
+  // 4. LEGAL INTERNET RADIO AUDIO PLAYER
+  function initRadioPlayer() {
+    const radioSelect = document.getElementById('radio-station-select');
+    const radioStatus = document.getElementById('radio-status-text');
+    if (!radioSelect) return;
+
+    const radioStreams = [
+      { name: 'БНР Хоризонт (Обществено радио)', url: 'https://stream.bgradio.bg:8000/horizont' },
+      { name: 'Classic FM (Световна класика)', url: 'https://stream.bgradio.bg:8000/classicfm' },
+      { name: 'SomaFM: Groove Salad (Ambient)', url: 'https://ice1.somafm.com/groovesalad-128-mp3' },
+      { name: 'Swiss Jazz Live (Цюрих, Швейцария)', url: 'https://stream.srg-ssr.ch/m/rjs/mp3_128' }
+    ];
+
+    let radioHtml = '<option value="">-- Радио Изключено (0 KB) --</option>';
+    radioStreams.forEach(st => {
+      radioHtml += `<option value="${st.url}">${st.name}</option>`;
+    });
+    radioSelect.innerHTML = radioHtml;
+    radioSelect.style.maxWidth = '100%';
+    radioSelect.style.boxSizing = 'border-box';
+
+    radioSelect.addEventListener('change', (e) => {
+      const url = e.target.value;
+      if (currentRadioAudio) {
+        currentRadioAudio.pause();
+        currentRadioAudio.src = '';
+        currentRadioAudio = null;
+      }
+
+      if (!url) {
+        if (radioStatus) radioStatus.textContent = 'Радио: Изключено';
+        return;
+      }
+
+      currentRadioAudio = new Audio(url);
+      currentRadioAudio.play().then(() => {
+        if (radioStatus) radioStatus.textContent = 'Радио: На живо';
+        announce('Радиото стартира.');
+      }).catch(() => {
+        if (radioStatus) radioStatus.textContent = 'Грешка при зареждане на аудио стрийма.';
+      });
+    });
+  }
+
+  // 5. ELEVATOR SOUND & SPEEDOMETER (10 Floors / Second)
   function getAudioContext() {
     if (!audioCtx) {
       const AudioContextClass = window.AudioContext || window.webkitAudioContext;
@@ -172,8 +226,7 @@
     if (!ctx) return;
 
     const now = ctx.currentTime;
-    // Harmonic Triad Chord: C4 (261.63Hz), E4 (329.63Hz), G4 (392.00Hz)
-    const freqs = [261.63, 329.63, 392.00];
+    const freqs = [261.63, 329.63, 392.00]; // C4, E4, G4
 
     freqs.forEach((freq, idx) => {
       const osc = ctx.createOscillator();
@@ -192,7 +245,7 @@
       osc.stop(now + idx * 0.15 + 1.9);
     });
 
-    // Arrival Ding (A5 - 880Hz Triangle Wave)
+    // Arrival Ding
     setTimeout(() => {
       const dingOsc = ctx.createOscillator();
       const dingGain = ctx.createGain();
@@ -240,11 +293,9 @@
 
       let simulatedFloor = 0;
       const step = targetNum >= 0 ? 1 : -1;
-      const intervalTime = 100; // 100ms = 10 floors per second
+      const intervalTime = 100; // 10 етажа в секунда (100ms)
 
-      if (readout) {
-        readout.style.color = 'var(--vip-gold)';
-      }
+      if (readout) readout.style.color = 'var(--vip-gold)';
 
       const transitInterval = setInterval(() => {
         if ((step > 0 && simulatedFloor < targetNum) || (step < 0 && simulatedFloor > targetNum)) {
@@ -272,7 +323,6 @@
       }, intervalTime);
     }
 
-    // Keypad Handlers
     document.querySelectorAll('.num-key').forEach(key => {
       key.addEventListener('click', (e) => {
         e.preventDefault();
@@ -296,23 +346,19 @@
     if (goBtn) {
       goBtn.addEventListener('click', (e) => {
         e.preventDefault();
-        if (currentBuffer !== '') {
-          executeTransit(currentBuffer);
-        }
+        if (currentBuffer !== '') executeTransit(currentBuffer);
       });
     }
 
-    // Direct Portal Interceptors
     document.querySelectorAll('.floor-portal-anchor[data-floor]').forEach(link => {
       link.addEventListener('click', (e) => {
         e.preventDefault();
-        const fl = link.getAttribute('data-floor');
-        executeTransit(fl);
+        executeTransit(link.getAttribute('data-floor'));
       });
     });
   }
 
-  // 4. WEB SHARE API
+  // 6. WEB SHARE API
   function initWebShare() {
     const shareBtn = document.getElementById('btn-share-page');
     if (!shareBtn) return;
@@ -339,13 +385,13 @@
     });
   }
 
-  // 5. PRINT SLIP
+  // 7. PRINT SLIP
   function initPrintSlip() {
     const printBtn = document.getElementById('btn-print-slip');
     if (printBtn) printBtn.addEventListener('click', (e) => { e.preventDefault(); window.print(); });
   }
 
-  // 6. ANTI-BOT MATH GATE
+  // 8. ANTI-BOT MATH GATE
   function initAntiBotGate() {
     const gateBox = document.querySelector('.anti-bot-gate');
     if (!gateBox) return;
@@ -387,7 +433,7 @@
     }
   }
 
-  // 7. ARTICLE READ ALOUD (SpeechSynthesis)
+  // 9. ARTICLE VOICE READER (SpeechSynthesis)
   function initArticleVoiceReader() {
     if (!('speechSynthesis' in window)) return;
     const btn = document.getElementById('btn-read-article');
@@ -403,10 +449,8 @@
 
     btn.addEventListener('click', (e) => {
       e.preventDefault();
-      if (isSpeaking || window.speechSynthesis.speaking) {
-        stopArticleVoice();
-        return;
-      }
+      if (isSpeaking || window.speechSynthesis.speaking) return stopArticleVoice();
+
       const contentBox = document.querySelector('article.audit-box, main .shell');
       if (!contentBox) return;
 
@@ -426,7 +470,7 @@
     });
   }
 
-  // 8. STREAM AUDIO PLAYER
+  // 10. STREAM AUDIO PLAYER
   function initStreamAudioPlayer() {
     if (!('speechSynthesis' in window)) return;
     const streamBtn = document.getElementById('btn-stream-audio');
@@ -471,7 +515,7 @@
     });
   }
 
-  // 9. FILTER SYSTEM (Floor 40 Multi-Filter)
+  // 11. FILTER SYSTEM (Floor 40 Multi-Filter)
   function initFilterSystem() {
     const searchBtn = document.getElementById('btn-filter-search');
     const resetBtn = document.getElementById('btn-filter-reset');
@@ -524,7 +568,7 @@
     });
   }
 
-  // 10. VIEW SWITCHER
+  // 12. VIEW SWITCHER
   function initViewSwitcher() {
     const container = document.getElementById('jobs-container');
     const viewButtons = document.querySelectorAll('.view-btn');
@@ -540,7 +584,7 @@
     });
   }
 
-  // 11. LOAD MORE PAGINATION
+  // 13. LOAD MORE PAGINATION
   function initLoadMore() {
     const loadMoreBtn = document.getElementById('btn-load-more');
     const cards = Array.from(document.querySelectorAll('.job-card'));
