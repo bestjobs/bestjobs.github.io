@@ -53,17 +53,23 @@
   <main>
     <div class="shell-grand">
 
-      <!-- Global Market Session Clocks Bar -->
-      <section class="audit-box" style="margin-block: 0 1.5rem; padding: 0.75rem 1rem;" aria-label="Global Financial Market Clocks">
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 0.75rem; font-size: 0.82rem; font-weight: 700;">
-          <div>🌐 Sofia (EET): <strong id="clock-sofia" style="color: var(--primary);">--:--</strong></div>
-          <div>🌐 London (LSE): <strong id="clock-london" style="color: var(--primary);">--:--</strong></div>
-          <div>🌐 New York (NYSE): <strong id="clock-ny" style="color: var(--primary);">--:--</strong></div>
-          <div>🌐 Tokyo (TSE): <strong id="clock-tokyo" style="color: var(--primary);">--:--</strong></div>
+      <!-- Single Horizontal Row: Meridian Market Pulse -->
+      <section class="audit-box" style="margin-block: 0 1.5rem; padding: 0.5rem 1rem; overflow-x: auto; white-space: nowrap;" aria-label="Global Meridian Clocks">
+        <div style="display: inline-flex; align-items: center; gap: 1.25rem; font-size: 0.8rem; font-weight: 700;">
+          <span style="color: var(--primary); text-transform: uppercase;">📅 <span id="current-calendar-date">Loading...</span></span>
+          <span class="legal-sep">&bull;</span>
+          <span>New York: <strong id="clock-ny">--:--</strong></span>
+          <span>London: <strong id="clock-london">--:--</strong></span>
+          <span>Monaco: <strong id="clock-monaco">--:--</strong></span>
+          <span>Sofia: <strong id="clock-sofia">--:--</strong></span>
+          <span>Moscow: <strong id="clock-moscow">--:--</strong></span>
+          <span>Abu Dhabi: <strong id="clock-abudhabi">--:--</strong></span>
+          <span>Hong Kong: <strong id="clock-hongkong">--:--</strong></span>
+          <span>Tokyo: <strong id="clock-tokyo">--:--</strong></span>
         </div>
       </section>
 
-      <!-- Grand Welcome Manifesto -->
+      <!-- Grand Welcome Manifesto (Original Economic Commercial Model Intact) -->
       <section class="lobby-hero" aria-labelledby="lobby-heading">
         <span class="hero-tag">DIGITAL MEGA-SKYSCRAPER &bull; BESTJOBS TOWER &bull; 7,777 FLOORS</span>
         <h1 id="lobby-heading">BestJobs Skyscraper &bull; Grand Lobby</h1>
@@ -84,43 +90,28 @@
       <!-- 3-Column Grand Gallery Architecture -->
       <div class="lobby-tri-layout">
 
-        <!-- Left Wing: Head Concierge, Directory, 100 Chambers & Desk -->
+        <!-- Left Wing: Head Concierge & In-Lobby Drafting Desk -->
         <div style="display: flex; flex-direction: column; gap: 1.5rem;">
           
           <section class="wing-column-box" aria-labelledby="concierge-heading">
             <h2 id="concierge-heading">Head Concierge Desk</h2>
-            <p class="wing-lead-note">24/7 Universal reception, building directory, and immediate floor routing:</p>
+            <p class="wing-lead-note">24/7 Chief Concierge on duty. Navigation guide for the central elevator bank:</p>
             
-            <!-- Safe Directory Index Buttons (Pure <a> Links - Zero <input>) -->
-            <div style="display: flex; flex-direction: column; gap: 0.45rem; margin-top: 0.5rem;">
-              <span style="font-size: 0.74rem; font-weight: 800; text-transform: uppercase; color: var(--muted);">Direct Directory Portals:</span>
-              <a href="#floor-40" class="floor-portal-anchor transit-btn" data-floor="40" title="Floor 40: Career Board">
-                <span>🏢 Careers &bull; Jobs (Floor 40)</span> <span>&rarr;</span>
-              </a>
-              <a href="#floor-30" class="floor-portal-anchor transit-btn" data-floor="30" title="Floor 30: B2B Enterprise Mall">
-                <span>🏬 B2B Mall Showcases (Floor 30)</span> <span>&rarr;</span>
-              </a>
-              <a href="#floor-50" class="floor-portal-anchor transit-btn" data-floor="50" title="Floor 50: Industrial Energy &amp; BESS Grid">
-                <span>⚡ Energy &amp; BESS Grid (Floor 50)</span> <span>&rarr;</span>
-              </a>
-              <a href="#floor-100" class="floor-portal-anchor transit-btn" data-floor="100" title="Floor 100: Casino &amp; Sports Gaming Hub">
-                <span>🎰 Gaming &amp; Betting Hub (Floor 100)</span> <span>&rarr;</span>
-              </a>
-              <a href="#floor-10" class="floor-portal-anchor transit-btn" data-floor="10" title="Floor 10: Entertainment &amp; Lotteries">
-                <span>🎟️ Entertainment &amp; Toto (Floor 10)</span> <span>&rarr;</span>
-              </a>
-              <a href="#floor-0" class="floor-portal-anchor transit-btn" data-floor="0" title="Floor 0: Cashier Desk, IBAN Settlement &amp; Verification">
-                <span>🏛️ Cashier Desk &bull; IBAN KYC (Floor 0)</span> <span>&rarr;</span>
-              </a>
-              <a href="#floor--1" class="floor-portal-anchor transit-btn" data-floor="-1" title="Floor -1: Digital Wardrobe &amp; Text Cache">
-                <span>🔽 Digital Wardrobe (Floor -1)</span> <span>&darr;</span>
-              </a>
-              <a href="#floor--2" class="floor-portal-anchor transit-btn" data-floor="-2" title="Floor -2: Central Garage &amp; Transport Hub">
-                <span>🚗 Central Garage (Floor -2)</span> <span>&darr;</span>
-              </a>
-              <a href="#floor--3" class="floor-portal-anchor transit-btn" data-floor="-3" title="Floor -3: Lost &amp; Found Permanent SEO Archives">
-                <span>🔽 Lost &amp; Found Archives (Floor -3)</span> <span>&darr;</span>
-              </a>
+            <!-- Text-Only Directory Instructions (No Redundant Action Buttons) -->
+            <div style="background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 0.85rem; font-size: 0.82rem; line-height: 1.6;">
+              <div>🏢 <strong>Floor 40:</strong> Career Board &bull; Employment Registry</div>
+              <div>🏬 <strong>Floor 30:</strong> Virtual B2B Showcase Mall</div>
+              <div>⚡ <strong>Floor 50:</strong> Industrial Energy &amp; BESS Grid</div>
+              <div>🎰 <strong>Floor 100:</strong> Casino &amp; Sports Gaming Hub</div>
+              <div>🎟️ <strong>Floor 10:</strong> Lotteries &amp; Entertainment</div>
+              <div>🏛️ <strong>Floor 0:</strong> Cashier Desk &bull; IBAN KYC Verification</div>
+              <div>🔽 <strong>Floor -1:</strong> Digital Wardrobe &bull; Text Templates</div>
+              <div>🚗 <strong>Floor -2:</strong> Central Garage &bull; Transit Hub</div>
+              <div>🔽 <strong>Floor -3:</strong> Lost &amp; Found &bull; Permanent SEO Archives</div>
+              <div>👑 <strong>Floor 7777:</strong> Mobikom Bulgaria Executive Penthouse</div>
+              <p style="margin-top: 0.5rem; font-size: 0.76rem; color: var(--vip-gold); font-weight: 700;">
+                &uarr; Enter floor number on the central elevator keypad to travel.
+              </p>
             </div>
 
             <!-- 100 Exquisite Conference Chambers Selector -->
@@ -162,7 +153,7 @@
         <!-- Center: Master Shaft Navigation & Speedometer -->
         <main class="elevator-central-hub" aria-label="Central Elevator Shaft &amp; Console">
           
-          <!-- Explicit Information Label Above the Counter on Clean Light Box -->
+          <!-- Explicit Clear Information Label Above the Counter on Clean Light Box -->
           <div style="background: var(--bg-alt); border: 1px solid var(--border); border-left: 4px solid var(--primary); border-radius: var(--radius); padding: 0.85rem 1.15rem;">
             <div style="font-size: 0.88rem; font-weight: 800; color: var(--text);">
               28 High-Speed Elevator Bank &bull; Active Transit Status &bull; Dual Velocity
@@ -177,54 +168,10 @@
             <div class="speedometer-flight-display" id="flight-readout">STATIONARY &bull; FLOOR 00 (GRAND LOBBY)</div>
           </div>
 
-          <!-- Key Commercial Portals Grid -->
-          <div class="floors-launch-grid">
-            <a href="https://mobikom.bg" target="_blank" rel="noopener" class="floor-portal-anchor penthouse-vip" title="Floor 7777+ &bull; Mobikom Bulgaria Executive Penthouse">
-              <span>👑 Floor 7777+ &bull; Mobikom Penthouse</span>
-              <span>&uarr; (Instant)</span>
-            </a>
-            <a href="#floor-100" class="floor-portal-anchor transit-btn" data-floor="100" title="Floor 100 &bull; Sovereign Gaming and Betting Hub">
-              <span>🎰 Floor 100 &bull; Gaming &amp; Betting</span>
-              <span>&rarr;</span>
-            </a>
-            <a href="#floor-50" class="floor-portal-anchor transit-btn" data-floor="50" title="Floor 50 &bull; Industrial Energy and BESS Systems">
-              <span>⚡ Floor 50 &bull; Energy &amp; BESS</span>
-              <span>&rarr;</span>
-            </a>
-            <a href="#floor-40" class="floor-portal-anchor transit-btn" data-floor="40" title="Floor 40 &bull; BestJobs Career Board">
-              <span>🏢 Floor 40 &bull; Career Board</span>
-              <span>&rarr;</span>
-            </a>
-            <a href="#floor-30" class="floor-portal-anchor transit-btn" data-floor="30" title="Floor 30 &bull; Virtual B2B Enterprise Mall">
-              <span>🏬 Floor 30 &bull; Virtual B2B Mall</span>
-              <span>&rarr;</span>
-            </a>
-            <a href="#floor-10" class="floor-portal-anchor transit-btn" data-floor="10" title="Floor 10 &bull; Entertainment, Toto &amp; Lotteries">
-              <span>🎟️ Floor 10 &bull; Lotteries &amp; Fun</span>
-              <span>&rarr;</span>
-            </a>
-            <a href="#floor-0" class="floor-portal-anchor subterranean transit-btn" data-floor="0" title="Floor 0 &bull; Central Cashier, IBAN KYC Verification">
-              <span>🏛️ Floor 0 &bull; Cashier &amp; IBAN</span>
-              <span>&darr;</span>
-            </a>
-            <a href="#floor--1" class="floor-portal-anchor subterranean transit-btn" data-floor="-1" title="Floor -1 &bull; Digital Wardrobe and Text Templates">
-              <span>🔽 Floor -1 &bull; Digital Wardrobe</span>
-              <span>&darr;</span>
-            </a>
-            <a href="#floor--2" class="floor-portal-anchor subterranean transit-btn" data-floor="-2" title="Floor -2 &bull; Central Garage &amp; Transport Hub">
-              <span>🚗 Floor -2 &bull; Central Garage</span>
-              <span>&darr;</span>
-            </a>
-            <a href="#floor--3" class="floor-portal-anchor subterranean transit-btn" data-floor="-3" title="Floor -3 &bull; Lost and Found &amp; Permanent SEO Archives">
-              <span>🔽 Floor -3 &bull; Lost &amp; Found</span>
-              <span>&darr;</span>
-            </a>
-          </div>
-
-          <!-- Numeric Keypad Chassis -->
+          <!-- Numeric Keypad Chassis (The Primary Transit Console) -->
           <div class="keypad-hardware-chassis">
             <div class="keypad-screen-row">
-              <span>Dial Any Floor (0 - 7777)</span>
+              <span>Dial Destination (0 - 7777)</span>
               <span class="keypad-buffer-readout" id="keypad-buffer">----</span>
             </div>
             <div class="keypad-matrix-grid">
