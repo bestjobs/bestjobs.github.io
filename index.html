@@ -53,99 +53,138 @@
   <main>
     <div class="shell-grand">
 
-      <!-- Single Horizontal Row: Meridian Market Pulse -->
-      <section class="audit-box" style="margin-block: 0 1.5rem; padding: 0.5rem 1rem; overflow-x: auto; white-space: nowrap;" aria-label="Global Meridian Clocks">
-        <div style="display: inline-flex; align-items: center; gap: 1.25rem; font-size: 0.8rem; font-weight: 700;">
-          <span style="color: var(--primary); text-transform: uppercase;">📅 <span id="current-calendar-date">Loading...</span></span>
-          <span class="legal-sep">&bull;</span>
+      <!-- 2-Row Meridian Market Pulse -->
+      <section class="audit-box" style="margin-block: 0 1.5rem; padding: 0.75rem 1rem;" aria-label="Global Financial Pulse">
+        <!-- Row 1: Calendar Date -->
+        <div style="font-size: 0.92rem; font-weight: 800; color: var(--primary); text-transform: uppercase; letter-spacing: 0.05em; border-bottom: 1px solid var(--border); padding-bottom: 0.35rem; margin-bottom: 0.45rem;">
+          📅 <span id="current-calendar-date">Loading date...</span>
+        </div>
+        <!-- Row 2: Clocks in single horizontal line -->
+        <div style="display: flex; align-items: center; gap: 1.25rem; font-size: 0.8rem; font-weight: 700; overflow-x: auto; white-space: nowrap; scrollbar-gutter: stable;">
           <span>New York: <strong id="clock-ny">--:--</strong></span>
+          <span class="legal-sep">&bull;</span>
           <span>London: <strong id="clock-london">--:--</strong></span>
+          <span class="legal-sep">&bull;</span>
           <span>Monaco: <strong id="clock-monaco">--:--</strong></span>
+          <span class="legal-sep">&bull;</span>
           <span>Sofia: <strong id="clock-sofia">--:--</strong></span>
+          <span class="legal-sep">&bull;</span>
           <span>Moscow: <strong id="clock-moscow">--:--</strong></span>
+          <span class="legal-sep">&bull;</span>
           <span>Abu Dhabi: <strong id="clock-abudhabi">--:--</strong></span>
+          <span class="legal-sep">&bull;</span>
           <span>Hong Kong: <strong id="clock-hongkong">--:--</strong></span>
+          <span class="legal-sep">&bull;</span>
           <span>Tokyo: <strong id="clock-tokyo">--:--</strong></span>
         </div>
       </section>
 
-      <!-- Grand Welcome Manifesto (Original Economic Commercial Model Intact) -->
+      <!-- Welcome Section with Voice Reader -->
       <section class="lobby-hero" aria-labelledby="lobby-heading">
-        <span class="hero-tag">DIGITAL MEGA-SKYSCRAPER &bull; BESTJOBS TOWER &bull; 7,777 FLOORS</span>
-        <h1 id="lobby-heading">BestJobs Skyscraper &bull; Grand Lobby</h1>
-        <p>
-          Welcome to the central Grand Lobby of the BestJobs digital skyscraper. Directly before you is our high-definition television screen featuring 1,000 global live streams selectable from the console (our portal initial load is strictly under 35 KB; high-definition video streams transmit hundreds of gigabytes strictly on demand). Beneath the screen lies the master panel of our central elevator, interconnecting you with the other 27 elevator shafts across the BestJobs skyscraper. Through our elevator network, you can visit any of the 7,777 floors in under 5 seconds depending on Internet traffic and conditions.
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 0.75rem; margin-bottom: 0.5rem;">
+          <div>
+            <span class="hero-tag">DIGITAL MEGA-SKYSCRAPER &bull; BESTJOBS TOWER &bull; 7,777 FLOORS</span>
+            <h1 id="lobby-heading" style="margin-bottom: 0;">WELCOME TO BESTJOBS SKYSCRAPER!</h1>
+          </div>
+          <!-- Voice Reader Button (Global Law) -->
+          <a href="#read" id="btn-read-article" class="btn-stream-audio" title="Listen to the Grand Lobby text via speech synthesis">
+            🔊 Read Aloud
+          </a>
+        </div>
+        
+        <p class="hero-lead">
+          Welcome to the central Grand Lobby coordinating 28 high-speed elevator shafts across 7,777 sovereign floors.
         </p>
         <p>
-          To your left is the 24/7 Reception with Concierges on duty for all your executive needs and desires (royal box opera tickets at La Scala or courtside front-row NBA passes), alongside immediate routing to our 100 Exquisite Conference Chambers and in-lobby drafting suites. To your right sits the central executive headquarters of Mobikom, our governing body, and beneath it are our two accredited, exclusive media properties: <a href="https://www.dobrichnews.com" target="_blank" rel="noopener noreferrer" title="DobrichNews Daily Media">www.dobrichnews.com</a> and <a href="https://www.dobruja.com" target="_blank" rel="noopener noreferrer" title="Dobruja Cultural Review">www.dobruja.com</a>—through which you can broadcast your enterprise to the entire world.
-        </p>
-        <p>
-          Do not miss our career bulletin board on Floor 40, as well as our other specialized projects across the tower. On the floor of our B2B MALL (Floor 30), any corporation, organization, or public administration can lease a storefront showcase card representing their office with an exact 140-character card dossier and an internal profile page up to 10,000 words, strictly without logos, pictures, photos, or heavy external files throughout the entire BestJobs virtual skyscraper. All this is available on a mandatory minimum subscription of <strong>1 (one) full calendar year (365 days) at the modest rate of 10.00 &euro; per day</strong> in our MALL. You stand shoulder-to-shoulder with the largest enterprises in your sector without visual disparity; we level the playing field from the very start by randomizing the order of storefronts on every single visit to ensure complete fairness.
-        </p>
-        <p>
-          The option to lease an entire floor is an elite privilege. Whole-floor enterprise leases carry a <strong>mandatory minimum term of 1 (one) full calendar year</strong> and are tied to corporate prestige and vertical elevation, determined strictly by the formula: <strong>Floor Number in Euros per Day</strong> (examples: Floor 300 carries a lease of 300.00 &euro; per day, while Floor 999 is leased at 999.00 &euro; per day). Furthermore, emerging enterprises benefit from our strategic venture model: in lieu of annual cash rent, startups may secure a dedicated floor against company equity shares—providing vital strategic support for capital-lean innovators. In the BestJobs Skyscraper, we unite and empower all enterprises and institutions in one sovereign center. For detailed regulations, consult the documentation desks across all levels. Enjoy your stay in the BestJobs Skyscraper!
+          Levels 0 to 100 operate at 10 floors per second, while all upper corporate levels above Floor 100 bypass transit latency entirely through instantaneous gravity-inversion teleportation. On Floor 30 (B2B Mall), storefront showcases are leased on a mandatory minimum 1-year contract at 10.00 &euro; per day with randomized fair-play rotation. Whole floors carry an annual lease by the formula: Floor Number in Euros per Day, with strategic equity options for emerging enterprises. For full regulatory guides and tariffs, consult our <a href="/bestjobs/help/">Help Center &rarr;</a>
         </p>
       </section>
 
       <!-- 3-Column Grand Gallery Architecture -->
       <div class="lobby-tri-layout">
 
-        <!-- Left Wing: Head Concierge & In-Lobby Drafting Desk -->
+        <!-- Left Wing: Head Concierge, 100 Chambers & Desk -->
         <div style="display: flex; flex-direction: column; gap: 1.5rem;">
           
+          <!-- Concierge Section (Proper Top-to-Bottom Floor Hierarchy) -->
           <section class="wing-column-box" aria-labelledby="concierge-heading">
             <h2 id="concierge-heading">Head Concierge Desk</h2>
-            <p class="wing-lead-note">24/7 Chief Concierge on duty. Navigation guide for the central elevator bank:</p>
+            <p class="wing-lead-note">24/7 Chief Concierge guide. Use the central elevator keypad to reach your destination:</p>
             
-            <!-- Text-Only Directory Instructions (No Redundant Action Buttons) -->
-            <div style="background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 0.85rem; font-size: 0.82rem; line-height: 1.6;">
+            <div style="background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 0.85rem; font-size: 0.82rem; line-height: 1.8;">
+              <div>👑 <strong>Floor 7777+:</strong> Mobikom Executive Penthouse</div>
+              <div>🎰 <strong>Floor 100:</strong> Casino &amp; Sports Gaming Hub</div>
+              <div>⚡ <strong>Floor 50:</strong> Industrial Energy &amp; BESS Grid</div>
               <div>🏢 <strong>Floor 40:</strong> Career Board &bull; Employment Registry</div>
               <div>🏬 <strong>Floor 30:</strong> Virtual B2B Showcase Mall</div>
-              <div>⚡ <strong>Floor 50:</strong> Industrial Energy &amp; BESS Grid</div>
-              <div>🎰 <strong>Floor 100:</strong> Casino &amp; Sports Gaming Hub</div>
               <div>🎟️ <strong>Floor 10:</strong> Lotteries &amp; Entertainment</div>
               <div>🏛️ <strong>Floor 0:</strong> Cashier Desk &bull; IBAN KYC Verification</div>
               <div>🔽 <strong>Floor -1:</strong> Digital Wardrobe &bull; Text Templates</div>
               <div>🚗 <strong>Floor -2:</strong> Central Garage &bull; Transit Hub</div>
               <div>🔽 <strong>Floor -3:</strong> Lost &amp; Found &bull; Permanent SEO Archives</div>
-              <div>👑 <strong>Floor 7777:</strong> Mobikom Bulgaria Executive Penthouse</div>
-              <p style="margin-top: 0.5rem; font-size: 0.76rem; color: var(--vip-gold); font-weight: 700;">
-                &uarr; Enter floor number on the central elevator keypad to travel.
-              </p>
             </div>
 
-            <!-- 100 Exquisite Conference Chambers Selector -->
+            <!-- 100 Exquisite Conference Chambers (Static HTML Options) -->
             <div style="margin-top: 0.75rem; border-top: 1px solid var(--border); padding-top: 0.75rem;">
               <label for="select-chamber" style="font-size: 0.76rem; font-weight: 800; text-transform: uppercase; color: var(--vip-gold); display: block; margin-bottom: 0.35rem;">
                 🏛️ 100 Exquisite Conference Chambers:
               </label>
               <select id="select-chamber" class="plasma-select" title="Select an executive conference chamber">
-                <!-- Populated via engine.js -->
+                <option value="">-- Select Chamber (Instant Teleport) --</option>
+                <option value="150">Chamber #01: The Aurum Boardroom (Floor 150)</option>
+                <option value="200">Chamber #02: Basalt Whisper Suite (Floor 200)</option>
+                <option value="250">Chamber #03: The Broken Gyroscope (Floor 250)</option>
+                <option value="300">Chamber #04: Prime Meridian Hub (Floor 300)</option>
+                <option value="350">Chamber #05: The Encrypted Oracle (Floor 350)</option>
+                <option value="400">Chamber #06: Deep Space Chamber (Floor 400)</option>
+                <option value="450">Chamber #07: Silence of the Penthouse (Floor 450)</option>
+                <option value="500">Chamber #08: Cold Fusion Lounge (Floor 500)</option>
+                <option value="550">Chamber #09: The Cryptic Rose (Floor 550)</option>
+                <option value="600">Chamber #10: Singularity Executive (Floor 600)</option>
+                <option value="650">Chamber #11: Event Horizon Red (Floor 650)</option>
+                <option value="700">Chamber #12: Borealis Council (Floor 700)</option>
+                <option value="750">Chamber #13: Solaris Zenith (Floor 750)</option>
+                <option value="800">Chamber #14: Quantum Solitude (Floor 800)</option>
+                <option value="850">Chamber #15: The Obsidian Vault (Floor 850)</option>
+                <option value="900">Chamber #16: Aether Pavilion (Floor 900)</option>
+                <option value="950">Chamber #17: Helios Grand Hall (Floor 950)</option>
+                <option value="1000">Chamber #18: Chronos Chamber (Floor 1000)</option>
+                <option value="1500">Chamber #25: The Sovereign Hearth (Floor 1500)</option>
+                <option value="2000">Chamber #35: The Emerald Atrium (Floor 2000)</option>
+                <option value="3000">Chamber #50: Diamond Horizon (Floor 3000)</option>
+                <option value="4000">Chamber #65: Perseus Bastion (Floor 4000)</option>
+                <option value="5000">Chamber #75: Pulsar Forum (Floor 5000)</option>
+                <option value="6000">Chamber #85: Hanseatic League (Floor 6000)</option>
+                <option value="7000">Chamber #95: Thracian Gold Suite (Floor 7000)</option>
+                <option value="7700">Chamber #100: The 7777 Supreme Senate (Floor 7700)</option>
               </select>
             </div>
 
-            <!-- In-Lobby Drafting Desk (Zero <textarea> - Safe contenteditable <div>) -->
-            <div style="margin-top: 0.75rem; border-top: 1px solid var(--border); padding-top: 0.75rem;">
-              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.4rem;">
-                <h3 style="font-size: 0.84rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--text); margin: 0;">✍️ Drafting Desk &bull; Office Tools</h3>
-                <span style="font-size: 0.72rem; color: var(--muted);" id="workbench-counter">0 words</span>
-              </div>
-              <div id="workbench-editor" contenteditable="true" role="textbox" aria-multiline="true" class="select-control" style="min-height: 110px; max-height: 220px; overflow-y: auto; font-family: inherit; font-size: 0.85rem; line-height: 1.5; margin-bottom: 0.5rem; background: var(--bg); white-space: pre-wrap;" title="Click to write news releases, speeches, or contracts">Type or paste document draft here...</div>
-              <div style="display: flex; flex-wrap: wrap; gap: 0.35rem; align-items: center;">
-                <a href="#save-txt" id="btn-bench-txt" class="nav-btn" style="min-height: 34px; padding: 0.25rem 0.55rem; font-size: 0.76rem;" title="Download clean plain text file">💾 .TXT</a>
-                <a href="#export-pdf" id="btn-bench-pdf" class="chip-btn" style="min-height: 34px; padding: 0.25rem 0.55rem; font-size: 0.76rem;" title="Export formatted PDF document">📄 PDF</a>
-                <a href="#export-docx" id="btn-bench-docx" class="chip-btn" style="min-height: 34px; padding: 0.25rem 0.55rem; font-size: 0.76rem;" title="Export standard Microsoft Word file">📝 Word</a>
-                <a href="#print" id="btn-bench-print" class="chip-btn" style="min-height: 34px; padding: 0.25rem 0.55rem; font-size: 0.76rem;" title="Print document cleanly">🖨️ Print</a>
-                <a href="#mail" id="btn-bench-mail" class="chip-btn" style="min-height: 34px; padding: 0.25rem 0.55rem; font-size: 0.76rem;" title="Open draft in your local email client">✉️ Email</a>
-                <a href="#clear" id="btn-bench-clear" class="btn-filter-reset" style="min-height: 34px; padding: 0.25rem 0.45rem; font-size: 0.74rem;" title="Clear local editor buffer">Clear</a>
-              </div>
-            </div>
-
-            <!-- VIP Privileges & Arrangements -->
+            <!-- VIP Arrangements -->
             <h3 class="concierge-subheading">VIP Privileges &amp; Arrangements</h3>
             <ul class="concierge-items-stack" id="concierge-dynamic-list">
               <!-- Populated via engine.js -->
             </ul>
+          </section>
+
+          <!-- Spacious In-Lobby Drafting Desk -->
+          <section class="wing-column-box" aria-labelledby="desk-heading">
+            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); padding-bottom: 0.4rem;">
+              <h2 id="desk-heading" style="margin: 0; border: none; padding: 0;">✍️ Drafting Desk</h2>
+              <span style="font-size: 0.74rem; font-weight: 700; color: var(--muted);" id="workbench-counter">0 words</span>
+            </div>
+            <p class="wing-lead-note">Draft news releases, speeches, or contracts locally in RAM with zero telemetry.</p>
+            
+            <div id="workbench-editor" contenteditable="true" role="textbox" aria-multiline="true" class="select-control" style="min-height: 180px; max-height: 350px; overflow-y: auto; font-family: inherit; font-size: 0.88rem; line-height: 1.6; background: var(--bg); white-space: pre-wrap; padding: 0.75rem;" title="Click to write news releases, speeches, or contracts">Type or paste document draft here...</div>
+            
+            <div style="display: flex; flex-wrap: wrap; gap: 0.4rem; align-items: center;">
+              <a href="#save-txt" id="btn-bench-txt" class="nav-btn" style="min-height: 36px; padding: 0.35rem 0.65rem; font-size: 0.78rem;" title="Download clean plain text file">💾 .TXT</a>
+              <a href="#export-pdf" id="btn-bench-pdf" class="chip-btn" style="min-height: 36px; padding: 0.35rem 0.65rem; font-size: 0.78rem;" title="Export formatted PDF document">📄 PDF</a>
+              <a href="#export-docx" id="btn-bench-docx" class="chip-btn" style="min-height: 36px; padding: 0.35rem 0.65rem; font-size: 0.78rem;" title="Export standard Microsoft Word file">📝 Word</a>
+              <a href="#print" id="btn-bench-print" class="chip-btn" style="min-height: 36px; padding: 0.35rem 0.65rem; font-size: 0.78rem;" title="Print document cleanly">🖨️ Print</a>
+              <a href="#mail" id="btn-bench-mail" class="chip-btn" style="min-height: 36px; padding: 0.35rem 0.65rem; font-size: 0.78rem;" title="Open draft in your local email client">✉️ Email</a>
+              <a href="#clear" id="btn-bench-clear" class="btn-filter-reset" style="min-height: 36px; padding: 0.35rem 0.5rem; font-size: 0.76rem;" title="Clear local editor buffer">Clear</a>
+            </div>
           </section>
 
         </div>
@@ -153,7 +192,7 @@
         <!-- Center: Master Shaft Navigation & Speedometer -->
         <main class="elevator-central-hub" aria-label="Central Elevator Shaft &amp; Console">
           
-          <!-- Explicit Clear Information Label Above the Counter on Clean Light Box -->
+          <!-- Explicit Information Label Above the Counter on Clean Light Box -->
           <div style="background: var(--bg-alt); border: 1px solid var(--border); border-left: 4px solid var(--primary); border-radius: var(--radius); padding: 0.85rem 1.15rem;">
             <div style="font-size: 0.88rem; font-weight: 800; color: var(--text);">
               28 High-Speed Elevator Bank &bull; Active Transit Status &bull; Dual Velocity
@@ -163,12 +202,56 @@
             </div>
           </div>
 
-          <!-- Real-Time Speedometer & Transit Display -->
+          <!-- Real-Time Speedometer Display -->
           <div class="speedometer-console-box">
             <div class="speedometer-flight-display" id="flight-readout">STATIONARY &bull; FLOOR 00 (GRAND LOBBY)</div>
           </div>
 
-          <!-- Numeric Keypad Chassis (The Primary Transit Console) -->
+          <!-- Key Commercial Portals Grid (Proper Top-to-Bottom Floor Hierarchy + Active Links) -->
+          <div class="floors-launch-grid">
+            <a href="https://mobikom.bg" target="_blank" rel="noopener" class="floor-portal-anchor penthouse-vip" title="Floor 7777+ &bull; Mobikom Bulgaria Executive Penthouse">
+              <span>👑 Floor 7777+ &bull; Mobikom Penthouse</span>
+              <span>&uarr; (Instant)</span>
+            </a>
+            <a href="/floor/100/" class="floor-portal-anchor" data-floor="100" title="Floor 100 &bull; Sovereign Gaming and Betting Hub">
+              <span>🎰 Floor 100 &bull; Gaming &amp; Betting</span>
+              <span>&rarr;</span>
+            </a>
+            <a href="/floor/50/" class="floor-portal-anchor" data-floor="50" title="Floor 50 &bull; Industrial Energy and BESS Systems">
+              <span>⚡ Floor 50 &bull; Energy &amp; BESS</span>
+              <span>&rarr;</span>
+            </a>
+            <a href="/bestjobs/" class="floor-portal-anchor" data-floor="40" title="Floor 40 &bull; BestJobs Career Board">
+              <span>🏢 Floor 40 &bull; Career Board</span>
+              <span>&rarr;</span>
+            </a>
+            <a href="/mall/" class="floor-portal-anchor" data-floor="30" title="Floor 30 &bull; Virtual B2B Enterprise Mall">
+              <span>🏬 Floor 30 &bull; Virtual B2B Mall</span>
+              <span>&rarr;</span>
+            </a>
+            <a href="/floor/10/" class="floor-portal-anchor" data-floor="10" title="Floor 10 &bull; Entertainment, Toto &amp; Lotteries">
+              <span>🎟️ Floor 10 &bull; Lotteries &amp; Fun</span>
+              <span>&rarr;</span>
+            </a>
+            <a href="/floor/0/" class="floor-portal-anchor subterranean" data-floor="0" title="Floor 0 &bull; Central Cashier, IBAN KYC Verification">
+              <span>🏛️ Floor 0 &bull; Cashier &amp; IBAN</span>
+              <span>&darr;</span>
+            </a>
+            <a href="/floor/-1/" class="floor-portal-anchor subterranean" data-floor="-1" title="Floor -1 &bull; Digital Wardrobe and Text Templates">
+              <span>🔽 Floor -1 &bull; Digital Wardrobe</span>
+              <span>&darr;</span>
+            </a>
+            <a href="/floor/-2/" class="floor-portal-anchor subterranean" data-floor="-2" title="Floor -2 &bull; Central Garage &amp; Transport Hub">
+              <span>🚗 Floor -2 &bull; Central Garage</span>
+              <span>&darr;</span>
+            </a>
+            <a href="/floor/-3/" class="floor-portal-anchor subterranean" data-floor="-3" title="Floor -3 &bull; Lost and Found &amp; Permanent SEO Archives">
+              <span>🔽 Floor -3 &bull; Lost &amp; Found</span>
+              <span>&darr;</span>
+            </a>
+          </div>
+
+          <!-- Numeric Keypad Chassis -->
           <div class="keypad-hardware-chassis">
             <div class="keypad-screen-row">
               <span>Dial Destination (0 - 7777)</span>
@@ -226,13 +309,13 @@
 
       </div>
 
-      <!-- Lower Media & Broadcasting Pavilion (Wide Dual Layout) -->
+      <!-- Lower Media Pavilion -->
       <section class="media-pavilion-grid" aria-label="Grand Media and Broadcasting Lounges">
         
         <!-- TV Marquee Terminal -->
         <div class="plasma-tv-deck">
-          <!-- Traffic Warning Above the Screen on Clean Light Box -->
-          <div style="background: rgba(220, 38, 38, 0.08); border: 1px solid var(--danger); border-radius: 4px; padding: 0.6rem 0.85rem; margin-bottom: 0.85rem; font-size: 0.78rem; color: var(--danger); font-weight: 800;">
+          <!-- Traffic Warning Entirely Outside the Black Frame on Clean White Box -->
+          <div style="background: rgba(220, 38, 38, 0.08); border: 1px solid var(--danger); border-radius: 4px; padding: 0.65rem 0.85rem; margin-bottom: 0.85rem; font-size: 0.78rem; color: var(--danger); font-weight: 800;">
             ⚠️ HIGH TRAFFIC WARNING: Live streaming transmits gigabytes of high-definition video data. Initiates strictly upon manual channel selection.
           </div>
 
@@ -250,17 +333,17 @@
           <div style="margin-bottom: 0.75rem;">
             <select id="tv-channel-select" class="plasma-select" title="Choose international television streams">
               <option value="">-- Screen Standby (Off / 0 KB) --</option>
-              <optgroup label="1. Новини &amp; Информация (News)">
+              <optgroup label="1. News &amp; Information">
                 <option value="sPJXq0lPzaM">Euronews International (Live)</option>
                 <option value="9Auq9mYxFEE">Sky News UK (Live Stream)</option>
                 <option value="w_Ma8oQLmSM">ABC News Live (Global)</option>
                 <option value="b1f3yO5W4gQ">DW News International (Germany)</option>
                 <option value="gCNeDWCI0vo">Al Jazeera English (Global)</option>
               </optgroup>
-              <optgroup label="2. Финанси &amp; Пазари (Finance)">
+              <optgroup label="2. Finance &amp; Markets">
                 <option value="dp8PhLsUcFE">Bloomberg Global Financial Live</option>
               </optgroup>
-              <optgroup label="3. Пълен спортен спектър (Sports &amp; Outdoor)">
+              <optgroup label="3. Sports, Boxing &amp; Outdoor">
                 <option value="FI2P4O-V50Q">FIFA+ Football &amp; Champions Hub</option>
                 <option value="2qF8Z6uE_zQ">DAZN Combat Sports &amp; Boxing</option>
                 <option value="FI2P4O-V50Q">Red Bull Action &amp; Extreme Sports</option>
@@ -268,20 +351,20 @@
                 <option value="F109TZt3nRc">Ocean Coral Reef &amp; Deep Sea Fishing</option>
                 <option value="Xv2XJ9P2xU4">African Safari &amp; Wildlife Habitat</option>
               </optgroup>
-              <optgroup label="4. Мода &amp; Стил (Fashion &amp; Luxury)">
+              <optgroup label="4. Fashion &amp; Luxury">
                 <option value="sPJXq0lPzaM">Fashion TV Worldwide Runway</option>
               </optgroup>
-              <optgroup label="5. Кино &amp; Документалистика (Cinema)">
+              <optgroup label="5. Cinema &amp; Documentaries">
                 <option value="V8ZwaKz_X8s">Classic Cinema Vault (Golden Age)</option>
               </optgroup>
-              <optgroup label="6. Музика &amp; Релакс (Music)">
+              <optgroup label="6. Music &amp; Relax">
                 <option value="jfKfPfyJRdk">Lofi Girl (24/7 Global Chill/Beats)</option>
                 <option value="k6zW2Jp-q6k">Classical Music &amp; Symphonic Hall</option>
               </optgroup>
             </select>
           </div>
 
-          <div class="plasma-viewport-frame" id="tv-viewport" title="Click to Pause / Stop Video Stream">
+          <div class="plasma-viewport-frame" id="tv-viewport" title="Click to Stop Video Stream">
             <div id="tv-standby-message">
               <div class="plasma-standby-title">Video Terminal Standby (0 KB)</div>
               <p class="plasma-standby-desc">Select channel above to stream high-definition broadcast.</p>
@@ -291,8 +374,8 @@
 
         <!-- Audio & Radio Pavilion Terminal -->
         <div class="plasma-tv-deck" style="border-top-color: var(--primary);">
-          <!-- Radio Clear Header on Light Box -->
-          <div style="background: rgba(0, 82, 204, 0.08); border: 1px solid var(--primary); border-radius: 4px; padding: 0.6rem 0.85rem; margin-bottom: 0.85rem; font-size: 0.78rem; color: var(--primary); font-weight: 800;">
+          <!-- Radio Clear Header on Clean White Box -->
+          <div style="background: rgba(0, 82, 204, 0.08); border: 1px solid var(--primary); border-radius: 4px; padding: 0.65rem 0.85rem; margin-bottom: 0.85rem; font-size: 0.78rem; color: var(--primary); font-weight: 800;">
             📻 SATELLITE RADIO PAVILION: Direct audio stream relay. Zero video overhead.
           </div>
 
@@ -310,16 +393,16 @@
           <div style="margin-bottom: 0.75rem;">
             <select id="radio-station-select" class="plasma-select" title="Choose internet radio station">
               <option value="">-- Radio Off (0 KB Standby) --</option>
-              <optgroup label="Обществени &amp; Новинарски (Public News)">
-                <option value="https://stream.bgradio.bg:8000/horizont">БНР Хоризонт (Национално информационно радио)</option>
-                <option value="https://stream.bgradio.bg:8000/hristobotev">БНР Христо Ботев (Култура &amp; Анализи)</option>
+              <optgroup label="Public News Stations">
+                <option value="https://stream.bgradio.bg:8000/horizont">BNR Horizont (National News)</option>
+                <option value="https://stream.bgradio.bg:8000/hristobotev">BNR Hristo Botev (Culture &amp; Analysis)</option>
               </optgroup>
-              <optgroup label="Класическа музика &amp; Опера (Classical)">
-                <option value="https://stream.bgradio.bg:8000/classicfm">Classic FM (Световни класически концерти)</option>
+              <optgroup label="Classical Music &amp; Opera">
+                <option value="https://stream.bgradio.bg:8000/classicfm">Classic FM (World Concerts)</option>
               </optgroup>
-              <optgroup label="Джаз &amp; Ембиънт (Jazz &amp; Ambient)">
-                <option value="https://stream.srg-ssr.ch/m/rjs/mp3_128">Swiss Jazz Live (Цюрих, Швейцария)</option>
-                <option value="https://ice1.somafm.com/groovesalad-128-mp3">SomaFM: Groove Salad (Chillout &amp; Ambient)</option>
+              <optgroup label="Jazz &amp; Ambient">
+                <option value="https://stream.srg-ssr.ch/m/rjs/mp3_128">Swiss Jazz Live (Zurich)</option>
+                <option value="https://ice1.somafm.com/groovesalad-128-mp3">SomaFM: Groove Salad (Ambient)</option>
               </optgroup>
             </select>
           </div>
