@@ -51,7 +51,7 @@
     }
   }
 
-  // 2. MERIDIAN MARKET PULSE (Strict West to East Order + Full Date)
+  // 2. 2-ROW MERIDIAN MARKET CLOCKS (Date on Row 1, Clocks on Row 2)
   function initMeridianClocks() {
     const dateEl = document.getElementById('current-calendar-date');
     const elNy = document.getElementById('clock-ny');
@@ -103,7 +103,7 @@
     setInterval(updateClocks, 1000);
   }
 
-  // 3. HEAD CONCIERGE DESK (VIP Arrangements Only)
+  // 3. CONCIERGE VIP OFFERS
   function initConciergeDesk() {
     const listEl = document.getElementById('concierge-dynamic-list');
     const isBg = (document.documentElement.lang || '').toLowerCase().startsWith('bg');
@@ -133,47 +133,10 @@
     }
   }
 
-  // 4. 100 EXQUISITE CONFERENCE CHAMBERS (Instant Jump Generator)
+  // 4. 100 EXQUISITE CONFERENCE CHAMBERS (Instant Teleport Jump)
   function initExquisiteChambers() {
     const selectChamber = document.getElementById('select-chamber');
     if (!selectChamber) return;
-
-    const chamberNames = [
-      'The Aurum Boardroom', 'Basalt Whisper Suite', 'The Broken Gyroscope', 'Prime Meridian Hub',
-      'The Encrypted Oracle', 'Deep Space Chamber', 'Silence of the Penthouse', 'Cold Fusion Lounge',
-      'The Cryptic Rose', 'Singularity Executive', 'Event Horizon Red', 'Borealis Council',
-      'Solaris Zenith', 'Quantum Solitude', 'The Obsidian Vault', 'Aether Pavilion',
-      'Helios Grand Hall', 'Chronos Chamber', 'Hyperion Forum', 'Titan Monolith',
-      'Apex Horizon', 'Atlas Assembly', 'Starlight Conclave', 'Vanguard Chamber',
-      'The Sovereign Hearth', 'Elysium Gallery', 'The Cobalt Sphere', 'Celestial Sanctum',
-      'Zenith Arch', 'Pinnacle Forum', 'Meridian Oasis', 'The Iron Compass',
-      'Equinox Pavilion', 'Solstice Retreat', 'The Emerald Atrium', 'Sapphire Council',
-      'Marble Bastion', 'Granite Sanctuary', 'Alabaster Lounge', 'Amber Citadel',
-      'The Golden Fleece', 'Argonaut Assembly', 'Prometheus Forge', 'Daedalus Workshop',
-      'Icarus Crest', 'Orpheus Auditorium', 'Athena Acropolis', 'Spartan Phalanx',
-      'Olympus Summit', 'Delphi Portico', 'The Glass Citadel', 'Diamond Horizon',
-      'Platinum Spire', 'Velvet Diplomat', 'The Silk Route', 'Ambergris Hall',
-      'Tungsten Bunker', 'Graphene Chamber', 'Krypton Gallery', 'Xenon Assembly',
-      'Argon Retreat', 'Neon Forum', 'Helium Zenith', 'Hydrogen Core',
-      'Perseus Bastion', 'Andromeda Spire', 'Cassiopeia Crown', 'Cygnus Atrium',
-      'Orion Belt Council', 'Sirius Bright Hall', 'Vega North Hub', 'Polaris Pivot',
-      'Ursa Major Room', 'Centauri Nexus', 'Nebula Chamber', 'Supernova Suite',
-      'Pulsar Forum', 'Quasar Assembly', 'Magnetar Core', 'Cosmos Arena',
-      'The Silent Treaty', 'Geneva Protocol', 'The Sovereign Round', 'Westphalia Suite',
-      'Hanseatic League', 'Venetian Loggia', 'Florentine Salon', 'Castilian Court',
-      'Burgundy Forum', 'Bavarian Citadel', 'Nordic Council', 'Baltic Bastion',
-      'Danubian Conclave', 'Carpathian Summit', 'Rhodope Sanctuary', 'Balkan Crossroads',
-      'Thracian Gold Suite', 'Dobruja Granary', 'Pontic Haven', 'The 7777 Supreme Senate'
-    ];
-
-    let optionsHtml = '<option value="">-- Choose Conference Chamber (Instant Jump) --</option>';
-    chamberNames.forEach((name, idx) => {
-      const chamberNum = idx + 1;
-      const floorTarget = 100 + chamberNum * 50;
-      optionsHtml += `<option value="${floorTarget}">Chamber #${String(chamberNum).padStart(2, '0')}: ${name} &bull; Fl ${floorTarget}</option>`;
-    });
-
-    selectChamber.innerHTML = optionsHtml;
 
     selectChamber.addEventListener('change', (e) => {
       const fl = e.target.value;
@@ -192,7 +155,7 @@
     });
   }
 
-  // 5. IN-LOBBY DRAFTING DESK (Safe contenteditable <div> \u2022 Zero Form Fields)
+  // 5. IN-LOBBY DRAFTING DESK (Working .TXT, PDF, Word, Print, Mail, Clear)
   function initExecutiveWorkbench() {
     const editor = document.getElementById('workbench-editor');
     const counter = document.getElementById('workbench-counter');
@@ -217,6 +180,7 @@
       if (counter) counter.textContent = `${words} words`;
     });
 
+    // 1. Download .TXT
     if (btnTxt) {
       btnTxt.addEventListener('click', (e) => {
         e.preventDefault();
@@ -231,6 +195,7 @@
       });
     }
 
+    // 2. Export PDF via Native Driver
     if (btnPdf) {
       btnPdf.addEventListener('click', (e) => {
         e.preventDefault();
@@ -240,6 +205,7 @@
       });
     }
 
+    // 3. Export Word (.doc XML format)
     if (btnDocx) {
       btnDocx.addEventListener('click', (e) => {
         e.preventDefault();
@@ -263,6 +229,7 @@
       });
     }
 
+    // 4. Print Clean
     if (btnPrint) {
       btnPrint.addEventListener('click', (e) => {
         e.preventDefault();
@@ -270,6 +237,7 @@
       });
     }
 
+    // 5. Mail via Local Client
     if (btnMail) {
       btnMail.addEventListener('click', (e) => {
         e.preventDefault();
@@ -281,6 +249,7 @@
       });
     }
 
+    // 6. Clear Buffer
     if (btnClear) {
       btnClear.addEventListener('click', (e) => {
         e.preventDefault();
@@ -290,7 +259,7 @@
     }
   }
 
-  // 6. MEDIA PAVILION (Smart Stop: Radio Stops TV, TV Stops Radio, Fullscreen, Outside Click Pause)
+  // 6. MEDIA PAVILION (Smart Stop: Radio Stops TV, TV Stops Radio, Fullscreen, Video Click Pause)
   function initMediaPavilion() {
     const channelSelect = document.getElementById('tv-channel-select');
     const tvViewport = document.getElementById('tv-viewport');
@@ -325,19 +294,23 @@
       if (btnRadioStop) btnRadioStop.style.display = 'none';
     }
 
+    // TV Controller
     if (channelSelect && tvViewport) {
       channelSelect.addEventListener('change', (e) => {
         const vid = e.target.value;
         if (!vid) {
           stopTv();
         } else {
+          // Starting TV stops Radio
           stopRadio();
+
           tvViewport.innerHTML = `<iframe id="tv-live-iframe" src="https://www.youtube-nocookie.com/embed/${vid}?autoplay=1&mute=0&rel=0&enablejsapi=1" allow="autoplay; encrypted-media; fullscreen; picture-in-picture" allowfullscreen="true" style="width:100%; height:100%; border:none;"></iframe>`;
           if (btnTvFullscreen) btnTvFullscreen.style.display = 'inline-flex';
           if (btnTvStop) btnTvStop.style.display = 'inline-flex';
         }
       });
 
+      // Pause/Stop on Click outside video frame
       tvViewport.addEventListener('click', (e) => {
         if (channelSelect.value && e.target === tvViewport) {
           stopTv();
@@ -365,17 +338,21 @@
       });
     }
 
+    // Radio Controller
     if (radioSelect) {
       radioSelect.addEventListener('change', (e) => {
         const url = e.target.value;
         if (!url) {
           stopRadio();
         } else {
+          // Starting Radio stops TV
           stopTv();
+
           if (currentRadioAudio) {
             currentRadioAudio.pause();
             currentRadioAudio = null;
           }
+
           currentRadioAudio = new Audio(url);
           currentRadioAudio.play().then(() => {
             if (radioStatus) radioStatus.textContent = 'Radio: Live Streaming';
@@ -524,6 +501,7 @@
       }, intervalTime);
     }
 
+    // Keypad Handlers
     document.querySelectorAll('.num-key').forEach(key => {
       key.addEventListener('click', (e) => {
         e.preventDefault();
@@ -627,7 +605,7 @@
     }
   }
 
-  // 11. ARTICLE VOICE READER
+  // 11. ARTICLE VOICE READER (Global SpeechSynthesis)
   function initArticleVoiceReader() {
     if (!('speechSynthesis' in window)) return;
     const btn = document.getElementById('btn-read-article');
@@ -645,7 +623,7 @@
       e.preventDefault();
       if (isSpeaking || window.speechSynthesis.speaking) return stopArticleVoice();
 
-      const contentBox = document.querySelector('article.audit-box, main .shell, main .shell-grand');
+      const contentBox = document.querySelector('article.audit-box, main .shell, main .shell-grand, .lobby-hero');
       if (!contentBox) return;
 
       const title = contentBox.querySelector('h1')?.textContent.trim() || '';
