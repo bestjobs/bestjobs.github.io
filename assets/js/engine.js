@@ -3,7 +3,6 @@
 
   let liveAnnouncer = null;
   let audioCtx = null;
-  let currentRadioAudio = null;
 
   document.addEventListener('DOMContentLoaded', () => {
     try { initLiveAnnouncer(); } catch (e) {}
@@ -12,7 +11,6 @@
     try { initExquisiteChambers(); } catch (e) {}
     try { initExecutiveWorkbench(); } catch (e) {}
     try { initElevatorSystem(); } catch (e) {}
-    try { initMediaPavilion(); } catch (e) {}
     try { initArticleVoiceReader(); } catch (e) {}
     try { initStreamAudioPlayer(); } catch (e) {}
     try { initWebShare(); } catch (e) {}
@@ -196,8 +194,9 @@
     if (btnPdf) {
       btnPdf.addEventListener('click', (e) => {
         e.preventDefault();
-        if (!getText()) { alert('Draft is empty.'); return; }
-        window.print();
+        const text = getText();
+        if (!text) { alert('Draft is empty.'); return; }
+        printOnlyDraft(text);
       });
     }
 
@@ -227,11 +226,63 @@
       });
     }
 
-    // 4. Print Clean
+    // 4. Print ONLY the text (Clean Isolated Driver - Zero Website Bloat)
+    function printOnlyDraft(text) {
+      const iframe = document.createElement('iframe');
+      iframe.style.position = 'fixed';
+      iframe.style.right = '0';
+      iframe.style.bottom = '0';
+      iframe.style.width = '0';
+      iframe.style.height = '0';
+      iframe.style.border = '0';
+      document.body.appendChild(iframe);
+
+      const doc = iframe.contentWindow.document;
+      doc.open();
+      doc.write(`
+        <!DOCTYPE html>
+        <html>
+        <head>
+          <meta charset="utf-8">
+          <title>Document Print</title>
+          <style>
+            body {
+              font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+              font-size: 12pt;
+              line-height: 1.6;
+              padding: 2cm;
+              margin: 0;
+              color: #000000;
+            }
+            p {
+              margin: 0 0 1em 0;
+              white-space: pre-wrap;
+              word-wrap: break-word;
+            }
+          </style>
+        </head>
+        <body>
+          ${text.split('\n').map(line => `<p>${line ? line.replace(/</g, '&lt;').replace(/>/g, '&gt;') : '&nbsp;'}</p>`).join('')}
+        </body>
+        </html>
+      `);
+      doc.close();
+
+      iframe.contentWindow.focus();
+      iframe.contentWindow.print();
+      setTimeout(() => {
+        if (document.body.contains(iframe)) {
+          document.body.removeChild(iframe);
+        }
+      }, 2000);
+    }
+
     if (btnPrint) {
       btnPrint.addEventListener('click', (e) => {
         e.preventDefault();
-        window.print();
+        const text = getText();
+        if (!text) { alert('Draft is empty.'); return; }
+        printOnlyDraft(text);
       });
     }
 
@@ -257,116 +308,7 @@
     }
   }
 
-  // 6. MEDIA PAVILION (Smart Stop: Radio Stops TV, TV Stops Radio, Fullscreen, Video Click Pause)
-  function initMediaPavilion() {
-    const channelSelect = document.getElementById('tv-channel-select');
-    const tvViewport = document.getElementById('tv-viewport');
-    const btnTvFullscreen = document.getElementById('btn-tv-fullscreen');
-    const btnTvStop = document.getElementById('btn-tv-stop');
-    const radioSelect = document.getElementById('radio-station-select');
-    const radioStatus = document.getElementById('radio-status-text');
-    const btnRadioStop = document.getElementById('btn-radio-stop');
-
-    function stopTv() {
-      if (tvViewport) {
-        tvViewport.innerHTML = `
-          <div id="tv-standby-message">
-            <div class="plasma-standby-title">Video Terminal Standby (0 KB)</div>
-            <p class="plasma-standby-desc">Select channel above to stream high-definition broadcast.</p>
-          </div>
-        `;
-      }
-      if (channelSelect) channelSelect.value = '';
-      if (btnTvFullscreen) btnTvFullscreen.style.display = 'none';
-      if (btnTvStop) btnTvStop.style.display = 'none';
-    }
-
-    function stopRadio() {
-      if (currentRadioAudio) {
-        currentRadioAudio.pause();
-        currentRadioAudio.src = '';
-        currentRadioAudio = null;
-      }
-      if (radioSelect) radioSelect.value = '';
-      if (radioStatus) radioStatus.textContent = 'Radio: Standby';
-      if (btnRadioStop) btnRadioStop.style.display = 'none';
-    }
-
-    // TV Controller
-    if (channelSelect && tvViewport) {
-      channelSelect.addEventListener('change', (e) => {
-        const vid = e.target.value;
-        if (!vid) {
-          stopTv();
-        } else {
-          stopRadio();
-          tvViewport.innerHTML = `<iframe id="tv-live-iframe" src="https://www.youtube-nocookie.com/embed/${vid}?autoplay=1&mute=0&rel=0&enablejsapi=1" allow="autoplay; encrypted-media; fullscreen; picture-in-picture" allowfullscreen="true" style="width:100%; height:100%; border:none;"></iframe>`;
-          if (btnTvFullscreen) btnTvFullscreen.style.display = 'inline-flex';
-          if (btnTvStop) btnTvStop.style.display = 'inline-flex';
-        }
-      });
-
-      // Pause/Stop on Click outside video frame
-      tvViewport.addEventListener('click', (e) => {
-        if (channelSelect.value && e.target === tvViewport) {
-          stopTv();
-        }
-      });
-    }
-
-    if (btnTvStop) {
-      btnTvStop.addEventListener('click', (e) => {
-        e.preventDefault();
-        stopTv();
-      });
-    }
-
-    if (btnTvFullscreen && tvViewport) {
-      btnTvFullscreen.addEventListener('click', (e) => {
-        e.preventDefault();
-        if (!document.fullscreenElement) {
-          if (tvViewport.requestFullscreen) tvViewport.requestFullscreen();
-          else if (tvViewport.webkitRequestFullscreen) tvViewport.webkitRequestFullscreen();
-          else if (tvViewport.msRequestFullscreen) tvViewport.msRequestFullscreen();
-        } else {
-          if (document.exitFullscreen) document.exitFullscreen();
-        }
-      });
-    }
-
-    // Radio Controller
-    if (radioSelect) {
-      radioSelect.addEventListener('change', (e) => {
-        const url = e.target.value;
-        if (!url) {
-          stopRadio();
-        } else {
-          stopTv();
-          if (currentRadioAudio) {
-            currentRadioAudio.pause();
-            currentRadioAudio = null;
-          }
-          currentRadioAudio = new Audio(url);
-          currentRadioAudio.play().then(() => {
-            if (radioStatus) radioStatus.textContent = 'Radio: Live Streaming';
-            if (btnRadioStop) btnRadioStop.style.display = 'inline-flex';
-            announce('Radio audio relay active.');
-          }).catch(() => {
-            if (radioStatus) radioStatus.textContent = 'Error connecting to audio stream.';
-          });
-        }
-      });
-    }
-
-    if (btnRadioStop) {
-      btnRadioStop.addEventListener('click', (e) => {
-        e.preventDefault();
-        stopRadio();
-      });
-    }
-  }
-
-  // 7. 28 ELEVATOR SHAFTS & DUAL-SPEED ENGINE
+  // 6. 28 ELEVATOR SHAFTS & DUAL-SPEED ENGINE
   function getAudioContext() {
     if (!audioCtx) {
       const AudioContextClass = window.AudioContext || window.webkitAudioContext;
@@ -494,7 +436,7 @@
       }, intervalTime);
     }
 
-    // Keypad Clicks
+    // Keypad Handlers
     document.querySelectorAll('.num-key').forEach(key => {
       key.addEventListener('click', (e) => {
         e.preventDefault();
@@ -533,7 +475,7 @@
     });
   }
 
-  // 8. GLOBAL ARTICLE VOICE READER (SpeechSynthesis)
+  // 7. GLOBAL ARTICLE VOICE READER (Mandatory Standard)
   function initArticleVoiceReader() {
     if (!('speechSynthesis' in window)) return;
     const btn = document.getElementById('btn-read-article');
@@ -551,7 +493,7 @@
       e.preventDefault();
       if (isSpeaking || window.speechSynthesis.speaking) return stopArticleVoice();
 
-      const contentBox = document.querySelector('article.audit-box, main .shell, main .shell-grand, .lobby-hero');
+      const contentBox = document.querySelector('.lobby-hero, article.audit-box, main .shell-grand');
       if (!contentBox) return;
 
       const title = contentBox.querySelector('h1')?.textContent.trim() || '';
@@ -570,7 +512,7 @@
     });
   }
 
-  // 9. WEB SHARE API
+  // 8. WEB SHARE API
   function initWebShare() {
     const shareBtn = document.getElementById('btn-share-page');
     if (!shareBtn) return;
@@ -597,13 +539,13 @@
     });
   }
 
-  // 10. PRINT SLIP
+  // 9. PRINT SLIP
   function initPrintSlip() {
     const printBtn = document.getElementById('btn-print-slip');
     if (printBtn) printBtn.addEventListener('click', (e) => { e.preventDefault(); window.print(); });
   }
 
-  // 11. ANTI-BOT MATH GATE
+  // 10. ANTI-BOT MATH GATE
   function initAntiBotGate() {
     const gateBox = document.querySelector('.anti-bot-gate');
     if (!gateBox) return;
@@ -645,7 +587,7 @@
     }
   }
 
-  // 12. STREAM AUDIO PLAYER
+  // 11. STREAM AUDIO PLAYER
   function initStreamAudioPlayer() {
     if (!('speechSynthesis' in window)) return;
     const streamBtn = document.getElementById('btn-stream-audio');
@@ -690,7 +632,7 @@
     });
   }
 
-  // 13. FILTER SYSTEM (Floor 40 Multi-Filter)
+  // 12. FILTER SYSTEM (Floor 40 Multi-Filter)
   function initFilterSystem() {
     const searchBtn = document.getElementById('btn-filter-search');
     const resetBtn = document.getElementById('btn-filter-reset');
@@ -743,7 +685,7 @@
     });
   }
 
-  // 14. VIEW SWITCHER
+  // 13. VIEW SWITCHER
   function initViewSwitcher() {
     const container = document.getElementById('jobs-container');
     const viewButtons = document.querySelectorAll('.view-btn');
@@ -759,7 +701,7 @@
     });
   }
 
-  // 15. LOAD MORE PAGINATION
+  // 14. LOAD MORE PAGINATION
   function initLoadMore() {
     const loadMoreBtn = document.getElementById('btn-load-more');
     const cards = Array.from(document.querySelectorAll('.job-card'));
