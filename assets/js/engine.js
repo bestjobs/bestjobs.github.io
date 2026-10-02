@@ -7,7 +7,7 @@
 
   document.addEventListener('DOMContentLoaded', () => {
     initLiveAnnouncer();
-    initMarketClocks();
+    initMeridianClocks();
     initConciergeDesk();
     initExquisiteChambers();
     initExecutiveWorkbench();
@@ -23,7 +23,7 @@
     initLoadMore();
   });
 
-  // 1. A11Y LIVE ANNOUNCER
+  // 1. A11Y ANNOUNCER
   function initLiveAnnouncer() {
     liveAnnouncer = document.getElementById('a11y-announcer');
     if (!liveAnnouncer) {
@@ -51,32 +51,51 @@
     }
   }
 
-  // 2. FINANCIAL MARKET SESSIONS CLOCKS (Day of Week + Date + Time)
-  function initMarketClocks() {
-    const elSofia = document.getElementById('clock-sofia');
-    const elLondon = document.getElementById('clock-london');
+  // 2. MERIDIAN MARKET PULSE (Strict West to East Order + Full Date)
+  function initMeridianClocks() {
+    const dateEl = document.getElementById('current-calendar-date');
     const elNy = document.getElementById('clock-ny');
+    const elLondon = document.getElementById('clock-london');
+    const elMonaco = document.getElementById('clock-monaco');
+    const elSofia = document.getElementById('clock-sofia');
+    const elMoscow = document.getElementById('clock-moscow');
+    const elAbuDhabi = document.getElementById('clock-abudhabi');
+    const elHongKong = document.getElementById('clock-hongkong');
     const elTokyo = document.getElementById('clock-tokyo');
-
-    if (!elSofia && !elLondon && !elNy && !elTokyo) return;
 
     function updateClocks() {
       const now = new Date();
-      const fmt = (tz) => new Intl.DateTimeFormat('en-GB', {
-        timeZone: tz,
-        weekday: 'short',
-        day: '2-digit',
-        month: '2-digit',
-        year: 'numeric',
-        hour: '2-digit',
-        minute: '2-digit',
-        second: '2-digit',
-        hour12: false
-      }).format(now);
+      
+      if (dateEl) {
+        dateEl.textContent = new Intl.DateTimeFormat('en-GB', {
+          weekday: 'long',
+          day: '2-digit',
+          month: 'long',
+          year: 'numeric'
+        }).format(now);
+      }
 
-      if (elSofia) elSofia.textContent = fmt('Europe/Sofia');
-      if (elLondon) elLondon.textContent = fmt('Europe/London');
+      const fmt = (tz) => {
+        try {
+          return new Intl.DateTimeFormat('en-GB', {
+            timeZone: tz,
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+            hour12: false
+          }).format(now);
+        } catch (e) {
+          return '--:--';
+        }
+      };
+
       if (elNy) elNy.textContent = fmt('America/New_York');
+      if (elLondon) elLondon.textContent = fmt('Europe/London');
+      if (elMonaco) elMonaco.textContent = fmt('Europe/Monaco');
+      if (elSofia) elSofia.textContent = fmt('Europe/Sofia');
+      if (elMoscow) elMoscow.textContent = fmt('Europe/Moscow');
+      if (elAbuDhabi) elAbuDhabi.textContent = fmt('Asia/Dubai');
+      if (elHongKong) elHongKong.textContent = fmt('Asia/Hong_Kong');
       if (elTokyo) elTokyo.textContent = fmt('Asia/Tokyo');
     }
 
@@ -84,7 +103,7 @@
     setInterval(updateClocks, 1000);
   }
 
-  // 3. HEAD CONCIERGE DESK (VIP Arrangements & Dynamic List)
+  // 3. HEAD CONCIERGE DESK (VIP Arrangements Only)
   function initConciergeDesk() {
     const listEl = document.getElementById('concierge-dynamic-list');
     const isBg = (document.documentElement.lang || '').toLowerCase().startsWith('bg');
@@ -114,7 +133,7 @@
     }
   }
 
-  // 4. 100 EXQUISITE CONFERENCE CHAMBERS (Instant Transit Generator)
+  // 4. 100 EXQUISITE CONFERENCE CHAMBERS (Instant Jump Generator)
   function initExquisiteChambers() {
     const selectChamber = document.getElementById('select-chamber');
     if (!selectChamber) return;
@@ -173,7 +192,7 @@
     });
   }
 
-  // 5. IN-LOBBY DRAFTING DESK (Safe contenteditable <div> \u2022 Zero <input>/<textarea>)
+  // 5. IN-LOBBY DRAFTING DESK (Safe contenteditable <div> \u2022 Zero Form Fields)
   function initExecutiveWorkbench() {
     const editor = document.getElementById('workbench-editor');
     const counter = document.getElementById('workbench-counter');
@@ -198,7 +217,6 @@
       if (counter) counter.textContent = `${words} words`;
     });
 
-    // Download .TXT
     if (btnTxt) {
       btnTxt.addEventListener('click', (e) => {
         e.preventDefault();
@@ -207,13 +225,12 @@
         const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
         const a = document.createElement('a');
         a.href = URL.createObjectURL(blob);
-        a.download = `bestjobs-doc-${Date.now()}.txt`;
+        a.download = `bestjobs-draft-${Date.now()}.txt`;
         a.click();
         URL.revokeObjectURL(a.href);
       });
     }
 
-    // Export PDF via Print Driver
     if (btnPdf) {
       btnPdf.addEventListener('click', (e) => {
         e.preventDefault();
@@ -223,7 +240,6 @@
       });
     }
 
-    // Export Word (.doc XML standard)
     if (btnDocx) {
       btnDocx.addEventListener('click', (e) => {
         e.preventDefault();
@@ -247,7 +263,6 @@
       });
     }
 
-    // Clean Print
     if (btnPrint) {
       btnPrint.addEventListener('click', (e) => {
         e.preventDefault();
@@ -255,7 +270,6 @@
       });
     }
 
-    // Mail Dispatch via Local Client
     if (btnMail) {
       btnMail.addEventListener('click', (e) => {
         e.preventDefault();
@@ -267,7 +281,6 @@
       });
     }
 
-    // Clear Workspace
     if (btnClear) {
       btnClear.addEventListener('click', (e) => {
         e.preventDefault();
@@ -277,7 +290,7 @@
     }
   }
 
-  // 6. MEDIA PAVILION (Smart Mute: Radio Stops TV, TV Stops Radio, Fullscreen, Video Click Pause)
+  // 6. MEDIA PAVILION (Smart Stop: Radio Stops TV, TV Stops Radio, Fullscreen, Outside Click Pause)
   function initMediaPavilion() {
     const channelSelect = document.getElementById('tv-channel-select');
     const tvViewport = document.getElementById('tv-viewport');
@@ -312,23 +325,19 @@
       if (btnRadioStop) btnRadioStop.style.display = 'none';
     }
 
-    // TV Controller
     if (channelSelect && tvViewport) {
       channelSelect.addEventListener('change', (e) => {
         const vid = e.target.value;
         if (!vid) {
           stopTv();
         } else {
-          // Starting TV immediately stops Radio
           stopRadio();
-
           tvViewport.innerHTML = `<iframe id="tv-live-iframe" src="https://www.youtube-nocookie.com/embed/${vid}?autoplay=1&mute=0&rel=0&enablejsapi=1" allow="autoplay; encrypted-media; fullscreen; picture-in-picture" allowfullscreen="true" style="width:100%; height:100%; border:none;"></iframe>`;
           if (btnTvFullscreen) btnTvFullscreen.style.display = 'inline-flex';
           if (btnTvStop) btnTvStop.style.display = 'inline-flex';
         }
       });
 
-      // Pause / Stop on Click Outside Video Frame
       tvViewport.addEventListener('click', (e) => {
         if (channelSelect.value && e.target === tvViewport) {
           stopTv();
@@ -356,21 +365,17 @@
       });
     }
 
-    // Radio Controller
     if (radioSelect) {
       radioSelect.addEventListener('change', (e) => {
         const url = e.target.value;
         if (!url) {
           stopRadio();
         } else {
-          // Starting Radio immediately stops TV
           stopTv();
-
           if (currentRadioAudio) {
             currentRadioAudio.pause();
             currentRadioAudio = null;
           }
-
           currentRadioAudio = new Audio(url);
           currentRadioAudio.play().then(() => {
             if (radioStatus) radioStatus.textContent = 'Radio: Live Streaming';
@@ -408,7 +413,7 @@
     if (!ctx) return;
 
     const now = ctx.currentTime;
-    const freqs = [261.63, 329.63, 392.00]; // Harmonic Triad (C4, E4, G4)
+    const freqs = [261.63, 329.63, 392.00];
 
     freqs.forEach((freq, idx) => {
       const osc = ctx.createOscillator();
@@ -476,7 +481,6 @@
         url: `/floor/${targetFloorStr}/` 
       };
 
-      // Over Floor 100: Instant Gravity Teleport
       if (isInstant) {
         if (readout) {
           readout.style.color = 'var(--console-green)';
@@ -489,7 +493,6 @@
         return;
       }
 
-      // Levels 0 to 100: 10 Floors Per Second Simulation
       let simulatedFloor = 0;
       const step = targetNum >= 0 ? 1 : -1;
       const intervalTime = 100;
@@ -521,7 +524,6 @@
       }, intervalTime);
     }
 
-    // Keypad Handlers
     document.querySelectorAll('.num-key').forEach(key => {
       key.addEventListener('click', (e) => {
         e.preventDefault();
@@ -548,14 +550,6 @@
         if (currentBuffer !== '') executeTransit(currentBuffer);
       });
     }
-
-    // Intercept All Portal and Directory Transit Links
-    document.querySelectorAll('.transit-btn[data-floor]').forEach(link => {
-      link.addEventListener('click', (e) => {
-        e.preventDefault();
-        executeTransit(link.getAttribute('data-floor'));
-      });
-    });
   }
 
   // 8. WEB SHARE API
@@ -633,7 +627,7 @@
     }
   }
 
-  // 11. ARTICLE VOICE READER (SpeechSynthesis)
+  // 11. ARTICLE VOICE READER
   function initArticleVoiceReader() {
     if (!('speechSynthesis' in window)) return;
     const btn = document.getElementById('btn-read-article');
