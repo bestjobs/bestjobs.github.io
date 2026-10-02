@@ -6,21 +6,21 @@
   let currentRadioAudio = null;
 
   document.addEventListener('DOMContentLoaded', () => {
-    initLiveAnnouncer();
-    initMeridianClocks();
-    initConciergeDesk();
-    initExquisiteChambers();
-    initExecutiveWorkbench();
-    initElevatorSystem();
-    initMediaPavilion();
-    initArticleVoiceReader();
-    initStreamAudioPlayer();
-    initWebShare();
-    initPrintSlip();
-    initAntiBotGate();
-    initFilterSystem();
-    initViewSwitcher();
-    initLoadMore();
+    try { initLiveAnnouncer(); } catch (e) {}
+    try { initMeridianClocks(); } catch (e) {}
+    try { initConciergeDesk(); } catch (e) {}
+    try { initExquisiteChambers(); } catch (e) {}
+    try { initExecutiveWorkbench(); } catch (e) {}
+    try { initElevatorSystem(); } catch (e) {}
+    try { initMediaPavilion(); } catch (e) {}
+    try { initArticleVoiceReader(); } catch (e) {}
+    try { initStreamAudioPlayer(); } catch (e) {}
+    try { initWebShare(); } catch (e) {}
+    try { initPrintSlip(); } catch (e) {}
+    try { initAntiBotGate(); } catch (e) {}
+    try { initFilterSystem(); } catch (e) {}
+    try { initViewSwitcher(); } catch (e) {}
+    try { initLoadMore(); } catch (e) {}
   });
 
   // 1. A11Y ANNOUNCER
@@ -154,7 +154,7 @@
     });
   }
 
-  // 5. IN-LOBBY DRAFTING DESK (Safe contenteditable <div>)
+  // 5. IN-LOBBY DRAFTING DESK (Working .TXT, PDF, Word, Print, Mail, Clear)
   function initExecutiveWorkbench() {
     const editor = document.getElementById('workbench-editor');
     const counter = document.getElementById('workbench-counter');
@@ -167,14 +167,10 @@
 
     if (!editor) return;
 
-    editor.addEventListener('focus', () => {
-      if (editor.textContent.trim() === 'Type or paste document draft here...') {
-        editor.textContent = '';
-      }
-    });
+    const getText = () => (editor.value || '').trim();
 
     editor.addEventListener('input', () => {
-      const text = editor.innerText.trim();
+      const text = getText();
       const words = text ? text.split(/\s+/).filter(Boolean).length : 0;
       if (counter) counter.textContent = `${words} words`;
     });
@@ -183,23 +179,24 @@
     if (btnTxt) {
       btnTxt.addEventListener('click', (e) => {
         e.preventDefault();
-        const text = editor.innerText.trim();
-        if (!text || text === 'Type or paste document draft here...') { alert('Editor is empty.'); return; }
+        const text = getText();
+        if (!text) { alert('Draft is empty.'); return; }
         const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
         const a = document.createElement('a');
         a.href = URL.createObjectURL(blob);
         a.download = `bestjobs-draft-${Date.now()}.txt`;
+        document.body.appendChild(a);
         a.click();
+        document.body.removeChild(a);
         URL.revokeObjectURL(a.href);
       });
     }
 
-    // 2. Export PDF via Native Print Driver
+    // 2. Export PDF via Native Driver
     if (btnPdf) {
       btnPdf.addEventListener('click', (e) => {
         e.preventDefault();
-        const text = editor.innerText.trim();
-        if (!text || text === 'Type or paste document draft here...') { alert('Editor is empty.'); return; }
+        if (!getText()) { alert('Draft is empty.'); return; }
         window.print();
       });
     }
@@ -208,8 +205,8 @@
     if (btnDocx) {
       btnDocx.addEventListener('click', (e) => {
         e.preventDefault();
-        const text = editor.innerText.trim();
-        if (!text || text === 'Type or paste document draft here...') { alert('Editor is empty.'); return; }
+        const text = getText();
+        if (!text) { alert('Draft is empty.'); return; }
         const paragraphs = text.split('\n').map(p => `<p>${p || '&nbsp;'}</p>`).join('');
         const docContent = `
           <html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
@@ -223,7 +220,9 @@
         const a = document.createElement('a');
         a.href = URL.createObjectURL(blob);
         a.download = `bestjobs-doc-${Date.now()}.doc`;
+        document.body.appendChild(a);
         a.click();
+        document.body.removeChild(a);
         URL.revokeObjectURL(a.href);
       });
     }
@@ -240,8 +239,8 @@
     if (btnMail) {
       btnMail.addEventListener('click', (e) => {
         e.preventDefault();
-        const text = editor.innerText.trim();
-        if (!text || text === 'Type or paste document draft here...') { alert('Editor is empty.'); return; }
+        const text = getText();
+        if (!text) { alert('Draft is empty.'); return; }
         const subject = encodeURIComponent('BestJobs Dispatch \u2022 Executive Document');
         const body = encodeURIComponent(text);
         window.location.href = `mailto:?subject=${subject}&body=${body}`;
@@ -252,7 +251,7 @@
     if (btnClear) {
       btnClear.addEventListener('click', (e) => {
         e.preventDefault();
-        editor.textContent = '';
+        editor.value = '';
         if (counter) counter.textContent = '0 words';
       });
     }
@@ -300,9 +299,7 @@
         if (!vid) {
           stopTv();
         } else {
-          // Starting TV stops Radio
           stopRadio();
-
           tvViewport.innerHTML = `<iframe id="tv-live-iframe" src="https://www.youtube-nocookie.com/embed/${vid}?autoplay=1&mute=0&rel=0&enablejsapi=1" allow="autoplay; encrypted-media; fullscreen; picture-in-picture" allowfullscreen="true" style="width:100%; height:100%; border:none;"></iframe>`;
           if (btnTvFullscreen) btnTvFullscreen.style.display = 'inline-flex';
           if (btnTvStop) btnTvStop.style.display = 'inline-flex';
@@ -344,14 +341,11 @@
         if (!url) {
           stopRadio();
         } else {
-          // Starting Radio stops TV
           stopTv();
-
           if (currentRadioAudio) {
             currentRadioAudio.pause();
             currentRadioAudio = null;
           }
-
           currentRadioAudio = new Audio(url);
           currentRadioAudio.play().then(() => {
             if (radioStatus) radioStatus.textContent = 'Radio: Live Streaming';
@@ -500,10 +494,11 @@
       }, intervalTime);
     }
 
-    // Keypad Handlers
+    // Keypad Clicks
     document.querySelectorAll('.num-key').forEach(key => {
       key.addEventListener('click', (e) => {
         e.preventDefault();
+        getAudioContext();
         if (currentBuffer.length < 4) {
           currentBuffer += key.getAttribute('data-digit');
           if (bufferDisplay) bufferDisplay.textContent = currentBuffer;
@@ -527,9 +522,18 @@
         if (currentBuffer !== '') executeTransit(currentBuffer);
       });
     }
+
+    // Intercept Direct Portal Anchors with Animation
+    document.querySelectorAll('.floor-portal-anchor[data-floor]').forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const fl = link.getAttribute('data-floor');
+        if (fl) executeTransit(fl);
+      });
+    });
   }
 
-  // 8. GLOBAL ARTICLE VOICE READER (Mandatory Standard)
+  // 8. GLOBAL ARTICLE VOICE READER (SpeechSynthesis)
   function initArticleVoiceReader() {
     if (!('speechSynthesis' in window)) return;
     const btn = document.getElementById('btn-read-article');
