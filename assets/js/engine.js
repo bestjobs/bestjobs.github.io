@@ -190,7 +190,56 @@
       });
     }
 
-    // 2. Export PDF via Native Driver
+    // Isolated Print Driver: Prints ONLY the text, never the website surrounding it
+    function printOnlyDraft(text) {
+      const iframe = document.createElement('iframe');
+      iframe.style.position = 'fixed';
+      iframe.style.right = '0';
+      iframe.style.bottom = '0';
+      iframe.style.width = '0';
+      iframe.style.height = '0';
+      iframe.style.border = '0';
+      document.body.appendChild(iframe);
+
+      const doc = iframe.contentWindow.document;
+      doc.open();
+      doc.write(`<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Document Print</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      font-size: 12pt;
+      line-height: 1.6;
+      padding: 2cm;
+      margin: 0;
+      color: #000000;
+    }
+    p {
+      margin: 0 0 1em 0;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+    }
+  </style>
+</head>
+<body>
+  ${text.split('\n').map(line => `<p>${line ? line.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;') : '&nbsp;'}</p>`).join('')}
+</body>
+</html>`);
+      doc.close();
+
+      iframe.contentWindow.focus();
+      iframe.contentWindow.print();
+      setTimeout(() => {
+        if (document.body.contains(iframe)) {
+          document.body.removeChild(iframe);
+        }
+      }, 2000);
+    }
+
+    // 2. Export PDF via Native Print Driver (Prints only document)
     if (btnPdf) {
       btnPdf.addEventListener('click', (e) => {
         e.preventDefault();
@@ -226,57 +275,7 @@
       });
     }
 
-    // 4. Print ONLY the text (Clean Isolated Driver - Zero Website Bloat)
-    function printOnlyDraft(text) {
-      const iframe = document.createElement('iframe');
-      iframe.style.position = 'fixed';
-      iframe.style.right = '0';
-      iframe.style.bottom = '0';
-      iframe.style.width = '0';
-      iframe.style.height = '0';
-      iframe.style.border = '0';
-      document.body.appendChild(iframe);
-
-      const doc = iframe.contentWindow.document;
-      doc.open();
-      doc.write(`
-        <!DOCTYPE html>
-        <html>
-        <head>
-          <meta charset="utf-8">
-          <title>Document Print</title>
-          <style>
-            body {
-              font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
-              font-size: 12pt;
-              line-height: 1.6;
-              padding: 2cm;
-              margin: 0;
-              color: #000000;
-            }
-            p {
-              margin: 0 0 1em 0;
-              white-space: pre-wrap;
-              word-wrap: break-word;
-            }
-          </style>
-        </head>
-        <body>
-          ${text.split('\n').map(line => `<p>${line ? line.replace(/</g, '&lt;').replace(/>/g, '&gt;') : '&nbsp;'}</p>`).join('')}
-        </body>
-        </html>
-      `);
-      doc.close();
-
-      iframe.contentWindow.focus();
-      iframe.contentWindow.print();
-      setTimeout(() => {
-        if (document.body.contains(iframe)) {
-          document.body.removeChild(iframe);
-        }
-      }, 2000);
-    }
-
+    // 4. Print Clean Text Only
     if (btnPrint) {
       btnPrint.addEventListener('click', (e) => {
         e.preventDefault();
