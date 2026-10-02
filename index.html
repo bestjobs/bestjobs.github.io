@@ -59,7 +59,7 @@
         <div style="font-size: 0.95rem; font-weight: 800; color: var(--primary); text-transform: uppercase; letter-spacing: 0.05em; border-bottom: 1px solid var(--border); padding-bottom: 0.35rem; margin-bottom: 0.5rem;">
           📅 <span id="current-calendar-date">Loading date...</span>
         </div>
-        <!-- Row 2: Clocks Ordered by Meridians (West to East) -->
+        <!-- Row 2: Clocks in Single Horizontal Line by Meridians (West to East) -->
         <div style="display: flex; align-items: center; gap: 1.25rem; font-size: 0.82rem; font-weight: 700; overflow-x: auto; white-space: nowrap; scrollbar-gutter: stable;">
           <span>New York: <strong id="clock-ny" style="color: var(--text);">--:--</strong></span>
           <span class="legal-sep">&bull;</span>
@@ -79,14 +79,14 @@
         </div>
       </section>
 
-      <!-- Welcome Section (Concise & With Working Voice Reader) -->
+      <!-- Welcome Section (Concise & With Voice Reader) -->
       <section class="lobby-hero" aria-labelledby="lobby-heading">
         <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 0.75rem; margin-bottom: 0.5rem;">
           <div>
             <span class="hero-tag">DIGITAL MEGA-SKYSCRAPER &bull; BESTJOBS TOWER &bull; 7,777 FLOORS</span>
             <h1 id="lobby-heading" style="margin-bottom: 0;">WELCOME TO BESTJOBS SKYSCRAPER!</h1>
           </div>
-          <!-- Voice Reader Button (Global Law) -->
+          <!-- Voice Reader Button (Mandatory Standard) -->
           <a href="#read" id="btn-read-article" class="btn-stream-audio" title="Listen to the Grand Lobby text via speech synthesis">
             🔊 Read Aloud
           </a>
@@ -167,7 +167,7 @@
             </ul>
           </section>
 
-          <!-- Spacious In-Lobby Drafting Desk (5 Visible Rows, Clean Print Engine) -->
+          <!-- 10-Row Spacious In-Lobby Drafting Desk -->
           <section class="wing-column-box" aria-labelledby="desk-heading">
             <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); padding-bottom: 0.4rem;">
               <h2 id="desk-heading" style="margin: 0; border: none; padding: 0;">✍️ Drafting Desk</h2>
@@ -175,7 +175,7 @@
             </div>
             <p class="wing-lead-note">Draft news releases, speeches, or contracts locally in RAM with zero telemetry.</p>
             
-            <textarea id="workbench-editor" rows="5" placeholder="Type or paste document draft here..." style="width: 100%; min-height: 140px; height: 140px; font-family: inherit; font-size: 0.92rem; line-height: 1.6; background: var(--bg); color: var(--text); padding: 0.75rem; border: 1px solid var(--border); border-radius: var(--radius); resize: vertical; margin-bottom: 0.5rem; display: block;"></textarea>
+            <textarea id="workbench-editor" rows="10" placeholder="Type or paste document draft here..." style="width: 100%; min-height: 240px; height: 240px; font-family: inherit; font-size: 0.95rem; line-height: 1.6; background: var(--bg); color: var(--text); padding: 0.85rem; border: 1px solid var(--border); border-radius: var(--radius); resize: vertical; margin-bottom: 0.5rem; display: block;"></textarea>
             
             <div style="display: flex; flex-wrap: wrap; gap: 0.4rem; align-items: center;">
               <a href="#save-txt" id="btn-bench-txt" class="nav-btn" style="min-height: 36px; padding: 0.35rem 0.65rem; font-size: 0.78rem;" title="Download clean plain text file">💾 .TXT</a>
@@ -207,8 +207,8 @@
             <div class="speedometer-flight-display" id="flight-readout">STATIONARY &bull; FLOOR 00 (GRAND LOBBY)</div>
           </div>
 
-          <!-- Key Commercial Portals Grid (Proper Top-to-Bottom Hierarchy) -->
-          <div class="floors-launch-grid">
+          <!-- Single-Column Vertical Elevator Shaft (Strict Top-to-Bottom Flow) -->
+          <div style="display: flex; flex-direction: column; gap: 0.45rem; width: 100%;">
             <a href="https://mobikom.bg" target="_blank" rel="noopener" class="floor-portal-anchor penthouse-vip" data-floor="7777" title="Floor 7777+ &bull; Mobikom Bulgaria Executive Penthouse">
               <span>👑 Floor 7777+ &bull; Mobikom Penthouse</span>
               <span>&uarr; (Instant)</span>
@@ -251,25 +251,25 @@
             </a>
           </div>
 
-          <!-- Numeric Keypad Chassis (Clean Light Theme with High Contrast 3D Buttons) -->
-          <div style="background: var(--bg-alt); border: 2px solid var(--border-strong); border-radius: 8px; padding: 1.25rem; max-width: 400px; margin-inline: auto; width: 100%; box-shadow: 0 4px 16px rgba(0,0,0,0.06);">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.65rem; font-size: 0.85rem; font-weight: 800; text-transform: uppercase; color: var(--text);">
+          <!-- 3x4 Hardware Keypad Chassis (Clean Light Theme with High Contrast Tactile Grid) -->
+          <div style="background: var(--bg-alt); border: 2px solid var(--border-strong); border-radius: 8px; padding: 1.25rem; max-width: 380px; margin-inline: auto; width: 100%; box-shadow: 0 4px 16px rgba(0,0,0,0.06);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem; font-size: 0.85rem; font-weight: 800; text-transform: uppercase; color: var(--text);">
               <span>Dial Destination (0 - 7777):</span>
-              <span id="keypad-buffer" style="font-family: monospace; font-size: 1.25rem; color: var(--vip-gold); font-weight: 900; background: var(--bg); border: 1px solid var(--border); padding: 0.2rem 0.6rem; border-radius: 4px;">----</span>
+              <span id="keypad-buffer" style="font-family: monospace; font-size: 1.3rem; color: var(--vip-gold); font-weight: 900; background: var(--bg); border: 1px solid var(--border); padding: 0.2rem 0.65rem; border-radius: 4px;">----</span>
             </div>
             <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.6rem;">
-              <a href="#dial-1" class="chip-btn num-key" data-digit="1" style="display: grid; place-items: center; min-height: 48px; font-size: 1.25rem; font-weight: 800; text-decoration: none; color: var(--text);" title="Dial 1">1</a>
-              <a href="#dial-2" class="chip-btn num-key" data-digit="2" style="display: grid; place-items: center; min-height: 48px; font-size: 1.25rem; font-weight: 800; text-decoration: none; color: var(--text);" title="Dial 2">2</a>
-              <a href="#dial-3" class="chip-btn num-key" data-digit="3" style="display: grid; place-items: center; min-height: 48px; font-size: 1.25rem; font-weight: 800; text-decoration: none; color: var(--text);" title="Dial 3">3</a>
-              <a href="#dial-4" class="chip-btn num-key" data-digit="4" style="display: grid; place-items: center; min-height: 48px; font-size: 1.25rem; font-weight: 800; text-decoration: none; color: var(--text);" title="Dial 4">4</a>
-              <a href="#dial-5" class="chip-btn num-key" data-digit="5" style="display: grid; place-items: center; min-height: 48px; font-size: 1.25rem; font-weight: 800; text-decoration: none; color: var(--text);" title="Dial 5">5</a>
-              <a href="#dial-6" class="chip-btn num-key" data-digit="6" style="display: grid; place-items: center; min-height: 48px; font-size: 1.25rem; font-weight: 800; text-decoration: none; color: var(--text);" title="Dial 6">6</a>
-              <a href="#dial-7" class="chip-btn num-key" data-digit="7" style="display: grid; place-items: center; min-height: 48px; font-size: 1.25rem; font-weight: 800; text-decoration: none; color: var(--text);" title="Dial 7">7</a>
-              <a href="#dial-8" class="chip-btn num-key" data-digit="8" style="display: grid; place-items: center; min-height: 48px; font-size: 1.25rem; font-weight: 800; text-decoration: none; color: var(--text);" title="Dial 8">8</a>
-              <a href="#dial-9" class="chip-btn num-key" data-digit="9" style="display: grid; place-items: center; min-height: 48px; font-size: 1.25rem; font-weight: 800; text-decoration: none; color: var(--text);" title="Dial 9">9</a>
-              <a href="#clear-buffer" class="chip-btn" id="key-clear" style="display: grid; place-items: center; min-height: 48px; font-size: 0.85rem; font-weight: 800; text-decoration: none; color: var(--danger);" title="Clear Buffer">CLEAR</a>
-              <a href="#dial-0" class="chip-btn num-key" data-digit="0" style="display: grid; place-items: center; min-height: 48px; font-size: 1.25rem; font-weight: 800; text-decoration: none; color: var(--text);" title="Dial 0">0</a>
-              <a href="#engage-transit" class="nav-btn" id="key-go" style="display: grid; place-items: center; min-height: 48px; font-size: 1rem; font-weight: 800; text-decoration: none; background: var(--wage); color: #fff;" title="Engage Elevator Transit">GO &rarr;</a>
+              <a href="#dial-1" class="chip-btn num-key" data-digit="1" style="display: grid; place-items: center; min-height: 52px; font-size: 1.3rem; font-weight: 800; text-decoration: none; color: var(--text);" title="Dial 1">1</a>
+              <a href="#dial-2" class="chip-btn num-key" data-digit="2" style="display: grid; place-items: center; min-height: 52px; font-size: 1.3rem; font-weight: 800; text-decoration: none; color: var(--text);" title="Dial 2">2</a>
+              <a href="#dial-3" class="chip-btn num-key" data-digit="3" style="display: grid; place-items: center; min-height: 52px; font-size: 1.3rem; font-weight: 800; text-decoration: none; color: var(--text);" title="Dial 3">3</a>
+              <a href="#dial-4" class="chip-btn num-key" data-digit="4" style="display: grid; place-items: center; min-height: 52px; font-size: 1.3rem; font-weight: 800; text-decoration: none; color: var(--text);" title="Dial 4">4</a>
+              <a href="#dial-5" class="chip-btn num-key" data-digit="5" style="display: grid; place-items: center; min-height: 52px; font-size: 1.3rem; font-weight: 800; text-decoration: none; color: var(--text);" title="Dial 5">5</a>
+              <a href="#dial-6" class="chip-btn num-key" data-digit="6" style="display: grid; place-items: center; min-height: 52px; font-size: 1.3rem; font-weight: 800; text-decoration: none; color: var(--text);" title="Dial 6">6</a>
+              <a href="#dial-7" class="chip-btn num-key" data-digit="7" style="display: grid; place-items: center; min-height: 52px; font-size: 1.3rem; font-weight: 800; text-decoration: none; color: var(--text);" title="Dial 7">7</a>
+              <a href="#dial-8" class="chip-btn num-key" data-digit="8" style="display: grid; place-items: center; min-height: 52px; font-size: 1.3rem; font-weight: 800; text-decoration: none; color: var(--text);" title="Dial 8">8</a>
+              <a href="#dial-9" class="chip-btn num-key" data-digit="9" style="display: grid; place-items: center; min-height: 52px; font-size: 1.3rem; font-weight: 800; text-decoration: none; color: var(--text);" title="Dial 9">9</a>
+              <a href="#clear-buffer" class="chip-btn" id="key-clear" style="display: grid; place-items: center; min-height: 52px; font-size: 0.85rem; font-weight: 800; text-decoration: none; color: var(--danger);" title="Clear Buffer">CLEAR</a>
+              <a href="#dial-0" class="chip-btn num-key" data-digit="0" style="display: grid; place-items: center; min-height: 52px; font-size: 1.3rem; font-weight: 800; text-decoration: none; color: var(--text);" title="Dial 0">0</a>
+              <a href="#engage-transit" class="nav-btn" id="key-go" style="display: grid; place-items: center; min-height: 52px; font-size: 1.05rem; font-weight: 800; text-decoration: none; background: var(--wage); color: #ffffff;" title="Engage Elevator Transit">GO &rarr;</a>
             </div>
           </div>
 
