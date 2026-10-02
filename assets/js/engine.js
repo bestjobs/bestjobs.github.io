@@ -49,12 +49,14 @@
     }
   }
 
-  // 2. CONCIERGE DYNAMIC DESK
+  // 2. HEAD CONCIERGE DESK & INTERACTIVE DIRECTORY SEARCH
   function initConciergeDesk() {
     const listEl = document.getElementById('concierge-dynamic-list');
-    if (!listEl) return;
-
+    const searchInput = document.getElementById('concierge-search-input');
+    const resultsContainer = document.getElementById('concierge-search-results');
     const isBg = (document.documentElement.lang || '').toLowerCase().startsWith('bg');
+
+    // VIP Arranged Experiences
     const conciergeOffers = isBg ? [
       { title: 'Ла Скала &bull; Милано', tag: 'Кралска ВИП Ложа', desc: 'Персонални ложи за премиерни оперни заглавия.', href: '/floor/0/#concierge-scala' },
       { title: 'Виенска държавна опера', tag: 'Централен балкон', desc: 'Ексклузивни места за виенската филхармония.', href: '/floor/0/#concierge-vienna' },
@@ -67,18 +69,58 @@
       { title: 'EuroLeague Final Four', tag: 'Presidential Suite', desc: 'Full corporate hospitality lounge access for global championship matches.', href: '/floor/0/#concierge-euroleague' }
     ];
 
-    listEl.innerHTML = conciergeOffers.map(item => `
-      <li class="concierge-entry-card">
-        <a href="${item.href}" title="${item.title} - ${item.tag}">
-          <span class="concierge-tier-tag">${item.tag}</span>
-          <strong>${item.title}</strong>
-          <span class="concierge-sub-desc">${item.desc}</span>
-        </a>
-      </li>
-    `).join('');
+    if (listEl) {
+      listEl.innerHTML = conciergeOffers.map(item => `
+        <li class="concierge-entry-card">
+          <a href="${item.href}" title="${item.title} - ${item.tag}">
+            <span class="concierge-tier-tag">${item.tag}</span>
+            <strong>${item.title}</strong>
+            <span class="concierge-sub-desc">${item.desc}</span>
+          </a>
+        </li>
+      `).join('');
+    }
+
+    // In-Memory Fast Building Directory Index
+    const directoryIndex = [
+      { keywords: ['jobs', 'job', 'work', 'career', 'работа', 'обяви', 'заплата', 'ваканция'], floor: '40', title: isBg ? 'Етаж 40: Кариерен борд (BestJobs)' : 'Floor 40: Career Board (BestJobs)', url: isBg ? '/bestjobs/bg/' : '/bestjobs/' },
+      { keywords: ['mall', 'b2b', 'showcase', 'мол', 'витрина', 'магазин', 'пазар'], floor: '30', title: isBg ? 'Етаж 30: B2B Търговски мол (Витрини 10€/ден)' : 'Floor 30: B2B Enterprise Mall (10€/day)', url: isBg ? '/mall/bg/' : '/mall/' },
+      { keywords: ['energy', 'bess', 'battery', 'ток', 'енергия', 'батерии', 'инфраструктура'], floor: '50', title: isBg ? 'Етаж 50: Индустриална енергетика & BESS' : 'Floor 50: Industrial Energy & BESS Grid', url: '/floor/50/' },
+      { keywords: ['casino', 'betting', 'gambling', 'казино', 'залози', 'хазарт'], floor: '100', title: isBg ? 'Етаж 100: Казино & Спортни залози' : 'Floor 100: Gaming & Sports Betting Hub', url: '/floor/100/' },
+      { keywords: ['lotto', 'toto', 'fun', 'тото', 'лото', 'игри', 'развлечение', 'числови'], floor: '10', title: isBg ? 'Етаж 10: Развлечения & Числови лотарии' : 'Floor 10: Entertainment & Lotteries', url: '/floor/10/' },
+      { keywords: ['iban', 'cashier', 'pay', 'bank', 'каса', 'плащане', 'банка', 'сметка', 'наем'], floor: '0', title: isBg ? 'Етаж 0: Администрация, Каса & IBAN реквизити' : 'Floor 0: Cashier Desk, IBAN KYC & Settlements', url: '/floor/0/' },
+      { keywords: ['wardrobe', 'text', 'cache', 'гардероб', 'текст', 'бланки'], floor: '-1', title: isBg ? 'Етаж -1: Дигитален гардероб & Текстов буфер' : 'Floor -1: Digital Wardrobe & Text Cache', url: '/floor/-1/' },
+      { keywords: ['archive', 'lost', 'seo', 'архив', 'вещи', 'стари'], floor: '-3', title: isBg ? 'Етаж -3: Загубени вещи & Постоянен SEO архив' : 'Floor -3: Lost & Found Archives', url: '/floor/-3/' },
+      { keywords: ['mobikom', 'penthouse', 'headquarters', 'управление', 'мобиком', 'пентхаус'], floor: '7777', title: isBg ? 'Етаж 7777+: Пентхаус Мобиком България' : 'Floor 7777+: Mobikom Executive Penthouse', url: 'https://mobikom.bg' }
+    ];
+
+    if (searchInput && resultsContainer) {
+      searchInput.addEventListener('input', (e) => {
+        const query = e.target.value.toLowerCase().trim();
+        if (query.length === 0) {
+          resultsContainer.innerHTML = '';
+          return;
+        }
+
+        const matches = directoryIndex.filter(item => 
+          item.keywords.some(k => k.includes(query)) || item.title.toLowerCase().includes(query) || item.floor === query
+        );
+
+        if (matches.length === 0) {
+          resultsContainer.innerHTML = `<div style="font-size:0.75rem; color:var(--muted); padding:0.25rem;">${isBg ? 'Няма намерени съвпадения. Попитайте за друг етаж или услуга.' : 'No matches found. Try another service or floor.'}</div>`;
+        } else {
+          resultsContainer.innerHTML = matches.map(m => `
+            <a href="${m.url}" class="floor-portal-anchor" style="padding:0.45rem 0.65rem; font-size:0.8rem; background:var(--bg);" title="${m.title}">
+              <span>${m.title}</span>
+              <span style="color:var(--primary); font-weight:800;">&rarr;</span>
+            </a>
+          `).join('');
+        }
+      });
+    }
   }
 
-  // 3. COMPACT TV CONTROLLER (Music, Cinema, Sports/Boxing/Fishing, Fashion, News)
+  // 3. COMPACT TV CONTROLLER (Ordered Categories, Fullscreen API)
   function initTvCompactPlayer() {
     const channelSelect = document.getElementById('tv-channel-select');
     const tvViewport = document.getElementById('tv-viewport');
@@ -86,35 +128,39 @@
 
     if (!channelSelect || !tvViewport) return;
 
-    // Стриктно разпределение по новите категории
+    // Стриктен ред: Новини -> Финанси -> Пълен спортен спектър -> Мода -> Кино -> Музика
     const tvChannels = [
-      { group: 'Музика (Music Channels)', options: [
-        { name: 'Lofi Girl (24/7 Global Chill/Beats)', id: 'jfKfPfyJRdk' },
-        { name: 'Classical Music & Opera Live', id: 'k6zW2Jp-q6k' },
-        { name: 'Clubbing TV (Electronic & Beats)', id: 'vW10jY-4_Xk' }
+      { group: '1. Новини (Global News)', options: [
+        { name: 'Euronews International (Live)', id: 'sPJXq0lPzaM' },
+        { name: 'Sky News UK (Live Stream)', id: '9Auq9mYxFEE' },
+        { name: 'ABC News Live (Global)', id: 'w_Ma8oQLmSM' },
+        { name: 'DW News International (Germany)', id: 'b1f3yO5W4gQ' },
+        { name: 'Al Jazeera English (Global)', id: 'gCNeDWCI0vo' }
       ]},
-      { group: 'Кино (Cinema & Movies)', options: [
-        { name: 'Classic Cinema Vault (Public Domain)', id: 'V8ZwaKz_X8s' },
-        { name: 'Sci-Fi & Fantasy Classics Live', id: 'dp8PhLsUcFE' },
-        { name: 'Documentary Central Live', id: 'FI2P4O-V50Q' }
+      { group: '2. Финанси (Global Finance & Markets)', options: [
+        { name: 'Bloomberg Global Financial Live', id: 'dp8PhLsUcFE' },
+        { name: 'Yahoo Finance Live Markets', id: 'V4w7r8U8N7M' }
       ]},
-      { group: 'Спорт, Бокс & Риболов (Sports & Outdoor)', options: [
-        { name: 'DAZN Combat Sports Highlights', id: '2qF8Z6uE_zQ' },
+      { group: '3. Пълен спортен спектър (Sports, Boxing & Outdoor)', options: [
+        { name: 'FIFA+ Football & Champions Hub', id: 'FI2P4O-V50Q' },
+        { name: 'DAZN Combat Sports & Boxing', id: '2qF8Z6uE_zQ' },
         { name: 'Red Bull Action & Extreme Sports', id: 'FI2P4O-V50Q' },
-        { name: 'World Surf League Official', id: 'c_6lKzYF9Xw' },
-        { name: 'Ocean Coral Reef & Deep Fishing', id: 'F109TZt3nRc' },
-        { name: 'African Safari Wildlife Hub', id: 'Xv2XJ9P2xU4' }
+        { name: 'World Surf League Official Live', id: 'c_6lKzYF9Xw' },
+        { name: 'Ocean Coral Reef & Deep Sea Fishing', id: 'F109TZt3nRc' },
+        { name: 'African Safari & Nature Habitat', id: 'Xv2XJ9P2xU4' }
       ]},
-      { group: 'Мода (Fashion & Runway)', options: [
-        { name: 'Fashion TV Runway Highlights', id: 'aBcDefGh123' },
-        { name: 'Luxury Lifestyle & Haute Couture', id: 'w_Ma8oQLmSM' }
+      { group: '4. Мода (Fashion & Luxury)', options: [
+        { name: 'Fashion TV Worldwide Runway', id: 'sPJXq0lPzaM' },
+        { name: 'Haute Couture & Luxury Lifestyle', id: 'w_Ma8oQLmSM' }
       ]},
-      { group: 'Новини & Финанси (News & Global Finance)', options: [
-        { name: 'Euronews International Live', id: 'sPJXq0lPzaM' },
-        { name: 'Bloomberg Global Financial', id: 'dp8PhLsUcFE' },
-        { name: 'Sky News UK Live Stream', id: '9Auq9mYxFEE' },
-        { name: 'ABC News Live Worldwide', id: 'w_Ma8oQLmSM' },
-        { name: 'Al Jazeera English Live', id: 'gCNeDWCI0vo' }
+      { group: '5. Кино (Cinema & Vault)', options: [
+        { name: 'Classic Cinema Vault (Golden Age)', id: 'V8ZwaKz_X8s' },
+        { name: 'Documentary Central Broadcast', id: 'dp8PhLsUcFE' }
+      ]},
+      { group: '6. Музика (Music & Opera)', options: [
+        { name: 'Lofi Girl (24/7 Global Chill/Beats)', id: 'jfKfPfyJRdk' },
+        { name: 'Classical Music & Symphonic Hall', id: 'k6zW2Jp-q6k' },
+        { name: 'Clubbing TV (Electronic Dance Music)', id: 'vW10jY-4_Xk' }
       ]}
     ];
 
@@ -129,18 +175,13 @@
 
     channelSelect.innerHTML = selectHtml;
 
-    // Контрол на размера в падащото меню (да не излиза от карето)
-    channelSelect.style.maxWidth = '100%';
-    channelSelect.style.boxSizing = 'border-box';
-    channelSelect.style.textOverflow = 'ellipsis';
-
     channelSelect.addEventListener('change', (e) => {
       const vid = e.target.value;
       if (!vid) {
         tvViewport.innerHTML = `
           <div id="tv-standby-message" style="display:flex; flex-direction:column; justify-content:center; align-items:center; height:100%;">
-            <div class="plasma-standby-title" style="font-size:0.95rem; color:#f1f5f9; font-weight:800; text-transform:uppercase;">Standby (0 KB)</div>
-            <p class="plasma-standby-desc" style="font-size:0.75rem; color:#94a3b8;">Select channel to stream.</p>
+            <div class="plasma-standby-title" style="font-size:0.95rem; color:#f1f5f9; font-weight:800; text-transform:uppercase;">Video Terminal Standby (0 KB)</div>
+            <p class="plasma-standby-desc" style="font-size:0.75rem; color:#94a3b8;">Select channel above to stream.</p>
           </div>
         `;
         if (btnFullscreen) btnFullscreen.style.display = 'none';
@@ -150,7 +191,7 @@
       }
     });
 
-    // Работещ Fullscreen върху външния контейнер
+    // Fullscreen API върху външния контейнер
     if (btnFullscreen) {
       btnFullscreen.addEventListener('click', (e) => {
         e.preventDefault();
@@ -172,19 +213,17 @@
     if (!radioSelect) return;
 
     const radioStreams = [
-      { name: 'БНР Хоризонт (Обществено радио)', url: 'https://stream.bgradio.bg:8000/horizont' },
-      { name: 'Classic FM (Световна класика)', url: 'https://stream.bgradio.bg:8000/classicfm' },
-      { name: 'SomaFM: Groove Salad (Ambient)', url: 'https://ice1.somafm.com/groovesalad-128-mp3' },
+      { name: 'БНР Хоризонт (Национално информационно радио)', url: 'https://stream.bgradio.bg:8000/horizont' },
+      { name: 'Classic FM (Световни класически концерти)', url: 'https://stream.bgradio.bg:8000/classicfm' },
+      { name: 'SomaFM: Groove Salad (Ambient & Chillout)', url: 'https://ice1.somafm.com/groovesalad-128-mp3' },
       { name: 'Swiss Jazz Live (Цюрих, Швейцария)', url: 'https://stream.srg-ssr.ch/m/rjs/mp3_128' }
     ];
 
-    let radioHtml = '<option value="">-- Радио Изключено (0 KB) --</option>';
+    let radioHtml = '<option value="">-- Radio Off (0 KB Standby) --</option>';
     radioStreams.forEach(st => {
       radioHtml += `<option value="${st.url}">${st.name}</option>`;
     });
     radioSelect.innerHTML = radioHtml;
-    radioSelect.style.maxWidth = '100%';
-    radioSelect.style.boxSizing = 'border-box';
 
     radioSelect.addEventListener('change', (e) => {
       const url = e.target.value;
@@ -195,21 +234,21 @@
       }
 
       if (!url) {
-        if (radioStatus) radioStatus.textContent = 'Радио: Изключено';
+        if (radioStatus) radioStatus.textContent = 'Radio: Standby';
         return;
       }
 
       currentRadioAudio = new Audio(url);
       currentRadioAudio.play().then(() => {
-        if (radioStatus) radioStatus.textContent = 'Радио: На живо';
-        announce('Радиото стартира.');
+        if (radioStatus) radioStatus.textContent = 'Radio: Live Streaming';
+        announce('Radio playback started.');
       }).catch(() => {
-        if (radioStatus) radioStatus.textContent = 'Грешка при зареждане на аудио стрийма.';
+        if (radioStatus) radioStatus.textContent = 'Error loading audio stream.';
       });
     });
   }
 
-  // 5. ELEVATOR SOUND & SPEEDOMETER (10 Floors / Second)
+  // 5. ELEVATOR DUAL-SPEED ENGINE & GRAVITY INVERSION OVER FLOOR 100
   function getAudioContext() {
     if (!audioCtx) {
       const AudioContextClass = window.AudioContext || window.webkitAudioContext;
@@ -221,47 +260,48 @@
     return audioCtx;
   }
 
-  function playElevatorSound() {
+  function playElevatorSound(isInstant) {
     const ctx = getAudioContext();
     if (!ctx) return;
 
     const now = ctx.currentTime;
-    const freqs = [261.63, 329.63, 392.00]; // C4, E4, G4
+    const freqs = [261.63, 329.63, 392.00]; // Harmonic Triad (C4, E4, G4)
 
     freqs.forEach((freq, idx) => {
       const osc = ctx.createOscillator();
       const gain = ctx.createGain();
       osc.type = 'sine';
-      osc.frequency.setValueAtTime(freq, now + idx * 0.15);
+      osc.frequency.setValueAtTime(freq, now + idx * 0.12);
 
-      gain.gain.setValueAtTime(0.001, now + idx * 0.15);
-      gain.gain.linearRampToValueAtTime(0.07, now + idx * 0.15 + 0.1);
-      gain.gain.exponentialRampToValueAtTime(0.0001, now + idx * 0.15 + 1.8);
+      gain.gain.setValueAtTime(0.001, now + idx * 0.12);
+      gain.gain.linearRampToValueAtTime(0.06, now + idx * 0.12 + 0.08);
+      gain.gain.exponentialRampToValueAtTime(0.0001, now + idx * 0.12 + 1.2);
 
       osc.connect(gain);
       gain.connect(ctx.destination);
 
-      osc.start(now + idx * 0.15);
-      osc.stop(now + idx * 0.15 + 1.9);
+      osc.start(now + idx * 0.12);
+      osc.stop(now + idx * 0.12 + 1.3);
     });
 
     // Arrival Ding
+    const dingDelay = isInstant ? 400 : 1800;
     setTimeout(() => {
       const dingOsc = ctx.createOscillator();
       const dingGain = ctx.createGain();
       dingOsc.type = 'triangle';
       dingOsc.frequency.setValueAtTime(880, ctx.currentTime);
-      dingOsc.frequency.exponentialRampToValueAtTime(440, ctx.currentTime + 1.2);
+      dingOsc.frequency.exponentialRampToValueAtTime(440, ctx.currentTime + 1.0);
 
       dingGain.gain.setValueAtTime(0.2, ctx.currentTime);
-      dingGain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 1.2);
+      dingGain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 1.0);
 
       dingOsc.connect(dingGain);
       dingGain.connect(ctx.destination);
 
       dingOsc.start(ctx.currentTime);
-      dingOsc.stop(ctx.currentTime + 1.2);
-    }, 1800);
+      dingOsc.stop(ctx.currentTime + 1.0);
+    }, dingDelay);
   }
 
   function initElevatorSystem() {
@@ -283,17 +323,33 @@
     };
 
     function executeTransit(targetFloorStr) {
-      playElevatorSound();
-
       const targetNum = parseInt(targetFloorStr, 10);
+      const isInstant = targetNum > 100 || targetFloorStr === '7777';
+
+      playElevatorSound(isInstant);
+
       const destination = knownFloors[targetFloorStr] || { 
         name: isBg ? `Етаж ${targetFloorStr}` : `Floor ${targetFloorStr}`, 
         url: `/floor/${targetFloorStr}/` 
       };
 
+      // ПРАВИЛО: Ако етажът е над 100 -> Мигновен скок (Instant Transit)
+      if (isInstant) {
+        if (readout) {
+          readout.style.color = 'var(--console-green)';
+          readout.textContent = isBg ? `МИГНОВЕН ЕКСПРЕС • ${destination.name.toUpperCase()}` : `INSTANT EXPRESS • ${destination.name.toUpperCase()}`;
+        }
+        announce(isBg ? `Мигновен скок до ${destination.name}` : `Instant arrival at ${destination.name}`);
+        setTimeout(() => {
+          window.location.href = destination.url;
+        }, 800);
+        return;
+      }
+
+      // За етажи до 100: Движение с 10 етажа в секунда (100ms за стъпка)
       let simulatedFloor = 0;
       const step = targetNum >= 0 ? 1 : -1;
-      const intervalTime = 100; // 10 етажа в секунда (100ms)
+      const intervalTime = 100;
 
       if (readout) readout.style.color = 'var(--vip-gold)';
 
