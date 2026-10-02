@@ -13,8 +13,8 @@
     initExecutiveWorkbench();
     initElevatorSystem();
     initMediaPavilion();
-    initStreamAudioPlayer();
     initArticleVoiceReader();
+    initStreamAudioPlayer();
     initWebShare();
     initPrintSlip();
     initAntiBotGate();
@@ -106,6 +106,7 @@
   // 3. CONCIERGE VIP OFFERS
   function initConciergeDesk() {
     const listEl = document.getElementById('concierge-dynamic-list');
+    if (!listEl) return;
     const isBg = (document.documentElement.lang || '').toLowerCase().startsWith('bg');
 
     const conciergeOffers = isBg ? [
@@ -120,17 +121,15 @@
       { title: 'EuroLeague Final Four', tag: 'Presidential Suite', desc: 'Full corporate hospitality lounge access for global championship matches.', href: '/floor/0/#concierge-euroleague' }
     ];
 
-    if (listEl) {
-      listEl.innerHTML = conciergeOffers.map(item => `
-        <li class="concierge-entry-card">
-          <a href="${item.href}" title="${item.title} - ${item.tag}">
-            <span class="concierge-tier-tag">${item.tag}</span>
-            <strong>${item.title}</strong>
-            <span class="concierge-sub-desc">${item.desc}</span>
-          </a>
-        </li>
-      `).join('');
-    }
+    listEl.innerHTML = conciergeOffers.map(item => `
+      <li class="concierge-entry-card">
+        <a href="${item.href}" title="${item.title} - ${item.tag}">
+          <span class="concierge-tier-tag">${item.tag}</span>
+          <strong>${item.title}</strong>
+          <span class="concierge-sub-desc">${item.desc}</span>
+        </a>
+      </li>
+    `).join('');
   }
 
   // 4. 100 EXQUISITE CONFERENCE CHAMBERS (Instant Teleport Jump)
@@ -155,7 +154,7 @@
     });
   }
 
-  // 5. IN-LOBBY DRAFTING DESK (Working .TXT, PDF, Word, Print, Mail, Clear)
+  // 5. IN-LOBBY DRAFTING DESK (Safe contenteditable <div>)
   function initExecutiveWorkbench() {
     const editor = document.getElementById('workbench-editor');
     const counter = document.getElementById('workbench-counter');
@@ -195,7 +194,7 @@
       });
     }
 
-    // 2. Export PDF via Native Driver
+    // 2. Export PDF via Native Print Driver
     if (btnPdf) {
       btnPdf.addEventListener('click', (e) => {
         e.preventDefault();
@@ -530,7 +529,44 @@
     }
   }
 
-  // 8. WEB SHARE API
+  // 8. GLOBAL ARTICLE VOICE READER (Mandatory Standard)
+  function initArticleVoiceReader() {
+    if (!('speechSynthesis' in window)) return;
+    const btn = document.getElementById('btn-read-article');
+    if (!btn) return;
+    const isBg = (document.documentElement.lang || '').toLowerCase().startsWith('bg');
+    let isSpeaking = false;
+
+    const stopArticleVoice = () => {
+      window.speechSynthesis.cancel();
+      isSpeaking = false;
+      btn.textContent = isBg ? '🔊 Прочети на глас' : '🔊 Read Aloud';
+    };
+
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      if (isSpeaking || window.speechSynthesis.speaking) return stopArticleVoice();
+
+      const contentBox = document.querySelector('article.audit-box, main .shell, main .shell-grand, .lobby-hero');
+      if (!contentBox) return;
+
+      const title = contentBox.querySelector('h1')?.textContent.trim() || '';
+      const textToRead = Array.from(contentBox.querySelectorAll('p, li')).map(n => n.textContent.trim()).filter(Boolean).join('. ');
+      
+      const utterance = new SpeechSynthesisUtterance(`${title}. ${textToRead}`);
+      utterance.lang = isBg ? 'bg-BG' : 'en-US';
+      utterance.rate = 0.95;
+      isSpeaking = true;
+      btn.textContent = isBg ? '⏹ Спри четенето' : '⏹ Stop Reading';
+
+      utterance.onend = stopArticleVoice;
+      utterance.onerror = stopArticleVoice;
+      window.speechSynthesis.cancel();
+      window.speechSynthesis.speak(utterance);
+    });
+  }
+
+  // 9. WEB SHARE API
   function initWebShare() {
     const shareBtn = document.getElementById('btn-share-page');
     if (!shareBtn) return;
@@ -557,13 +593,13 @@
     });
   }
 
-  // 9. PRINT SLIP
+  // 10. PRINT SLIP
   function initPrintSlip() {
     const printBtn = document.getElementById('btn-print-slip');
     if (printBtn) printBtn.addEventListener('click', (e) => { e.preventDefault(); window.print(); });
   }
 
-  // 10. ANTI-BOT MATH GATE
+  // 11. ANTI-BOT MATH GATE
   function initAntiBotGate() {
     const gateBox = document.querySelector('.anti-bot-gate');
     if (!gateBox) return;
@@ -603,43 +639,6 @@
         }
       });
     }
-  }
-
-  // 11. ARTICLE VOICE READER (Global SpeechSynthesis)
-  function initArticleVoiceReader() {
-    if (!('speechSynthesis' in window)) return;
-    const btn = document.getElementById('btn-read-article');
-    if (!btn) return;
-    const isBg = (document.documentElement.lang || '').toLowerCase().startsWith('bg');
-    let isSpeaking = false;
-
-    const stopArticleVoice = () => {
-      window.speechSynthesis.cancel();
-      isSpeaking = false;
-      btn.textContent = isBg ? '🔊 Прочети на глас' : '🔊 Read Aloud';
-    };
-
-    btn.addEventListener('click', (e) => {
-      e.preventDefault();
-      if (isSpeaking || window.speechSynthesis.speaking) return stopArticleVoice();
-
-      const contentBox = document.querySelector('article.audit-box, main .shell, main .shell-grand, .lobby-hero');
-      if (!contentBox) return;
-
-      const title = contentBox.querySelector('h1')?.textContent.trim() || '';
-      const textToRead = Array.from(contentBox.querySelectorAll('p, li')).map(n => n.textContent.trim()).filter(Boolean).join('. ');
-      
-      const utterance = new SpeechSynthesisUtterance(`${title}. ${textToRead}`);
-      utterance.lang = isBg ? 'bg-BG' : 'en-US';
-      utterance.rate = 0.95;
-      isSpeaking = true;
-      btn.textContent = isBg ? '⏹ Спри четенето' : '⏹ Stop Reading';
-
-      utterance.onend = stopArticleVoice;
-      utterance.onerror = stopArticleVoice;
-      window.speechSynthesis.cancel();
-      window.speechSynthesis.speak(utterance);
-    });
   }
 
   // 12. STREAM AUDIO PLAYER
