@@ -23,7 +23,7 @@
     initLoadMore();
   });
 
-  // 1. ACCESSIBILITY LIVE ANNOUNCER
+  // 1. A11Y LIVE ANNOUNCER
   function initLiveAnnouncer() {
     liveAnnouncer = document.getElementById('a11y-announcer');
     if (!liveAnnouncer) {
@@ -51,7 +51,7 @@
     }
   }
 
-  // 2. REAL-TIME FINANCIAL MARKET SESSIONS CLOCKS
+  // 2. FINANCIAL MARKET SESSIONS CLOCKS (Day of Week + Date + Time)
   function initMarketClocks() {
     const elSofia = document.getElementById('clock-sofia');
     const elLondon = document.getElementById('clock-london');
@@ -64,6 +64,10 @@
       const now = new Date();
       const fmt = (tz) => new Intl.DateTimeFormat('en-GB', {
         timeZone: tz,
+        weekday: 'short',
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
         hour: '2-digit',
         minute: '2-digit',
         second: '2-digit',
@@ -80,15 +84,11 @@
     setInterval(updateClocks, 1000);
   }
 
-  // 3. HEAD CONCIERGE DESK & BILINGUAL INSTANT SEARCH
+  // 3. HEAD CONCIERGE DESK (VIP Arrangements & Dynamic List)
   function initConciergeDesk() {
     const listEl = document.getElementById('concierge-dynamic-list');
-    const searchInput = document.getElementById('concierge-search-input');
-    const searchBtn = document.getElementById('btn-concierge-search');
-    const resultsContainer = document.getElementById('concierge-search-results');
     const isBg = (document.documentElement.lang || '').toLowerCase().startsWith('bg');
 
-    // VIP Experiences
     const conciergeOffers = isBg ? [
       { title: 'Ла Скала &bull; Милано', tag: 'Кралска ВИП Ложа', desc: 'Персонални ложи за премиерни оперни заглавия.', href: '/floor/0/#concierge-scala' },
       { title: 'Виенска държавна опера', tag: 'Централен балкон', desc: 'Ексклузивни места за виенската филхармония.', href: '/floor/0/#concierge-vienna' },
@@ -111,110 +111,6 @@
           </a>
         </li>
       `).join('');
-    }
-
-    // Complete Bilingual Directory Index
-    const directoryIndex = [
-      { 
-        keywords: ['jobs', 'job', 'work', 'career', 'careers', 'vacancy', 'vacancies', 'salary', 'работа', 'обява', 'обяви', 'заплата', 'ваканции', 'кариера', 'труд', '40'], 
-        floor: '40', 
-        title: isBg ? 'Етаж 40: Кариерен борд (BestJobs.bg)' : 'Floor 40: Career Board (BestJobs)', 
-        url: isBg ? '/bestjobs/bg/' : '/bestjobs/' 
-      },
-      { 
-        keywords: ['mall', 'b2b', 'store', 'shop', 'showcase', '10', 'мол', 'витрина', 'магазин', 'пазар', 'търговия', 'каре', 'каренце', '30'], 
-        floor: '30', 
-        title: isBg ? 'Етаж 30: B2B Търговски мол (Витрини 10 €/ден)' : 'Floor 30: B2B Enterprise Mall (10 €/day)', 
-        url: isBg ? '/mall/bg/' : '/mall/' 
-      },
-      { 
-        keywords: ['energy', 'bess', 'battery', 'power', 'grid', 'ток', 'енергия', 'батерии', 'инфраструктура', 'веи', '50'], 
-        floor: '50', 
-        title: isBg ? 'Етаж 50: Индустриална енергетика & BESS' : 'Floor 50: Industrial Energy & BESS Grid', 
-        url: '/floor/50/' 
-      },
-      { 
-        keywords: ['casino', 'betting', 'gambling', 'sport', 'казино', 'залози', 'хазарт', 'спорт', 'рулетка', '100'], 
-        floor: '100', 
-        title: isBg ? 'Етаж 100: Казино & Спортни залози' : 'Floor 100: Gaming & Sports Betting Hub', 
-        url: '/floor/100/' 
-      },
-      { 
-        keywords: ['lotto', 'toto', 'fun', 'lottery', 'games', 'тото', 'лото', 'игри', 'развлечение', 'числови', '10'], 
-        floor: '10', 
-        title: isBg ? 'Етаж 10: Развлечения & Числови лотарии' : 'Floor 10: Entertainment & Lotteries', 
-        url: '/floor/10/' 
-      },
-      { 
-        keywords: ['cashier', 'iban', 'pay', 'bank', 'wire', 'kyc', 'rent', 'каса', 'плащане', 'банка', 'сметка', 'наем', 'айбан', '0'], 
-        floor: '0', 
-        title: isBg ? 'Етаж 0: Администрация, Каса & IBAN реквизити' : 'Floor 0: Cashier Desk, IBAN KYC & Settlements', 
-        url: '/floor/0/' 
-      },
-      { 
-        keywords: ['wardrobe', 'text', 'cache', 'buffer', 'гардероб', 'текст', 'бланки', 'шаблони', '-1'], 
-        floor: '-1', 
-        title: isBg ? 'Етаж -1: Дигитален гардероб & Текстов буфер' : 'Floor -1: Digital Wardrobe & Text Cache', 
-        url: '/floor/-1/' 
-      },
-      { 
-        keywords: ['archive', 'archives', 'lost', 'seo', 'архив', 'вещи', 'стари', 'загубени', '-3'], 
-        floor: '-3', 
-        title: isBg ? 'Етаж -3: Загубени вещи & Постоянен SEO архив' : 'Floor -3: Lost & Found Archives', 
-        url: '/floor/-3/' 
-      },
-      { 
-        keywords: ['mobikom', 'penthouse', 'headquarters', 'управление', 'мобиком', 'пентхаус', '7777'], 
-        floor: '7777', 
-        title: isBg ? 'Етаж 7777+: Пентхаус Мобиком България' : 'Floor 7777+: Mobikom Executive Penthouse', 
-        url: 'https://mobikom.bg' 
-      }
-    ];
-
-    function performSearch() {
-      if (!searchInput || !resultsContainer) return;
-      const query = searchInput.value.toLowerCase().trim();
-      if (!query) {
-        resultsContainer.innerHTML = '';
-        return;
-      }
-
-      const matches = directoryIndex.filter(item => 
-        item.keywords.some(k => k.toLowerCase().includes(query)) ||
-        item.title.toLowerCase().includes(query) ||
-        item.floor === query
-      );
-
-      if (matches.length === 0) {
-        resultsContainer.innerHTML = `<div style="font-size:0.78rem; color:var(--muted); padding:0.4rem; background:var(--bg); border:1px solid var(--border); border-radius:4px;">${isBg ? 'Няма намерени съвпадения. Попитайте за друг етаж, услуга или ключова дума.' : 'No matches found. Try another floor, service, or keyword.'}</div>`;
-      } else {
-        resultsContainer.innerHTML = matches.map(m => `
-          <a href="${m.url}" class="floor-portal-anchor" style="padding:0.5rem 0.75rem; font-size:0.82rem; background:var(--bg);" title="${m.title}">
-            <span>${m.title}</span>
-            <span style="color:var(--primary); font-weight:800;">&rarr;</span>
-          </a>
-        `).join('');
-      }
-      announce(isBg ? `Намерени резултати: ${matches.length}` : `Search results: ${matches.length}`);
-    }
-
-    if (searchInput) {
-      searchInput.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter') {
-          e.preventDefault();
-          performSearch();
-        }
-      });
-      searchInput.addEventListener('input', () => {
-        if (searchInput.value.trim() === '') resultsContainer.innerHTML = '';
-      });
-    }
-
-    if (searchBtn) {
-      searchBtn.addEventListener('click', (e) => {
-        e.preventDefault();
-        performSearch();
-      });
     }
   }
 
@@ -254,7 +150,7 @@
     let optionsHtml = '<option value="">-- Choose Conference Chamber (Instant Jump) --</option>';
     chamberNames.forEach((name, idx) => {
       const chamberNum = idx + 1;
-      const floorTarget = 100 + chamberNum * 50; // Distributed on floors > 100
+      const floorTarget = 100 + chamberNum * 50;
       optionsHtml += `<option value="${floorTarget}">Chamber #${String(chamberNum).padStart(2, '0')}: ${name} &bull; Fl ${floorTarget}</option>`;
     });
 
@@ -277,7 +173,7 @@
     });
   }
 
-  // 5. IN-LOBBY DRAFTING DESK (TXT, PDF, WORD, EMAIL, PRINT)
+  // 5. IN-LOBBY DRAFTING DESK (Safe contenteditable <div> \u2022 Zero <input>/<textarea>)
   function initExecutiveWorkbench() {
     const editor = document.getElementById('workbench-editor');
     const counter = document.getElementById('workbench-counter');
@@ -290,44 +186,49 @@
 
     if (!editor) return;
 
-    // Word & Character Counter
-    editor.addEventListener('input', () => {
-      const text = editor.value.trim();
-      const words = text ? text.split(/\s+/).length : 0;
-      const chars = editor.value.length;
-      if (counter) counter.textContent = `${words} words \u2022 ${chars} chars`;
+    editor.addEventListener('focus', () => {
+      if (editor.textContent.trim() === 'Type or paste document draft here...') {
+        editor.textContent = '';
+      }
     });
 
-    // 1. Download .TXT
+    editor.addEventListener('input', () => {
+      const text = editor.innerText.trim();
+      const words = text ? text.split(/\s+/).filter(Boolean).length : 0;
+      if (counter) counter.textContent = `${words} words`;
+    });
+
+    // Download .TXT
     if (btnTxt) {
       btnTxt.addEventListener('click', (e) => {
         e.preventDefault();
-        const text = editor.value;
-        if (!text.trim()) { alert('Editor is empty.'); return; }
+        const text = editor.innerText.trim();
+        if (!text || text === 'Type or paste document draft here...') { alert('Editor is empty.'); return; }
         const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
         const a = document.createElement('a');
         a.href = URL.createObjectURL(blob);
-        a.download = `bestjobs-draft-${Date.now()}.txt`;
+        a.download = `bestjobs-doc-${Date.now()}.txt`;
         a.click();
         URL.revokeObjectURL(a.href);
       });
     }
 
-    // 2. Export Clean PDF via Print Driver
+    // Export PDF via Print Driver
     if (btnPdf) {
       btnPdf.addEventListener('click', (e) => {
         e.preventDefault();
-        if (!editor.value.trim()) { alert('Editor is empty.'); return; }
+        const text = editor.innerText.trim();
+        if (!text || text === 'Type or paste document draft here...') { alert('Editor is empty.'); return; }
         window.print();
       });
     }
 
-    // 3. Export Word (.DOCX XML Standard)
+    // Export Word (.doc XML standard)
     if (btnDocx) {
       btnDocx.addEventListener('click', (e) => {
         e.preventDefault();
-        const text = editor.value;
-        if (!text.trim()) { alert('Editor is empty.'); return; }
+        const text = editor.innerText.trim();
+        if (!text || text === 'Type or paste document draft here...') { alert('Editor is empty.'); return; }
         const paragraphs = text.split('\n').map(p => `<p>${p || '&nbsp;'}</p>`).join('');
         const docContent = `
           <html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
@@ -346,7 +247,7 @@
       });
     }
 
-    // 4. Print Clean
+    // Clean Print
     if (btnPrint) {
       btnPrint.addEventListener('click', (e) => {
         e.preventDefault();
@@ -354,23 +255,23 @@
       });
     }
 
-    // 5. Send via Local Email Client
+    // Mail Dispatch via Local Client
     if (btnMail) {
       btnMail.addEventListener('click', (e) => {
         e.preventDefault();
-        const text = editor.value;
-        if (!text.trim()) { alert('Editor is empty.'); return; }
-        const subject = encodeURIComponent('Document Dispatch \u2022 BestJobs Skyscraper');
+        const text = editor.innerText.trim();
+        if (!text || text === 'Type or paste document draft here...') { alert('Editor is empty.'); return; }
+        const subject = encodeURIComponent('BestJobs Dispatch \u2022 Executive Document');
         const body = encodeURIComponent(text);
         window.location.href = `mailto:?subject=${subject}&body=${body}`;
       });
     }
 
-    // 6. Clear Buffer
+    // Clear Workspace
     if (btnClear) {
       btnClear.addEventListener('click', (e) => {
         e.preventDefault();
-        editor.value = '';
+        editor.textContent = '';
         if (counter) counter.textContent = '0 words';
       });
     }
@@ -418,7 +319,7 @@
         if (!vid) {
           stopTv();
         } else {
-          // RULE: Starting TV immediately stops Radio
+          // Starting TV immediately stops Radio
           stopRadio();
 
           tvViewport.innerHTML = `<iframe id="tv-live-iframe" src="https://www.youtube-nocookie.com/embed/${vid}?autoplay=1&mute=0&rel=0&enablejsapi=1" allow="autoplay; encrypted-media; fullscreen; picture-in-picture" allowfullscreen="true" style="width:100%; height:100%; border:none;"></iframe>`;
@@ -427,9 +328,8 @@
         }
       });
 
-      // Pause / Stop on Click Screen
+      // Pause / Stop on Click Outside Video Frame
       tvViewport.addEventListener('click', (e) => {
-        // Toggle Stop if screen is clicked outside iframe
         if (channelSelect.value && e.target === tvViewport) {
           stopTv();
         }
@@ -463,7 +363,7 @@
         if (!url) {
           stopRadio();
         } else {
-          // RULE: Starting Radio immediately stops TV
+          // Starting Radio immediately stops TV
           stopTv();
 
           if (currentRadioAudio) {
@@ -561,6 +461,7 @@
       '10':   { name: isBg ? 'Етаж 10 • Тото & Игри' : 'Floor 10 • Lotteries & Fun', url: '/floor/10/' },
       '0':    { name: isBg ? 'Етаж 0 • Каса & IBAN' : 'Floor 0 • Cashier & IBAN', url: '/floor/0/' },
       '-1':   { name: isBg ? 'Етаж -1 • Дигитален гардероб' : 'Floor -1 • Digital Wardrobe', url: '/floor/-1/' },
+      '-2':   { name: isBg ? 'Етаж -2 • Централен Гараж' : 'Floor -2 • Central Garage', url: '/floor/-2/' },
       '-3':   { name: isBg ? 'Етаж -3 • Загубени вещи & Архив' : 'Floor -3 • Lost & Found Archives', url: '/floor/-3/' }
     };
 
@@ -620,6 +521,7 @@
       }, intervalTime);
     }
 
+    // Keypad Handlers
     document.querySelectorAll('.num-key').forEach(key => {
       key.addEventListener('click', (e) => {
         e.preventDefault();
@@ -647,7 +549,8 @@
       });
     }
 
-    document.querySelectorAll('.floor-portal-anchor[data-floor]').forEach(link => {
+    // Intercept All Portal and Directory Transit Links
+    document.querySelectorAll('.transit-btn[data-floor]').forEach(link => {
       link.addEventListener('click', (e) => {
         e.preventDefault();
         executeTransit(link.getAttribute('data-floor'));
