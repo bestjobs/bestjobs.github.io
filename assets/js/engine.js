@@ -7,10 +7,12 @@
 
   document.addEventListener('DOMContentLoaded', () => {
     initLiveAnnouncer();
-    initElevatorSystem();
-    initTvCompactPlayer();
-    initRadioPlayer();
+    initMarketClocks();
     initConciergeDesk();
+    initExquisiteChambers();
+    initExecutiveWorkbench();
+    initElevatorSystem();
+    initMediaPavilion();
     initStreamAudioPlayer();
     initArticleVoiceReader();
     initWebShare();
@@ -49,14 +51,44 @@
     }
   }
 
-  // 2. HEAD CONCIERGE DESK & INTERACTIVE DIRECTORY SEARCH
+  // 2. REAL-TIME FINANCIAL MARKET SESSIONS CLOCKS
+  function initMarketClocks() {
+    const elSofia = document.getElementById('clock-sofia');
+    const elLondon = document.getElementById('clock-london');
+    const elNy = document.getElementById('clock-ny');
+    const elTokyo = document.getElementById('clock-tokyo');
+
+    if (!elSofia && !elLondon && !elNy && !elTokyo) return;
+
+    function updateClocks() {
+      const now = new Date();
+      const fmt = (tz) => new Intl.DateTimeFormat('en-GB', {
+        timeZone: tz,
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: false
+      }).format(now);
+
+      if (elSofia) elSofia.textContent = fmt('Europe/Sofia');
+      if (elLondon) elLondon.textContent = fmt('Europe/London');
+      if (elNy) elNy.textContent = fmt('America/New_York');
+      if (elTokyo) elTokyo.textContent = fmt('Asia/Tokyo');
+    }
+
+    updateClocks();
+    setInterval(updateClocks, 1000);
+  }
+
+  // 3. HEAD CONCIERGE DESK & BILINGUAL INSTANT SEARCH
   function initConciergeDesk() {
     const listEl = document.getElementById('concierge-dynamic-list');
     const searchInput = document.getElementById('concierge-search-input');
+    const searchBtn = document.getElementById('btn-concierge-search');
     const resultsContainer = document.getElementById('concierge-search-results');
     const isBg = (document.documentElement.lang || '').toLowerCase().startsWith('bg');
 
-    // VIP Arranged Experiences
+    // VIP Experiences
     const conciergeOffers = isBg ? [
       { title: 'Ла Скала &bull; Милано', tag: 'Кралска ВИП Ложа', desc: 'Персонални ложи за премиерни оперни заглавия.', href: '/floor/0/#concierge-scala' },
       { title: 'Виенска държавна опера', tag: 'Централен балкон', desc: 'Ексклузивни места за виенската филхармония.', href: '/floor/0/#concierge-vienna' },
@@ -81,119 +113,338 @@
       `).join('');
     }
 
-    // In-Memory Fast Building Directory Index
+    // Complete Bilingual Directory Index
     const directoryIndex = [
-      { keywords: ['jobs', 'job', 'work', 'career', 'работа', 'обяви', 'заплата', 'ваканция'], floor: '40', title: isBg ? 'Етаж 40: Кариерен борд (BestJobs)' : 'Floor 40: Career Board (BestJobs)', url: isBg ? '/bestjobs/bg/' : '/bestjobs/' },
-      { keywords: ['mall', 'b2b', 'showcase', 'мол', 'витрина', 'магазин', 'пазар'], floor: '30', title: isBg ? 'Етаж 30: B2B Търговски мол (Витрини 10€/ден)' : 'Floor 30: B2B Enterprise Mall (10€/day)', url: isBg ? '/mall/bg/' : '/mall/' },
-      { keywords: ['energy', 'bess', 'battery', 'ток', 'енергия', 'батерии', 'инфраструктура'], floor: '50', title: isBg ? 'Етаж 50: Индустриална енергетика & BESS' : 'Floor 50: Industrial Energy & BESS Grid', url: '/floor/50/' },
-      { keywords: ['casino', 'betting', 'gambling', 'казино', 'залози', 'хазарт'], floor: '100', title: isBg ? 'Етаж 100: Казино & Спортни залози' : 'Floor 100: Gaming & Sports Betting Hub', url: '/floor/100/' },
-      { keywords: ['lotto', 'toto', 'fun', 'тото', 'лото', 'игри', 'развлечение', 'числови'], floor: '10', title: isBg ? 'Етаж 10: Развлечения & Числови лотарии' : 'Floor 10: Entertainment & Lotteries', url: '/floor/10/' },
-      { keywords: ['iban', 'cashier', 'pay', 'bank', 'каса', 'плащане', 'банка', 'сметка', 'наем'], floor: '0', title: isBg ? 'Етаж 0: Администрация, Каса & IBAN реквизити' : 'Floor 0: Cashier Desk, IBAN KYC & Settlements', url: '/floor/0/' },
-      { keywords: ['wardrobe', 'text', 'cache', 'гардероб', 'текст', 'бланки'], floor: '-1', title: isBg ? 'Етаж -1: Дигитален гардероб & Текстов буфер' : 'Floor -1: Digital Wardrobe & Text Cache', url: '/floor/-1/' },
-      { keywords: ['archive', 'lost', 'seo', 'архив', 'вещи', 'стари'], floor: '-3', title: isBg ? 'Етаж -3: Загубени вещи & Постоянен SEO архив' : 'Floor -3: Lost & Found Archives', url: '/floor/-3/' },
-      { keywords: ['mobikom', 'penthouse', 'headquarters', 'управление', 'мобиком', 'пентхаус'], floor: '7777', title: isBg ? 'Етаж 7777+: Пентхаус Мобиком България' : 'Floor 7777+: Mobikom Executive Penthouse', url: 'https://mobikom.bg' }
+      { 
+        keywords: ['jobs', 'job', 'work', 'career', 'careers', 'vacancy', 'vacancies', 'salary', 'работа', 'обява', 'обяви', 'заплата', 'ваканции', 'кариера', 'труд', '40'], 
+        floor: '40', 
+        title: isBg ? 'Етаж 40: Кариерен борд (BestJobs.bg)' : 'Floor 40: Career Board (BestJobs)', 
+        url: isBg ? '/bestjobs/bg/' : '/bestjobs/' 
+      },
+      { 
+        keywords: ['mall', 'b2b', 'store', 'shop', 'showcase', '10', 'мол', 'витрина', 'магазин', 'пазар', 'търговия', 'каре', 'каренце', '30'], 
+        floor: '30', 
+        title: isBg ? 'Етаж 30: B2B Търговски мол (Витрини 10 €/ден)' : 'Floor 30: B2B Enterprise Mall (10 €/day)', 
+        url: isBg ? '/mall/bg/' : '/mall/' 
+      },
+      { 
+        keywords: ['energy', 'bess', 'battery', 'power', 'grid', 'ток', 'енергия', 'батерии', 'инфраструктура', 'веи', '50'], 
+        floor: '50', 
+        title: isBg ? 'Етаж 50: Индустриална енергетика & BESS' : 'Floor 50: Industrial Energy & BESS Grid', 
+        url: '/floor/50/' 
+      },
+      { 
+        keywords: ['casino', 'betting', 'gambling', 'sport', 'казино', 'залози', 'хазарт', 'спорт', 'рулетка', '100'], 
+        floor: '100', 
+        title: isBg ? 'Етаж 100: Казино & Спортни залози' : 'Floor 100: Gaming & Sports Betting Hub', 
+        url: '/floor/100/' 
+      },
+      { 
+        keywords: ['lotto', 'toto', 'fun', 'lottery', 'games', 'тото', 'лото', 'игри', 'развлечение', 'числови', '10'], 
+        floor: '10', 
+        title: isBg ? 'Етаж 10: Развлечения & Числови лотарии' : 'Floor 10: Entertainment & Lotteries', 
+        url: '/floor/10/' 
+      },
+      { 
+        keywords: ['cashier', 'iban', 'pay', 'bank', 'wire', 'kyc', 'rent', 'каса', 'плащане', 'банка', 'сметка', 'наем', 'айбан', '0'], 
+        floor: '0', 
+        title: isBg ? 'Етаж 0: Администрация, Каса & IBAN реквизити' : 'Floor 0: Cashier Desk, IBAN KYC & Settlements', 
+        url: '/floor/0/' 
+      },
+      { 
+        keywords: ['wardrobe', 'text', 'cache', 'buffer', 'гардероб', 'текст', 'бланки', 'шаблони', '-1'], 
+        floor: '-1', 
+        title: isBg ? 'Етаж -1: Дигитален гардероб & Текстов буфер' : 'Floor -1: Digital Wardrobe & Text Cache', 
+        url: '/floor/-1/' 
+      },
+      { 
+        keywords: ['archive', 'archives', 'lost', 'seo', 'архив', 'вещи', 'стари', 'загубени', '-3'], 
+        floor: '-3', 
+        title: isBg ? 'Етаж -3: Загубени вещи & Постоянен SEO архив' : 'Floor -3: Lost & Found Archives', 
+        url: '/floor/-3/' 
+      },
+      { 
+        keywords: ['mobikom', 'penthouse', 'headquarters', 'управление', 'мобиком', 'пентхаус', '7777'], 
+        floor: '7777', 
+        title: isBg ? 'Етаж 7777+: Пентхаус Мобиком България' : 'Floor 7777+: Mobikom Executive Penthouse', 
+        url: 'https://mobikom.bg' 
+      }
     ];
 
-    if (searchInput && resultsContainer) {
-      searchInput.addEventListener('input', (e) => {
-        const query = e.target.value.toLowerCase().trim();
-        if (query.length === 0) {
-          resultsContainer.innerHTML = '';
-          return;
-        }
+    function performSearch() {
+      if (!searchInput || !resultsContainer) return;
+      const query = searchInput.value.toLowerCase().trim();
+      if (!query) {
+        resultsContainer.innerHTML = '';
+        return;
+      }
 
-        const matches = directoryIndex.filter(item => 
-          item.keywords.some(k => k.includes(query)) || item.title.toLowerCase().includes(query) || item.floor === query
-        );
+      const matches = directoryIndex.filter(item => 
+        item.keywords.some(k => k.toLowerCase().includes(query)) ||
+        item.title.toLowerCase().includes(query) ||
+        item.floor === query
+      );
 
-        if (matches.length === 0) {
-          resultsContainer.innerHTML = `<div style="font-size:0.75rem; color:var(--muted); padding:0.25rem;">${isBg ? 'Няма намерени съвпадения. Попитайте за друг етаж или услуга.' : 'No matches found. Try another service or floor.'}</div>`;
-        } else {
-          resultsContainer.innerHTML = matches.map(m => `
-            <a href="${m.url}" class="floor-portal-anchor" style="padding:0.45rem 0.65rem; font-size:0.8rem; background:var(--bg);" title="${m.title}">
-              <span>${m.title}</span>
-              <span style="color:var(--primary); font-weight:800;">&rarr;</span>
-            </a>
-          `).join('');
+      if (matches.length === 0) {
+        resultsContainer.innerHTML = `<div style="font-size:0.78rem; color:var(--muted); padding:0.4rem; background:var(--bg); border:1px solid var(--border); border-radius:4px;">${isBg ? 'Няма намерени съвпадения. Попитайте за друг етаж, услуга или ключова дума.' : 'No matches found. Try another floor, service, or keyword.'}</div>`;
+      } else {
+        resultsContainer.innerHTML = matches.map(m => `
+          <a href="${m.url}" class="floor-portal-anchor" style="padding:0.5rem 0.75rem; font-size:0.82rem; background:var(--bg);" title="${m.title}">
+            <span>${m.title}</span>
+            <span style="color:var(--primary); font-weight:800;">&rarr;</span>
+          </a>
+        `).join('');
+      }
+      announce(isBg ? `Намерени резултати: ${matches.length}` : `Search results: ${matches.length}`);
+    }
+
+    if (searchInput) {
+      searchInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          performSearch();
         }
+      });
+      searchInput.addEventListener('input', () => {
+        if (searchInput.value.trim() === '') resultsContainer.innerHTML = '';
+      });
+    }
+
+    if (searchBtn) {
+      searchBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        performSearch();
       });
     }
   }
 
-  // 3. COMPACT TV CONTROLLER (Ordered Categories, Fullscreen API)
-  function initTvCompactPlayer() {
-    const channelSelect = document.getElementById('tv-channel-select');
-    const tvViewport = document.getElementById('tv-viewport');
-    const btnFullscreen = document.getElementById('btn-tv-fullscreen');
+  // 4. 100 EXQUISITE CONFERENCE CHAMBERS (Instant Transit Generator)
+  function initExquisiteChambers() {
+    const selectChamber = document.getElementById('select-chamber');
+    if (!selectChamber) return;
 
-    if (!channelSelect || !tvViewport) return;
-
-    // Стриктен ред: Новини -> Финанси -> Пълен спортен спектър -> Мода -> Кино -> Музика
-    const tvChannels = [
-      { group: '1. Новини (Global News)', options: [
-        { name: 'Euronews International (Live)', id: 'sPJXq0lPzaM' },
-        { name: 'Sky News UK (Live Stream)', id: '9Auq9mYxFEE' },
-        { name: 'ABC News Live (Global)', id: 'w_Ma8oQLmSM' },
-        { name: 'DW News International (Germany)', id: 'b1f3yO5W4gQ' },
-        { name: 'Al Jazeera English (Global)', id: 'gCNeDWCI0vo' }
-      ]},
-      { group: '2. Финанси (Global Finance & Markets)', options: [
-        { name: 'Bloomberg Global Financial Live', id: 'dp8PhLsUcFE' },
-        { name: 'Yahoo Finance Live Markets', id: 'V4w7r8U8N7M' }
-      ]},
-      { group: '3. Пълен спортен спектър (Sports, Boxing & Outdoor)', options: [
-        { name: 'FIFA+ Football & Champions Hub', id: 'FI2P4O-V50Q' },
-        { name: 'DAZN Combat Sports & Boxing', id: '2qF8Z6uE_zQ' },
-        { name: 'Red Bull Action & Extreme Sports', id: 'FI2P4O-V50Q' },
-        { name: 'World Surf League Official Live', id: 'c_6lKzYF9Xw' },
-        { name: 'Ocean Coral Reef & Deep Sea Fishing', id: 'F109TZt3nRc' },
-        { name: 'African Safari & Nature Habitat', id: 'Xv2XJ9P2xU4' }
-      ]},
-      { group: '4. Мода (Fashion & Luxury)', options: [
-        { name: 'Fashion TV Worldwide Runway', id: 'sPJXq0lPzaM' },
-        { name: 'Haute Couture & Luxury Lifestyle', id: 'w_Ma8oQLmSM' }
-      ]},
-      { group: '5. Кино (Cinema & Vault)', options: [
-        { name: 'Classic Cinema Vault (Golden Age)', id: 'V8ZwaKz_X8s' },
-        { name: 'Documentary Central Broadcast', id: 'dp8PhLsUcFE' }
-      ]},
-      { group: '6. Музика (Music & Opera)', options: [
-        { name: 'Lofi Girl (24/7 Global Chill/Beats)', id: 'jfKfPfyJRdk' },
-        { name: 'Classical Music & Symphonic Hall', id: 'k6zW2Jp-q6k' },
-        { name: 'Clubbing TV (Electronic Dance Music)', id: 'vW10jY-4_Xk' }
-      ]}
+    const chamberNames = [
+      'The Aurum Boardroom', 'Basalt Whisper Suite', 'The Broken Gyroscope', 'Prime Meridian Hub',
+      'The Encrypted Oracle', 'Deep Space Chamber', 'Silence of the Penthouse', 'Cold Fusion Lounge',
+      'The Cryptic Rose', 'Singularity Executive', 'Event Horizon Red', 'Borealis Council',
+      'Solaris Zenith', 'Quantum Solitude', 'The Obsidian Vault', 'Aether Pavilion',
+      'Helios Grand Hall', 'Chronos Chamber', 'Hyperion Forum', 'Titan Monolith',
+      'Apex Horizon', 'Atlas Assembly', 'Starlight Conclave', 'Vanguard Chamber',
+      'The Sovereign Hearth', 'Elysium Gallery', 'The Cobalt Sphere', 'Celestial Sanctum',
+      'Zenith Arch', 'Pinnacle Forum', 'Meridian Oasis', 'The Iron Compass',
+      'Equinox Pavilion', 'Solstice Retreat', 'The Emerald Atrium', 'Sapphire Council',
+      'Marble Bastion', 'Granite Sanctuary', 'Alabaster Lounge', 'Amber Citadel',
+      'The Golden Fleece', 'Argonaut Assembly', 'Prometheus Forge', 'Daedalus Workshop',
+      'Icarus Crest', 'Orpheus Auditorium', 'Athena Acropolis', 'Spartan Phalanx',
+      'Olympus Summit', 'Delphi Portico', 'The Glass Citadel', 'Diamond Horizon',
+      'Platinum Spire', 'Velvet Diplomat', 'The Silk Route', 'Ambergris Hall',
+      'Tungsten Bunker', 'Graphene Chamber', 'Krypton Gallery', 'Xenon Assembly',
+      'Argon Retreat', 'Neon Forum', 'Helium Zenith', 'Hydrogen Core',
+      'Perseus Bastion', 'Andromeda Spire', 'Cassiopeia Crown', 'Cygnus Atrium',
+      'Orion Belt Council', 'Sirius Bright Hall', 'Vega North Hub', 'Polaris Pivot',
+      'Ursa Major Room', 'Centauri Nexus', 'Nebula Chamber', 'Supernova Suite',
+      'Pulsar Forum', 'Quasar Assembly', 'Magnetar Core', 'Cosmos Arena',
+      'The Silent Treaty', 'Geneva Protocol', 'The Sovereign Round', 'Westphalia Suite',
+      'Hanseatic League', 'Venetian Loggia', 'Florentine Salon', 'Castilian Court',
+      'Burgundy Forum', 'Bavarian Citadel', 'Nordic Council', 'Baltic Bastion',
+      'Danubian Conclave', 'Carpathian Summit', 'Rhodope Sanctuary', 'Balkan Crossroads',
+      'Thracian Gold Suite', 'Dobruja Granary', 'Pontic Haven', 'The 7777 Supreme Senate'
     ];
 
-    let selectHtml = '<option value="">-- Select TV Channel (Instant Play) --</option>';
-    tvChannels.forEach(cat => {
-      selectHtml += `<optgroup label="${cat.group}">`;
-      cat.options.forEach(opt => {
-        selectHtml += `<option value="${opt.id}">${opt.name}</option>`;
-      });
-      selectHtml += `</optgroup>`;
+    let optionsHtml = '<option value="">-- Choose Conference Chamber (Instant Jump) --</option>';
+    chamberNames.forEach((name, idx) => {
+      const chamberNum = idx + 1;
+      const floorTarget = 100 + chamberNum * 50; // Distributed on floors > 100
+      optionsHtml += `<option value="${floorTarget}">Chamber #${String(chamberNum).padStart(2, '0')}: ${name} &bull; Fl ${floorTarget}</option>`;
     });
 
-    channelSelect.innerHTML = selectHtml;
+    selectChamber.innerHTML = optionsHtml;
 
-    channelSelect.addEventListener('change', (e) => {
-      const vid = e.target.value;
-      if (!vid) {
-        tvViewport.innerHTML = `
-          <div id="tv-standby-message" style="display:flex; flex-direction:column; justify-content:center; align-items:center; height:100%;">
-            <div class="plasma-standby-title" style="font-size:0.95rem; color:#f1f5f9; font-weight:800; text-transform:uppercase;">Video Terminal Standby (0 KB)</div>
-            <p class="plasma-standby-desc" style="font-size:0.75rem; color:#94a3b8;">Select channel above to stream.</p>
-          </div>
-        `;
-        if (btnFullscreen) btnFullscreen.style.display = 'none';
-      } else {
-        tvViewport.innerHTML = `<iframe id="tv-live-iframe" src="https://www.youtube-nocookie.com/embed/${vid}?autoplay=1&mute=0&rel=0" allow="autoplay; encrypted-media; fullscreen; picture-in-picture" allowfullscreen="true" style="width:100%; height:100%; border:none;"></iframe>`;
-        if (btnFullscreen) btnFullscreen.style.display = 'inline-flex';
+    selectChamber.addEventListener('change', (e) => {
+      const fl = e.target.value;
+      if (fl) {
+        const readout = document.getElementById('flight-readout');
+        const isBg = (document.documentElement.lang || '').toLowerCase().startsWith('bg');
+        if (readout) {
+          readout.style.color = 'var(--console-green)';
+          readout.textContent = isBg ? `МИГНОВЕН СКОК • ЗАЛА НА ЕТАЖ ${fl}` : `INSTANT TELEPORT • CHAMBER FLOOR ${fl}`;
+        }
+        playElevatorSound(true);
+        setTimeout(() => {
+          window.location.href = `/floor/${fl}/`;
+        }, 800);
       }
     });
+  }
 
-    // Fullscreen API върху външния контейнер
-    if (btnFullscreen) {
-      btnFullscreen.addEventListener('click', (e) => {
+  // 5. IN-LOBBY DRAFTING DESK (TXT, PDF, WORD, EMAIL, PRINT)
+  function initExecutiveWorkbench() {
+    const editor = document.getElementById('workbench-editor');
+    const counter = document.getElementById('workbench-counter');
+    const btnTxt = document.getElementById('btn-bench-txt');
+    const btnPdf = document.getElementById('btn-bench-pdf');
+    const btnDocx = document.getElementById('btn-bench-docx');
+    const btnPrint = document.getElementById('btn-bench-print');
+    const btnMail = document.getElementById('btn-bench-mail');
+    const btnClear = document.getElementById('btn-bench-clear');
+
+    if (!editor) return;
+
+    // Word & Character Counter
+    editor.addEventListener('input', () => {
+      const text = editor.value.trim();
+      const words = text ? text.split(/\s+/).length : 0;
+      const chars = editor.value.length;
+      if (counter) counter.textContent = `${words} words \u2022 ${chars} chars`;
+    });
+
+    // 1. Download .TXT
+    if (btnTxt) {
+      btnTxt.addEventListener('click', (e) => {
+        e.preventDefault();
+        const text = editor.value;
+        if (!text.trim()) { alert('Editor is empty.'); return; }
+        const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = `bestjobs-draft-${Date.now()}.txt`;
+        a.click();
+        URL.revokeObjectURL(a.href);
+      });
+    }
+
+    // 2. Export Clean PDF via Print Driver
+    if (btnPdf) {
+      btnPdf.addEventListener('click', (e) => {
+        e.preventDefault();
+        if (!editor.value.trim()) { alert('Editor is empty.'); return; }
+        window.print();
+      });
+    }
+
+    // 3. Export Word (.DOCX XML Standard)
+    if (btnDocx) {
+      btnDocx.addEventListener('click', (e) => {
+        e.preventDefault();
+        const text = editor.value;
+        if (!text.trim()) { alert('Editor is empty.'); return; }
+        const paragraphs = text.split('\n').map(p => `<p>${p || '&nbsp;'}</p>`).join('');
+        const docContent = `
+          <html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
+          <head><meta charset='utf-8'><title>BestJobs Document</title>
+          <style>body { font-family: Arial, sans-serif; font-size: 11pt; line-height: 1.5; }</style>
+          </head>
+          <body>${paragraphs}</body>
+          </html>
+        `;
+        const blob = new Blob(['\ufeff', docContent], { type: 'application/msword' });
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = `bestjobs-doc-${Date.now()}.doc`;
+        a.click();
+        URL.revokeObjectURL(a.href);
+      });
+    }
+
+    // 4. Print Clean
+    if (btnPrint) {
+      btnPrint.addEventListener('click', (e) => {
+        e.preventDefault();
+        window.print();
+      });
+    }
+
+    // 5. Send via Local Email Client
+    if (btnMail) {
+      btnMail.addEventListener('click', (e) => {
+        e.preventDefault();
+        const text = editor.value;
+        if (!text.trim()) { alert('Editor is empty.'); return; }
+        const subject = encodeURIComponent('Document Dispatch \u2022 BestJobs Skyscraper');
+        const body = encodeURIComponent(text);
+        window.location.href = `mailto:?subject=${subject}&body=${body}`;
+      });
+    }
+
+    // 6. Clear Buffer
+    if (btnClear) {
+      btnClear.addEventListener('click', (e) => {
+        e.preventDefault();
+        editor.value = '';
+        if (counter) counter.textContent = '0 words';
+      });
+    }
+  }
+
+  // 6. MEDIA PAVILION (Smart Mute: Radio Stops TV, TV Stops Radio, Fullscreen, Video Click Pause)
+  function initMediaPavilion() {
+    const channelSelect = document.getElementById('tv-channel-select');
+    const tvViewport = document.getElementById('tv-viewport');
+    const btnTvFullscreen = document.getElementById('btn-tv-fullscreen');
+    const btnTvStop = document.getElementById('btn-tv-stop');
+    const radioSelect = document.getElementById('radio-station-select');
+    const radioStatus = document.getElementById('radio-status-text');
+    const btnRadioStop = document.getElementById('btn-radio-stop');
+
+    function stopTv() {
+      if (tvViewport) {
+        tvViewport.innerHTML = `
+          <div id="tv-standby-message">
+            <div class="plasma-standby-title">Video Terminal Standby (0 KB)</div>
+            <p class="plasma-standby-desc">Select channel above to stream high-definition broadcast.</p>
+          </div>
+        `;
+      }
+      if (channelSelect) channelSelect.value = '';
+      if (btnTvFullscreen) btnTvFullscreen.style.display = 'none';
+      if (btnTvStop) btnTvStop.style.display = 'none';
+    }
+
+    function stopRadio() {
+      if (currentRadioAudio) {
+        currentRadioAudio.pause();
+        currentRadioAudio.src = '';
+        currentRadioAudio = null;
+      }
+      if (radioSelect) radioSelect.value = '';
+      if (radioStatus) radioStatus.textContent = 'Radio: Standby';
+      if (btnRadioStop) btnRadioStop.style.display = 'none';
+    }
+
+    // TV Controller
+    if (channelSelect && tvViewport) {
+      channelSelect.addEventListener('change', (e) => {
+        const vid = e.target.value;
+        if (!vid) {
+          stopTv();
+        } else {
+          // RULE: Starting TV immediately stops Radio
+          stopRadio();
+
+          tvViewport.innerHTML = `<iframe id="tv-live-iframe" src="https://www.youtube-nocookie.com/embed/${vid}?autoplay=1&mute=0&rel=0&enablejsapi=1" allow="autoplay; encrypted-media; fullscreen; picture-in-picture" allowfullscreen="true" style="width:100%; height:100%; border:none;"></iframe>`;
+          if (btnTvFullscreen) btnTvFullscreen.style.display = 'inline-flex';
+          if (btnTvStop) btnTvStop.style.display = 'inline-flex';
+        }
+      });
+
+      // Pause / Stop on Click Screen
+      tvViewport.addEventListener('click', (e) => {
+        // Toggle Stop if screen is clicked outside iframe
+        if (channelSelect.value && e.target === tvViewport) {
+          stopTv();
+        }
+      });
+    }
+
+    if (btnTvStop) {
+      btnTvStop.addEventListener('click', (e) => {
+        e.preventDefault();
+        stopTv();
+      });
+    }
+
+    if (btnTvFullscreen && tvViewport) {
+      btnTvFullscreen.addEventListener('click', (e) => {
         e.preventDefault();
         if (!document.fullscreenElement) {
           if (tvViewport.requestFullscreen) tvViewport.requestFullscreen();
@@ -204,51 +455,43 @@
         }
       });
     }
-  }
 
-  // 4. LEGAL INTERNET RADIO AUDIO PLAYER
-  function initRadioPlayer() {
-    const radioSelect = document.getElementById('radio-station-select');
-    const radioStatus = document.getElementById('radio-status-text');
-    if (!radioSelect) return;
+    // Radio Controller
+    if (radioSelect) {
+      radioSelect.addEventListener('change', (e) => {
+        const url = e.target.value;
+        if (!url) {
+          stopRadio();
+        } else {
+          // RULE: Starting Radio immediately stops TV
+          stopTv();
 
-    const radioStreams = [
-      { name: 'БНР Хоризонт (Национално информационно радио)', url: 'https://stream.bgradio.bg:8000/horizont' },
-      { name: 'Classic FM (Световни класически концерти)', url: 'https://stream.bgradio.bg:8000/classicfm' },
-      { name: 'SomaFM: Groove Salad (Ambient & Chillout)', url: 'https://ice1.somafm.com/groovesalad-128-mp3' },
-      { name: 'Swiss Jazz Live (Цюрих, Швейцария)', url: 'https://stream.srg-ssr.ch/m/rjs/mp3_128' }
-    ];
+          if (currentRadioAudio) {
+            currentRadioAudio.pause();
+            currentRadioAudio = null;
+          }
 
-    let radioHtml = '<option value="">-- Radio Off (0 KB Standby) --</option>';
-    radioStreams.forEach(st => {
-      radioHtml += `<option value="${st.url}">${st.name}</option>`;
-    });
-    radioSelect.innerHTML = radioHtml;
-
-    radioSelect.addEventListener('change', (e) => {
-      const url = e.target.value;
-      if (currentRadioAudio) {
-        currentRadioAudio.pause();
-        currentRadioAudio.src = '';
-        currentRadioAudio = null;
-      }
-
-      if (!url) {
-        if (radioStatus) radioStatus.textContent = 'Radio: Standby';
-        return;
-      }
-
-      currentRadioAudio = new Audio(url);
-      currentRadioAudio.play().then(() => {
-        if (radioStatus) radioStatus.textContent = 'Radio: Live Streaming';
-        announce('Radio playback started.');
-      }).catch(() => {
-        if (radioStatus) radioStatus.textContent = 'Error loading audio stream.';
+          currentRadioAudio = new Audio(url);
+          currentRadioAudio.play().then(() => {
+            if (radioStatus) radioStatus.textContent = 'Radio: Live Streaming';
+            if (btnRadioStop) btnRadioStop.style.display = 'inline-flex';
+            announce('Radio audio relay active.');
+          }).catch(() => {
+            if (radioStatus) radioStatus.textContent = 'Error connecting to audio stream.';
+          });
+        }
       });
-    });
+    }
+
+    if (btnRadioStop) {
+      btnRadioStop.addEventListener('click', (e) => {
+        e.preventDefault();
+        stopRadio();
+      });
+    }
   }
 
-  // 5. ELEVATOR DUAL-SPEED ENGINE & GRAVITY INVERSION OVER FLOOR 100
+  // 7. 28 ELEVATOR SHAFTS & DUAL-SPEED ENGINE
   function getAudioContext() {
     if (!audioCtx) {
       const AudioContextClass = window.AudioContext || window.webkitAudioContext;
@@ -284,8 +527,7 @@
       osc.stop(now + idx * 0.12 + 1.3);
     });
 
-    // Arrival Ding
-    const dingDelay = isInstant ? 400 : 1800;
+    const dingDelay = isInstant ? 350 : 1800;
     setTimeout(() => {
       const dingOsc = ctx.createOscillator();
       const dingGain = ctx.createGain();
@@ -333,11 +575,11 @@
         url: `/floor/${targetFloorStr}/` 
       };
 
-      // ПРАВИЛО: Ако етажът е над 100 -> Мигновен скок (Instant Transit)
+      // Over Floor 100: Instant Gravity Teleport
       if (isInstant) {
         if (readout) {
           readout.style.color = 'var(--console-green)';
-          readout.textContent = isBg ? `МИГНОВЕН ЕКСПРЕС • ${destination.name.toUpperCase()}` : `INSTANT EXPRESS • ${destination.name.toUpperCase()}`;
+          readout.textContent = isBg ? `МИГНОВЕН СКОК • ${destination.name.toUpperCase()}` : `INSTANT EXPRESS • ${destination.name.toUpperCase()}`;
         }
         announce(isBg ? `Мигновен скок до ${destination.name}` : `Instant arrival at ${destination.name}`);
         setTimeout(() => {
@@ -346,7 +588,7 @@
         return;
       }
 
-      // За етажи до 100: Движение с 10 етажа в секунда (100ms за стъпка)
+      // Levels 0 to 100: 10 Floors Per Second Simulation
       let simulatedFloor = 0;
       const step = targetNum >= 0 ? 1 : -1;
       const intervalTime = 100;
@@ -371,7 +613,6 @@
             readout.textContent = isBg ? `ПРИСТИГАНЕ • ${destination.name.toUpperCase()}` : `ARRIVED • ${destination.name.toUpperCase()}`;
           }
           announce(isBg ? `Пристигнахте на ${destination.name}` : `Arrived at ${destination.name}`);
-          
           setTimeout(() => {
             window.location.href = destination.url;
           }, 1100);
@@ -414,7 +655,7 @@
     });
   }
 
-  // 6. WEB SHARE API
+  // 8. WEB SHARE API
   function initWebShare() {
     const shareBtn = document.getElementById('btn-share-page');
     if (!shareBtn) return;
@@ -441,13 +682,13 @@
     });
   }
 
-  // 7. PRINT SLIP
+  // 9. PRINT SLIP
   function initPrintSlip() {
     const printBtn = document.getElementById('btn-print-slip');
     if (printBtn) printBtn.addEventListener('click', (e) => { e.preventDefault(); window.print(); });
   }
 
-  // 8. ANTI-BOT MATH GATE
+  // 10. ANTI-BOT MATH GATE
   function initAntiBotGate() {
     const gateBox = document.querySelector('.anti-bot-gate');
     if (!gateBox) return;
@@ -489,7 +730,7 @@
     }
   }
 
-  // 9. ARTICLE VOICE READER (SpeechSynthesis)
+  // 11. ARTICLE VOICE READER (SpeechSynthesis)
   function initArticleVoiceReader() {
     if (!('speechSynthesis' in window)) return;
     const btn = document.getElementById('btn-read-article');
@@ -507,7 +748,7 @@
       e.preventDefault();
       if (isSpeaking || window.speechSynthesis.speaking) return stopArticleVoice();
 
-      const contentBox = document.querySelector('article.audit-box, main .shell');
+      const contentBox = document.querySelector('article.audit-box, main .shell, main .shell-grand');
       if (!contentBox) return;
 
       const title = contentBox.querySelector('h1')?.textContent.trim() || '';
@@ -526,7 +767,7 @@
     });
   }
 
-  // 10. STREAM AUDIO PLAYER
+  // 12. STREAM AUDIO PLAYER
   function initStreamAudioPlayer() {
     if (!('speechSynthesis' in window)) return;
     const streamBtn = document.getElementById('btn-stream-audio');
@@ -571,7 +812,7 @@
     });
   }
 
-  // 11. FILTER SYSTEM (Floor 40 Multi-Filter)
+  // 13. FILTER SYSTEM (Floor 40 Multi-Filter)
   function initFilterSystem() {
     const searchBtn = document.getElementById('btn-filter-search');
     const resetBtn = document.getElementById('btn-filter-reset');
@@ -624,7 +865,7 @@
     });
   }
 
-  // 12. VIEW SWITCHER
+  // 14. VIEW SWITCHER
   function initViewSwitcher() {
     const container = document.getElementById('jobs-container');
     const viewButtons = document.querySelectorAll('.view-btn');
@@ -640,7 +881,7 @@
     });
   }
 
-  // 13. LOAD MORE PAGINATION
+  // 15. LOAD MORE PAGINATION
   function initLoadMore() {
     const loadMoreBtn = document.getElementById('btn-load-more');
     const cards = Array.from(document.querySelectorAll('.job-card'));
