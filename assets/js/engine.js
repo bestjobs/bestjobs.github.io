@@ -11,6 +11,7 @@
     try { initExquisiteChambers(); } catch (e) {}
     try { initExecutiveWorkbench(); } catch (e) {}
     try { initElevatorSystem(); } catch (e) {}
+    try { initMallFilter(); } catch (e) {}
     try { initArticleVoiceReader(); } catch (e) {}
     try { initStreamAudioPlayer(); } catch (e) {}
     try { initWebShare(); } catch (e) {}
@@ -49,7 +50,7 @@
     }
   }
 
-  // 2. 2-ROW MERIDIAN MARKET CLOCKS (Date on Row 1, Clocks on Row 2)
+  // 2. 2-ROW MERIDIAN MARKET CLOCKS
   function initMeridianClocks() {
     const dateEl = document.getElementById('current-calendar-date');
     const elNy = document.getElementById('clock-ny');
@@ -61,11 +62,14 @@
     const elHongKong = document.getElementById('clock-hongkong');
     const elTokyo = document.getElementById('clock-tokyo');
 
+    if (!elSofia && !elLondon && !elNy && !elTokyo) return;
+
     function updateClocks() {
       const now = new Date();
+      const isBg = (document.documentElement.lang || '').toLowerCase().startsWith('bg');
       
       if (dateEl) {
-        dateEl.textContent = new Intl.DateTimeFormat('en-GB', {
+        dateEl.textContent = new Intl.DateTimeFormat(isBg ? 'bg-BG' : 'en-GB', {
           weekday: 'long',
           day: '2-digit',
           month: 'long',
@@ -190,7 +194,7 @@
       });
     }
 
-    // Isolated Print Driver: Prints ONLY the text, never the website surrounding it
+    // Isolated Print Driver: Prints ONLY document text
     function printOnlyDraft(text) {
       const iframe = document.createElement('iframe');
       iframe.style.position = 'fixed';
@@ -239,7 +243,7 @@
       }, 2000);
     }
 
-    // 2. Export PDF via Native Print Driver (Prints only document)
+    // 2. Export PDF
     if (btnPdf) {
       btnPdf.addEventListener('click', (e) => {
         e.preventDefault();
@@ -307,7 +311,36 @@
     }
   }
 
-  // 6. 28 ELEVATOR SHAFTS & DUAL-SPEED ENGINE
+  // 6. B2B MALL SECTOR FILTER ENGINE (Floor 100 Instant Sharding)
+  function initMallFilter() {
+    const chips = Array.from(document.querySelectorAll('.filter-box .chip-btn[data-sector]'));
+    const cards = Array.from(document.querySelectorAll('#mall-showcase-grid .portal-card[data-sector]'));
+    if (chips.length === 0 || cards.length === 0) return;
+
+    chips.forEach(chip => {
+      chip.addEventListener('click', (e) => {
+        e.preventDefault();
+        const targetSector = chip.getAttribute('data-sector') || 'all';
+
+        chips.forEach(c => c.classList.remove('active'));
+        chip.classList.add('active');
+
+        let matched = 0;
+        cards.forEach(card => {
+          const cardSector = card.getAttribute('data-sector') || '';
+          if (targetSector === 'all' || cardSector === targetSector) {
+            card.removeAttribute('hidden');
+            matched++;
+          } else {
+            card.setAttribute('hidden', '');
+          }
+        });
+        announce(`Showcases displayed: ${matched}`);
+      });
+    });
+  }
+
+  // 7. 28 ELEVATOR SHAFTS & DUAL-SPEED ENGINE
   function getAudioContext() {
     if (!audioCtx) {
       const AudioContextClass = window.AudioContext || window.webkitAudioContext;
@@ -370,11 +403,11 @@
 
     const knownFloors = {
       '7777': { name: isBg ? 'Пентхаус Мобиком' : 'Mobikom Penthouse', url: 'https://mobikom.bg' },
-      '100':  { name: isBg ? 'Етаж 100 • Казино & Залози' : 'Floor 100 • Gaming & Betting', url: '/floor/100/' },
+      '100':  { name: isBg ? 'Етаж 100 • B2B Мол Витрини' : 'Floor 100 • B2B Trade Mall', url: isBg ? '/mall/bg/' : '/mall/' },
       '50':   { name: isBg ? 'Етаж 50 • Енергетика & BESS' : 'Floor 50 • Energy & BESS', url: '/floor/50/' },
-      '40':   { name: isBg ? 'Етаж 40 • Кариерен борд' : 'Floor 40 • Career Board', url: isBg ? '/bestjobs/bg/' : '/bestjobs/' },
-      '30':   { name: isBg ? 'Етаж 30 • B2B Мол Витрини' : 'Floor 30 • B2B Virtual Mall', url: isBg ? '/mall/bg/' : '/mall/' },
+      '20':   { name: isBg ? 'Етаж 20 • Кариерен борд' : 'Floor 20 • Career Board', url: isBg ? '/bestjobs/bg/' : '/bestjobs/' },
       '10':   { name: isBg ? 'Етаж 10 • Тото & Игри' : 'Floor 10 • Lotteries & Fun', url: '/floor/10/' },
+      '1':    { name: isBg ? 'Етаж 1 • Централно фоайе' : 'Floor 1 • Grand Lobby', url: isBg ? '/bg/' : '/' },
       '0':    { name: isBg ? 'Етаж 0 • Каса & IBAN' : 'Floor 0 • Cashier & IBAN', url: '/floor/0/' },
       '-1':   { name: isBg ? 'Етаж -1 • Дигитален гардероб' : 'Floor -1 • Digital Wardrobe', url: '/floor/-1/' },
       '-2':   { name: isBg ? 'Етаж -2 • Централен Гараж' : 'Floor -2 • Central Garage', url: '/floor/-2/' },
@@ -404,8 +437,8 @@
         return;
       }
 
-      let simulatedFloor = 0;
-      const step = targetNum >= 0 ? 1 : -1;
+      let simulatedFloor = 1;
+      const step = targetNum >= 1 ? 1 : -1;
       const intervalTime = 100;
 
       if (readout) readout.style.color = 'var(--vip-gold)';
@@ -464,8 +497,8 @@
       });
     }
 
-    // Intercept Direct Portal Anchors with Animation
-    document.querySelectorAll('.floor-portal-anchor[data-floor]').forEach(link => {
+    // Intercept Vertical Floor Portal Anchors
+    document.querySelectorAll('.floor-portal-anchor[data-floor], nav a[data-floor]').forEach(link => {
       link.addEventListener('click', (e) => {
         e.preventDefault();
         const fl = link.getAttribute('data-floor');
@@ -474,7 +507,7 @@
     });
   }
 
-  // 7. GLOBAL ARTICLE VOICE READER (Mandatory Standard)
+  // 8. GLOBAL ARTICLE VOICE READER
   function initArticleVoiceReader() {
     if (!('speechSynthesis' in window)) return;
     const btn = document.getElementById('btn-read-article');
@@ -511,7 +544,7 @@
     });
   }
 
-  // 8. WEB SHARE API
+  // 9. WEB SHARE API
   function initWebShare() {
     const shareBtn = document.getElementById('btn-share-page');
     if (!shareBtn) return;
@@ -538,13 +571,13 @@
     });
   }
 
-  // 9. PRINT SLIP
+  // 10. PRINT SLIP
   function initPrintSlip() {
     const printBtn = document.getElementById('btn-print-slip');
     if (printBtn) printBtn.addEventListener('click', (e) => { e.preventDefault(); window.print(); });
   }
 
-  // 10. ANTI-BOT MATH GATE
+  // 11. ANTI-BOT MATH GATE
   function initAntiBotGate() {
     const gateBox = document.querySelector('.anti-bot-gate');
     if (!gateBox) return;
@@ -586,7 +619,7 @@
     }
   }
 
-  // 11. STREAM AUDIO PLAYER
+  // 12. STREAM AUDIO PLAYER
   function initStreamAudioPlayer() {
     if (!('speechSynthesis' in window)) return;
     const streamBtn = document.getElementById('btn-stream-audio');
@@ -631,7 +664,7 @@
     });
   }
 
-  // 12. FILTER SYSTEM (Floor 40 Multi-Filter)
+  // 13. FILTER SYSTEM (Floor 20 Multi-Filter)
   function initFilterSystem() {
     const searchBtn = document.getElementById('btn-filter-search');
     const resetBtn = document.getElementById('btn-filter-reset');
@@ -684,7 +717,7 @@
     });
   }
 
-  // 13. VIEW SWITCHER
+  // 14. VIEW SWITCHER
   function initViewSwitcher() {
     const container = document.getElementById('jobs-container');
     const viewButtons = document.querySelectorAll('.view-btn');
@@ -700,7 +733,7 @@
     });
   }
 
-  // 14. LOAD MORE PAGINATION
+  // 15. LOAD MORE PAGINATION
   function initLoadMore() {
     const loadMoreBtn = document.getElementById('btn-load-more');
     const cards = Array.from(document.querySelectorAll('.job-card'));
