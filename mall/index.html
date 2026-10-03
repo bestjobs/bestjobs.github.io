@@ -20,7 +20,7 @@
 </head>
 <body>
 
-  <!-- Site Header -->
+  <!-- Site Header (Clean 5 Links + Language Switch) -->
   <header class="site-header">
     <div class="shell-grand nav-bar">
       <a href="/" class="brand-link" title="BestJobs Skyscraper &bull; Return to Grand Lobby">
@@ -40,11 +40,11 @@
         <input type="checkbox" id="nav-toggle" class="nav-toggle" aria-label="Toggle Navigation Drawer">
         <label for="nav-toggle" class="nav-toggle-label" title="Open Navigation Menu">&#9776;</label>
         <ul>
-          <li><a href="/" class="nav-link" title="Return to Grand Lobby Entrance">Grand Lobby</a></li>
+          <li><a href="/" class="nav-link" data-floor="1" title="Take elevator down to Floor 1 Grand Lobby">Grand Lobby</a></li>
           <li><a href="/about/" class="nav-link" title="Institutional Heritage and Governance">About Us</a></li>
           <li><a href="/blog/" class="nav-link" title="Central Research Monographs Catalog">Monographs</a></li>
           <li><a href="/help/" class="nav-link" title="Commercial Tariffs and Mall Lease Rules">Help Desk</a></li>
-          <li><a href="/floor/0/" class="nav-btn" title="Floor 0: Cashier Desk &bull; IBAN KYC Verification">Cashier Desk</a></li>
+          <li><a href="/contact/" class="nav-link" title="Official Communication Desks">Contact</a></li>
           <li><a href="/mall/bg/" class="lang-toggle" hreflang="bg" title="Switch to Bulgarian Mall Showcase">Bulgarian (BG)</a></li>
         </ul>
       </nav>
@@ -81,7 +81,7 @@
       <section class="grid-cards" id="mall-showcase-grid" aria-label="Enterprise Showcases Concourse">
 
         <!-- Showcase 1: Mobikom Bulgaria -->
-        <a href="/mall/M-100-0001-mobikom-bulgaria-telecom-infrastructure-bess-energy/" class="portal-card" data-sector="telecom" title="Mobikom Bulgaria &bull; Read complete 10,000-word corporate digital dossier">
+        <a href="/mall/M-100-0001-mobikom-bulgaria-telecom-infrastructure-bess-energy/" class="portal-card" data-sector="telecom" title="Mobikom Bulgaria &bull; Read complete 10,000-word corporate digital space">
           <span class="card-eyebrow">REF: M-100-0001 &bull; TELECOM &amp; ENERGY</span>
           <div class="card-title-box">
             <h3>Mobikom Bulgaria</h3>
@@ -95,7 +95,7 @@
         </a>
 
         <!-- Showcase 2: DobrichNews -->
-        <a href="/mall/M-100-0002-dobrichnews-regional-daily-media-news-economic-analysis/" class="portal-card" data-sector="media" title="DobrichNews Daily Media &bull; Read complete 10,000-word corporate digital dossier">
+        <a href="/mall/M-100-0002-dobrichnews-regional-daily-media-news-economic-analysis/" class="portal-card" data-sector="media" title="DobrichNews Daily Media &bull; Read complete 10,000-word corporate digital space">
           <span class="card-eyebrow">REF: M-100-0002 &bull; REGIONAL MEDIA</span>
           <div class="card-title-box">
             <h3>DobrichNews Daily</h3>
@@ -109,7 +109,7 @@
         </a>
 
         <!-- Showcase 3: Dobruja -->
-        <a href="/mall/M-100-0003-dobruja-cultural-heritage-folklore-agricultural-traditions/" class="portal-card" data-sector="agriculture" title="Dobruja Cultural Review &bull; Read complete 10,000-word corporate digital dossier">
+        <a href="/mall/M-100-0003-dobruja-cultural-heritage-folklore-agricultural-traditions/" class="portal-card" data-sector="agriculture" title="Dobruja Cultural Review &bull; Read complete 10,000-word corporate digital space">
           <span class="card-eyebrow">REF: M-100-0003 &bull; AGRARIAN HERITAGE</span>
           <div class="card-title-box">
             <h3>Dobruja Cultural Review</h3>
@@ -123,7 +123,7 @@
         </a>
 
         <!-- Showcase 4: BestJobs Bulgaria -->
-        <a href="/mall/M-100-0004-bestjobs-global-economic-skyscraper-career-board-tariffs/" class="portal-card" data-sector="employment" title="BestJobs Skyscraper &bull; Read complete 10,000-word corporate digital dossier">
+        <a href="/mall/M-100-0004-bestjobs-global-economic-skyscraper-career-board-tariffs/" class="portal-card" data-sector="employment" title="BestJobs Skyscraper &bull; Read complete 10,000-word corporate digital space">
           <span class="card-eyebrow">REF: M-100-0004 &bull; ECONOMIC GATEWAY</span>
           <div class="card-title-box">
             <h3>BestJobs Skyscraper</h3>
@@ -152,7 +152,7 @@
     </div>
   </main>
 
-  <!-- Site Footer (Unified 3-Column Consortium Standard with Dual License) -->
+  <!-- Site Footer (Unified 3-Column Standard with Dual License) -->
   <footer class="site-footer">
     <div class="shell-grand">
       <div class="footer-grid">
@@ -169,11 +169,11 @@
         <div class="footer-col">
           <h4>Skyscraper Portals</h4>
           <ul>
-            <li><a href="/" title="Return to Grand Lobby Entrance">Grand Lobby</a></li>
-            <li><a href="/bestjobs/" title="Career Board on Floor 40">Career Board</a></li>
+            <li><a href="/" data-floor="1" title="Take elevator down to Floor 1 Grand Lobby">Grand Lobby</a></li>
+            <li><a href="/bestjobs/" title="Career Board on Floor 20">Career Board</a></li>
             <li><a href="/mall/" aria-current="page" title="Virtual B2B Mall on Floor 100">B2B Enterprise Mall</a></li>
             <li><a href="/floor/50/" title="Industrial Energy &amp; BESS Systems">Energy Infrastructure</a></li>
-            <li><a href="/floor/100/" title="Gaming and Sports Betting Hub">Gaming &amp; Betting</a></li>
+            <li><a href="/floor/10/" title="Entertainment and Number Lotteries">Entertainment &amp; Toto</a></li>
             <li><a href="/floor/0/" title="Central Cashier, IBAN &amp; Verification">Cashier Desk</a></li>
           </ul>
         </div>
@@ -183,7 +183,7 @@
           <ul>
             <li><a href="/about/" title="Platform Heritage and Corporate Framework">About Us</a></li>
             <li><a href="/blog/" title="Central Research and Insights Blog">Monographs</a></li>
-            <li><a href="/help/" title="Unified Documentation and Tariffs">Help Desk</a></li>
+            <li><a href="/help/" title="Commercial Tariffs and Mall Lease Rules">Help Desk</a></li>
             <li><a href="/contact/#employers" title="Employer B2B listing support and VIP syndication">Employers B2B Desk</a></li>
             <li><a href="/contact/#candidates" title="Candidate support desk">Candidate Support Desk</a></li>
             <li><a href="/vip-jobs.xml" title="Syndicated VIP feed for partner media">&#128246; VIP Syndication Feed</a></li>
